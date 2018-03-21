@@ -12,6 +12,8 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 /**
+ * system for moving entities
+ *
  * @author AIsopp
  * @version 1.0
  * @since 16.03.2018
@@ -33,17 +35,15 @@ public class MovementSystem extends IteratingSystem {
         TransformComponent transform = mTransformComponent.get(entity);
         MovementComponent movementComponent = mMovementComponent.get(entity);
         Vector2 position = transform.getPosition();
-        //Maybe add
-        if(movementComponent.hasNewTarget()){
-            Vector2 targetLocation = movementComponent.getTargetLocation();
-            float speed = movementComponent.getSpeed();
-            //movementComponent.getTargetLocation().sub(transform.getPosition()).nor().scl(movementComponent.getSpeed());
-            Vector2 velocity = VectorMath.scl(VectorMath.nor(VectorMath.sub(targetLocation, position)) ,speed);
-            movementComponent.setVelocity(velocity);
-            //movementComponent.setNewTarget(false);
-        }
-        //transform.setPosition(transform.getPosition().add(movementComponent.getVelocity().scl(Gdx.graphics.getDeltaTime())));
-        transform.setPosition(VectorMath.add(position, VectorMath.scl(movementComponent.getVelocity(), Gdx.graphics.getDeltaTime() )));
+
+        Vector2 targetLocation = movementComponent.getTargetLocation();
+        float speed = movementComponent.getSpeed();
+        // velocity = normal(targetLocation - position) * speed
+        Vector2 velocity = VectorMath.scl(VectorMath.nor(VectorMath.sub(targetLocation, position)), speed);
+        movementComponent.setVelocity(velocity);
+
+        // position = position + (velocity * deltaTime)
+        transform.setPosition(VectorMath.add(position, VectorMath.scl(movementComponent.getVelocity(), Gdx.graphics.getDeltaTime())));
 
     }
 }
