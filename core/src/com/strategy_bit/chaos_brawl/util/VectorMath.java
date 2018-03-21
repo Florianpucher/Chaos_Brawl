@@ -40,4 +40,8 @@ public class VectorMath {
         vector2.nor();
         return vector2;
     }
+
+    public static double distance(Vector2 v,Vector2 v2){
+        return Math.sqrt(Math.pow(v.x-v2.x,2)+Math.pow(v.y-v2.y,2));
+    }
 }

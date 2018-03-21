@@ -2,6 +2,8 @@ package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Queue;
 
 /**
  * component that has fields for moving an entity
@@ -32,6 +34,10 @@ public class MovementComponent implements Component {
      */
     private float speed;
 
+    /**
+     * precalculated path to target
+     */
+    private Queue<Vector2> path;
 
 
 
@@ -40,14 +46,22 @@ public class MovementComponent implements Component {
         // initial target is current position
         this.targetLocation = transformComponent.getPosition();
         this.velocity = new Vector2(0,0);
+        path=new Queue<Vector2>();
     }
 
     public Vector2 getTargetLocation() {
-        return targetLocation;
+        if(path.size<1) {
+            return targetLocation;
+        }
+        else{
+            return path.last();
+        }
     }
 
     public void setTargetLocation(Vector2 targetLocation) {
-        this.targetLocation = targetLocation;
+            this.targetLocation = targetLocation;
+            //TODO: remove line
+            addToPath(targetLocation);
     }
 
     public Vector2 getVelocity() {
@@ -64,6 +78,31 @@ public class MovementComponent implements Component {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    public void popCurTarget(){
+        if(!(path.size<1)) {
+            path.removeLast();
+        }
+    }
+
+    public void setPath(Array<Vector2> path){
+        this.path.clear();
+        for (Vector2 vector2:path) {
+            this.path.addFirst(vector2);
+        }
+    }
+
+    public boolean hasNoPath(){
+        if(path.size<1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public void addToPath(Vector2 point){
+        this.path.addFirst(point);
     }
 
 }

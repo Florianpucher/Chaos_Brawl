@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
@@ -43,8 +44,10 @@ public class MovementSystem extends IteratingSystem {
         // get actual position of entity
         Vector2 position = transform.getPosition();
 
+        updateTarget(movementComponent,position);
         //get target position of entity
         Vector2 targetLocation = movementComponent.getTargetLocation();
+
         float speed = movementComponent.getSpeed();
         //TODO maybe velocity is not needed to be a field of movementComponent
         // velocity = normalVector(targetLocation - position) * speed
@@ -54,5 +57,21 @@ public class MovementSystem extends IteratingSystem {
         // position = position + (velocity * deltaTime)
         transform.setPosition(VectorMath.add(position, VectorMath.scl(movementComponent.getVelocity(), Gdx.graphics.getDeltaTime())));
 
+    }
+
+    private void updateTarget(MovementComponent movementComponent, Vector2 position){
+        Vector2 targetLocation=movementComponent.getTargetLocation();
+        if(VectorMath.distance(targetLocation,position)<1.0){
+            movementComponent.popCurTarget();
+            return;
+        }else if (movementComponent.hasNoPath()){
+            movementComponent.setPath(calculatePathTo(targetLocation));
+        }
+    }
+    private Array<Vector2> calculatePathTo(Vector2 dest){
+        Array<Vector2> path=new Array<Vector2>();
+        //TODO: find path
+        path.add(dest);
+        return path;
     }
 }
