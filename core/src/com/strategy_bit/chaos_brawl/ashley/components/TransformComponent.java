@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 
 /**
+ * components that holds the position, scale, z-index and rotation of an entity
+ *
  * @author AIsopp
  * @version 1.0
  * @since 15.03.2018

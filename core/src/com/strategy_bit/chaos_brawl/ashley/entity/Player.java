@@ -10,6 +10,8 @@ import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 
 /**
+ * test entity
+ *
  * @author AIsopp
  * @version 1.0
  * @since 15.03.2018

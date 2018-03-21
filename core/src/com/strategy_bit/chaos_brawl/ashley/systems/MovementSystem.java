@@ -13,6 +13,12 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 /**
  * system for moving entities
+ * <br>
+ * handled components
+ * <ul>
+ *     <li>MovementComponent</li>
+ *     <li>TransformComponent</li>
+ * </ul>
  *
  * @author AIsopp
  * @version 1.0
@@ -34,11 +40,14 @@ public class MovementSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transform = mTransformComponent.get(entity);
         MovementComponent movementComponent = mMovementComponent.get(entity);
+        // get actual position of entity
         Vector2 position = transform.getPosition();
 
+        //get target position of entity
         Vector2 targetLocation = movementComponent.getTargetLocation();
         float speed = movementComponent.getSpeed();
-        // velocity = normal(targetLocation - position) * speed
+        //TODO maybe velocity is not needed to be a field of movementComponent
+        // velocity = normalVector(targetLocation - position) * speed
         Vector2 velocity = VectorMath.scl(VectorMath.nor(VectorMath.sub(targetLocation, position)), speed);
         movementComponent.setVelocity(velocity);
 

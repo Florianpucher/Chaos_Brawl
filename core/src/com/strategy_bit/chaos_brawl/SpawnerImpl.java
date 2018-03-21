@@ -9,7 +9,7 @@ import com.strategy_bit.chaos_brawl.ashley.entity.Player;
  * @version 1.0
  * @since 18.03.2018
  */
-
+//TODO move every creation of an entity here
 public class SpawnerImpl {
     public static final int SPAWN_PLAYER = 0;
 

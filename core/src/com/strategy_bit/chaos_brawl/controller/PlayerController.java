@@ -5,6 +5,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 /**
+ * interface of user interface and other user input
+ *
  * @author AIsopp
  * @version 1.0
  * @since 15.03.2018

@@ -15,6 +15,8 @@ import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import java.util.HashMap;
 
 /**
+ * Central manager for game
+ *
  * @author AIsopp
  * @version 1.0
  * @since 15.03.2018

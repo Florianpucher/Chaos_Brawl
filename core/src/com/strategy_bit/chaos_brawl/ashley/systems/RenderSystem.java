@@ -20,36 +20,51 @@ import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 import java.util.Comparator;
 
 /**
+ * System for rendering images/sprites
+ * <br>
+ * handled components
+ * <ul>
+ *     <li>TextureComponent</li>
+ *     <li>TransformComponent</li>
+ * </ul>
+ *
  * @author AIsopp
  * @version 1.0
  * @since 15.03.2018
  */
 public class RenderSystem extends IteratingSystem implements DisposeAble {
-    static final float FRUSTUM_WIDTH = 10;
+
+    //size of game board that the camera can show
+    static final float FRUSTUM_WIDTH = 20;
     static final float FRUSTUM_HEIGHT = 15;
     static final float PIXELS_TO_METRES = 1.0f / 32.0f;
 
     private ComponentMapper<TextureComponent> textureMapper;
-    private ComponentMapper<TransformComponent> transformMapper = ComponentMapper.getFor(TransformComponent.class);
+    private ComponentMapper<TransformComponent> transformMapper;
     private SpriteBatch batch;
     private Array<Entity> renderQueue;
     private ZComparator comparator;
     private OrthographicCamera camera;
 
     public RenderSystem() {
+        //set used entities by components
         super(Family.all(TextureComponent.class, TransformComponent.class).get());
+        //initialize component mapper
         textureMapper = ComponentMapper.getFor(TextureComponent.class);
         transformMapper = ComponentMapper.getFor(TransformComponent.class);
+        //initialize additional used components
         batch = new SpriteBatch();
         renderQueue = new Array<Entity>();
         comparator = new ZComparator();
 
+        //initialize camera with size
         camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        // add entity with transform and texture component to render queue
         renderQueue.add(entity);
     }
 
@@ -57,21 +72,27 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
+        //sort entity by z-index
+        //entities with lower z-index will be rendered before entities with higher z-index
         renderQueue.sort(comparator);
+        //update camera
         camera.update();
         batch.setProjectionMatrix(camera.combined);
+        //draw over old scene
         Gdx.gl.glClearColor(.135f, .206f, .235f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //begin new draw
         batch.begin();
         for (Entity entity :
                 renderQueue) {
 
             TextureRegion tex = textureMapper.get(entity).getTexture();
+            // if an entity has a texture component but there is no texture set skip it
             if (tex == null) {
                 continue;
             }
             TransformComponent transform = transformMapper.get(entity);
-
+            //calculate real draw size
             float width = tex.getRegionWidth();
             float height = tex.getRegionHeight();
             float originX = width * 0.5f;
@@ -84,6 +105,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                     MathUtils.radiansToDegrees * transform.getRotation());
         }
         batch.end();
+        //clear render queue
         renderQueue.clear();
     }
 
@@ -92,11 +114,18 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         batch.dispose();
     }
 
+    /**
+     *
+     * @return the used camera
+     */
     public Camera getCamera(){
         return camera;
     }
 
 
+    /**
+     * comparator for sorting entities by z-index
+     */
     private static class ZComparator implements Comparator<Entity> {
         private ComponentMapper<TransformComponent> pm = ComponentMapper.getFor(TransformComponent.class);
 

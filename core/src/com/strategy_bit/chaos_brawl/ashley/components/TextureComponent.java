@@ -4,8 +4,10 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- *
- * Created by AIsopp on 15.03.2018.
+ * component that holds the sprite that needs to tbe rendered
+ * @author AIsopp
+ * @version 1.0
+ * @since 15.03.2018
  */
 
 public class TextureComponent implements Component {

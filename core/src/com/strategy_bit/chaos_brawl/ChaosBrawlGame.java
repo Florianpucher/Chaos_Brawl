@@ -6,12 +6,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.strategy_bit.chaos_brawl.controller.PlayerController;
+//TODO split into more screens, add assetManager
 
+/**
+ *
+ */
 public class ChaosBrawlGame extends ApplicationAdapter {
 	private GameManager manager;
 
 	@Override
 	public void create () {
+
 		manager = new GameManager();
 		//add User input
 		PlayerController controller = new PlayerController();

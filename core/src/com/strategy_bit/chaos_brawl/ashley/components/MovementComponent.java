@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 
 /**
+ * component that has fields for moving an entity
+ *
  * @author AIsopp
  * @version 1.0
  * @since 17.03.2018
@@ -18,16 +20,23 @@ public class MovementComponent implements Component {
      */
     private Vector2 targetLocation;
 
+    /**
+     * will be changed by movementsystem
+     * <br>
+     * do not change
+     */
     private Vector2 velocity;
 
+    /**
+     * speed of an entity
+     */
     private float speed;
 
-    private boolean newTarget;
+
 
 
     public MovementComponent(float speed, TransformComponent transformComponent) {
         this.speed = speed;
-        this.newTarget = false;
         // initial target is current position
         this.targetLocation = transformComponent.getPosition();
         this.velocity = new Vector2(0,0);
@@ -39,7 +48,6 @@ public class MovementComponent implements Component {
 
     public void setTargetLocation(Vector2 targetLocation) {
         this.targetLocation = targetLocation;
-        setNewTarget(true);
     }
 
     public Vector2 getVelocity() {
@@ -58,11 +66,4 @@ public class MovementComponent implements Component {
         this.speed = speed;
     }
 
-    public boolean hasNewTarget() {
-        return newTarget;
-    }
-
-    public void setNewTarget(boolean newTarget) {
-        this.newTarget = newTarget;
-    }
 }
