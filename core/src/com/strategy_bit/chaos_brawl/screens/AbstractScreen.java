@@ -39,4 +39,14 @@ public class AbstractScreen extends Stage implements Screen {
     public void hide() {
 
     }
+
+    public void buildStage(){
+
+    }
+
+    @Override
+    public void dispose() {
+        clear();
+        super.dispose();
+    }
 }
