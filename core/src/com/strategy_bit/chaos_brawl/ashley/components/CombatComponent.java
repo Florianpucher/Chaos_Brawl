@@ -34,6 +34,7 @@ public class CombatComponent implements Component {
 
     public void setHitPotins(double hitPotins) {
         this.hitPotins = hitPotins;
+        System.out.println("HitPoints: "+hitPotins);
     }
 
     public double getAttackRadius() {
@@ -73,11 +74,11 @@ public class CombatComponent implements Component {
     }
 
     private long millisBetweenAttacks(){
-        return (long)((1/attackSpeed)/1000);
+        return (long)((1.0/attackSpeed)*1000.0);
     }
 
     public boolean attack(){
-        if (System.currentTimeMillis()-lastAttackTimeStamp< millisBetweenAttacks()){
+        if (System.currentTimeMillis()-lastAttackTimeStamp> millisBetweenAttacks()){
             lastAttackTimeStamp=System.currentTimeMillis();
             return true;
         }else{

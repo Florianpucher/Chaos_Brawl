@@ -11,6 +11,8 @@ import com.strategy_bit.chaos_brawl.SpawnerImpl;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
+import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
+import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 
@@ -38,12 +40,19 @@ public class GameManager implements InputHandler {
         spawner = new SpawnerImpl();
         createEngine();
         createPlayer();
+        createDummy();
     }
 
     public void createPlayer(){
         Player player = new Player();
         engine.addEntity(player);
         units.put(lastID, player);
+        lastID++;
+    }
+    public void createDummy(){
+        PlayerClone dummy = new PlayerClone();
+        engine.addEntity(dummy);
+        units.put(lastID, dummy);
         lastID++;
     }
 
@@ -53,6 +62,7 @@ public class GameManager implements InputHandler {
         //Add some logic
 
         engine.addSystem(new MovementSystem());
+        engine.addSystem(new CombatSystem());
         //Renderer should be the last system to add
         RenderSystem renderSystem = new RenderSystem();
         engine.addSystem(renderSystem);
