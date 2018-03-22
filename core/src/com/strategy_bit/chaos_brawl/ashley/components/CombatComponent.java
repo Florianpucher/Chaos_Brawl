@@ -18,6 +18,7 @@ public class CombatComponent implements Component {
     private int teamId;
     private long lastAttackTimeStamp;
     private boolean isRanged;
+    private boolean isEngagedInCombat;
     public CombatComponent(double hitPotins,double attackRadius,double attackSpeed,double attackDamage,int teamId,boolean ranged) {
         setHitPotins(hitPotins);
         setAttackDamage(attackDamage);
@@ -25,6 +26,7 @@ public class CombatComponent implements Component {
         setAttackSpeed(attackSpeed);
         setTeamId(teamId);
         setRanged(ranged);
+        setEngagedInCombat(false);
         lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
     }
 
@@ -71,6 +73,14 @@ public class CombatComponent implements Component {
 
     public void setTeamId(int teamId) {
         this.teamId = teamId;
+    }
+
+    public boolean isEngagedInCombat() {
+        return isEngagedInCombat;
+    }
+
+    public void setEngagedInCombat(boolean engagedInCombat) {
+        isEngagedInCombat = engagedInCombat;
     }
 
     private long millisBetweenAttacks(){

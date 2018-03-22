@@ -8,6 +8,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
@@ -30,15 +31,23 @@ public class MovementSystem extends IteratingSystem {
 
     protected ComponentMapper<TransformComponent> mTransformComponent;
     protected ComponentMapper<MovementComponent> mMovementComponent;
+    protected ComponentMapper<CombatComponent> mCombatComponent;
 
     public MovementSystem() {
         super(Family.all(TransformComponent.class, MovementComponent.class).get());
         mTransformComponent = ComponentMapper.getFor(TransformComponent.class);
         mMovementComponent = ComponentMapper.getFor(MovementComponent.class);
+        mCombatComponent=ComponentMapper.getFor(CombatComponent.class);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        CombatComponent combatComponent=mCombatComponent.get(entity);
+        if (combatComponent!=null){
+            if(combatComponent.isEngagedInCombat()){
+                return;
+            }
+        }
         TransformComponent transform = mTransformComponent.get(entity);
         MovementComponent movementComponent = mMovementComponent.get(entity);
         // get actual position of entity
@@ -56,12 +65,18 @@ public class MovementSystem extends IteratingSystem {
 
         // position = position + (velocity * deltaTime)
         transform.setPosition(VectorMath.add(position, VectorMath.scl(movementComponent.getVelocity(), Gdx.graphics.getDeltaTime())));
+        if(movementComponent.isDeleteOnTargetReached()){
+            if(VectorMath.distance(targetLocation,position)<0.1){
+                getEngine().removeEntity(entity);
+            }
+        }
 
     }
 
     private void updateTarget(MovementComponent movementComponent, Vector2 position){
         Vector2 targetLocation=movementComponent.getTargetLocation();
         if(VectorMath.distance(targetLocation,position)<1.0){
+
             movementComponent.popCurTarget();
             return;
         }else if (movementComponent.hasNoPath()){

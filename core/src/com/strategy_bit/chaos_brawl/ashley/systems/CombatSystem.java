@@ -1,12 +1,14 @@
 package com.strategy_bit.chaos_brawl.ashley.systems;
 
 import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 /**
@@ -29,6 +31,7 @@ public class CombatSystem extends IteratingSystem {
         TransformComponent transformComponent=mTransformComponent.get(entity);
         double closest=combatComponent.getAttackRadius()+1.0;
         CombatComponent closestEnemy=null;
+        TransformComponent closestEnemyPosition=null;
         for (Entity enemy : getEntities()) {
             CombatComponent eCombatComponent=mCombatComponent.get(enemy);
             if(combatComponent.getTeamId()!=eCombatComponent.getTeamId()) {
@@ -43,6 +46,7 @@ public class CombatSystem extends IteratingSystem {
                             if (dist<closest){
                                 closest=dist;
                                 closestEnemy=eCombatComponent;
+                                closestEnemyPosition=eTransformComponent;
                             }
                         }
                     }
@@ -50,13 +54,19 @@ public class CombatSystem extends IteratingSystem {
             }
         }
         if(closestEnemy!=null) {
-            attack(combatComponent, closestEnemy);
+            combatComponent.setEngagedInCombat(true);
+            attack(combatComponent, closestEnemy,transformComponent,closestEnemyPosition);
+        }
+        else {
+            combatComponent.setEngagedInCombat(false);
         }
     }
 
-    private void attack(CombatComponent c1,CombatComponent c2){
+    private void attack(CombatComponent c1,CombatComponent c2,TransformComponent t1,TransformComponent t2){
         if(c1.attack()){
             c2.setHitPotins(c2.getHitPotins()-c1.getAttackDamage());
+            Projectile projectile=new Projectile(t1.getPosition(),t2.getPosition());
+            getEngine().addEntity(projectile);
         }
     }
 }

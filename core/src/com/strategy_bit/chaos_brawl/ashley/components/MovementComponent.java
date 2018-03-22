@@ -39,6 +39,8 @@ public class MovementComponent implements Component {
      */
     private Queue<Vector2> path;
 
+    private boolean deleteOnTargetReached;
+
 
 
     public MovementComponent(float speed, TransformComponent transformComponent) {
@@ -47,6 +49,7 @@ public class MovementComponent implements Component {
         this.targetLocation = transformComponent.getPosition();
         this.velocity = new Vector2(0,0);
         path=new Queue<Vector2>();
+        setDeleteOnTargetReached(false);
     }
 
     public Vector2 getTargetLocation() {
@@ -78,6 +81,14 @@ public class MovementComponent implements Component {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    public boolean isDeleteOnTargetReached() {
+        return deleteOnTargetReached;
+    }
+
+    public void setDeleteOnTargetReached(boolean deleteOnTargetReached) {
+        this.deleteOnTargetReached = deleteOnTargetReached;
     }
 
     public void popCurTarget(){

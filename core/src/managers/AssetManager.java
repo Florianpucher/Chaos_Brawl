@@ -18,6 +18,7 @@ public class AssetManager {
 
     public  Skin defaultSkin;
     public TextureRegion playerSkin;
+    public TextureRegion projectileSkin;
 
 
     private static AssetManager instance;
@@ -37,11 +38,13 @@ public class AssetManager {
     public  void loadAssets(){
         defaultSkin = new Skin(Gdx.files.internal("default/skin.json"));
         playerSkin = new TextureRegion(new Texture("character.png"));
+        projectileSkin=new TextureRegion(new Texture("projectile.png"));
     }
 
 
     public void dispose(){
         defaultSkin.dispose();
         playerSkin.getTexture().dispose();
+        projectileSkin.getTexture().dispose();
     }
 }
