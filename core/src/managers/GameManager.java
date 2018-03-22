@@ -51,7 +51,7 @@ public class GameManager implements InputHandler {
         lastID++;
     }
     public void createDummy(){
-        PlayerClone dummy = new PlayerClone();
+        PlayerClone dummy = new PlayerClone(new Vector2((float) (Math.random()*10),(float) (Math.random()*10)));
         engine.addEntity(dummy);
         units.put(lastID, dummy);
         lastID++;

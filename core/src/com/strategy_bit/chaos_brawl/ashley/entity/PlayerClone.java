@@ -7,6 +7,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import managers.AssetManager;
 
@@ -19,9 +20,9 @@ import managers.AssetManager;
  */
 public class PlayerClone extends Entity {
 
-    public PlayerClone() {
+    public PlayerClone(Vector2 position) {
         TransformComponent transformComponent = new TransformComponent();
-        transformComponent.setPosition(new Vector2(15,7.5f));
+        transformComponent.setPosition(position);
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().playerSkin);
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
