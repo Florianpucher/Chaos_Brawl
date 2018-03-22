@@ -1,8 +1,10 @@
 package com.strategy_bit.chaos_brawl.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -20,7 +22,7 @@ import managers.ScreenManager;
  * @version 1.0
  * @since 22.03.2018
  */
-public class MainMenuScreen extends AbstractScreen {
+public class MainMenuScreen extends AbstractScreen{
 
     private final static String NEW_GAME = "New GAME";
 
@@ -44,9 +46,8 @@ public class MainMenuScreen extends AbstractScreen {
         float height = Gdx.graphics.getHeight()/8;
         root.center();
         root.add(btnNewGame).width(Gdx.graphics.getWidth()/2).height(height);
-
         addActor(root);
-        Gdx.input.setInputProcessor(((Stage) this));
+
 
         ClickListener listener = new ClickListener(){
             @Override
@@ -59,8 +60,19 @@ public class MainMenuScreen extends AbstractScreen {
             }
         };
         btnNewGame.addListener(listener);
+    }
 
+    @Override
+    public void show() {
+        super.show();
+        Gdx.input.setInputProcessor((Stage)this);
+        System.out.println(Gdx.input.getInputProcessor().getClass().getName());
+    }
 
+    @Override
+    public void hide() {
+        super.hide();
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

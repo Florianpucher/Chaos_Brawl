@@ -17,15 +17,21 @@ public class GameScreen extends AbstractScreen {
     public GameScreen() {
         manager = new GameManager();
         //add User input
-        //TODO input needs to be changed
-        PlayerController controller = new PlayerController();
-        controller.setInputHandler(manager);
+
     }
 
     @Override
     public void buildStage() {
         super.buildStage();
 
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        //TODO input needs to be changed
+        PlayerController controller = new PlayerController();
+        controller.setInputHandler(manager);
     }
 
     @Override

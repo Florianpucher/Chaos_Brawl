@@ -12,6 +12,11 @@ public enum ScreenEnum {
             return new MainMenuScreen();
         }
     },
+    SPLASH_SCREEN {
+        public AbstractScreen getScreen(Object... params) {
+            return new SplashScreen();
+        }
+    },
 
     GAME {
         public AbstractScreen getScreen(Object... params) {
