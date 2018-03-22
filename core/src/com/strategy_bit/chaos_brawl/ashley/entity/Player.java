@@ -9,6 +9,8 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 
+import managers.AssetManager;
+
 /**
  * test entity
  *
@@ -22,7 +24,7 @@ public class Player extends Entity {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(new Vector2(5,7.5f));
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(new TextureRegion(new Texture("character.png")));
+        textureComponent.setTexture(AssetManager.getInstance().playerSkin);
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
         add(transformComponent);
         add(textureComponent);

@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl;
+package managers;
 
 
 import com.badlogic.ashley.core.Entity;
@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.strategy_bit.chaos_brawl.InputHandler;
+import com.strategy_bit.chaos_brawl.SpawnerImpl;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
@@ -21,7 +23,7 @@ import java.util.HashMap;
  * @version 1.0
  * @since 15.03.2018
  */
-public class GameManager implements InputHandler{
+public class GameManager implements InputHandler {
 
     public long lastID = 0;
 
