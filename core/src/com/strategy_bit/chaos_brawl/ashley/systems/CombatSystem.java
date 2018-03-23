@@ -31,7 +31,7 @@ public class CombatSystem extends IteratingSystem {
         CombatComponent combatComponent=mCombatComponent.get(entity);
         if(combatComponent.getHitPotins()<=0.0){
             getEngine().removeEntity(entity);
-            PlayerClone playerClone=new PlayerClone(new Vector2((float) (Math.random()*10),(float) (Math.random()*10)));
+            PlayerClone playerClone=new PlayerClone(new Vector2((float) (Math.random()*20),(float) (Math.random()*10)));
             getEngine().addEntity(playerClone);
             return;
         }
