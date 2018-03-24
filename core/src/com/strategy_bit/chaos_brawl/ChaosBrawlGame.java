@@ -1,22 +1,16 @@
 package com.strategy_bit.chaos_brawl;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.strategy_bit.chaos_brawl.controller.PlayerController;
 import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import managers.AssetManager;
-import managers.ScreenManager;
-//TODO split into more screens, add assetManager
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
+
 
 /**
  *
@@ -30,7 +24,7 @@ public class ChaosBrawlGame extends Game {
 
 	@Override
 	public void create () {
-
+		// Entry point for application
 		screenManager = ScreenManager.getInstance();
 		screenManager.initialize(this);
 		screenManager.showScreen(ScreenEnum.SPLASH_SCREEN);
@@ -55,10 +49,8 @@ public class ChaosBrawlGame extends Game {
 	public void render () {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 		if(!loadGame){
-
 			screenManager.showScreen(ScreenEnum.MAIN_MENU);
 			loadGame = true;
-			System.out.println("Loaded");
 		}
 	}
 

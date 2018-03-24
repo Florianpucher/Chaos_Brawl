@@ -65,11 +65,11 @@ public class MovementSystem extends IteratingSystem {
 
         // position = position + (velocity * deltaTime)
         transform.setPosition(VectorMath.add(position, VectorMath.scl(movementComponent.getVelocity(), Gdx.graphics.getDeltaTime())));
-        if(movementComponent.isDeleteOnTargetReached()){
+        /*if(movementComponent.isDeleteOnTargetReached()){
             if(VectorMath.distance(targetLocation,position)<1){
                 getEngine().removeEntity(entity);
             }
-        }
+        }*/
 
     }
 

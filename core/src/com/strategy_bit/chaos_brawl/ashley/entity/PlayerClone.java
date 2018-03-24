@@ -7,9 +7,8 @@ import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.util.VectorMath;
 
-import managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 /**
  * test entity

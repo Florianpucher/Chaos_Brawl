@@ -8,7 +8,7 @@ import com.badlogic.ashley.core.Component;
 
 public class CombatComponent implements Component {
     private static final double MAX_ATTACK_SPEED=2.5;
-    private double hitPotins;
+    private double hitPoints;
     private double attackRadius;
     /**
      * Attacks per second
@@ -19,8 +19,9 @@ public class CombatComponent implements Component {
     private long lastAttackTimeStamp;
     private boolean isRanged;
     private boolean isEngagedInCombat;
-    public CombatComponent(double hitPotins,double attackRadius,double attackSpeed,double attackDamage,int teamId,boolean ranged) {
-        setHitPotins(hitPotins);
+
+    public CombatComponent(double hitPoints, double attackRadius, double attackSpeed, double attackDamage, int teamId, boolean ranged) {
+        setHitPoints(hitPoints);
         setAttackDamage(attackDamage);
         setAttackRadius(attackRadius);
         setAttackSpeed(attackSpeed);
@@ -30,13 +31,13 @@ public class CombatComponent implements Component {
         lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
     }
 
-    public double getHitPotins() {
-        return hitPotins;
+    public double getHitPoints() {
+        return hitPoints;
     }
 
-    public void setHitPotins(double hitPotins) {
-        this.hitPotins = hitPotins;
-        System.out.println("HitPoints: "+hitPotins);
+    public void setHitPoints(double hitPoints) {
+        this.hitPoints = hitPoints;
+        System.out.println("HitPoints: "+ hitPoints);
     }
 
     public double getAttackRadius() {
