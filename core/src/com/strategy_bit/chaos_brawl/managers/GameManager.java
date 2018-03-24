@@ -1,4 +1,4 @@
-package managers;
+package com.strategy_bit.chaos_brawl.managers;
 
 
 import com.badlogic.ashley.core.Entity;
@@ -12,7 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
-import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
+import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
@@ -62,6 +62,7 @@ public class GameManager implements InputHandler {
         //Add some logic
 
         engine.addSystem(new MovementSystem());
+        engine.addSystem(new BulletSystem());
         engine.addSystem(new CombatSystem());
         //Renderer should be the last system to add
         RenderSystem renderSystem = new RenderSystem();

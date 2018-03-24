@@ -1,4 +1,4 @@
-package managers;
+package com.strategy_bit.chaos_brawl.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
