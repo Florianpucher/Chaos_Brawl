@@ -44,7 +44,9 @@ public class MovementSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         CombatComponent combatComponent=mCombatComponent.get(entity);
         if (combatComponent!=null){
+            //Unit is attacking
             if(combatComponent.isEngagedInCombat()){
+                //stop moving
                 return;
             }
         }
@@ -65,18 +67,12 @@ public class MovementSystem extends IteratingSystem {
 
         // position = position + (velocity * deltaTime)
         transform.setPosition(VectorMath.add(position, VectorMath.scl(movementComponent.getVelocity(), Gdx.graphics.getDeltaTime())));
-        /*if(movementComponent.isDeleteOnTargetReached()){
-            if(VectorMath.distance(targetLocation,position)<1){
-                getEngine().removeEntity(entity);
-            }
-        }*/
 
     }
 
     private void updateTarget(MovementComponent movementComponent, Vector2 position){
         Vector2 targetLocation=movementComponent.getTargetLocation();
         if(VectorMath.distance(targetLocation,position)<1.0){
-
             movementComponent.popCurTarget();
             return;
         }else if (movementComponent.hasNoPath()){

@@ -20,10 +20,9 @@ public class Projectile extends Entity {
         textureComponent.setTexture(AssetManager.getInstance().projectileSkin);
         MovementComponent movementComponent = new MovementComponent(30,transformComponent);
         movementComponent.setTargetLocation(target);
-        movementComponent.setDeleteOnTargetReached(true);
         add(transformComponent);
         add(textureComponent);
         add(movementComponent);
-        add(new BulletComponent());
+        add(new BulletComponent(true));
     }
 }

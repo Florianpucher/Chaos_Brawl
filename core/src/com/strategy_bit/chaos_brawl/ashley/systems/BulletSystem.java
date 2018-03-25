@@ -34,9 +34,10 @@ public class BulletSystem extends IteratingSystem {
 
         MovementComponent movementComponent = mMovementComponent.get(entity);
         TransformComponent transformComponent = mTransformComponent.get(entity);
+        BulletComponent bulletComponent = mBulletComponent.get(entity);
         Vector2 targetLocation = movementComponent.getTargetLocation();
         Vector2 position = transformComponent.getPosition();
-        if(VectorMath.distance(targetLocation,position)<1){
+        if(bulletComponent.isDeleteWhenTargetIsReached()&&VectorMath.distance(targetLocation,position)<1){
             getEngine().removeEntity(entity);
         }
     }
