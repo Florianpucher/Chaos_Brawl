@@ -1,11 +1,9 @@
 package com.strategy_bit.chaos_brawl.types;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.strategy_bit.chaos_brawl.config.MoveAble;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
-import static com.strategy_bit.chaos_brawl.config.MoveAble.*;
+import static com.strategy_bit.chaos_brawl.config.WalkAbleAreas.*;
 
 /**
  * @author AIsopp
@@ -15,7 +13,7 @@ import static com.strategy_bit.chaos_brawl.config.MoveAble.*;
 public enum TileType {
     GRASS{
        public TextureRegion getTexture(){
-           return AssetManager.getInstance().playerSkin;
+           return AssetManager.getInstance().defaultTile;
        }
 
         @Override
@@ -24,7 +22,7 @@ public enum TileType {
         }
     },WATER{
         public TextureRegion getTexture(){
-            return AssetManager.getInstance().playerSkin;
+            return AssetManager.getInstance().defaultTile;
         }
 
         @Override
@@ -34,7 +32,7 @@ public enum TileType {
     },
     DIRT{
         public TextureRegion getTexture(){
-            return AssetManager.getInstance().playerSkin;
+            return AssetManager.getInstance().defaultTile;
         }
         @Override
         public int getMoveAble() {

@@ -4,12 +4,15 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.types.TileType;
+import com.strategy_bit.chaos_brawl.world.Board;
 import com.strategy_bit.chaos_brawl.world.Tile;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.config.Z_Index;
 
 /**
+ * Representing the tiles used by {@link Board}
+ *
  * @author AIsopp
  * @version 1.0
  * @since 27.03.2018
@@ -19,7 +22,7 @@ public class BackgroundTile extends Entity implements Tile{
     private TileType type;
 
 
-    protected BackgroundTile(TileType tileType){
+    public BackgroundTile(TileType tileType){
         type = tileType;
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(new TextureRegion(tileType.getTexture()));
@@ -43,11 +46,21 @@ public class BackgroundTile extends Entity implements Tile{
 
     @Override
     public void setPosition(Vector2 position) {
-
+        getComponent(TransformComponent.class).setPosition(position);
     }
 
     @Override
     public Vector2 getPosition() {
-        return null;
+        return getComponent(TransformComponent.class).getPosition();
+    }
+
+    @Override
+    public void setScale(Vector2 size) {
+        getComponent(TransformComponent.class).setScale(new Vector2(size));
+    }
+
+    @Override
+    public Vector2 getScale() {
+        return getComponent(TransformComponent.class).getScale();
     }
 }

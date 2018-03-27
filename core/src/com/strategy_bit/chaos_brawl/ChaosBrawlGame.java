@@ -49,7 +49,7 @@ public class ChaosBrawlGame extends Game {
 	public void render () {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 		if(!loadGame){
-			screenManager.showScreen(ScreenEnum.MAIN_MENU);
+			screenManager.showScreen(ScreenEnum.GAME);
 			loadGame = true;
 		}
 	}

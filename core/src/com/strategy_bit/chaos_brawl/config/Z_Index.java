@@ -8,4 +8,5 @@ package com.strategy_bit.chaos_brawl.config;
 public class Z_Index {
     public static final int BACKGROUND = 0;
     public static final int FOREGROUND = 1;
+    public static final int DEFAULT = 1;
 }
