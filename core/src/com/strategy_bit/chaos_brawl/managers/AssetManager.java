@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
- * manger for holding references to assets
+ * manager for holding references to assets
  *
  * @author AIsopp
  * @version 1.0
@@ -19,6 +19,7 @@ public class AssetManager {
     public  Skin defaultSkin;
     public TextureRegion playerSkin;
     public TextureRegion projectileSkin;
+    public TextureRegion defaultTile;
 
 
     private static AssetManager instance;
@@ -39,6 +40,7 @@ public class AssetManager {
         defaultSkin = new Skin(Gdx.files.internal("default/skin.json"));
         playerSkin = new TextureRegion(new Texture("character.png"));
         projectileSkin=new TextureRegion(new Texture("projectile.png"));
+        defaultTile = new TextureRegion(new Texture("default_tile.png"));
     }
 
 
@@ -46,5 +48,6 @@ public class AssetManager {
         defaultSkin.dispose();
         playerSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
+        defaultTile.getTexture().dispose();
     }
 }

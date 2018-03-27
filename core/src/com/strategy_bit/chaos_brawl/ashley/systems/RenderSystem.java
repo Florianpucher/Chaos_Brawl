@@ -19,6 +19,10 @@ import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 
 import java.util.Comparator;
 
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
+
 /**
  * System for rendering images/sprites
  * <br>
@@ -34,10 +38,7 @@ import java.util.Comparator;
  */
 public class RenderSystem extends IteratingSystem implements DisposeAble {
 
-    //size of game board that the camera can show
-    static final float FRUSTUM_WIDTH = 20;
-    static final float FRUSTUM_HEIGHT = 15;
-    static final float PIXELS_TO_METRES = 1.0f / 32.0f;
+
 
     private ComponentMapper<TextureComponent> textureMapper;
     private ComponentMapper<TransformComponent> transformMapper;

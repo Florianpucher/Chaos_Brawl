@@ -16,6 +16,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
+import com.strategy_bit.chaos_brawl.world.Board;
 
 import java.util.HashMap;
 
@@ -40,6 +41,7 @@ public class GameManager implements InputHandler {
         units = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
         createEngine();
+        createWorld();
         createPlayer();
         createDummy();
     }
@@ -68,6 +70,14 @@ public class GameManager implements InputHandler {
         RenderSystem renderSystem = new RenderSystem();
         engine.addSystem(renderSystem);
         camera = renderSystem.getCamera();
+    }
+
+
+    /**
+     * creates Game board ({@link Board})
+     */
+    private void createWorld(){
+        Board board = new Board(engine);
     }
 
     public void render(){
