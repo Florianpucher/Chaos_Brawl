@@ -117,7 +117,7 @@ eclipse {
 idea {
     module {
         sourceDirs += file("src");
-        scopes = [ COMPILE: [plus:[project.configurations.compile]]]        
+        scopes = [ COMPILE: [plus:[project.configurations.compile]]]
 
         iml {
             withXml {

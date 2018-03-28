@@ -1,1 +1,2 @@
+include ':test'
 include 'desktop', 'android', 'core'
