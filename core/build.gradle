@@ -1,11 +1,23 @@
 apply plugin: "java"
-
+apply plugin: 'info.solidsoft.pitest'
 sourceCompatibility = 1.6
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.java.srcDirs = [ "src/main/java" ]
+sourceSets.test.java.srcDirs = ["src/test/java", "src/integration/java"]
 
 
 eclipse.project {
     name = appName + "-core"
+}
+
+
+
+
+pitest {
+    targetClasses = ['com.strategy_bit.chaos_brawl.*']  //by default "${project.group}.*"
+    //pitestVersion = '1.1.0' //not needed when a default PIT version should be used
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
 }

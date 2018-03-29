@@ -12,6 +12,9 @@ import static org.junit.Assert.*;
 public class ExampleIntegrationTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+        com.strategy_bit.chaos_brawl.Test test = new com.strategy_bit.chaos_brawl.Test();
+
+        assertEquals(test.test(5), true);
+        assertEquals(test.test(3), false);
     }
 }
