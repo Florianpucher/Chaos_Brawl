@@ -5,6 +5,7 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        //maven { url "https://repo.clojars.org/repo"}
         jcenter()
         google()
     }
@@ -27,6 +28,8 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
+        kryoVersion = '2.24.0'
+        kryonetVersion = '2.22.0-RC1'
     }
 
     repositories {
@@ -75,6 +78,9 @@ project(":core") {
     dependencies {
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "com.badlogicgames.ashley:ashley:$ashleyVersion"
+        implementation "com.esotericsoftware.kryo:kryo:$kryoVersion"
+        implementation "com.esotericsoftware:kryonet:$kryonetVersion"
+        //implementation 'kryonet:kryonet:2.21'
         testImplementation "org.mockito:mockito-core:2.8.9"
         //testImplementation group: 'org.powermock', name: 'powermock', version: '1.6.5'
         testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '1.7.3'
