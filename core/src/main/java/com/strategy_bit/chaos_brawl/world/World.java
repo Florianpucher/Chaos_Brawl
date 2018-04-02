@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl;
+package com.strategy_bit.chaos_brawl.world;
 
 
 import com.badlogic.ashley.core.Entity;
