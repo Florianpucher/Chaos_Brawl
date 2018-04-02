@@ -1,6 +1,6 @@
 package com.strategy_bit.chaos_brawl.screens;
 
-import com.strategy_bit.chaos_brawl.managers.GameManager;
+import com.strategy_bit.chaos_brawl.world.World;
 import com.strategy_bit.chaos_brawl.controller.PlayerController;
 
 /**
@@ -12,10 +12,10 @@ import com.strategy_bit.chaos_brawl.controller.PlayerController;
 
 public class GameScreen extends AbstractScreen {
 
-    private GameManager manager;
+    private World manager;
 
     public GameScreen() {
-        manager = new GameManager();
+        manager = new World();
         //add User input
 
     }

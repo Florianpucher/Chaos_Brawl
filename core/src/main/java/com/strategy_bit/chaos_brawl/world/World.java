@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.managers;
+package com.strategy_bit.chaos_brawl.world;
 
 
 import com.badlogic.ashley.core.Entity;
@@ -27,7 +27,7 @@ import java.util.HashMap;
  * @version 1.0
  * @since 15.03.2018
  */
-public class GameManager implements InputHandler {
+public class World implements InputHandler {
 
     public long lastID = 0;
 
@@ -37,7 +37,7 @@ public class GameManager implements InputHandler {
     private MyEngine engine;
     private Camera camera;
 
-    public GameManager() {
+    public World() {
         units = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
         createEngine();
