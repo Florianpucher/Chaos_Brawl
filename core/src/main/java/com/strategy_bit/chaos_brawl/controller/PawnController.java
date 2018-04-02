@@ -10,7 +10,7 @@ import com.strategy_bit.chaos_brawl.InputHandler;
  * @version 1.0
  * @since 15.03.2018
  */
-public class PawnController {
+public abstract class PawnController {
 
     protected InputHandler inputHandler;
 
