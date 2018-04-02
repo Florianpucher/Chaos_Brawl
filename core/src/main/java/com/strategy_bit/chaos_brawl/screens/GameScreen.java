@@ -1,6 +1,6 @@
 package com.strategy_bit.chaos_brawl.screens;
 
-import com.strategy_bit.chaos_brawl.World;
+import com.strategy_bit.chaos_brawl.world.World;
 import com.strategy_bit.chaos_brawl.controller.PlayerController;
 
 /**
