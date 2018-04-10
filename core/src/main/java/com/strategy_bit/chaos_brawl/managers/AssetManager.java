@@ -20,6 +20,8 @@ public class AssetManager {
     public TextureRegion playerSkin;
     public TextureRegion projectileSkin;
     public TextureRegion defaultTile;
+    public TextureRegion TowerSkin;
+    public TextureRegion BaseSkin;
 
 
     private static AssetManager instance;
@@ -41,6 +43,8 @@ public class AssetManager {
         playerSkin = new TextureRegion(new Texture("character.png"));
         projectileSkin=new TextureRegion(new Texture("projectile.png"));
         defaultTile = new TextureRegion(new Texture("default_tile.png"));
+        TowerSkin = new TextureRegion(new Texture("Tower.png"));
+        BaseSkin = new TextureRegion(new Texture("Base.png"));
     }
 
 
