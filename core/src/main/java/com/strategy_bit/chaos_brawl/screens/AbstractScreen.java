@@ -1,7 +1,9 @@
 package com.strategy_bit.chaos_brawl.screens;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 
 /**
  * @author AIsopp
@@ -10,6 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  */
 
 public class AbstractScreen extends Stage implements Screen {
+
+    protected ScreenManager screenManager;
+
+    public AbstractScreen() {
+        this.screenManager = ScreenManager.getInstance();
+    }
+
     @Override
     public void show() {
 
@@ -48,5 +57,21 @@ public class AbstractScreen extends Stage implements Screen {
     public void dispose() {
         clear();
         super.dispose();
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        System.out.println("Received Input: " + keyCode);
+        if(keyCode == Input.Keys.BACK){
+            handleBackKey();
+        }
+        return super.keyDown(keyCode);
+    }
+
+    /**
+     * what should the screen do if the back button on android has been clicked
+     */
+    protected void handleBackKey(){
+        screenManager.switchToLastScreen();
     }
 }

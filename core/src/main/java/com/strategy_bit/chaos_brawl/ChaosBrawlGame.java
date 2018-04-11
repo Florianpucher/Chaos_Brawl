@@ -24,6 +24,7 @@ public class ChaosBrawlGame extends Game {
 
 	@Override
 	public void create () {
+		Gdx.input.setCatchBackKey(true);
 		// Entry point for application
 		screenManager = ScreenManager.getInstance();
 		screenManager.initialize(this);
@@ -49,7 +50,7 @@ public class ChaosBrawlGame extends Game {
 	public void render () {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 		if(!loadGame){
-			screenManager.showScreen(ScreenEnum.MAIN_MENU);
+			screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAIN_MENU);
 			loadGame = true;
 		}
 	}
