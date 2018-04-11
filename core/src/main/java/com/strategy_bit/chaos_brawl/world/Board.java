@@ -57,6 +57,37 @@ public class Board {
                 engine.addEntity((BackgroundTile)tile);
             }
         }
+        for (int i = 0; i < BOARD_HEIGHT; i++){
+            for(int j = 6; j < 9; j++){
+                Tile tile = new BackgroundTile(TileType.WATER);
+                tileBoard[i][j] = tile;
+                tile.setPosition(new Vector2(multiplicandX/2 + multiplicandX* j, multiplicandY/2 + multiplicandY *i));
+                tile.setScale(size);
+                engine.addEntity((BackgroundTile)tile);
+            }
+
+        }
+        for(int i = 1; i < 3; i++){
+            for(int j = 6; j < 9; j++){
+                Tile tile = new BackgroundTile(TileType.DIRT);
+                tileBoard[i][j] = tile;
+                tile.setPosition(new Vector2(multiplicandX/2 + multiplicandX* j, multiplicandY/2 + multiplicandY *i));
+                tile.setScale(size);
+                engine.addEntity((BackgroundTile)tile);
+            }
+        }
+        for(int i = 7; i < 9; i++){
+            for(int j = 6; j < 9; j++){
+                Tile tile = new BackgroundTile(TileType.DIRT);
+                tileBoard[i][j] = tile;
+                tile.setPosition(new Vector2(multiplicandX/2 + multiplicandX* j, multiplicandY/2 + multiplicandY *i));
+                tile.setScale(size);
+                engine.addEntity((BackgroundTile)tile);
+            }
+        }
+
+
+
     }
 
     public Tile[][] getTileBoard(){
