@@ -17,7 +17,21 @@ public enum ScreenEnum {
             return new SplashScreen();
         }
     },
-
+    NETWORK_SCREEN {
+        public AbstractScreen getScreen(Object... params) {
+            return new NetworkScreen();
+        }
+    },
+    CLIENT_CONNECT_SCREEN {
+        public AbstractScreen getScreen(Object... params) {
+            return new ClientConnectToScreen();
+        }
+    },
+    HOST_LOUNGE_SCREEN {
+        public AbstractScreen getScreen(Object... params) {
+            return new HostLoungeScreen();
+        }
+    },
     GAME {
         public AbstractScreen getScreen(Object... params) {
             return new GameScreen();

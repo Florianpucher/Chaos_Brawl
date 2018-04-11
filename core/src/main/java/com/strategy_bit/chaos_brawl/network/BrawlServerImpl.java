@@ -8,6 +8,7 @@ import com.strategy_bit.chaos_brawl.InputHandler;
 import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.network.messages.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
+import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
 
 import java.io.IOException;
 
@@ -20,13 +21,13 @@ public class BrawlServerImpl implements BrawlServer {
 
     private Server server;
     private InputHandler inputHandler;
+    private boolean serverIsRunning;
 
-    public BrawlServerImpl(InputHandler inputHandler) throws IOException {
-        this.inputHandler = inputHandler;
+    public BrawlServerImpl(){
+        System.out.println("INIT");
         server = new Server();
-        server.start();
-        server.bind(Network.TCP_PORT);
         server.addListener(listener);
+        serverIsRunning = false;
         BrawlNetwork network = new BrawlNetwork(this);
     }
 
@@ -34,6 +35,29 @@ public class BrawlServerImpl implements BrawlServer {
     public void sendData(Message msg) {
         server.sendToAllTCP(msg);
 
+    }
+
+    @Override
+    public boolean isServerIsRunning() {
+        return serverIsRunning;
+    }
+
+    @Override
+    public void startServer() throws IOException {
+        server.start();
+        server.bind(Network.TCP_PORT, Network.UDP_PORT);
+        serverIsRunning = true;
+
+    }
+
+    @Override
+    public void closeServer() {
+        server.close();
+        try {
+            server.dispose();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -49,5 +73,20 @@ public class BrawlServerImpl implements BrawlServer {
     @Override
     public Kryo getKryo() {
         return server.getKryo();
+    }
+
+    @Override
+    public Connection[] getNetworkMembers() {
+        return server.getConnections();
+    }
+
+    @Override
+    public void addNetworkInputHandler(NetworkInputHandler inputHandler) {
+
+    }
+
+    @Override
+    public void removeNetworkInputHandler(NetworkInputHandler inputHandler) {
+
     }
 }

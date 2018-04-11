@@ -87,6 +87,7 @@ project(":core") {
         testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '1.7.3'
         testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         testImplementation 'junit:junit:4.12'
     }
 }
