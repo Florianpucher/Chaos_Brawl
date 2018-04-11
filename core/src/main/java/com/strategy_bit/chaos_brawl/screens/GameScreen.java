@@ -1,5 +1,8 @@
 package com.strategy_bit.chaos_brawl.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.strategy_bit.chaos_brawl.world.World;
 import com.strategy_bit.chaos_brawl.controller.PlayerController;
 
@@ -30,8 +33,13 @@ public class GameScreen extends AbstractScreen {
     public void show() {
         super.show();
         //TODO input needs to be changed
+
         PlayerController controller = new PlayerController();
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(controller);
+        inputMultiplexer.addProcessor(this);
         controller.setInputHandler(manager);
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
