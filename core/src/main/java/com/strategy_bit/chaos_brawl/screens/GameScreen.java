@@ -36,10 +36,10 @@ public class GameScreen extends AbstractScreen {
 
         PlayerController controller = new PlayerController();
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(controller);
         inputMultiplexer.addProcessor(this);
+        inputMultiplexer.addProcessor(controller);
         controller.setInputHandler(manager);
-        Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
@@ -53,5 +53,10 @@ public class GameScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
         manager.dispose();
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
     }
 }
