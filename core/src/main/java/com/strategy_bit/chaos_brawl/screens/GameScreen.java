@@ -1,5 +1,6 @@
 package com.strategy_bit.chaos_brawl.screens;
 
+import com.strategy_bit.chaos_brawl.network.BrawlNetworkInterface;
 import com.strategy_bit.chaos_brawl.world.World;
 import com.strategy_bit.chaos_brawl.controller.PlayerController;
 
@@ -19,6 +20,7 @@ public class GameScreen extends AbstractScreen {
         //add User input
 
     }
+
 
     @Override
     public void buildStage() {

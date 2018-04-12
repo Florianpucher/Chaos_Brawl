@@ -1,18 +1,22 @@
-package com.strategy_bit.chaos_brawl.network;
+package com.strategy_bit.chaos_brawl.network.Client;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.strategy_bit.chaos_brawl.network.messages.NetworkMembersSendMessage;
+import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
+import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
 import com.strategy_bit.chaos_brawl.config.Network;
-import com.strategy_bit.chaos_brawl.network.messages.EntityMovingMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
-import com.strategy_bit.chaos_brawl.network.messages.NetworkMemberReplyMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkLoungeHandler;
+import com.strategy_bit.chaos_brawl.world.World;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -28,18 +32,22 @@ import java.util.concurrent.Executors;
  */
 public class BrawlClientImpl implements BrawlClient {
 
+    private World manager;
     private Client client;
     private ArrayList<NetworkDiscoveryHandler> discoveryHandlers;
     private ArrayList<NetworkInputHandler> inputHandlers;
     private ArrayList<NetworkLoungeHandler> loungeHandlers;
+    protected Connection[] connections;
 
     public BrawlClientImpl() {
         client = new Client();
         client.start();
-        client.addListener(listener);
+        client.addListener(new BrawlClientListener(this));
         discoveryHandlers = new ArrayList<NetworkDiscoveryHandler>();
         inputHandlers = new ArrayList<NetworkInputHandler>();
         loungeHandlers = new ArrayList<NetworkLoungeHandler>();
+        connections=null;
+        manager=null;
         BrawlNetwork network = new BrawlNetwork(this);
     }
 
@@ -84,17 +92,6 @@ public class BrawlClientImpl implements BrawlClient {
     }
 
 
-    private Listener listener = new Listener() {
-        public void received(Connection connection, Object object) {
-            if (object instanceof EntityMovingMessage) {
-                EntityMovingMessage movingMessage = (EntityMovingMessage) object;
-                //inputHandler.sendTouchInput(movingMessage.screenCoordinates, movingMessage.entityID);
-            } else if (object instanceof NetworkMemberReplyMessage) {
-                NetworkMemberReplyMessage replyMessage = (NetworkMemberReplyMessage) object;
-            }
-        }
-    };
-
     @Override
     public Kryo getKryo() {
         return client.getKryo();
@@ -102,8 +99,15 @@ public class BrawlClientImpl implements BrawlClient {
 
     @Override
     public Connection[] getNetworkMembers() {
-        sendData(new NetworkMembersSendMessage());
-        return null;
+        sendData(new NetworkMembersRequestMessage());
+        synchronized (connections){
+            try {
+                connections.wait();
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        return connections;
     }
 
 
@@ -152,4 +156,19 @@ public class BrawlClientImpl implements BrawlClient {
 
     }
 
+    public void spawnEntity(Entity entity) {
+    }
+
+    public void moveEntity(Vector2 screenCoordinates, long entityID) {
+    }
+
+
+
+    public World getManager() {
+        return manager;
+    }
+
+    public void setManager(World manager) {
+        this.manager = manager;
+    }
 }

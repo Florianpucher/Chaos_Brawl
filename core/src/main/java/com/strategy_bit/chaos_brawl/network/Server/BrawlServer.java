@@ -1,6 +1,7 @@
-package com.strategy_bit.chaos_brawl.network;
+package com.strategy_bit.chaos_brawl.network.Server;
 
 import com.badlogic.gdx.net.ServerSocket;
+import com.strategy_bit.chaos_brawl.network.BrawlNetworkInterface;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 29.03.2018
  */
-public interface BrawlServer extends  BrawlNetworkInterface{
+public interface BrawlServer extends BrawlNetworkInterface {
 
 
 

@@ -1,6 +1,7 @@
-package com.strategy_bit.chaos_brawl.network;
+package com.strategy_bit.chaos_brawl.network.Client;
 
 import com.badlogic.gdx.net.Socket;
+import com.strategy_bit.chaos_brawl.network.BrawlNetworkInterface;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
@@ -15,7 +16,7 @@ import java.util.List;
  * @version 1.0
  * @since 29.03.2018
  */
-public interface BrawlClient extends BrawlNetworkInterface{
+public interface BrawlClient extends BrawlNetworkInterface {
 
 
 

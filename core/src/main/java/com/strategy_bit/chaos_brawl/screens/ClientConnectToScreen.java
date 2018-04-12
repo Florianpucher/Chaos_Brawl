@@ -2,20 +2,18 @@ package com.strategy_bit.chaos_brawl.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.esotericsoftware.kryonet.Connection;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
-import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.network.BrawlClient;
-import com.strategy_bit.chaos_brawl.network.BrawlClientImpl;
+import com.strategy_bit.chaos_brawl.network.Client.BrawlClient;
+import com.strategy_bit.chaos_brawl.network.Client.BrawlClientImpl;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.List;
 
@@ -27,6 +25,7 @@ import java.util.List;
 public class ClientConnectToScreen extends AbstractScreen implements NetworkDiscoveryHandler{
 
     private final static String REFRESH = "Refresh";
+    private final static String DIRECT = "10.0.2.2";
 
     private AssetManager assetManager;
     private ScreenManager screenManager;
@@ -48,6 +47,8 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnHostGame = new TextButton(REFRESH, assetManager.defaultSkin);
         btnHostGame.setName(REFRESH);
+        final TextButton btnDirectConnect = new TextButton(DIRECT, assetManager.defaultSkin);
+        btnDirectConnect.setName(DIRECT);
 
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
@@ -55,6 +56,8 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
         float height = Gdx.graphics.getHeight()/8;
         root.center();
         root.add(btnHostGame).width(Gdx.graphics.getWidth()/4).height(height);
+        root.row().space(10);
+        root.add(btnDirectConnect).width(Gdx.graphics.getWidth()/4).height(height);
         addActor(root);
 
         ClickListener listener = new ClickListener(){
@@ -66,9 +69,19 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
                     brawlClient.discoverServers();
                     //screenManager.showScreen(ScreenEnum.GAME);
                 }
+                else if (name.equals(DIRECT)){
+                    try {
+                        brawlClient.connectToServer(DIRECT);
+                        screenManager.showScreen(ScreenEnum.GAME);
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+
+                }
             }
         };
         btnHostGame.addListener(listener);
+        btnDirectConnect.addListener(listener);
     }
 
     @Override

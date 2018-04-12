@@ -1,9 +1,9 @@
 package com.strategy_bit.chaos_brawl.network;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.strategy_bit.chaos_brawl.network.messages.EntityMovingMessage;
-import com.strategy_bit.chaos_brawl.network.messages.NetworkMemberReplyMessage;
-import com.strategy_bit.chaos_brawl.network.messages.NetworkMembersSendMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
 
 /**
  * Registers all Messages
@@ -25,7 +25,7 @@ public class BrawlNetwork {
     public BrawlNetwork(BrawlNetworkInterface brawlNetworkInterface) {
         Kryo kryo = brawlNetworkInterface.getKryo();
         kryo.register(EntityMovingMessage.class);
-        kryo.register(NetworkMemberReplyMessage.class);
-        kryo.register(NetworkMembersSendMessage.class);
+        kryo.register(NetworkMemberResponseMessage.class);
+        kryo.register(NetworkMembersRequestMessage.class);
     }
 }
