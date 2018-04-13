@@ -17,8 +17,16 @@ public class GameScreen extends AbstractScreen {
 
     private World manager;
 
-    public GameScreen() {
-        manager = new World();
+    public GameScreen(int map) {
+        if(map == 1){
+            manager = new World(1);
+        }
+        if(map == 2){
+            manager = new World(2);
+        }
+        if(map == 3){
+            manager = new World(3);
+        }
         //add User input
 
     }

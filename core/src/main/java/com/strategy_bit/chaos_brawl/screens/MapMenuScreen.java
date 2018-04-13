@@ -8,20 +8,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 
 /**
- * class that represents the main menu screen
- *
- * @author AIsopp
- * @version 1.0
- * @since 22.03.2018
+ * Created by Florian on 11.04.2018.
  */
-public class MainMenuScreen extends AbstractScreen{
 
-    private final static String NEW_GAME = "New GAME";
+public class MapMenuScreen extends AbstractScreen {
+    private final static String CHOOSE_MAP = "Choose Map";
+    private final static String MAP_1 = "MAP 1";
+    private final static String MAP_2 = "MAP 2";
+    private final static String MAP_3 = "MAP 3";
 
     private OrthographicCamera camera;
     private AssetManager assetManager;
@@ -34,15 +32,24 @@ public class MainMenuScreen extends AbstractScreen{
         screenManager = ScreenManager.getInstance();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        final TextButton btnNewGame = new TextButton(NEW_GAME, assetManager.defaultSkin);
-        btnNewGame.setName(NEW_GAME);
+        final TextButton btnNewMap1 = new TextButton(MAP_1, assetManager.defaultSkin);
+        final TextButton btnNewMap2 = new TextButton(MAP_2, assetManager.defaultSkin);
+        final TextButton btnNewMap3 = new TextButton(MAP_3, assetManager.defaultSkin);
+        btnNewMap1.setName(MAP_1);
+        btnNewMap2.setName(MAP_2);
+        btnNewMap3.setName(MAP_3);
+
 
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/8;
         root.center();
-        root.add(btnNewGame).width(Gdx.graphics.getWidth()/2).height(height);
+        root.add(btnNewMap1).width(Gdx.graphics.getWidth()/3).height(height);
+        root.row();
+        root.add(btnNewMap2).width(Gdx.graphics.getWidth()/3).height(height);
+        root.row();
+        root.add(btnNewMap3).width(Gdx.graphics.getWidth()/3).height(height);
         addActor(root);
 
 
@@ -50,13 +57,21 @@ public class MainMenuScreen extends AbstractScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String name = event.getListenerActor().getName();
-                if(name.equals(NEW_GAME)){
-                    screenManager.showScreen(ScreenEnum.MAP_MENU);
+                if(name.equals(MAP_1)){
+                    screenManager.showScreen(ScreenEnum.GAME1);
+                }
+                if(name.equals(MAP_2)){
+                    screenManager.showScreen(ScreenEnum.GAME2);
+                }
+                if(name.equals(MAP_3)){
+                    screenManager.showScreen(ScreenEnum.GAME3);
                 }
                 super.clicked(event, x, y);
             }
         };
-        btnNewGame.addListener(listener);
+        btnNewMap1.addListener(listener);
+        btnNewMap2.addListener(listener);
+        btnNewMap3.addListener(listener);
     }
 
     @Override

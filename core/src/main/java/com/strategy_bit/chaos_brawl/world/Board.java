@@ -23,6 +23,7 @@ import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES
 public class Board {
 
     private Tile[][] tileBoard;
+    private int[][] intBoard;
 
     public Board(Engine engine){
         // TODO add Custom board option
@@ -89,12 +90,18 @@ public class Board {
         }
 
 
-
     }
 
     public Tile[][] getTileBoard(){
         return tileBoard;
     }
 
-
+    public int[][] boardToMatrix(Board board){
+        for(int i = 0; i < BOARD_HEIGHT; i++){
+            for (int j = 0; j < BOARD_WIDTH; j++){
+                intBoard[i][j] = tileBoard[i][j].getType().getMoveAble();
+            }
+        }
+        return intBoard;
+    }
 }

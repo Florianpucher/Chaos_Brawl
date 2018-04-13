@@ -12,15 +12,29 @@ public enum ScreenEnum {
             return new MainMenuScreen();
         }
     },
+    MAP_MENU {
+        public AbstractScreen getScreen(Object... params) {
+            return new MapMenuScreen();
+        }
+    },
     SPLASH_SCREEN {
         public AbstractScreen getScreen(Object... params) {
             return new SplashScreen();
         }
     },
-
-    GAME {
+    GAME1 {
         public AbstractScreen getScreen(Object... params) {
-            return new GameScreen();
+            return new GameScreen(1);
+        }
+    },
+    GAME2 {
+        public AbstractScreen getScreen(Object... params) {
+            return new GameScreen(2);
+        }
+    },
+    GAME3 {
+        public AbstractScreen getScreen(Object... params) {
+            return new GameScreen(3);
         }
     };
 
