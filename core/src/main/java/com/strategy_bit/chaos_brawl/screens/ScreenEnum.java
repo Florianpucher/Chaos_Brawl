@@ -1,6 +1,6 @@
 package com.strategy_bit.chaos_brawl.screens;
 
-import com.strategy_bit.chaos_brawl.network.BrawlNetworkInterface;
+import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 
 /**
  * @author AIsopp
@@ -36,7 +36,7 @@ public enum ScreenEnum {
     },
     MULTIPLAYERGAME {
         public AbstractScreen getScreen(Object... params) {
-            return new MultiplayerGameScreen((BrawlNetworkInterface) params[0]);
+            return new MultiplayerGameScreen((BrawlMultiplayer) params[0]);
         }
     },
     GAME {
