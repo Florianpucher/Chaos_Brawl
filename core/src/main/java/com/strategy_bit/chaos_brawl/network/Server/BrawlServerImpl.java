@@ -4,15 +4,15 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import com.strategy_bit.chaos_brawl.InputHandler;
 import com.strategy_bit.chaos_brawl.config.Network;
+import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
+import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
-import com.strategy_bit.chaos_brawl.world.World;
+import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
 
 import java.io.IOException;
 
@@ -21,11 +21,10 @@ import java.io.IOException;
  * @version 1.0
  * @since 30.03.2018
  */
-public class BrawlServerImpl implements BrawlServer {
+public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
-    private World manager;
+    private MultiplayerWorld manager;
     private Server server;
-    private InputHandler inputHandler;
     private boolean serverIsRunning;
 
     public BrawlServerImpl(){
@@ -72,7 +71,7 @@ public class BrawlServerImpl implements BrawlServer {
     }
 
     public void moveEntity(Vector2 screenCoordinates, long entityID){
-        inputHandler.sendTouchInput(screenCoordinates, entityID);
+        sendData(new EntityMovingMessage(screenCoordinates,entityID));
     }
 
     @Override
@@ -96,16 +95,18 @@ public class BrawlServerImpl implements BrawlServer {
     }
 
     public void spawnEntity(Entity entity) {
-
+        sendData(new EntitySpawnMessage(entity));
     }
 
     @Override
-    public World getManager() {
+    public MultiplayerWorld getManager() {
         return manager;
     }
 
     @Override
-    public void setManager(World manager) {
+    public void setManager(MultiplayerWorld manager) {
         this.manager = manager;
     }
+
+
 }

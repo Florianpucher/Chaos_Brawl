@@ -25,11 +25,11 @@ public class BrawlClientListener extends Listener {
     public void received(Connection connection, Object object) {
         if (object instanceof EntityMovingMessage) {
             EntityMovingMessage movingMessage = (EntityMovingMessage) object;
-            brawlClient.moveEntity(movingMessage.screenCoordinates,movingMessage.entityID);
+            brawlClient.getManager().sendTouchInputLocal(movingMessage.screenCoordinates,movingMessage.entityID);
         }
         else if (object instanceof EntitySpawnMessage){
             EntitySpawnMessage entitySpawnMessage=(EntitySpawnMessage) object;
-            brawlClient.spawnEntity(entitySpawnMessage.entity);
+            brawlClient.getManager().createEntityLocal(entitySpawnMessage.entity);
         }
         else if (object instanceof NetworkMemberResponseMessage) {
             NetworkMemberResponseMessage replyMessage = (NetworkMemberResponseMessage) object;

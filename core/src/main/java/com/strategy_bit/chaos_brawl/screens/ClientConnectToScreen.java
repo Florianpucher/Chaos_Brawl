@@ -25,13 +25,14 @@ import java.util.List;
 public class ClientConnectToScreen extends AbstractScreen implements NetworkDiscoveryHandler{
 
     private final static String REFRESH = "Refresh";
-    private final static String DIRECT = "10.0.2.2";
+    private static String DIRECT = "10.0.2.2";
 
     private AssetManager assetManager;
     private ScreenManager screenManager;
     private OrthographicCamera camera;
 
     private BrawlClient brawlClient;
+    private TextButton btnDirectConnect;
 
     public ClientConnectToScreen() {
         this.brawlClient = new BrawlClientImpl();
@@ -47,7 +48,7 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnHostGame = new TextButton(REFRESH, assetManager.defaultSkin);
         btnHostGame.setName(REFRESH);
-        final TextButton btnDirectConnect = new TextButton(DIRECT, assetManager.defaultSkin);
+        btnDirectConnect= new TextButton(DIRECT, assetManager.defaultSkin);
         btnDirectConnect.setName(DIRECT);
 
         final Table root = new Table(assetManager.defaultSkin);
@@ -72,7 +73,7 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
                 else if (name.equals(DIRECT)){
                     try {
                         brawlClient.connectToServer(DIRECT);
-                        screenManager.showScreen(ScreenEnum.GAME);
+                        screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME,brawlClient);
                     }catch (IOException e){
                         e.printStackTrace();
                     }
@@ -110,6 +111,11 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
         for (InetAddress address :
                 hostIPs) {
             System.out.format("HostAddress: %s \nHostName: %s \n", address.getHostAddress(), address.getHostName());
+        }
+        if(!hostIPs.isEmpty()){
+            DIRECT=hostIPs.get(0).getHostAddress();
+            btnDirectConnect.setName(DIRECT);
+            btnDirectConnect.setText(DIRECT);
         }
     }
 }

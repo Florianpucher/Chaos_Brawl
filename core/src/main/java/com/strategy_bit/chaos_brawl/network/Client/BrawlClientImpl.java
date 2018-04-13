@@ -7,7 +7,9 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
+import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
@@ -16,6 +18,7 @@ import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkLoungeHandler;
+import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
 import com.strategy_bit.chaos_brawl.world.World;
 
 import java.io.IOException;
@@ -30,9 +33,9 @@ import java.util.concurrent.Executors;
  * @version 1.0
  * @since 01.04.2018
  */
-public class BrawlClientImpl implements BrawlClient {
+public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
 
-    private World manager;
+    private MultiplayerWorld manager;
     private Client client;
     private ArrayList<NetworkDiscoveryHandler> discoveryHandlers;
     private ArrayList<NetworkInputHandler> inputHandlers;
@@ -157,18 +160,20 @@ public class BrawlClientImpl implements BrawlClient {
     }
 
     public void spawnEntity(Entity entity) {
+        sendData(new EntitySpawnMessage(entity));
     }
 
     public void moveEntity(Vector2 screenCoordinates, long entityID) {
+        sendData(new EntityMovingMessage(screenCoordinates,entityID));
     }
 
 
 
-    public World getManager() {
+    public MultiplayerWorld getManager() {
         return manager;
     }
 
-    public void setManager(World manager) {
+    public void setManager(MultiplayerWorld manager) {
         this.manager = manager;
     }
 }

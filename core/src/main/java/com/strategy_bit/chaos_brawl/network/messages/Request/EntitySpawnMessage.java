@@ -11,4 +11,8 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
  */
 public class EntitySpawnMessage implements Message {
     public Entity entity;
+
+    public EntitySpawnMessage(Entity entity) {
+        this.entity = entity;
+    }
 }

@@ -48,18 +48,19 @@ public class World implements InputHandler {
 
     public void createPlayer(){
         Player player = new Player();
-        engine.addEntity(player);
-        units.put(lastID, player);
-        lastID++;
+        createEntity(player);
     }
     public void createDummy(){
         PlayerClone dummy = new PlayerClone(new Vector2((float) (Math.random()*10),(float) (Math.random()*10)));
-        engine.addEntity(dummy);
-        units.put(lastID, dummy);
+        createEntity(dummy);
+    }
+    public  void createEntity(Entity entity){
+        engine.addEntity(entity);
+        units.put(lastID, entity);
         lastID++;
     }
 
-    private void createEngine(){
+    protected void createEngine(){
         engine = new MyEngine();
         //Add some logic
 
@@ -76,7 +77,7 @@ public class World implements InputHandler {
     /**
      * creates Game board ({@link Board})
      */
-    private void createWorld(){
+    protected void createWorld(){
         Board board = new Board(engine);
     }
 
