@@ -14,4 +14,7 @@ public class NetworkMemberResponseMessage implements Message {
     public NetworkMemberResponseMessage(Connection[] members) {
         this.members = members;
     }
+
+    public NetworkMemberResponseMessage() {
+    }
 }
