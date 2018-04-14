@@ -19,4 +19,7 @@ public class EntitySpawnMessage implements Message {
         this.teamId = teamId;
         this.entityTypeId = entityTypeId;
     }
+
+    public EntitySpawnMessage() {
+    }
 }
