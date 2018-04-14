@@ -18,4 +18,6 @@ public class EntityMovingMessage implements Message {
         this.screenCoordinates = screenCoordinates;
     }
 
+    public EntityMovingMessage() {
+    }
 }
