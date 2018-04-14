@@ -10,9 +10,13 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
  * @since 01.04.2018
  */
 public class EntitySpawnMessage implements Message {
-    public Entity entity;
+    public Vector2 position;
+    public int teamId;
+    public int entityTypeId;
 
-    public EntitySpawnMessage(Entity entity) {
-        this.entity = entity;
+    public EntitySpawnMessage(Vector2 position, int teamId, int entityTypeId) {
+        this.position = position;
+        this.teamId = teamId;
+        this.entityTypeId = entityTypeId;
     }
 }

@@ -95,7 +95,7 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     }
 
     public void spawnEntity(Entity entity) {
-        sendData(new EntitySpawnMessage(entity));
+        sendData(manager.createEntitySpawnMsg(entity));
     }
 
     @Override

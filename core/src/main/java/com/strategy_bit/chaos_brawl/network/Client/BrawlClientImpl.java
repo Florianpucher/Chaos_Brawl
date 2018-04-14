@@ -7,6 +7,9 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
@@ -160,7 +163,7 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     }
 
     public void spawnEntity(Entity entity) {
-        sendData(new EntitySpawnMessage(entity));
+        sendData(manager.createEntitySpawnMsg(entity));
     }
 
     public void moveEntity(Vector2 screenCoordinates, long entityID) {

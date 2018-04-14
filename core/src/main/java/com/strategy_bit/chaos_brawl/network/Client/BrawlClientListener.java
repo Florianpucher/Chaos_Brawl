@@ -33,7 +33,7 @@ public class BrawlClientListener extends Listener {
                 }
                 else if (object instanceof EntitySpawnMessage){
                     EntitySpawnMessage entitySpawnMessage=(EntitySpawnMessage) object;
-                    brawlClient.getManager().createEntityLocal(entitySpawnMessage.entity);
+                    brawlClient.getManager().createEntityLocal(entitySpawnMessage.position,entitySpawnMessage.teamId,entitySpawnMessage.entityTypeId);
                 }
                 else if (object instanceof NetworkMemberResponseMessage) {
                     NetworkMemberResponseMessage replyMessage = (NetworkMemberResponseMessage) object;
