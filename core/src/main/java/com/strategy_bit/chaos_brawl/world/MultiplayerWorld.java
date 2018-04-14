@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.kryonet.Connection;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
@@ -67,8 +68,12 @@ public class MultiplayerWorld extends World {
 
     @Override
     public void sendTouchInput(Vector2 screenCoordinates, long entityID) {
-        super.sendTouchInput(screenCoordinates, entityID);
-        brawlMultiplayer.moveEntity(screenCoordinates, entityID);
+
+        Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
+        Vector3 translated = camera.unproject(withZCoordinate);
+        Vector2 targetLocation = new Vector2(translated.x,translated.y);
+        super.moveEntity(targetLocation, entityID);
+        brawlMultiplayer.moveEntity(targetLocation, entityID);
     }
 
     //creates entity without notifying other Players
@@ -80,8 +85,8 @@ public class MultiplayerWorld extends World {
     }
 
     //sets target location without notifying other Players
-    public void sendTouchInputLocal(Vector2 screenCoordinates, long entityID) {
-        super.sendTouchInput(screenCoordinates, entityID);
+    public void sendTouchInputLocal(Vector2 worldCoordinates, long entityID) {
+        super.moveEntity(worldCoordinates, entityID);
     }
 
     private Entity toEntity(Vector2 position, int teamId, int entityTypeId){

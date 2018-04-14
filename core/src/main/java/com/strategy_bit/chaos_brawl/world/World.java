@@ -107,11 +107,14 @@ public class World implements InputHandler {
 
     @Override
     public void sendTouchInput(Vector2 screenCoordinates, long entityID) {
-        Entity entity = units.get(entityID);
         Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        System.out.println("Hello");
-        entity.getComponent(MovementComponent.class).setTargetLocation(targetLocation);
+        moveEntity(targetLocation, entityID);
+    }
+
+    public void moveEntity(Vector2 worldCoordinates, long entityID){
+        Entity entity = units.get(entityID);
+        entity.getComponent(MovementComponent.class).setTargetLocation(worldCoordinates);
     }
 }
