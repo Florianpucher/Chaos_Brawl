@@ -12,6 +12,8 @@ public class MultiplayerGameScreen extends AbstractScreen {
     public MultiplayerGameScreen(BrawlMultiplayer brawlMultiplayer) {
         manager = new MultiplayerWorld(brawlMultiplayer);
         brawlMultiplayer.setManager(manager);
+        manager.createPlayer();
+        manager.createDummy();
         //add User input
     }
 

@@ -1,5 +1,6 @@
 package com.strategy_bit.chaos_brawl.network;
 
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
@@ -29,6 +30,6 @@ public class BrawlNetwork {
         kryo.register(NetworkMemberResponseMessage.class);
         kryo.register(NetworkMembersRequestMessage.class);
         kryo.register(EntitySpawnMessage.class);
-
+        kryo.register(Vector2.class);
     }
 }

@@ -8,6 +8,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
+import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 
@@ -21,11 +22,11 @@ public class MultiplayerWorld extends World {
         this.brawlMultiplayer = brawlMultiplayer;
         if (brawlMultiplayer instanceof BrawlServerImpl) {
             //spawn own starting units
-            createPlayer();
-            for (Connection connection : ((BrawlServerImpl) brawlMultiplayer).getNetworkMembers()) {
+            //createPlayer();
+            /*for (Connection connection : ((BrawlServerImpl) brawlMultiplayer).getNetworkMembers()) {
                 //spawn starting units for other players
-                createEntity(new PlayerClone(new Vector2(15, 7.5f)));
-            }
+                //createEntity(new PlayerClone(new Vector2(15, 7.5f)));
+            }*/
         }
     }
 
@@ -44,7 +45,9 @@ public class MultiplayerWorld extends World {
     public void createEntity(Entity entity) {
         super.createEntity(entity);
         //Check if brawlMultiplayer has been set
-        brawlMultiplayer.spawnEntity(entity);
+        if(brawlMultiplayer instanceof BrawlServer){
+            brawlMultiplayer.spawnEntity(entity);
+        }
     }
 
     public void createEntity(Vector2 position, int teamId, int entityTypeId) {
