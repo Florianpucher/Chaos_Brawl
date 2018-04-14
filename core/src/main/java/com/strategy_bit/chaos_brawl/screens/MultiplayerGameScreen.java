@@ -1,8 +1,11 @@
 package com.strategy_bit.chaos_brawl.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.strategy_bit.chaos_brawl.controller.PlayerController;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetworkInterface;
+import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
 import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
 
 public class MultiplayerGameScreen extends AbstractScreen {
@@ -12,6 +15,12 @@ public class MultiplayerGameScreen extends AbstractScreen {
     public MultiplayerGameScreen(BrawlMultiplayer brawlMultiplayer) {
         manager = new MultiplayerWorld(brawlMultiplayer);
         brawlMultiplayer.setManager(manager);
+        //TODO remove if testing phase is over
+        if(brawlMultiplayer instanceof BrawlServer){
+            manager.createPlayer();
+            manager.createDummy();
+        }
+
         //add User input
     }
 
@@ -28,6 +37,10 @@ public class MultiplayerGameScreen extends AbstractScreen {
         //TODO input needs to be changed
         PlayerController controller = new PlayerController();
         controller.setInputHandler(manager);
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(controller);
+        multiplexer.addProcessor(this);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override

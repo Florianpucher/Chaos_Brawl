@@ -118,4 +118,14 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
             btnDirectConnect.setText(DIRECT);
         }
     }
+
+    @Override
+    protected void handleBackKey() {
+        try {
+            brawlClient.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.handleBackKey();
+    }
 }

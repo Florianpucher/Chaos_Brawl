@@ -85,7 +85,7 @@ public class HostLoungeScreen extends AbstractScreen {
         //TODO do not close server here
         super.hide();
         Gdx.input.setInputProcessor(null);
-        brawlServer.closeServer();
+        //brawlServer.closeServer();
     }
 
     private void startServer() {
@@ -97,5 +97,11 @@ public class HostLoungeScreen extends AbstractScreen {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void handleBackKey() {
+        brawlServer.closeServer();
+        super.handleBackKey();
     }
 }

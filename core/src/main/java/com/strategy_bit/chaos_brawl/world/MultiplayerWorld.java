@@ -2,12 +2,14 @@ package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.kryonet.Connection;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
+import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 
@@ -21,11 +23,11 @@ public class MultiplayerWorld extends World {
         this.brawlMultiplayer = brawlMultiplayer;
         if (brawlMultiplayer instanceof BrawlServerImpl) {
             //spawn own starting units
-            createPlayer();
-            for (Connection connection : ((BrawlServerImpl) brawlMultiplayer).getNetworkMembers()) {
+            //createPlayer();
+            /*for (Connection connection : ((BrawlServerImpl) brawlMultiplayer).getNetworkMembers()) {
                 //spawn starting units for other players
-                createEntity(new PlayerClone(new Vector2(15, 7.5f)));
-            }
+                //createEntity(new PlayerClone(new Vector2(15, 7.5f)));
+            }*/
         }
     }
 
@@ -44,7 +46,9 @@ public class MultiplayerWorld extends World {
     public void createEntity(Entity entity) {
         super.createEntity(entity);
         //Check if brawlMultiplayer has been set
-        brawlMultiplayer.spawnEntity(entity);
+        if(brawlMultiplayer instanceof BrawlServer){
+            brawlMultiplayer.spawnEntity(entity);
+        }
     }
 
     public void createEntity(Vector2 position, int teamId, int entityTypeId) {
@@ -64,8 +68,12 @@ public class MultiplayerWorld extends World {
 
     @Override
     public void sendTouchInput(Vector2 screenCoordinates, long entityID) {
-        super.sendTouchInput(screenCoordinates, entityID);
-        brawlMultiplayer.moveEntity(screenCoordinates, entityID);
+
+        Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
+        Vector3 translated = camera.unproject(withZCoordinate);
+        Vector2 targetLocation = new Vector2(translated.x,translated.y);
+        super.moveEntity(targetLocation, entityID);
+        brawlMultiplayer.moveEntity(targetLocation, entityID);
     }
 
     //creates entity without notifying other Players
@@ -77,8 +85,8 @@ public class MultiplayerWorld extends World {
     }
 
     //sets target location without notifying other Players
-    public void sendTouchInputLocal(Vector2 screenCoordinates, long entityID) {
-        super.sendTouchInput(screenCoordinates, entityID);
+    public void sendTouchInputLocal(Vector2 worldCoordinates, long entityID) {
+        super.moveEntity(worldCoordinates, entityID);
     }
 
     private Entity toEntity(Vector2 position, int teamId, int entityTypeId){
