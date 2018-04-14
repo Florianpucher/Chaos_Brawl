@@ -1,11 +1,9 @@
 package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
-import com.strategy_bit.chaos_brawl.SpawnerImpl;
-import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
@@ -13,13 +11,7 @@ import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
 import java.util.HashMap;
 
 public class MultiplayerWorld extends World {
-    public long lastID = 0;
 
-    private HashMap<Long, Entity> units;
-
-    private SpawnerImpl spawner;
-    private MyEngine engine;
-    private Camera camera;
     private BrawlMultiplayer brawlMultiplayer;
 
     public MultiplayerWorld(BrawlMultiplayer brawlMultiplayer) {
@@ -36,12 +28,14 @@ public class MultiplayerWorld extends World {
 
     @Override
     public void createPlayer() {
-        super.createPlayer();
+        Player player = new Player();
+        createEntity(player);
     }
 
     @Override
     public void createDummy() {
-        super.createDummy();
+        PlayerClone dummy = new PlayerClone(new Vector2((float) (Math.random()*10),(float) (Math.random()*10)));
+        createEntity(dummy);
     }
 
     public void createEntity(Entity entity) {

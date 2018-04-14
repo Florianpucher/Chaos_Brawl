@@ -1,7 +1,6 @@
 package com.strategy_bit.chaos_brawl.network;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
@@ -30,7 +29,6 @@ public class BrawlNetwork {
         kryo.register(NetworkMemberResponseMessage.class);
         kryo.register(NetworkMembersRequestMessage.class);
         kryo.register(EntitySpawnMessage.class);
-        kryo.register(Player.class);
 
     }
 }

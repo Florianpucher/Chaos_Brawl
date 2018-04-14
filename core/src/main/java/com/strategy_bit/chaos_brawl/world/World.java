@@ -29,13 +29,13 @@ import java.util.HashMap;
  */
 public class World implements InputHandler {
 
-    public long lastID = 0;
+    protected long lastID = 0;
 
     protected HashMap<Long, Entity> units;
 
-    private SpawnerImpl spawner;
-    private MyEngine engine;
-    private Camera camera;
+    protected SpawnerImpl spawner;
+    protected MyEngine engine;
+    protected Camera camera;
 
     public World() {
         units = new HashMap<Long, Entity>();
