@@ -37,12 +37,11 @@ public class World implements InputHandler {
     protected MyEngine engine;
     protected Camera camera;
 
-    public World() {
+    public World(int map) {
         units = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
         createEngine();
-        createWorld();
-
+        createWorld(map);
     }
 
     public void createPlayer(){
@@ -76,8 +75,16 @@ public class World implements InputHandler {
     /**
      * creates Game board ({@link Board})
      */
-    protected void createWorld(){
-        Board board = new Board(engine);
+    private void createWorld(int map){
+        if(map == 1){
+            Board board = new Board(engine);
+        }
+        if(map == 2){
+            BoardB board = new BoardB(engine);
+        }
+        if(map == 3){
+            //BoardC board = new BoardC(engine);
+        }
     }
 
     public void render(){
