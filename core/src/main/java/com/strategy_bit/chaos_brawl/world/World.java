@@ -44,6 +44,13 @@ public class World implements InputHandler {
         createWorld(map);
     }
 
+    public World() {
+        units = new HashMap<Long, Entity>();
+        spawner = new SpawnerImpl();
+        createEngine();
+        createWorld(1);
+    }
+
     public void createPlayer(){
         Player player = new Player();
         createEntity(player);
