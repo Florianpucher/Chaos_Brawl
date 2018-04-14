@@ -31,7 +31,7 @@ public class World implements InputHandler {
 
     public long lastID = 0;
 
-    private HashMap<Long, Entity> units;
+    protected HashMap<Long, Entity> units;
 
     private SpawnerImpl spawner;
     private MyEngine engine;
@@ -42,8 +42,7 @@ public class World implements InputHandler {
         spawner = new SpawnerImpl();
         createEngine();
         createWorld();
-        createPlayer();
-        createDummy();
+
     }
 
     public void createPlayer(){

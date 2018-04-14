@@ -18,7 +18,8 @@ public class GameScreen extends AbstractScreen {
     public GameScreen() {
         manager = new World();
         //add User input
-
+        manager.createPlayer();
+        manager.createDummy();
     }
 
 

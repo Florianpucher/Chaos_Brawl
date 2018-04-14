@@ -23,17 +23,13 @@ public class MultiplayerWorld extends World {
     private BrawlMultiplayer brawlMultiplayer;
 
     public MultiplayerWorld(BrawlMultiplayer brawlMultiplayer) {
-        units = new HashMap<Long, Entity>();
-        spawner = new SpawnerImpl();
-        createEngine();
-        createWorld();
-        this.brawlMultiplayer=brawlMultiplayer;
-        if(brawlMultiplayer instanceof BrawlServerImpl){
+        this.brawlMultiplayer = brawlMultiplayer;
+        if (brawlMultiplayer instanceof BrawlServerImpl) {
             //spawn own starting units
             createPlayer();
             for (Connection connection : ((BrawlServerImpl) brawlMultiplayer).getNetworkMembers()) {
                 //spawn starting units for other players
-                createEntity(new PlayerClone(new Vector2(15,7.5f)));
+                createEntity(new PlayerClone(new Vector2(15, 7.5f)));
             }
         }
     }
@@ -48,8 +44,9 @@ public class MultiplayerWorld extends World {
         super.createDummy();
     }
 
-    public  void createEntity(Entity entity){
+    public void createEntity(Entity entity) {
         super.createEntity(entity);
+        //Check if brawlMultiplayer has been set
         brawlMultiplayer.spawnEntity(entity);
     }
 
@@ -67,11 +64,11 @@ public class MultiplayerWorld extends World {
     @Override
     public void sendTouchInput(Vector2 screenCoordinates, long entityID) {
         super.sendTouchInput(screenCoordinates, entityID);
-        brawlMultiplayer.moveEntity(screenCoordinates,entityID);
+        brawlMultiplayer.moveEntity(screenCoordinates, entityID);
     }
 
     //creates entity without notifying other Players
-    public  void createEntityLocal(Entity entity){
+    public void createEntityLocal(Entity entity) {
         super.createEntity(entity);
     }
 
