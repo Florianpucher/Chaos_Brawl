@@ -29,37 +29,43 @@ import java.util.HashMap;
  */
 public class World implements InputHandler {
 
-    public long lastID = 0;
+    protected long lastID = 0;
 
-    private HashMap<Long, Entity> units;
+    protected HashMap<Long, Entity> units;
 
-    private SpawnerImpl spawner;
-    private MyEngine engine;
-    private Camera camera;
+    protected SpawnerImpl spawner;
+    protected MyEngine engine;
+    protected Camera camera;
 
     public World(int map) {
         units = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
         createEngine();
         createWorld(map);
-        createPlayer();
-        createDummy();
+    }
+
+    public World() {
+        units = new HashMap<Long, Entity>();
+        spawner = new SpawnerImpl();
+        createEngine();
+        createWorld(1);
     }
 
     public void createPlayer(){
         Player player = new Player();
-        engine.addEntity(player);
-        units.put(lastID, player);
-        lastID++;
+        createEntity(player);
     }
     public void createDummy(){
         PlayerClone dummy = new PlayerClone(new Vector2((float) (Math.random()*10),(float) (Math.random()*10)));
-        engine.addEntity(dummy);
-        units.put(lastID, dummy);
+        createEntity(dummy);
+    }
+    public  void createEntity(Entity entity){
+        engine.addEntity(entity);
+        units.put(lastID, entity);
         lastID++;
     }
 
-    private void createEngine(){
+    protected void createEngine(){
         engine = new MyEngine();
         //Add some logic
 

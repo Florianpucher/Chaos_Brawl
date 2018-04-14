@@ -25,7 +25,19 @@ public class Player extends Entity {
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().playerSkin);
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
-        CombatComponent combatComponent=new CombatComponent(10000.0,10,2,5,0,true);
+        CombatComponent combatComponent=new CombatComponent(10000.0,2,2,5,0,true);
+        add(transformComponent);
+        add(textureComponent);
+        add(movementComponent);
+        add(combatComponent);
+    }
+    public Player(Vector2 position, int teamId) {
+        TransformComponent transformComponent = new TransformComponent();
+        transformComponent.setPosition(position);
+        TextureComponent textureComponent = new TextureComponent();
+        textureComponent.setTexture(AssetManager.getInstance().playerSkin);
+        MovementComponent movementComponent = new MovementComponent(5,transformComponent);
+        CombatComponent combatComponent=new CombatComponent(10000.0,2,2,5,teamId,true);
         add(transformComponent);
         add(textureComponent);
         add(movementComponent);

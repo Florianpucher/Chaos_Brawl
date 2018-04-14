@@ -3,30 +3,36 @@ package com.strategy_bit.chaos_brawl.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
+import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
+import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
+
+import java.io.IOException;
 
 /**
- * class that represents the main menu screen
- *
  * @author AIsopp
  * @version 1.0
- * @since 22.03.2018
+ * @since 02.04.2018
  */
-public class MainMenuScreen extends AbstractScreen{
+public class HostLoungeScreen extends AbstractScreen {
 
-    private final static String NEW_GAME = "New GAME";
-    private final static String MULTIPLAYER = "Multiplayer";
+    private final static String START_SERVER = "Start Server";
 
-    private OrthographicCamera camera;
     private AssetManager assetManager;
     private ScreenManager screenManager;
+    private OrthographicCamera camera;
+    private BrawlServer brawlServer;
+
+    public HostLoungeScreen() {
+
+        brawlServer = new BrawlServerImpl();
+        System.out.println("Init Server done");
+    }
 
     @Override
     public void buildStage() {
@@ -35,52 +41,28 @@ public class MainMenuScreen extends AbstractScreen{
         screenManager = ScreenManager.getInstance();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        final TextButton btnNewGame = new TextButton(NEW_GAME, assetManager.defaultSkin);
-        btnNewGame.setName(NEW_GAME);
-        final TextButton btnMultiplayer = new TextButton(MULTIPLAYER, assetManager.defaultSkin);
-        btnMultiplayer.setName(MULTIPLAYER);
+        final TextButton btnStartServer = new TextButton(START_SERVER, assetManager.defaultSkin);
+        btnStartServer.setName(START_SERVER);
 
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/8;
         root.center();
-        root.add(btnNewGame).width(Gdx.graphics.getWidth()/2).height(height);
-        root.row().space(10);
-        root.add(btnMultiplayer).width(Gdx.graphics.getWidth()/2).height(height);
+        root.add(btnStartServer).width(Gdx.graphics.getWidth()/4).height(height);
         addActor(root);
-
 
         ClickListener listener = new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 String name = event.getListenerActor().getName();
-                if(name.equals(NEW_GAME)){
-                    screenManager.showScreen(ScreenEnum.MAP_MENU);
+                if(name.equals(START_SERVER)){
+                    startServer();
                 }
-                else if(name.equals(MULTIPLAYER)){
-                    screenManager.showScreen(ScreenEnum.NETWORK_SCREEN);
-                }
-
             }
         };
-        btnNewGame.addListener(listener);
-        btnMultiplayer.addListener(listener);
-
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        Gdx.input.setInputProcessor((Stage)this);
-        System.out.println(Gdx.input.getInputProcessor().getClass().getName());
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-        Gdx.input.setInputProcessor(null);
+        btnStartServer.addListener(listener);
     }
 
     @Override
@@ -92,8 +74,28 @@ public class MainMenuScreen extends AbstractScreen{
     }
 
     @Override
-    public void dispose() {
-        super.dispose();
-        camera = null;
+    public void show() {
+        super.show();
+        System.out.println("SHOW LOUNGE");
+        Gdx.input.setInputProcessor(this);
+    }
+
+    @Override
+    public void hide() {
+        //TODO do not close server here
+        super.hide();
+        Gdx.input.setInputProcessor(null);
+        brawlServer.closeServer();
+    }
+
+    private void startServer() {
+        if (brawlServer.isServerIsRunning()){
+            return;
+        }
+        try {
+            brawlServer.startServer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
