@@ -15,7 +15,7 @@ public class Base extends Entity {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(new Vector2(20,20));
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().BaseSkin);
+        textureComponent.setTexture(AssetManager.getInstance().wallSkin);
         //CombatComponent combatComponent=new CombatComponent(200000.0,12,1,30,0,true);
         add(transformComponent);
         add(textureComponent);

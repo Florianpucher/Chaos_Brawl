@@ -18,7 +18,7 @@ public class Tower extends Entity {
     public Tower(){
 
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().TowerSkin);
+        textureComponent.setTexture(AssetManager.getInstance().ballistaTowerSkin);
         NewCombatComponent newCombatComponent=new NewCombatComponent(100000.0,13,1,20,true);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(30000.0,0);
         add(textureComponent);
