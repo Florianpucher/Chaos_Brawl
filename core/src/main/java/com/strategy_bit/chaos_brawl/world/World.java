@@ -6,8 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.strategy_bit.chaos_brawl.InputHandler;
-import com.strategy_bit.chaos_brawl.SpawnerImpl;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
@@ -16,7 +14,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.world.Board;
+import com.strategy_bit.chaos_brawl.types.UnitType;
 
 import java.util.HashMap;
 
@@ -113,8 +111,21 @@ public class World implements InputHandler {
         moveEntity(targetLocation, entityID);
     }
 
+    @Override
+    public void createEntity(Vector2 screenCoordinates, UnitType entityType, int teamID) {
+        Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
+        Vector3 translated = camera.unproject(withZCoordinate);
+        Vector2 targetLocation = new Vector2(translated.x,translated.y);
+        Entity entity = spawner.createNewUnit(entityType,teamID,targetLocation);
+        engine.addEntity(entity);
+    }
+
     public void moveEntity(Vector2 worldCoordinates, long entityID){
         Entity entity = units.get(entityID);
         entity.getComponent(MovementComponent.class).setTargetLocation(worldCoordinates);
+    }
+
+    public Camera getCamera() {
+        return camera;
     }
 }

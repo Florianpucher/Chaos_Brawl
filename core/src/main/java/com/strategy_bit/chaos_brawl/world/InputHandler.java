@@ -1,6 +1,7 @@
-package com.strategy_bit.chaos_brawl;
+package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.types.UnitType;
 
 /**
  * @author AIsopp
@@ -11,4 +12,5 @@ import com.badlogic.gdx.math.Vector2;
 public interface InputHandler {
 
     void sendTouchInput(Vector2 screenCoordinates, long entityID);
+    void createEntity(Vector2 screenCoordinates, UnitType entityType, int teamID);
 }

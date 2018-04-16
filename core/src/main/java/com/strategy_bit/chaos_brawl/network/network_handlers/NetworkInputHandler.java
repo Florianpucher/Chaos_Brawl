@@ -1,7 +1,7 @@
 package com.strategy_bit.chaos_brawl.network.network_handlers;
 
 import com.esotericsoftware.kryonet.Connection;
-import com.strategy_bit.chaos_brawl.InputHandler;
+import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 /**
  * @author AIsopp
