@@ -35,7 +35,7 @@ public class MultiplayerGameScreen extends AbstractScreen {
     public void show() {
         super.show();
         //TODO input needs to be changed
-        PlayerController controller = new PlayerController();
+        PlayerController controller = new PlayerController(1);
         controller.setInputHandler(manager);
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(controller);

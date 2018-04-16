@@ -1,7 +1,7 @@
 package com.strategy_bit.chaos_brawl.controller;
 
 
-import com.strategy_bit.chaos_brawl.InputHandler;
+import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 /**
  * Interface for communication between player(AI or human) and game
