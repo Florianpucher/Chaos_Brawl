@@ -26,7 +26,7 @@ public class PlayerClone extends Entity {
         textureComponent.setTexture(AssetManager.getInstance().playerSkin);
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
         NewCombatComponent newCombatComponent= new NewCombatComponent(100.0,0,1,0,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(10.0,6);
+        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(25.0,6);
         add(transformComponent);
         add(textureComponent);
         add(movementComponent);

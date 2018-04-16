@@ -19,6 +19,7 @@ public class MultiplayerGameScreen extends AbstractScreen {
         if(brawlMultiplayer instanceof BrawlServer){
             manager.createPlayer();
             manager.createDummy();
+            manager.createTower();
         }
 
         //add User input

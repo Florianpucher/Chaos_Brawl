@@ -10,19 +10,20 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 
-public class TowerSync extends Entity {
+public class TowerP extends Entity {
 
-    public TowerSync(Vector2 position){
+    public TowerP(Vector2 position){
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().TowerSkin);
-        NewCombatComponent newCombatComponent=new NewCombatComponent(100000.0,13,1,20,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(30000.0,1);
+        textureComponent.setTexture(AssetManager.getInstance().TowerSkinP);
+        NewCombatComponent newCombatComponent=new NewCombatComponent(100000.0,4,1,20,true);
+        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(50.0,9);
+
         add(transformComponent);
         add(textureComponent);
         add(newCombatComponent);
         add(teamGameObjectComponent);
-        add(new BuildingComponent(true));
+        //add(new BuildingComponent(true));
     }
 }
