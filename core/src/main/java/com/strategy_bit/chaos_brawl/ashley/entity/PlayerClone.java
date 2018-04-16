@@ -33,4 +33,16 @@ public class PlayerClone extends Entity {
         add(newCombatComponent);
         add(teamGameObjectComponent);
     }
+    public PlayerClone(Vector2 position,int teamId) {
+        TransformComponent transformComponent = new TransformComponent();
+        transformComponent.setPosition(position);
+        TextureComponent textureComponent = new TextureComponent();
+        textureComponent.setTexture(AssetManager.getInstance().playerSkin);
+        MovementComponent movementComponent = new MovementComponent(5,transformComponent);
+        CombatComponent combatComponent=new CombatComponent(100.0,0,1,0,teamId,true);
+        add(transformComponent);
+        add(textureComponent);
+        add(movementComponent);
+        add(combatComponent);
+    }
 }

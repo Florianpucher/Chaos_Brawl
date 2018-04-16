@@ -22,6 +22,7 @@ import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 public class MainMenuScreen extends AbstractScreen{
 
     private final static String NEW_GAME = "New GAME";
+    private final static String MULTIPLAYER = "Multiplayer";
 
     private OrthographicCamera camera;
     private AssetManager assetManager;
@@ -36,6 +37,8 @@ public class MainMenuScreen extends AbstractScreen{
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnNewGame = new TextButton(NEW_GAME, assetManager.defaultSkin);
         btnNewGame.setName(NEW_GAME);
+        final TextButton btnMultiplayer = new TextButton(MULTIPLAYER, assetManager.defaultSkin);
+        btnMultiplayer.setName(MULTIPLAYER);
 
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
@@ -43,20 +46,28 @@ public class MainMenuScreen extends AbstractScreen{
         float height = Gdx.graphics.getHeight()/8;
         root.center();
         root.add(btnNewGame).width(Gdx.graphics.getWidth()/2).height(height);
+        root.row().space(10);
+        root.add(btnMultiplayer).width(Gdx.graphics.getWidth()/2).height(height);
         addActor(root);
 
 
         ClickListener listener = new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
                 String name = event.getListenerActor().getName();
                 if(name.equals(NEW_GAME)){
-                    screenManager.showScreen(ScreenEnum.GAME);
+                    screenManager.showScreen(ScreenEnum.MAP_MENU);
                 }
-                super.clicked(event, x, y);
+                else if(name.equals(MULTIPLAYER)){
+                    screenManager.showScreen(ScreenEnum.NETWORK_SCREEN);
+                }
+
             }
         };
         btnNewGame.addListener(listener);
+        btnMultiplayer.addListener(listener);
+
     }
 
     @Override

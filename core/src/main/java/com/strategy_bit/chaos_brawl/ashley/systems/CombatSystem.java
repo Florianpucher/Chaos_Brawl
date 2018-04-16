@@ -34,8 +34,8 @@ public class CombatSystem extends IteratingSystem {
         // Remove entity if hitpoints lower than 0
         if(TeamGameObjectComponent.getHitPoints()<=0.0){
             getEngine().removeEntity(entity);
-            PlayerClone playerClone=new PlayerClone(new Vector2((float) (Math.random()*20),(float) (Math.random()*10)));
-            getEngine().addEntity(playerClone);
+            //PlayerClone playerClone=new PlayerClone(new Vector2((float) (Math.random()*20),(float) (Math.random()*10)));
+            //getEngine().addEntity(playerClone);
             return;
         }
         TransformComponent transformComponent=mTransformComponent.get(entity);

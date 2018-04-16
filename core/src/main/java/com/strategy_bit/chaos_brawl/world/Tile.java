@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.types.TileType;
 
 /**
- * Tile interface for {@link Board}
+ * Tile interface for {@link BoardA}
  *
  *
  * @author AIsopp

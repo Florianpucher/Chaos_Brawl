@@ -1,7 +1,7 @@
 package com.strategy_bit.chaos_brawl.controller;
 
 
-import com.strategy_bit.chaos_brawl.InputHandler;
+import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 /**
  * Interface for communication between player(AI or human) and game
@@ -10,7 +10,7 @@ import com.strategy_bit.chaos_brawl.InputHandler;
  * @version 1.0
  * @since 15.03.2018
  */
-public class PawnController {
+public abstract class PawnController {
 
     protected InputHandler inputHandler;
 

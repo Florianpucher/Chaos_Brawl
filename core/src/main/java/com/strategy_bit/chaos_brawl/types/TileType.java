@@ -22,7 +22,7 @@ public enum TileType {
         }
     },WATER{
         public TextureRegion getTexture(){
-            return AssetManager.getInstance().defaultTile;
+            return AssetManager.getInstance().waterTile;
         }
 
         @Override
@@ -32,7 +32,7 @@ public enum TileType {
     },
     DIRT{
         public TextureRegion getTexture(){
-            return AssetManager.getInstance().defaultTile;
+            return AssetManager.getInstance().dirtTile;
         }
         @Override
         public int getMoveAble() {

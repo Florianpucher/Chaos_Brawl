@@ -6,8 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.strategy_bit.chaos_brawl.InputHandler;
-import com.strategy_bit.chaos_brawl.SpawnerImpl;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
@@ -16,7 +14,9 @@ import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.world.Board;
+
+import com.strategy_bit.chaos_brawl.types.UnitType;
+
 
 import java.util.HashMap;
 
@@ -29,37 +29,43 @@ import java.util.HashMap;
  */
 public class World implements InputHandler {
 
-    public long lastID = 0;
+    protected long lastID = 0;
 
-    private HashMap<Long, Entity> units;
+    protected HashMap<Long, Entity> units;
 
-    private SpawnerImpl spawner;
-    private MyEngine engine;
-    private Camera camera;
+    protected SpawnerImpl spawner;
+    protected MyEngine engine;
+    protected Camera camera;
+
+    public World(int map) {
+        units = new HashMap<Long, Entity>();
+        spawner = new SpawnerImpl();
+        createEngine();
+        createWorld(map);
+    }
 
     public World() {
         units = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
         createEngine();
-        createWorld();
-        createPlayer();
-        createDummy();
+        createWorld(1);
     }
 
     public void createPlayer(){
         Player player = new Player();
-        engine.addEntity(player);
-        units.put(lastID, player);
-        lastID++;
+        createEntity(player);
     }
     public void createDummy(){
         PlayerClone dummy = new PlayerClone(new Vector2((float) (Math.random()*10),(float) (Math.random()*10)));
-        engine.addEntity(dummy);
-        units.put(lastID, dummy);
+        createEntity(dummy);
+    }
+    public  void createEntity(Entity entity){
+        engine.addEntity(entity);
+        units.put(lastID, entity);
         lastID++;
     }
 
-    private void createEngine(){
+    protected void createEngine(){
         engine = new MyEngine();
         //Add some logic
 
@@ -74,10 +80,18 @@ public class World implements InputHandler {
 
 
     /**
-     * creates Game board ({@link Board})
+     * creates Game board ({@link BoardA, BoardB, BoardC})
      */
-    private void createWorld(){
-        Board board = new Board(engine);
+    private void createWorld(int map){
+        if(map == 1){
+            BoardA board = new BoardA(engine);
+        }
+        if(map == 2){
+            BoardB board = new BoardB(engine);
+        }
+        if(map == 3){
+            BoardC board = new BoardC(engine);
+        }
     }
 
     public void render(){
@@ -93,11 +107,27 @@ public class World implements InputHandler {
 
     @Override
     public void sendTouchInput(Vector2 screenCoordinates, long entityID) {
-        Entity entity = units.get(entityID);
         Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        System.out.println("Hello");
-        entity.getComponent(MovementComponent.class).setTargetLocation(targetLocation);
+        moveEntity(targetLocation, entityID);
+    }
+
+    @Override
+    public void createEntity(Vector2 screenCoordinates, UnitType entityType, int teamID) {
+        Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
+        Vector3 translated = camera.unproject(withZCoordinate);
+        Vector2 targetLocation = new Vector2(translated.x,translated.y);
+        Entity entity = spawner.createNewUnit(entityType,teamID,targetLocation);
+        engine.addEntity(entity);
+    }
+
+    public void moveEntity(Vector2 worldCoordinates, long entityID){
+        Entity entity = units.get(entityID);
+        entity.getComponent(MovementComponent.class).setTargetLocation(worldCoordinates);
+    }
+
+    public Camera getCamera() {
+        return camera;
     }
 }

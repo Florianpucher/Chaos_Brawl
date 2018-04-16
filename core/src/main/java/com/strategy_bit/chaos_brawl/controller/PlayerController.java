@@ -13,8 +13,17 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class PlayerController extends PawnController implements InputProcessor {
 
-    public PlayerController() {
-        Gdx.input.setInputProcessor(this);
+    private int teamID;
+
+
+
+    public PlayerController(int teamID) {
+        this.teamID = teamID;
+
+    }
+
+    public int getTeamID() {
+        return teamID;
     }
 
     @Override
