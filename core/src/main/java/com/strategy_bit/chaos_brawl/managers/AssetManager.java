@@ -44,7 +44,7 @@ public class AssetManager {
 
     public  void loadAssets(){
         defaultSkin = new Skin(Gdx.files.internal("default/skin.json"));
-        playerSkin = new TextureRegion(new Texture("character.png"));
+        playerSkin = new TextureRegion(new Texture("unit.png"));
         projectileSkin=new TextureRegion(new Texture("projectile.png"));
         defaultTile = new TextureRegion(new Texture("default_tile.png"));
         waterTile = new TextureRegion(new Texture ( "water_tile.png"));
