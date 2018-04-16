@@ -66,7 +66,7 @@ public class World implements InputHandler {
     }
 
     protected void createEngine(){
-        engine = new MyEngine();
+        engine = new MyEngine(units);
         //Add some logic
 
         engine.addSystem(new MovementSystem());
@@ -119,7 +119,7 @@ public class World implements InputHandler {
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
         Entity entity = spawner.createNewUnit(entityType,teamID,targetLocation);
-        engine.addEntity(entity);
+        createEntity(entity);
     }
 
     public void moveEntity(Vector2 worldCoordinates, long entityID){

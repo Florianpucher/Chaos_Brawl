@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.NewCombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
 import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 /*
@@ -21,19 +20,19 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
 public class CombatSystem extends IteratingSystem {
     private ComponentMapper<NewCombatComponent> mCombatComponent;
     private ComponentMapper<TransformComponent> mTransformComponent;
-    private ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponent;
+    private ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponentMapper;
 
     public CombatSystem() {
         super(Family.all(NewCombatComponent.class, TransformComponent.class, TeamGameObjectComponent.class).get());
         mCombatComponent = ComponentMapper.getFor(NewCombatComponent.class);
         mTransformComponent = ComponentMapper.getFor(TransformComponent.class);
-        mTeamGameObjectComponent = ComponentMapper.getFor(TeamGameObjectComponent.class);
+        mTeamGameObjectComponentMapper = ComponentMapper.getFor(TeamGameObjectComponent.class);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         NewCombatComponent combatComponent=mCombatComponent.get(entity);
-        TeamGameObjectComponent teamGameObjectComponent = mTeamGameObjectComponent.get(entity);
+        TeamGameObjectComponent teamGameObjectComponent = mTeamGameObjectComponentMapper.get(entity);
         // Remove entity if hitpoints lower than 0
         if(teamGameObjectComponent.getHitPoints()<=0.0){
             getEngine().removeEntity(entity);
@@ -45,8 +44,8 @@ public class CombatSystem extends IteratingSystem {
         double closest=combatComponent.getAttackRadius()+1.0;
         TeamGameObjectComponent closestEnemy=null;
         TransformComponent closestEnemyPosition=null;
-        for (Entity enemy : getEntities()) {
-            TeamGameObjectComponent eTeamGameObjectComponent=mTeamGameObjectComponent.get(enemy);
+        for (Entity enemy : getEngine().getEntitiesFor(Family.all(TeamGameObjectComponent.class).get())) {
+            TeamGameObjectComponent eTeamGameObjectComponent= mTeamGameObjectComponentMapper.get(enemy);
             if(teamGameObjectComponent.getTeamId()!=eTeamGameObjectComponent.getTeamId()) {
                 Vector2 mPos=transformComponent.getPosition();
                 TransformComponent eTransformComponent=mTransformComponent.get(enemy);
