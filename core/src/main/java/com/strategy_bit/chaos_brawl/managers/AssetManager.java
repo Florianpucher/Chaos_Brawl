@@ -23,6 +23,7 @@ public class AssetManager {
     public TextureRegion waterTile;
     public TextureRegion dirtTile;
     public TextureRegion TowerSkin;
+    public TextureRegion TowerSkinP;
     public TextureRegion BaseSkin;
     public TextureRegion ballistaTowerSkin;
     public TextureRegion wallSkin;
@@ -49,6 +50,7 @@ public class AssetManager {
         waterTile = new TextureRegion(new Texture ( "water_tile.png"));
         dirtTile = new TextureRegion(new Texture ( "dirt_tile.png"));
         TowerSkin = new TextureRegion(new Texture("Tower.png"));
+        TowerSkinP = new TextureRegion(new Texture("Towerp.png"));
         BaseSkin = new TextureRegion(new Texture("Base.png"));
         ballistaTowerSkin = new TextureRegion(new Texture("ballistaTowerSkin.png"));
         wallSkin = new TextureRegion(new Texture("wall.png"));

@@ -25,8 +25,8 @@ public class Player extends Entity {
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().playerSkin);
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
-        NewCombatComponent newCombatComponent = new NewCombatComponent(10000.0,10,2,5,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(10000.0,9);
+        NewCombatComponent newCombatComponent = new NewCombatComponent(10000.0,3,2,5,true);
+        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(50000.0,9);
 
         add(transformComponent);
         add(textureComponent);
@@ -40,8 +40,8 @@ public class Player extends Entity {
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().playerSkin);
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
-        NewCombatComponent newCombatComponent = new NewCombatComponent(10000.0,10,2,5,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(10000.0,teamId);
+        NewCombatComponent newCombatComponent = new NewCombatComponent(10000.0,3,2,5,true);
+        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(50.0,teamId);
         add(transformComponent);
         add(textureComponent);
         add(movementComponent);

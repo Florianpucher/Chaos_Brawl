@@ -15,30 +15,19 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 public class Tower extends Entity {
 
-    public Tower(){
-
+    public Tower(Vector2 position){
+        TransformComponent transformComponent = new TransformComponent();
+        transformComponent.setPosition(position);
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().ballistaTowerSkin);
-        NewCombatComponent newCombatComponent=new NewCombatComponent(100000.0,13,1,20,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(30000.0,0);
+        NewCombatComponent newCombatComponent=new NewCombatComponent(100000.0,4,1,20,true);
+        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(50.0,0);
+
         add(textureComponent);
+        add(transformComponent);
         add(newCombatComponent);
         add(teamGameObjectComponent);
-        add(new BuildingComponent(true));
+        // add(new BuildingComponent(true));
     }
 
-    /*
-    private SpriteBatch batch;
-
-    public void create () {
-        batch = new SpriteBatch();
-        towerSkin = new Texture("TowerSkin.png");
-    }
-
-    public void render () {
-        batch.begin();
-        batch.draw(towerSkin, Gdx.graphics.getWidth()/2 - towerSkin.getWidth()/2, Gdx.graphics.getHeight()/2 - towerSkin.getHeight()/2);
-        batch.end();
-    }
-    */
 }

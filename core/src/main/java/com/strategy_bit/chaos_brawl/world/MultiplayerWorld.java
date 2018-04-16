@@ -3,12 +3,12 @@ package com.strategy_bit.chaos_brawl.world;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.esotericsoftware.kryonet.Connection;
-import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
+import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
+import com.strategy_bit.chaos_brawl.ashley.entity.Base;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
@@ -36,6 +36,16 @@ public class MultiplayerWorld extends World {
     public void createPlayer() {
         Player player = new Player();
         createEntity(player);
+    }
+    public void createTower(){
+        Tower topTower = new Tower(new Vector2(17,12));
+        createEntity(topTower);
+        Tower botTower = new Tower(new Vector2(17, 5));
+        createEntity(botTower);
+    }
+    public void createBase() {
+        Base base = new Base(new Vector2(19, 9));
+        createEntity(base);
     }
 
     @Override
