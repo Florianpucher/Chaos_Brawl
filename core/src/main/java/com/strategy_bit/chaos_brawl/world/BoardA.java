@@ -7,23 +7,25 @@ import com.strategy_bit.chaos_brawl.ashley.entity.BackgroundTile;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.TileType;
 
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_HEIGHT;
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_WIDTH;
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_HEIGHT;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_WIDTH;
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
 
 /**
- * Created by Florian on 11.04.2018.
+ * @author AIsopp
+ * @version 1.0
+ * @since 27.03.2018
  *
- * Game BoardA with only one big bridge in the middle
+ * Default game board with 2 bridges across the river (top and bottom)
  */
+public class BoardA implements Board {
 
-public class BoardB implements Board {
     private Tile[][] tileBoard;
     private int[][] intBoard;
 
-    public BoardB(Engine engine){
+    public BoardA(Engine engine){
         // TODO add Custom board option
         tileBoard = new Tile[BOARD_HEIGHT][BOARD_WIDTH];
         float tileHeight;
@@ -68,15 +70,25 @@ public class BoardB implements Board {
             }
 
         }
-        for(int i = 3; i < 7; i++) {
-            for (int j = 6; j < 9; j++) {
+        for(int i = 1; i < 3; i++){
+            for(int j = 6; j < 9; j++){
                 Tile tile = new BackgroundTile(TileType.DIRT);
                 tileBoard[i][j] = tile;
-                tile.setPosition(new Vector2(multiplicandX / 2 + multiplicandX * j, multiplicandY / 2 + multiplicandY * i));
+                tile.setPosition(new Vector2(multiplicandX/2 + multiplicandX* j, multiplicandY/2 + multiplicandY *i));
                 tile.setScale(size);
-                engine.addEntity((BackgroundTile) tile);
+                engine.addEntity((BackgroundTile)tile);
             }
         }
+        for(int i = 7; i < 9; i++){
+            for(int j = 6; j < 9; j++){
+                Tile tile = new BackgroundTile(TileType.DIRT);
+                tileBoard[i][j] = tile;
+                tile.setPosition(new Vector2(multiplicandX/2 + multiplicandX* j, multiplicandY/2 + multiplicandY *i));
+                tile.setScale(size);
+                engine.addEntity((BackgroundTile)tile);
+            }
+        }
+
 
     }
 
@@ -92,6 +104,4 @@ public class BoardB implements Board {
         }
         return intBoard;
     }
-
-
 }

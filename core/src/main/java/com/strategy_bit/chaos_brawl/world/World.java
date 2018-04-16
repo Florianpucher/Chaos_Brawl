@@ -16,7 +16,6 @@ import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.world.Board;
 
 import java.util.HashMap;
 
@@ -80,17 +79,17 @@ public class World implements InputHandler {
 
 
     /**
-     * creates Game board ({@link Board})
+     * creates Game board ({@link BoardA, BoardB, BoardC})
      */
     private void createWorld(int map){
         if(map == 1){
-            Board board = new Board(engine);
+            BoardA board = new BoardA(engine);
         }
         if(map == 2){
             BoardB board = new BoardB(engine);
         }
         if(map == 3){
-            //BoardC board = new BoardC(engine);
+            BoardC board = new BoardC(engine);
         }
     }
 
