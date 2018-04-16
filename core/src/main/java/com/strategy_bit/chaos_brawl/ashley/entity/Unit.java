@@ -15,7 +15,7 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  * @since 16.04.2018
  */
 public class Unit extends Entity {
-    public Unit() {
+    /*public Unit() {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(new Vector2(5,7.5f));
         TextureComponent textureComponent = new TextureComponent();
@@ -43,7 +43,7 @@ public class Unit extends Entity {
         add(textureComponent);
         add(movementComponent);
         add(combatComponent);
-    }
+    }*/
 
 
 }

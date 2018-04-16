@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.kryonet.Connection;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
@@ -108,7 +109,8 @@ public class MultiplayerWorld extends World {
 
     public EntitySpawnMessage createEntitySpawnMsg(Entity entity){
         TransformComponent transformComponent=entity.getComponent(TransformComponent.class);
-        CombatComponent combatComponent=entity.getComponent(CombatComponent.class);
+        TeamGameObjectComponent teamGameObjectComponent = entity.getComponent(TeamGameObjectComponent.class);
+        //CombatComponent combatComponent=entity.getComponent(CombatComponent.class);
         int entityTypeId=0;
         //TODO add other types
         if (entity instanceof Player){
@@ -116,6 +118,6 @@ public class MultiplayerWorld extends World {
         }else if(entity instanceof  PlayerClone){
             entityTypeId=2;
         }
-        return new EntitySpawnMessage(transformComponent.getPosition(),combatComponent.getTeamId(),entityTypeId);
+        return new EntitySpawnMessage(transformComponent.getPosition(),teamGameObjectComponent.getTeamId(),entityTypeId);
     }
 }

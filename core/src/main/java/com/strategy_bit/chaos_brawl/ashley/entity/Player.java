@@ -26,7 +26,7 @@ public class Player extends Entity {
         textureComponent.setTexture(AssetManager.getInstance().playerSkin);
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
         NewCombatComponent newCombatComponent = new NewCombatComponent(10000.0,10,2,5,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(10000.0,0);
+        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(10000.0,9);
 
         add(transformComponent);
         add(textureComponent);

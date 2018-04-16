@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.Component;
 
 public class TeamGameObjectComponent implements Component {
 
-    private static int teamId;
-    private static double hitPoints;
+    private int teamId;
+    private  double hitPoints;
 
 
     public TeamGameObjectComponent(double hitPoints, int teamId) {
@@ -13,7 +13,7 @@ public class TeamGameObjectComponent implements Component {
         setTeamId(teamId);
     }
 
-    public static double getHitPoints() {
+    public  double getHitPoints() {
         return hitPoints;
     }
 
@@ -22,7 +22,7 @@ public class TeamGameObjectComponent implements Component {
         System.out.println("HitPoints: "+ hitPoints);
     }
 
-    public static int getTeamId() {
+    public  int getTeamId() {
         return teamId;
     }
 

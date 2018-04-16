@@ -24,7 +24,7 @@ public class CombatSystem extends IteratingSystem {
     private ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponent;
 
     public CombatSystem() {
-        super(Family.all(NewCombatComponent.class, TransformComponent.class).get());
+        super(Family.all(NewCombatComponent.class, TransformComponent.class, TeamGameObjectComponent.class).get());
         mCombatComponent = ComponentMapper.getFor(NewCombatComponent.class);
         mTransformComponent = ComponentMapper.getFor(TransformComponent.class);
         mTeamGameObjectComponent = ComponentMapper.getFor(TeamGameObjectComponent.class);
@@ -33,8 +33,9 @@ public class CombatSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         NewCombatComponent combatComponent=mCombatComponent.get(entity);
+        TeamGameObjectComponent teamGameObjectComponent = mTeamGameObjectComponent.get(entity);
         // Remove entity if hitpoints lower than 0
-        if(TeamGameObjectComponent.getHitPoints()<=0.0){
+        if(teamGameObjectComponent.getHitPoints()<=0.0){
             getEngine().removeEntity(entity);
             //PlayerClone playerClone=new PlayerClone(new Vector2((float) (Math.random()*20),(float) (Math.random()*10)));
             //getEngine().addEntity(playerClone);
@@ -46,7 +47,7 @@ public class CombatSystem extends IteratingSystem {
         TransformComponent closestEnemyPosition=null;
         for (Entity enemy : getEntities()) {
             TeamGameObjectComponent eTeamGameObjectComponent=mTeamGameObjectComponent.get(enemy);
-            if(TeamGameObjectComponent.getTeamId()!=TeamGameObjectComponent.getTeamId()) {
+            if(teamGameObjectComponent.getTeamId()!=eTeamGameObjectComponent.getTeamId()) {
                 Vector2 mPos=transformComponent.getPosition();
                 TransformComponent eTransformComponent=mTransformComponent.get(enemy);
                 Vector2 ePos=eTransformComponent.getPosition();
