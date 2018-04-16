@@ -14,10 +14,9 @@ import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-<<<<<<< HEAD
-=======
+
 import com.strategy_bit.chaos_brawl.types.UnitType;
->>>>>>> 7db7ce8c1cf536f216534c914239939cb484c790
+
 
 import java.util.HashMap;
 
