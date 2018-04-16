@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.strategy_bit.chaos_brawl.views.GameHUD;
 import com.strategy_bit.chaos_brawl.world.World;
 import com.strategy_bit.chaos_brawl.controller.PlayerController;
 
@@ -16,6 +17,8 @@ import com.strategy_bit.chaos_brawl.controller.PlayerController;
 public class GameScreen extends AbstractScreen {
 
     private World manager;
+    private GameHUD gameHUD;
+    private PlayerController controller;
 
     public GameScreen(int map) {
         if(map == 1){
@@ -36,17 +39,20 @@ public class GameScreen extends AbstractScreen {
     public void buildStage() {
         super.buildStage();
 
+        controller = new PlayerController(1);
+        controller.setInputHandler(manager);
+        gameHUD = new GameHUD(manager, controller.getTeamID());
+        addActor(gameHUD);
     }
 
     @Override
     public void show() {
         super.show();
         //TODO input needs to be changed
-        PlayerController controller = new PlayerController();
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
+        inputMultiplexer.addProcessor(gameHUD);
         inputMultiplexer.addProcessor(controller);
-        controller.setInputHandler(manager);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -54,7 +60,9 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         manager.render();
         super.render(delta);
-
+        act();
+        draw();
+        //manager.getCamera().update();
     }
 
     @Override
@@ -63,8 +71,5 @@ public class GameScreen extends AbstractScreen {
         manager.dispose();
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
+
 }

@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
@@ -21,9 +22,11 @@ public class ChaosBrawlGame extends Game {
 	private ScreenManager screenManager;
 	private AssetManager assetManager;
 	private boolean loadGame;
+	private FPSLogger logger;
 
 	@Override
 	public void create () {
+		logger = new FPSLogger();
 		Gdx.input.setCatchBackKey(true);
 		// Entry point for application
 		screenManager = ScreenManager.getInstance();
@@ -49,6 +52,7 @@ public class ChaosBrawlGame extends Game {
 	@Override
 	public void render () {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
+		logger.log();
 		if(!loadGame){
 			screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAIN_MENU);
 			loadGame = true;
