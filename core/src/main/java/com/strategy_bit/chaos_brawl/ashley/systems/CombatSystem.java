@@ -21,11 +21,13 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
 public class CombatSystem extends IteratingSystem {
     private ComponentMapper<NewCombatComponent> mCombatComponent;
     private ComponentMapper<TransformComponent> mTransformComponent;
+    private ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponent;
 
     public CombatSystem() {
         super(Family.all(NewCombatComponent.class, TransformComponent.class).get());
         mCombatComponent = ComponentMapper.getFor(NewCombatComponent.class);
         mTransformComponent = ComponentMapper.getFor(TransformComponent.class);
+        mTeamGameObjectComponent = ComponentMapper.getFor(TeamGameObjectComponent.class);
     }
 
     @Override
@@ -40,10 +42,10 @@ public class CombatSystem extends IteratingSystem {
         }
         TransformComponent transformComponent=mTransformComponent.get(entity);
         double closest=combatComponent.getAttackRadius()+1.0;
-        NewCombatComponent closestEnemy=null;
+        TeamGameObjectComponent closestEnemy=null;
         TransformComponent closestEnemyPosition=null;
         for (Entity enemy : getEntities()) {
-            TeamGameObjectComponent eCombatComponent=mCombatComponent.get(enemy);
+            TeamGameObjectComponent eTeamGameObjectComponent=mTeamGameObjectComponent.get(enemy);
             if(TeamGameObjectComponent.getTeamId()!=TeamGameObjectComponent.getTeamId()) {
                 Vector2 mPos=transformComponent.getPosition();
                 TransformComponent eTransformComponent=mTransformComponent.get(enemy);
@@ -55,7 +57,7 @@ public class CombatSystem extends IteratingSystem {
                         if(dist<range){
                             if (dist<closest){
                                 closest=dist;
-                                closestEnemy=eCombatComponent;
+                                closestEnemy=eTeamGameObjectComponent;
                                 closestEnemyPosition=eTransformComponent;
                             }
                         }
