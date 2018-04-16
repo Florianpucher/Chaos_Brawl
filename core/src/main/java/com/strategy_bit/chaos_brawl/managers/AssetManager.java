@@ -23,8 +23,10 @@ public class AssetManager {
     public TextureRegion waterTile;
     public TextureRegion dirtTile;
     public TextureRegion TowerSkin;
+    public TextureRegion TowerSkinP;
     public TextureRegion BaseSkin;
-
+    public TextureRegion ballistaTowerSkin;
+    public TextureRegion wallSkin;
 
     private static AssetManager instance;
 
@@ -42,13 +44,16 @@ public class AssetManager {
 
     public  void loadAssets(){
         defaultSkin = new Skin(Gdx.files.internal("default/skin.json"));
-        playerSkin = new TextureRegion(new Texture("character.png"));
+        playerSkin = new TextureRegion(new Texture("unit.png"));
         projectileSkin=new TextureRegion(new Texture("projectile.png"));
         defaultTile = new TextureRegion(new Texture("default_tile.png"));
         waterTile = new TextureRegion(new Texture ( "water_tile.png"));
         dirtTile = new TextureRegion(new Texture ( "dirt_tile.png"));
         TowerSkin = new TextureRegion(new Texture("Tower.png"));
+        TowerSkinP = new TextureRegion(new Texture("Towerp.png"));
         BaseSkin = new TextureRegion(new Texture("Base.png"));
+        ballistaTowerSkin = new TextureRegion(new Texture("ballista_tower.png"));
+        wallSkin = new TextureRegion(new Texture("wall.png"));
     }
 
 
@@ -57,5 +62,11 @@ public class AssetManager {
         playerSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
         defaultTile.getTexture().dispose();
+        waterTile.getTexture().dispose();
+        dirtTile.getTexture().dispose();
+        TowerSkin.getTexture().dispose();
+        BaseSkin.getTexture().dispose();
+        ballistaTowerSkin.getTexture().dispose();
+        wallSkin.getTexture().dispose();
     }
 }

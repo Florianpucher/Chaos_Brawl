@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.NewCombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
@@ -31,18 +32,18 @@ public class MovementSystem extends IteratingSystem {
 
     protected ComponentMapper<TransformComponent> mTransformComponent;
     protected ComponentMapper<MovementComponent> mMovementComponent;
-    protected ComponentMapper<CombatComponent> mCombatComponent;
+    protected ComponentMapper<NewCombatComponent> mCombatComponent;
 
     public MovementSystem() {
         super(Family.all(TransformComponent.class, MovementComponent.class).get());
         mTransformComponent = ComponentMapper.getFor(TransformComponent.class);
         mMovementComponent = ComponentMapper.getFor(MovementComponent.class);
-        mCombatComponent=ComponentMapper.getFor(CombatComponent.class);
+        mCombatComponent=ComponentMapper.getFor(NewCombatComponent.class);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        CombatComponent combatComponent=mCombatComponent.get(entity);
+        NewCombatComponent combatComponent=mCombatComponent.get(entity);
         if (combatComponent!=null){
             //Unit is attacking
             if(combatComponent.isEngagedInCombat()){

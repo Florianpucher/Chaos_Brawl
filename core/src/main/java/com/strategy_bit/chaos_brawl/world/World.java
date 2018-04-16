@@ -10,6 +10,9 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
+import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
+import com.strategy_bit.chaos_brawl.ashley.entity.Base;
+import com.strategy_bit.chaos_brawl.ashley.entity.TowerP;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
@@ -55,18 +58,32 @@ public class World implements InputHandler {
         Player player = new Player();
         createEntity(player);
     }
+    public void createTower(){
+        Tower topTower = new Tower(new Vector2(17,12));
+        createEntity(topTower);
+        Tower botTower = new Tower(new Vector2(17, 5));
+        createEntity(botTower);
+        TowerP topTowerP = new TowerP(new Vector2(3,12));
+        createEntity(topTowerP);
+        TowerP botTowerP = new TowerP(new Vector2(3, 5));
+        createEntity(botTowerP);
+    }
+    public void createBase() {
+        Base base = new Base(new Vector2(19, 9));
+        createEntity(base);
+    }
     public void createDummy(){
         PlayerClone dummy = new PlayerClone(new Vector2((float) (Math.random()*10),(float) (Math.random()*10)));
         createEntity(dummy);
     }
-    public  void createEntity(Entity entity){
+    public void createEntity(Entity entity){
         engine.addEntity(entity);
         units.put(lastID, entity);
         lastID++;
     }
 
     protected void createEngine(){
-        engine = new MyEngine();
+        engine = new MyEngine(units);
         //Add some logic
 
         engine.addSystem(new MovementSystem());
@@ -119,7 +136,7 @@ public class World implements InputHandler {
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
         Entity entity = spawner.createNewUnit(entityType,teamID,targetLocation);
-        engine.addEntity(entity);
+        createEntity(entity);
     }
 
     public void moveEntity(Vector2 worldCoordinates, long entityID){

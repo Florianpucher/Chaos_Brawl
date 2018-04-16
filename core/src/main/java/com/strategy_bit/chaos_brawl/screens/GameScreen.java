@@ -32,6 +32,8 @@ public class GameScreen extends AbstractScreen {
         }
         //add User input
         manager.createPlayer();
+        manager.createTower();
+        manager.createBase();
         manager.createDummy();
     }
 
