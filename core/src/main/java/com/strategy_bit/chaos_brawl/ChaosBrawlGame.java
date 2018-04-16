@@ -14,7 +14,7 @@ import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 
 
 /**
- *
+ * entry point for this application
  */
 public class ChaosBrawlGame extends Game {
 

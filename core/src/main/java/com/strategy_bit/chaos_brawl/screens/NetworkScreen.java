@@ -42,9 +42,9 @@ public class NetworkScreen extends AbstractScreen {
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/8;
         root.center();
-        root.add(btnHostGame).width(Gdx.graphics.getWidth()/4);
+        root.add(btnHostGame).width(Gdx.graphics.getWidth()/2).height(height);
         root.row().space(10);
-        root.add(btnConnectToGame).width(Gdx.graphics.getWidth()/4);
+        root.add(btnConnectToGame).width(Gdx.graphics.getWidth()/2).height(height);
         addActor(root);
 
         ClickListener listener = new ClickListener(){

@@ -13,6 +13,7 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 /**
+ * holds information of the gameHUD
  * @author AIsopp
  * @version 1.0
  * @since 16.04.2018
@@ -26,6 +27,11 @@ public class GameHUD extends Table implements InputProcessor{
     private UnitType nextUnitType;
     private int teamID;
 
+    /**
+     * Implementation for a classic gameHud
+     * @param inputHandler on what world do you want to spawn the units
+     * @param teamID used for spawning units for the given team
+     */
     public GameHUD(InputHandler inputHandler, int teamID) {
         super(AssetManager.getInstance().defaultSkin);
         this.inputHandler = inputHandler;

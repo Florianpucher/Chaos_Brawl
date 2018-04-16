@@ -49,6 +49,7 @@ public class GameScreen extends AbstractScreen {
     public void show() {
         super.show();
         //TODO input needs to be changed
+        // The order of adding the input processors plays an important role!!!
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(gameHUD);
