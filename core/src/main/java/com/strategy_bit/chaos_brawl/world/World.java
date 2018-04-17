@@ -126,6 +126,9 @@ public class World implements InputHandler {
 
     public void moveEntity(Vector2 worldCoordinates, long entityID){
         Entity entity = units.get(entityID);
+        if(entity == null){
+            return;
+        }
         entity.getComponent(MovementComponent.class).setTargetLocation(worldCoordinates);
     }
 
