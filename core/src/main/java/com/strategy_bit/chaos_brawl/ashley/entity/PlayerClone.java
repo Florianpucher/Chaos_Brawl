@@ -4,7 +4,7 @@ package com.strategy_bit.chaos_brawl.ashley.entity;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
-import com.strategy_bit.chaos_brawl.ashley.components.NewCombatComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
@@ -25,12 +25,12 @@ public class PlayerClone extends Entity {
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().playerSkin);
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
-        NewCombatComponent newCombatComponent= new NewCombatComponent(100.0,0,1,0,true);
+        CombatComponent combatComponent = new CombatComponent(100.0,0,1,0,true);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(25.0,6);
         add(transformComponent);
         add(textureComponent);
         add(movementComponent);
-        add(newCombatComponent);
+        add(combatComponent);
         add(teamGameObjectComponent);
     }
     public PlayerClone(Vector2 position,int teamId) {

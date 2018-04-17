@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.ashley.components.NewCombatComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
@@ -18,20 +18,20 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
  */
 
 public class CombatSystem extends IteratingSystem {
-    private ComponentMapper<NewCombatComponent> mCombatComponent;
+    private ComponentMapper<CombatComponent> mCombatComponent;
     private ComponentMapper<TransformComponent> mTransformComponent;
     private ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponentMapper;
 
     public CombatSystem() {
-        super(Family.all(NewCombatComponent.class, TransformComponent.class, TeamGameObjectComponent.class).get());
-        mCombatComponent = ComponentMapper.getFor(NewCombatComponent.class);
+        super(Family.all(CombatComponent.class, TransformComponent.class, TeamGameObjectComponent.class).get());
+        mCombatComponent = ComponentMapper.getFor(CombatComponent.class);
         mTransformComponent = ComponentMapper.getFor(TransformComponent.class);
         mTeamGameObjectComponentMapper = ComponentMapper.getFor(TeamGameObjectComponent.class);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        NewCombatComponent combatComponent=mCombatComponent.get(entity);
+        CombatComponent combatComponent=mCombatComponent.get(entity);
         TeamGameObjectComponent teamGameObjectComponent = mTeamGameObjectComponentMapper.get(entity);
         // Remove entity if hitpoints lower than 0
         if(teamGameObjectComponent.getHitPoints()<=0.0){
@@ -74,7 +74,7 @@ public class CombatSystem extends IteratingSystem {
         }
     }
 
-    private void attack(NewCombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, TransformComponent t2){
+    private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, TransformComponent t2){
         //TODO add here attack logic for different types
         if(c1.attack()){
             c2.setHitPoints(c2.getHitPoints()-c1.getAttackDamage());
