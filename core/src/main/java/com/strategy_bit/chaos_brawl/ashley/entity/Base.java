@@ -11,13 +11,13 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 public class Base extends Entity {
 
-    public Base (Vector2 position){
+    public Base (Vector2 position, int teamID){
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().wallSkin);
         CombatComponent combatComponent =new CombatComponent(100000.0,4,1,20,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(100.0,0);
+        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(100.0,teamID);
 
         add(textureComponent);
         add(transformComponent);
