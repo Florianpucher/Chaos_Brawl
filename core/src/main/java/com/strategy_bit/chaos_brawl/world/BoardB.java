@@ -55,7 +55,7 @@ public class BoardB implements Board {
                 tileBoard[i][j] = tile;
                 tile.setPosition(new Vector2(multiplicandX/2 + multiplicandX* j, multiplicandY/2 + multiplicandY *i));
                 tile.setScale(size);
-                engine.addEntity((BackgroundTile)tile);
+                //engine.addEntity((BackgroundTile)tile);
             }
         }
         for (int i = 0; i < BOARD_HEIGHT; i++){
@@ -64,7 +64,7 @@ public class BoardB implements Board {
                 tileBoard[i][j] = tile;
                 tile.setPosition(new Vector2(multiplicandX/2 + multiplicandX* j, multiplicandY/2 + multiplicandY *i));
                 tile.setScale(size);
-                engine.addEntity((BackgroundTile)tile);
+                //engine.addEntity((BackgroundTile)tile);
             }
 
         }
@@ -74,7 +74,13 @@ public class BoardB implements Board {
                 tileBoard[i][j] = tile;
                 tile.setPosition(new Vector2(multiplicandX / 2 + multiplicandX * j, multiplicandY / 2 + multiplicandY * i));
                 tile.setScale(size);
-                engine.addEntity((BackgroundTile) tile);
+                //engine.addEntity((BackgroundTile) tile);
+            }
+        }
+
+        for (int i = 0; i < BOARD_WIDTH; i++) {
+            for (int j = 0; j < BOARD_HEIGHT; j++) {
+                engine.addEntity((BackgroundTile) tileBoard[i][j]);
             }
         }
 
