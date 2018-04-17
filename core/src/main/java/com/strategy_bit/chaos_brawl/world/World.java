@@ -40,6 +40,7 @@ public class World implements InputHandler {
     protected SpawnerImpl spawner;
     protected MyEngine engine;
     protected Camera camera;
+    protected Board board;
 
     public World(int map) {
         units = new HashMap<Long, Entity>();
@@ -80,13 +81,13 @@ public class World implements InputHandler {
      */
     private void createWorld(int map){
         if(map == 1){
-            BoardA board = new BoardA(engine);
+            board = new BoardA(engine);
         }
         if(map == 2){
-            BoardB board = new BoardB(engine);
+            board = new BoardB(engine);
         }
         if(map == 3){
-            BoardC board = new BoardC(engine);
+            board = new BoardC(engine);
         }
     }
 
