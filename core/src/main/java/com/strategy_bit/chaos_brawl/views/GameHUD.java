@@ -87,7 +87,7 @@ public class GameHUD extends Table implements InputProcessor{
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         System.out.println("Catched");
         if(nextUnitType != null){
-            inputHandler.createEntity(new Vector2(screenX,screenY),  nextUnitType,teamID);
+            inputHandler.createEntityScreenCoordinates(new Vector2(screenX,screenY),  nextUnitType,teamID);
             nextUnitType = null;
             return true;
         }
