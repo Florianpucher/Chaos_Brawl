@@ -7,5 +7,5 @@ package com.strategy_bit.chaos_brawl.types;
  */
 
 public enum UnitType {
-    RANGED, MELEE
+    RANGED, MELEE, MAINBUILDING, TOWER
 }

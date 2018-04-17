@@ -44,19 +44,9 @@ public enum ScreenEnum {
             return new MultiplayerGameScreen((BrawlMultiplayer) params[0]);
         }
     },
-    GAME1 {
+    GAME {
         public AbstractScreen getScreen(Object... params) {
-            return new GameScreen(1);
-        }
-    },
-    GAME2 {
-        public AbstractScreen getScreen(Object... params) {
-            return new GameScreen(2);
-        }
-    },
-    GAME3 {
-        public AbstractScreen getScreen(Object... params) {
-            return new GameScreen(3);
+            return new GameScreen((Integer) params[0]);
         }
     };
 

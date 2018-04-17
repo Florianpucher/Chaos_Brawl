@@ -32,27 +32,6 @@ public class MultiplayerWorld extends World {
         }
     }
 
-    @Override
-    public void createPlayer() {
-        Player player = new Player();
-        createEntity(player);
-    }
-    public void createTower(){
-        Tower topTower = new Tower(new Vector2(17,12));
-        createEntity(topTower);
-        Tower botTower = new Tower(new Vector2(17, 5));
-        createEntity(botTower);
-    }
-    public void createBase() {
-        Base base = new Base(new Vector2(19, 9));
-        createEntity(base);
-    }
-
-    @Override
-    public void createDummy() {
-        PlayerClone dummy = new PlayerClone(new Vector2((float) (Math.random()*10),(float) (Math.random()*10)));
-        createEntity(dummy);
-    }
 
     public void createEntity(Entity entity) {
         super.createEntity(entity);

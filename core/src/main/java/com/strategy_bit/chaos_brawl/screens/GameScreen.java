@@ -3,6 +3,8 @@ package com.strategy_bit.chaos_brawl.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.views.GameHUD;
 import com.strategy_bit.chaos_brawl.world.World;
 import com.strategy_bit.chaos_brawl.controller.PlayerController;
@@ -21,27 +23,27 @@ public class GameScreen extends AbstractScreen {
     private PlayerController controller;
 
     public GameScreen(int map) {
-        if(map == 1){
-            manager = new World(1);
-        }
-        if(map == 2){
-            manager = new World(2);
-        }
-        if(map == 3){
-            manager = new World(3);
-        }
+        manager = new World(map);
         //add User input
-        manager.createPlayer();
-        manager.createTower();
-        manager.createBase();
-        manager.createDummy();
+        initializeGame();
+    }
+
+
+    protected void initializeGame(){
+        manager.createEntityWorldCoordinates(new Vector2(5,7.5f), UnitType.MELEE, 9);
+        manager.createEntityWorldCoordinates(new Vector2(3,12), UnitType.TOWER, 9);
+        manager.createEntityWorldCoordinates(new Vector2(3,5), UnitType.TOWER, 9);
+        manager.createEntityWorldCoordinates(new Vector2(2,9), UnitType.MAINBUILDING, 9);
+        manager.createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER, 8);
+        manager.createEntityWorldCoordinates(new Vector2(17,5), UnitType.TOWER, 8);
+        manager.createEntityWorldCoordinates(new Vector2(19,9), UnitType.MAINBUILDING, 8);
     }
 
     @Override
     public void buildStage() {
         super.buildStage();
 
-        controller = new PlayerController(1);
+        controller = new PlayerController(9);
         controller.setInputHandler(manager);
         gameHUD = new GameHUD(manager, controller.getTeamID());
         addActor(gameHUD);
