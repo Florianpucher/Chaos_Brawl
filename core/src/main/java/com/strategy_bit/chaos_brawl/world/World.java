@@ -15,6 +15,7 @@ import com.strategy_bit.chaos_brawl.ashley.entity.Base;
 import com.strategy_bit.chaos_brawl.ashley.entity.TowerP;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 
@@ -85,7 +86,7 @@ public class World implements InputHandler {
     protected void createEngine(){
         engine = new MyEngine(units);
         //Add some logic
-
+        engine.addSystem(new DeleteSystem());
         engine.addSystem(new MovementSystem());
         engine.addSystem(new BulletSystem());
         engine.addSystem(new CombatSystem());
