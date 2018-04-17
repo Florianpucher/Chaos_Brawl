@@ -58,13 +58,13 @@ public class MapMenuScreen extends AbstractScreen {
             public void clicked(InputEvent event, float x, float y) {
                 String name = event.getListenerActor().getName();
                 if(name.equals(MAP_1)){
-                    screenManager.showScreen(ScreenEnum.GAME1);
+                    screenManager.showScreen(ScreenEnum.GAME, 1);
                 }
                 if(name.equals(MAP_2)){
-                    screenManager.showScreen(ScreenEnum.GAME2);
+                    screenManager.showScreen(ScreenEnum.GAME,2);
                 }
                 if(name.equals(MAP_3)){
-                    screenManager.showScreen(ScreenEnum.GAME3);
+                    screenManager.showScreen(ScreenEnum.GAME,3);
                 }
                 super.clicked(event, x, y);
             }

@@ -21,15 +21,7 @@ public class GameScreen extends AbstractScreen {
     private PlayerController controller;
 
     public GameScreen(int map) {
-        if(map == 1){
-            manager = new World(1);
-        }
-        if(map == 2){
-            manager = new World(2);
-        }
-        if(map == 3){
-            manager = new World(3);
-        }
+        manager = new World(map);
         //add User input
         manager.createPlayer();
         manager.createTower();
