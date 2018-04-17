@@ -55,28 +55,6 @@ public class World implements InputHandler {
         createWorld(1);
     }
 
-    public void createPlayer(){
-        Player player = new Player();
-        createEntity(player);
-    }
-    public void createTower(){
-        Tower topTower = new Tower(new Vector2(17,12));
-        createEntity(topTower);
-        Tower botTower = new Tower(new Vector2(17, 5));
-        createEntity(botTower);
-        TowerP topTowerP = new TowerP(new Vector2(3,12));
-        createEntity(topTowerP);
-        TowerP botTowerP = new TowerP(new Vector2(3, 5));
-        createEntity(botTowerP);
-    }
-    public void createBase() {
-        Base base = new Base(new Vector2(19, 9));
-        createEntity(base);
-    }
-    public void createDummy(){
-        PlayerClone dummy = new PlayerClone(new Vector2((float) (Math.random()*10),(float) (Math.random()*10)));
-        createEntity(dummy);
-    }
     public void createEntity(Entity entity){
         engine.addEntity(entity);
         units.put(lastID, entity);
@@ -132,11 +110,16 @@ public class World implements InputHandler {
     }
 
     @Override
-    public void createEntity(Vector2 screenCoordinates, UnitType entityType, int teamID) {
+    public void createEntityScreenCoordinates(Vector2 screenCoordinates, UnitType entityType, int teamID) {
         Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        Entity entity = spawner.createNewUnit(entityType,teamID,targetLocation);
+        createEntityWorldCoordinates(targetLocation, entityType, teamID);
+    }
+
+    @Override
+    public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
+        Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
         createEntity(entity);
     }
 

@@ -24,5 +24,13 @@ public interface InputHandler {
      * @param entityType the type of entity to spawn
      * @param teamID to which team/player this unit belongs to
      */
-    void createEntity(Vector2 screenCoordinates, UnitType entityType, int teamID);
+    void createEntityScreenCoordinates(Vector2 screenCoordinates, UnitType entityType, int teamID);
+
+    /**
+     * spawns an entity on the given coordinates for the given team
+     * @param worldCoordinates the world coordinates where the unit´s initial position is
+     * @param entityType the type of entity to spawn
+     * @param teamID to which team/player this unit belongs to
+     */
+    void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID);
 }
