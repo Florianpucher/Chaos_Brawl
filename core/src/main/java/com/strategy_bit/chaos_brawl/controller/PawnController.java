@@ -1,7 +1,7 @@
 package com.strategy_bit.chaos_brawl.controller;
 
 
-import com.badlogic.gdx.math.Matrix4;
+import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 /**
@@ -14,8 +14,13 @@ import com.strategy_bit.chaos_brawl.world.InputHandler;
 public abstract class PawnController {
 
     protected InputHandler inputHandler;
+    /**
+     * in screen Coordinates
+     */
+    protected Boundary spawnArea;
 
-    public PawnController(InputHandler inputHandler){
+    public PawnController(InputHandler inputHandler, Boundary spawnArea){
         this.inputHandler = inputHandler;
+        this.spawnArea = spawnArea;
     }
 }

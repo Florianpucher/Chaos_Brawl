@@ -40,7 +40,7 @@ public class GameScreen extends AbstractScreen {
     public void buildStage() {
         super.buildStage();
 
-        controller = new PlayerController(9, manager);
+        controller = new PlayerController(9, manager, manager.createSpawnAreaForPlayer(1));
 
         initializeGame();
     }
