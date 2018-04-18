@@ -24,8 +24,6 @@ public class GameScreen extends AbstractScreen {
 
     public GameScreen(int map) {
         manager = new World(map);
-        //add User input
-        initializeGame();
     }
 
 
@@ -47,6 +45,7 @@ public class GameScreen extends AbstractScreen {
         controller.setInputHandler(manager);
         gameHUD = new GameHUD(manager, controller.getTeamID());
         addActor(gameHUD);
+        initializeGame();
     }
 
     @Override
