@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.util;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * @author AIsopp
@@ -43,5 +44,10 @@ public class VectorMath {
 
     public static double distance(Vector2 v,Vector2 v2){
         return Math.sqrt(Math.pow(v.x-v2.x,2)+Math.pow(v.y-v2.y,2));
+    }
+
+    public static Vector2 vector3ToVector2(Vector3 vector3){
+        Vector2 vector2 = new Vector2(vector3.x,vector3.y);
+        return vector2;
     }
 }
