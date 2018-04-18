@@ -1,10 +1,9 @@
 package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
-import com.strategy_bit.chaos_brawl.util.MatrixNx2;
+import com.strategy_bit.chaos_brawl.util.Boundary;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,9 +39,9 @@ public class WorldTest {
         world = new World(1);
     }
 
-    @Test
+    /*@Test
     public void testCreateSpawnArea1(){
-        MatrixNx2 spawnArea = world.createSpawnAreaForPlayer(1);
+        Boundary spawnArea = world.createSpawnAreaForPlayer(1);
         Assert.assertArrayEquals(new Vector2[]{
                 new Vector2(0.0f, WorldSettings.FRUSTUM_HEIGHT),
                 new Vector2(5, WorldSettings.FRUSTUM_HEIGHT),
@@ -54,7 +53,7 @@ public class WorldTest {
 
     @Test
     public void testCreateSpawnArea2(){
-        MatrixNx2 spawnArea = world.createSpawnAreaForPlayer(2);
+        Boundary spawnArea = world.createSpawnAreaForPlayer(2);
         Assert.assertArrayEquals(new Vector2[]{
                 new Vector2(7.5f, WorldSettings.FRUSTUM_HEIGHT),
                 new Vector2(WorldSettings.FRUSTUM_WIDTH, WorldSettings.FRUSTUM_HEIGHT),
@@ -66,12 +65,12 @@ public class WorldTest {
     @Test
     public void testCreateSpawnArea3(){
         try{
-            MatrixNx2 spawnArea = world.createSpawnAreaForPlayer(3);
+            Boundary spawnArea = world.createSpawnAreaForPlayer(3);
             Assert.fail();
         }catch (UnsupportedOperationException e){
 
         }
 
-    }
+    }*/
 
 }
