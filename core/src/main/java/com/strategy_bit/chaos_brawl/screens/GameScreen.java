@@ -41,8 +41,8 @@ public class GameScreen extends AbstractScreen {
     public void buildStage() {
         super.buildStage();
 
-        controller = new PlayerController(9);
-        controller.setInputHandler(manager);
+        controller = new PlayerController(9, manager);
+
         gameHUD = new GameHUD(manager, controller.getTeamID());
         addActor(gameHUD);
         initializeGame();

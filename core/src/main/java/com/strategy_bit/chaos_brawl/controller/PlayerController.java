@@ -1,8 +1,8 @@
 package com.strategy_bit.chaos_brawl.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 /**
  * interface of user interface and other user input
@@ -17,9 +17,9 @@ public class PlayerController extends PawnController implements InputProcessor {
 
 
 
-    public PlayerController(int teamID) {
+    public PlayerController(int teamID, InputHandler inputHandler) {
+        super(inputHandler);
         this.teamID = teamID;
-
     }
 
     public int getTeamID() {
