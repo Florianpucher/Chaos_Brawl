@@ -4,16 +4,10 @@ package com.strategy_bit.chaos_brawl.world;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
-import com.strategy_bit.chaos_brawl.ashley.entity.Player;
-import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
-import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
-import com.strategy_bit.chaos_brawl.ashley.entity.Base;
-import com.strategy_bit.chaos_brawl.ashley.entity.TowerP;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
@@ -22,7 +16,8 @@ import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.types.UnitType;
-import com.strategy_bit.chaos_brawl.util.MatrixNx2;
+import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 
 import java.util.HashMap;
@@ -139,28 +134,41 @@ public class World implements InputHandler {
      *
      * NOTE: current playerID can be only 1 or 2
      * @param playerID for which player the spawn area will be created
-     * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in world coordinates
+     * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
      */
-    public MatrixNx2 createSpawnAreaForPlayer(int playerID){
+    public Boundary createSpawnAreaForPlayer(int playerID){
         //TODO add spawn Area boundaries and player base positions to board
         //Simple implementation for creating spawn area
         int spawnAreaWidth = 5;
-        MatrixNx2 spawnArea;
+        Boundary spawnArea;
         // current left player
         if(playerID == 1){
-            Vector2 lowerLeftCorner = new Vector2(0.0f, WorldSettings.FRUSTUM_HEIGHT);
-            Vector2 upperLeftCorner = new Vector2(0.0f, 0.0f);
-            Vector2 lowerRightCorner = new Vector2( board.getWorldCoordinateOfTile(spawnAreaWidth,0).x, WorldSettings.FRUSTUM_HEIGHT);
-            Vector2 upperRightCorner = new Vector2(board.getWorldCoordinateOfTile(spawnAreaWidth,0).x,0.0f);
-            spawnArea = new MatrixNx2(lowerLeftCorner, lowerRightCorner, upperLeftCorner, upperRightCorner);
+            Vector2 lowerLeftCorner = new Vector2(0.0f - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
+            Vector2 upperLeftCorner = new Vector2(0.0f - WorldSettings.FRUSTUM_WIDTH/2f , 0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
+            Vector2 lowerRightCorner = new Vector2( board.getWorldCoordinateOfTile(spawnAreaWidth,0).x - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
+            Vector2 upperRightCorner = new Vector2(board.getWorldCoordinateOfTile(spawnAreaWidth,0).x - WorldSettings.FRUSTUM_WIDTH/2f,0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
+
+            lowerLeftCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(lowerLeftCorner,0)));
+            upperLeftCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(upperLeftCorner,0)));
+            lowerRightCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(lowerRightCorner,0)));
+            upperRightCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(upperRightCorner,0)));
+
+            spawnArea = new Boundary(lowerLeftCorner, lowerRightCorner, upperLeftCorner, upperRightCorner);
             return spawnArea;
             //current right player
         }else if(playerID == 2){
-            Vector2 lowerRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH, WorldSettings.FRUSTUM_HEIGHT);
-            Vector2 upperRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH, 0.0f);
-            Vector2 lowerLeftCorner = new Vector2( board.getWorldCoordinateOfTile(WorldSettings.BOARD_WIDTH - 5,0).x, WorldSettings.FRUSTUM_HEIGHT);
-            Vector2 upperLeftCorner = new Vector2(board.getWorldCoordinateOfTile(WorldSettings.BOARD_WIDTH - 5,0).x,0.0f);
-            spawnArea = new MatrixNx2(lowerLeftCorner, lowerRightCorner, upperLeftCorner, upperRightCorner);
+            Vector2 lowerRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
+            Vector2 upperRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH/2f, 0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
+            Vector2 lowerLeftCorner = new Vector2( board.getWorldCoordinateOfTile(WorldSettings.BOARD_WIDTH - 5,0).x  - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
+            Vector2 upperLeftCorner = new Vector2(board.getWorldCoordinateOfTile(WorldSettings.BOARD_WIDTH - 5,0).x  - WorldSettings.FRUSTUM_WIDTH/2f,0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
+
+
+            lowerLeftCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(lowerLeftCorner,0)));
+            upperLeftCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(upperLeftCorner,0)));
+            lowerRightCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(lowerRightCorner,0)));
+            upperRightCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(upperRightCorner,0)));
+
+            spawnArea = new Boundary(lowerLeftCorner, lowerRightCorner, upperLeftCorner, upperRightCorner);
             return spawnArea;
         }
         throw new UnsupportedOperationException("Game only supports two player mode at the moment :)");
