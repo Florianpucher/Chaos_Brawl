@@ -109,4 +109,10 @@ public class BoardA implements Board {
         }
         return intBoard;
     }
+
+    @Override
+    public Vector2 getWorldCoordinateOfTile(int x, int y) {
+        Tile tile = tileBoard[y][x];
+        return new Vector2(tile.getPosition());
+    }
 }

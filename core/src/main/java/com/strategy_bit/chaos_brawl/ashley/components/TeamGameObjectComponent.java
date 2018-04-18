@@ -19,7 +19,6 @@ public class TeamGameObjectComponent implements Component {
 
     public void setHitPoints(double hitPoints) {
         this.hitPoints = hitPoints;
-        System.out.println("HitPoints: "+ hitPoints);
     }
 
     public  int getTeamId() {
