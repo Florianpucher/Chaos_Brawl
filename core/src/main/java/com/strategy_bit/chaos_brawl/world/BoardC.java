@@ -117,7 +117,7 @@ public class BoardC implements Board {
 
     @Override
     public Vector2 getWorldCoordinateOfTile(int x, int y) {
-        Tile tile = tileBoard[x][y];
+        Tile tile = tileBoard[y][x];
         return new Vector2(tile.getPosition());
     }
 
