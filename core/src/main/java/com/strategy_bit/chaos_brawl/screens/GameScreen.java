@@ -19,7 +19,6 @@ import com.strategy_bit.chaos_brawl.controller.PlayerController;
 public class GameScreen extends AbstractScreen {
 
     private World manager;
-    private GameHUD gameHUD;
     private PlayerController controller;
 
     public GameScreen(int map) {
@@ -43,8 +42,6 @@ public class GameScreen extends AbstractScreen {
 
         controller = new PlayerController(9, manager);
 
-        gameHUD = new GameHUD(manager, controller.getTeamID());
-        addActor(gameHUD);
         initializeGame();
     }
 
@@ -53,9 +50,9 @@ public class GameScreen extends AbstractScreen {
         super.show();
         //TODO input needs to be changed
         // The order of adding the input processors plays an important role!!!
+        controller.addGameHUD(this);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
-        inputMultiplexer.addProcessor(gameHUD);
         inputMultiplexer.addProcessor(controller);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }

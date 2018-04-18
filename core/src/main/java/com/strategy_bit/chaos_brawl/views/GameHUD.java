@@ -18,24 +18,15 @@ import com.strategy_bit.chaos_brawl.world.InputHandler;
  * @version 1.0
  * @since 16.04.2018
  */
-public class GameHUD extends Table implements InputProcessor{
+public class GameHUD extends Table{
 
-    private InputHandler inputHandler;
     private static final String NEW_UNIT_1 = "UNIT_1";
 
     private boolean catchNextUserInput;
     private UnitType nextUnitType;
-    private int teamID;
 
-    /**
-     * Implementation for a classic gameHud
-     * @param inputHandler on what world do you want to spawn the units
-     * @param teamID used for spawning units for the given team
-     */
-    public GameHUD(InputHandler inputHandler, int teamID) {
+    public GameHUD() {
         super(AssetManager.getInstance().defaultSkin);
-        this.inputHandler = inputHandler;
-        this.teamID = teamID;
         catchNextUserInput = false;
         AssetManager assetManager = AssetManager.getInstance();
         final TextButton btnNewUnit1 = new TextButton(NEW_UNIT_1, assetManager.defaultSkin);
@@ -67,50 +58,11 @@ public class GameHUD extends Table implements InputProcessor{
         btnNewUnit1.addListener(listener);
     }
 
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
+    public UnitType getUnitToSpawn(){
+        UnitType current = nextUnitType;
+        nextUnitType = null;
+        return current;
     }
 
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
 
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("Catched");
-        if(nextUnitType != null){
-            inputHandler.createEntityScreenCoordinates(new Vector2(screenX,screenY),  nextUnitType,teamID);
-            nextUnitType = null;
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
 }
