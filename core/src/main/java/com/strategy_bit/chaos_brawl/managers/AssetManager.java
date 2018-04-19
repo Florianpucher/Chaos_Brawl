@@ -54,8 +54,8 @@ public class AssetManager {
         TowerSkinP = new TextureRegion(new Texture("Towerp.png"));
         BaseSkin = new TextureRegion(new Texture("Base.png"));
         ballistaTowerSkin = new TextureRegion(new Texture("ballista_tower.png"));
-        wallSkin = new TextureRegion(new Texture("wall.9.png"));
-        resourceSkin=new TextureRegion(new Texture("resource.png"));
+        wallSkin = new TextureRegion(new Texture("wall.png"));
+        resourceSkin=new TextureRegion(new Texture("resource.9.png"));
     }
 
 

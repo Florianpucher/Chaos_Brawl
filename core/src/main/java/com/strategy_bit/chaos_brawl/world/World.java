@@ -6,8 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
-import com.strategy_bit.chaos_brawl.ResourceSystem.ResourceGold;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
@@ -22,7 +20,6 @@ import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -37,7 +34,6 @@ public class World implements InputHandler {
     protected long lastID = 0;
 
     protected HashMap<Long, Entity> units;
-
 
     protected SpawnerImpl spawner;
     protected MyEngine engine;

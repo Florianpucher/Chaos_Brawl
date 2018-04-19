@@ -16,6 +16,8 @@ import com.strategy_bit.chaos_brawl.world.World;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -50,6 +52,14 @@ public abstract class PawnController {
         }
 
 
+    }
+    public void startTicking(){
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                tick();
+            }
+        }, 0, 1);
     }
     public void createResource(){
         Resource resource=new ResourceGold();
