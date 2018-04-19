@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -19,7 +20,8 @@ public class AssetManager {
     public  Skin defaultSkin;
     public TextureRegion playerSkin;
     public TextureRegion projectileSkin;
-    public TextureRegion resourceSkin;
+    public NinePatch resourceSkinOuter;
+    public NinePatch resourceSkinInner;
     public TextureRegion defaultTile;
     public TextureRegion waterTile;
     public TextureRegion dirtTile;
@@ -54,8 +56,9 @@ public class AssetManager {
         TowerSkinP = new TextureRegion(new Texture("Towerp.png"));
         BaseSkin = new TextureRegion(new Texture("Base.png"));
         ballistaTowerSkin = new TextureRegion(new Texture("ballista_tower.png"));
-        wallSkin = new TextureRegion(new Texture("wall.9.png"));
-        resourceSkin=new TextureRegion(new Texture("resource.png"));
+        wallSkin = new TextureRegion(new Texture("wall.png"));
+        resourceSkinOuter = new NinePatch(new Texture("resourceBarOuterBorder.9.png"));
+        resourceSkinInner = new NinePatch(new Texture("resourceBarInner.9.png"));
     }
 
 
@@ -70,6 +73,7 @@ public class AssetManager {
         BaseSkin.getTexture().dispose();
         ballistaTowerSkin.getTexture().dispose();
         wallSkin.getTexture().dispose();
-        resourceSkin.getTexture().dispose();
+        resourceSkinOuter.getTexture().dispose();
+        resourceSkinInner.getTexture().dispose();
     }
 }

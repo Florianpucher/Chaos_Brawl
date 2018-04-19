@@ -8,6 +8,7 @@ import com.strategy_bit.chaos_brawl.ashley.entity.Base;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
 import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
+import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
@@ -38,13 +39,14 @@ public abstract class PawnController {
     public PawnController(InputHandler inputHandler, Boundary spawnArea){
         this.inputHandler = inputHandler;
         this.spawnArea = spawnArea;
+        this.resources = new ArrayList<Resource>();
         createResource();
     }
     public void tick(){
         for (Resource r :
                 resources) {
             r.add(rate);
-            float width=MAX_WIDTH*(float) r.percentageFull();
+            //float width= WorldSettings.MAX_WIDTH*(float) r.percentageFull();
             //TODO paint bars somewhere on screen with percentage
 
         }

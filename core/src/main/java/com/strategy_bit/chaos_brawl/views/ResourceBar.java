@@ -23,12 +23,4 @@ public class ResourceBar {
         this.color = color;
     }
 
-    public void draw(SpriteBatch spriteBatch,float x,float y,float width,float height){
-        AssetManager assetManager = AssetManager.getInstance();
-        Texture texture = assetManager.resourceSkin.getTexture();
-        NinePatch patch = new NinePatch(texture, 15, 15, 15, 15);
-        NinePatchDrawable ninePatch = new NinePatchDrawable(patch);
-        ninePatch.draw(spriteBatch, x, y, width, height);
-    }
-
 }
