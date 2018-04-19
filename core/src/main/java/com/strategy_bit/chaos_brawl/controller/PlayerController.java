@@ -17,17 +17,11 @@ import com.strategy_bit.chaos_brawl.world.InputHandler;
  */
 public class PlayerController extends PawnController implements InputProcessor {
 
-    private int teamID;
     private GameHUD gameHUD;
 
 
     public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
-        super(inputHandler, spawnArea);
-        this.teamID = teamID;
-    }
-
-    public int getTeamID() {
-        return teamID;
+        super(teamID,inputHandler, spawnArea);
     }
 
     @Override
