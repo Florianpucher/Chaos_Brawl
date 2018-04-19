@@ -52,12 +52,12 @@ public class GameHUD extends Table{
                 super.clicked(event, x, y);
                 String name = event.getListenerActor().getName();
                 if(name.equals(NEW_UNIT_1)){
-                    if(nextUnitType == UnitType.RANGED){
+                    if(nextUnitType == UnitType.MELEE){
                         setBackground((Drawable) null);
                         nextUnitType = null;
                     }else{
                         setBackground(new TextureRegionDrawable(new TextureRegion(nonSpawnAreaTexture)));
-                        nextUnitType = UnitType.RANGED;
+                        nextUnitType = UnitType.MELEE;
                     }
                 }
 
