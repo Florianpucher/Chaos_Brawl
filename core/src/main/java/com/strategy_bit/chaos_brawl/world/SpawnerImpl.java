@@ -24,16 +24,13 @@ public class SpawnerImpl {
 
     public Entity createNewUnit(UnitType unitType, int teamID, Vector2 position) {
         Entity entity = null;
-        double cost=Double.MIN_VALUE;
 
         switch (unitType) {
             case RANGED:
                 entity = new PlayerClone(position, teamID);
-                cost=PlayerClone.COST;
                 break;
             case MELEE:
                 entity = new Player(position, teamID);
-                cost=Player.COST;
                 break;
             case MAINBUILDING:
                 entity = new Base(position, teamID);
@@ -42,15 +39,7 @@ public class SpawnerImpl {
                 entity = new Tower(position, teamID);
                 break;
         }
-        if(cost!=Double.MIN_VALUE){
-            Resource resource=world.resources.get((long)teamID);
-            if(resource!=null) {
-                if (!resource.add(-cost)) {
-                    //not enough resoureces
-                    return null;
-                }
-            }
-        }
+
         return entity;
     }
 }

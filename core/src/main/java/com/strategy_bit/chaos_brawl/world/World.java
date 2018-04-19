@@ -22,6 +22,7 @@ import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -36,7 +37,7 @@ public class World implements InputHandler {
     protected long lastID = 0;
 
     protected HashMap<Long, Entity> units;
-    protected HashMap<Long, Resource> resources;
+
 
     protected SpawnerImpl spawner;
     protected MyEngine engine;
@@ -45,7 +46,6 @@ public class World implements InputHandler {
 
     public World(int map) {
         units = new HashMap<Long, Entity>();
-        resources= new HashMap<Long, Resource>();
         spawner = new SpawnerImpl(this);
         createEngine();
         createWorld(map);
@@ -67,7 +67,6 @@ public class World implements InputHandler {
     protected void createEngine(){
         engine = new MyEngine(units);
         //Add some logic
-        engine.addSystem(new Resourcesystem());
         engine.addSystem(new DeleteSystem());
         engine.addSystem(new MovementSystem());
         engine.addSystem(new BulletSystem());
@@ -187,8 +186,5 @@ public class World implements InputHandler {
         return camera;
     }
 
-    public void createResource(int teamId){
-        Resource resource=new ResourceGold(teamId);
-        resources.put((long)teamId,resource);
-    }
+
 }
