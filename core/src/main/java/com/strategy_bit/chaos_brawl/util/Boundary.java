@@ -40,4 +40,20 @@ public class Boundary {
         builder.append(lowerLeft).append(lowerRight).append(upperLeft).append(upperRight);
         return builder.toString();
     }
+
+    public Vector2 getLowerLeft() {
+        return lowerLeft;
+    }
+
+    public Vector2 getLowerRight() {
+        return lowerRight;
+    }
+
+    public Vector2 getUpperLeft() {
+        return upperLeft;
+    }
+
+    public Vector2 getUpperRight() {
+        return upperRight;
+    }
 }
