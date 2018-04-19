@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.BaseTest;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
@@ -46,7 +47,7 @@ public class WorldTest extends BaseTest {
 
         PowerMockito.whenNew(RenderSystem.class).withNoArguments().thenReturn(renderSystem);
         PowerMockito.whenNew(BoardA.class).withAnyArguments().thenReturn(boardA);
-        world = new World(1);
+        world = new World(1,2);
 
 
     }
