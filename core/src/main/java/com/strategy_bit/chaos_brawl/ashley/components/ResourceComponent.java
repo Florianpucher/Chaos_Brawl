@@ -45,8 +45,14 @@ public class ResourceComponent implements Component {
     public void setTeamId(int teamId) {
         this.teamId = teamId;
     }
-    public void add(double a){
-        setResources(getResources()+a);
+    synchronized public  boolean  add(double a){
+        if(-a>getResources()){
+            return false;
+        }
+        else {
+            setResources(getResources() + a);
+            return true;
+        }
     }
     public double percentageFull(){
         return getResources()/MAX_RESOURCES;

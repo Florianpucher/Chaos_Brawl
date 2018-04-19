@@ -36,6 +36,7 @@ public class World implements InputHandler {
     protected long lastID = 0;
 
     protected HashMap<Long, Entity> units;
+    protected HashMap<Long, Entity> resources;
 
     protected SpawnerImpl spawner;
     protected MyEngine engine;
@@ -44,14 +45,15 @@ public class World implements InputHandler {
 
     public World(int map) {
         units = new HashMap<Long, Entity>();
-        spawner = new SpawnerImpl();
+        resources= new HashMap<Long, Entity>();
+        spawner = new SpawnerImpl(this);
         createEngine();
         createWorld(map);
     }
 
     public World() {
         units = new HashMap<Long, Entity>();
-        spawner = new SpawnerImpl();
+        spawner = new SpawnerImpl(this);
         createEngine();
         createWorld(1);
     }
@@ -122,6 +124,10 @@ public class World implements InputHandler {
     @Override
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
         Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
+        if(entity==null){
+            //not enough resources
+            return;
+        }
         createEntity(entity);
     }
 
@@ -184,5 +190,6 @@ public class World implements InputHandler {
     public void createResource(int teamId){
         Entity resource=new Resource(teamId);
         engine.addEntity(resource);
+        resources.put((long)teamId,resource);
     }
 }
