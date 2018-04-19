@@ -6,16 +6,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
+import com.strategy_bit.chaos_brawl.ResourceSystem.ResourceGold;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
-import com.strategy_bit.chaos_brawl.ashley.entity.Resource;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 
-import com.strategy_bit.chaos_brawl.ashley.systems.Resourcesystem;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
@@ -36,7 +36,7 @@ public class World implements InputHandler {
     protected long lastID = 0;
 
     protected HashMap<Long, Entity> units;
-    protected HashMap<Long, Entity> resources;
+    protected HashMap<Long, Resource> resources;
 
     protected SpawnerImpl spawner;
     protected MyEngine engine;
@@ -45,7 +45,7 @@ public class World implements InputHandler {
 
     public World(int map) {
         units = new HashMap<Long, Entity>();
-        resources= new HashMap<Long, Entity>();
+        resources= new HashMap<Long, Resource>();
         spawner = new SpawnerImpl(this);
         createEngine();
         createWorld(map);
@@ -188,8 +188,7 @@ public class World implements InputHandler {
     }
 
     public void createResource(int teamId){
-        Entity resource=new Resource(teamId);
-        engine.addEntity(resource);
+        Resource resource=new ResourceGold(teamId);
         resources.put((long)teamId,resource);
     }
 }

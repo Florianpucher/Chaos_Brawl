@@ -16,7 +16,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.ashley.components.ResourceComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
@@ -46,7 +45,6 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
 
     private ComponentMapper<TextureComponent> textureMapper;
     private ComponentMapper<TransformComponent> transformMapper;
-    protected ComponentMapper<ResourceComponent> mResourceComponent;
     private SpriteBatch batch;
     private Array<Entity> renderQueue;
     private ZComparator comparator;
@@ -58,7 +56,6 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         //initialize component mapper
         textureMapper = ComponentMapper.getFor(TextureComponent.class);
         transformMapper = ComponentMapper.getFor(TransformComponent.class);
-        mResourceComponent=ComponentMapper.getFor(ResourceComponent.class);
         //initialize additional used components
         batch = new SpriteBatch();
         renderQueue = new Array<Entity>();
@@ -111,21 +108,6 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                     transform.getScale().x * PIXELS_TO_METRES, transform.getScale().y * PIXELS_TO_METRES,
                     MathUtils.radiansToDegrees * transform.getRotation());
 
-            ResourceComponent resourceComponent=mResourceComponent.get(entity);
-            if(resourceComponent!=null){
-                //update Resource bar
-                Pixmap resourceBar=new Pixmap((int)(width* resourceComponent.percentageFull()),(int)height, Pixmap.Format.RGB565);
-                resourceBar.setColor(Color.GOLD);
-                resourceBar.fillRectangle(0,0, resourceBar.getWidth(), resourceBar.getHeight() );
-                TextureRegion reourceCount=new TextureRegion(new Texture(resourceBar));
-                batch.draw(reourceCount,
-                        transform.getPosition().x - originX, transform.getPosition().y - originY,
-                        originX, originY,
-                        reourceCount.getRegionWidth(), height,
-                        transform.getScale().x * PIXELS_TO_METRES, transform.getScale().y * PIXELS_TO_METRES,
-                        MathUtils.radiansToDegrees * transform.getRotation());
-
-            }
         }
         batch.end();
         //clear render queue

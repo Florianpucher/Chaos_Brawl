@@ -1,18 +1,14 @@
 package com.strategy_bit.chaos_brawl.world;
 
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.ashley.components.ResourceComponent;
+import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
 import com.strategy_bit.chaos_brawl.ashley.entity.Base;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
-import com.strategy_bit.chaos_brawl.ashley.entity.Resource;
 import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
 import com.strategy_bit.chaos_brawl.types.UnitType;
-
-import static com.strategy_bit.chaos_brawl.types.UnitType.*;
 
 /**
  * @author AIsopp
@@ -47,10 +43,9 @@ public class SpawnerImpl {
                 break;
         }
         if(cost!=Double.MIN_VALUE){
-            Entity resource=world.resources.get((long)teamID);
+            Resource resource=world.resources.get((long)teamID);
             if(resource!=null) {
-                ResourceComponent resourceComponent = resource.getComponent(ResourceComponent.class);
-                if (!resourceComponent.add(-cost)) {
+                if (!resource.add(-cost)) {
                     //not enough resoureces
                     return null;
                 }
