@@ -30,14 +30,11 @@ public class GameHUD extends Table{
 
     private static final String NEW_UNIT_1 = "UNIT_1";
 
-    private boolean catchNextUserInput;
     private UnitType nextUnitType;
-    private Image nonSpawnAreaShadow;
     private Texture nonSpawnAreaTexture;
 
     public GameHUD(Boundary spawnArea) {
         super(AssetManager.getInstance().defaultSkin);
-        catchNextUserInput = false;
         AssetManager assetManager = AssetManager.getInstance();
         initializeNonSpawnAreaShadow(spawnArea);
 
@@ -83,7 +80,7 @@ public class GameHUD extends Table{
                 (int)(spawnArea.getUpperRight().x - spawnArea.getUpperLeft().x)+","+
                 (int) (spawnArea.getLowerLeft().y - spawnArea.getUpperRight().y));
         nonSpawnAreaTexture = new Texture(pixmap);
-        nonSpawnAreaShadow = new Image(nonSpawnAreaTexture);
+        pixmap.dispose();
     }
 
     public UnitType getUnitToSpawn(){
