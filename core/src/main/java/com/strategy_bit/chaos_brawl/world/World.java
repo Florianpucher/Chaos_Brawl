@@ -8,12 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entity.Resource;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 
+import com.strategy_bit.chaos_brawl.ashley.systems.Resourcesystem;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
@@ -63,6 +65,7 @@ public class World implements InputHandler {
     protected void createEngine(){
         engine = new MyEngine(units);
         //Add some logic
+        engine.addSystem(new Resourcesystem());
         engine.addSystem(new DeleteSystem());
         engine.addSystem(new MovementSystem());
         engine.addSystem(new BulletSystem());
@@ -176,5 +179,10 @@ public class World implements InputHandler {
 
     public Camera getCamera() {
         return camera;
+    }
+
+    public void createResource(int teamId){
+        Entity resource=new Resource(teamId);
+        engine.addEntity(resource);
     }
 }

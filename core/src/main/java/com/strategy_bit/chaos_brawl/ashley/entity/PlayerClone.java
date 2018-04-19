@@ -18,7 +18,7 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  * @since 15.03.2018
  */
 public class PlayerClone extends Entity {
-
+    public final static double COST=5.0;
     public PlayerClone(Vector2 position) {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
@@ -27,6 +27,7 @@ public class PlayerClone extends Entity {
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
         CombatComponent combatComponent = new CombatComponent(100.0,0,1,0,true);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(25.0,6);
+
         add(transformComponent);
         add(textureComponent);
         add(movementComponent);

@@ -34,6 +34,7 @@ public class GameScreen extends AbstractScreen {
         manager.createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER, 8);
         manager.createEntityWorldCoordinates(new Vector2(17,5), UnitType.TOWER, 8);
         manager.createEntityWorldCoordinates(new Vector2(19,9), UnitType.MAINBUILDING, 8);
+        manager.createResource(9);
     }
 
     @Override

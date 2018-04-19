@@ -19,6 +19,7 @@ public class AssetManager {
     public  Skin defaultSkin;
     public TextureRegion playerSkin;
     public TextureRegion projectileSkin;
+    public TextureRegion resourceSkin;
     public TextureRegion defaultTile;
     public TextureRegion waterTile;
     public TextureRegion dirtTile;
@@ -54,6 +55,7 @@ public class AssetManager {
         BaseSkin = new TextureRegion(new Texture("Base.png"));
         ballistaTowerSkin = new TextureRegion(new Texture("ballista_tower.png"));
         wallSkin = new TextureRegion(new Texture("wall.png"));
+        resourceSkin=new TextureRegion(new Texture("resource.png"));
     }
 
 
@@ -68,5 +70,6 @@ public class AssetManager {
         BaseSkin.getTexture().dispose();
         ballistaTowerSkin.getTexture().dispose();
         wallSkin.getTexture().dispose();
+        resourceSkin.getTexture().dispose();
     }
 }
