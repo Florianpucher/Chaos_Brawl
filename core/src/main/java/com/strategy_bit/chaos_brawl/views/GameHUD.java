@@ -2,14 +2,22 @@ package com.strategy_bit.chaos_brawl.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.UnitType;
+import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 /**
@@ -24,11 +32,15 @@ public class GameHUD extends Table{
 
     private boolean catchNextUserInput;
     private UnitType nextUnitType;
+    private Image nonSpawnAreaShadow;
+    private Texture nonSpawnAreaTexture;
 
-    public GameHUD() {
+    public GameHUD(Boundary spawnArea) {
         super(AssetManager.getInstance().defaultSkin);
         catchNextUserInput = false;
         AssetManager assetManager = AssetManager.getInstance();
+        initializeNonSpawnAreaShadow(spawnArea);
+
         final TextButton btnNewUnit1 = new TextButton(NEW_UNIT_1, assetManager.defaultSkin);
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
@@ -42,26 +54,47 @@ public class GameHUD extends Table{
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 String name = event.getListenerActor().getName();
-                System.out.println("Spawn unit on next click");
                 if(name.equals(NEW_UNIT_1)){
                     if(nextUnitType == UnitType.RANGED){
+                        setBackground((Drawable) null);
                         nextUnitType = null;
                     }else{
-                        System.out.println("Spawn unit on next click");
+                        setBackground(new TextureRegionDrawable(new TextureRegion(nonSpawnAreaTexture)));
                         nextUnitType = UnitType.RANGED;
                     }
                 }
 
             }
         };
-        System.out.println("init game hud");
         btnNewUnit1.addListener(listener);
     }
 
+    public void initializeNonSpawnAreaShadow(Boundary spawnArea){
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
+        pixmap.setBlending(Pixmap.Blending.None);
+        pixmap.setColor(0,0,0,150);
+        //pixmap.drawRectangle(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        pixmap.fillRectangle(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        pixmap.setColor(Color.CLEAR);
+        pixmap.fillRectangle((int)(spawnArea.getUpperLeft().x), (int)(spawnArea.getUpperLeft().y),
+                (int)(spawnArea.getUpperRight().x - spawnArea.getUpperLeft().x),
+                (int) (spawnArea.getLowerRight().y - spawnArea.getUpperRight().y));
+        System.out.println((int)(spawnArea.getUpperLeft().x) +","+ (int)(spawnArea.getUpperLeft().y)+","+
+                (int)(spawnArea.getUpperRight().x - spawnArea.getUpperLeft().x)+","+
+                (int) (spawnArea.getLowerLeft().y - spawnArea.getUpperRight().y));
+        nonSpawnAreaTexture = new Texture(pixmap);
+        nonSpawnAreaShadow = new Image(nonSpawnAreaTexture);
+    }
+
     public UnitType getUnitToSpawn(){
+        setBackground((Drawable) null);
         UnitType current = nextUnitType;
         nextUnitType = null;
         return current;
+    }
+
+    public void dispose(){
+        nonSpawnAreaTexture.dispose();
     }
 
 

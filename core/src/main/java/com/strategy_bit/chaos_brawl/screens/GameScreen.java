@@ -70,6 +70,7 @@ public class GameScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
         manager.dispose();
+        controller.dispose();
     }
 
 
