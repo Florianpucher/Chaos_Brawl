@@ -15,6 +15,7 @@ public abstract class PawnController {
 
     protected int teamID;
     protected InputHandler inputHandler;
+    protected int currentTargetTeam;
     /**
      * in screen Coordinates
      */
@@ -28,5 +29,13 @@ public abstract class PawnController {
 
     public int getTeamID() {
         return teamID;
+    }
+
+    public int getCurrentTargetTeam() {
+        return currentTargetTeam;
+    }
+
+    public void setCurrentTargetTeam(int currentTargetTeam) {
+        this.currentTargetTeam = currentTargetTeam;
     }
 }

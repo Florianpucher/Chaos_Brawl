@@ -35,14 +35,16 @@ public class GameScreen extends AbstractScreen {
     public void buildStage() {
         super.buildStage();
 
-        controller = new PlayerController(9, manager, manager.createSpawnAreaForPlayer(1));
-        otherPlayerController = new AI_Controller(8,manager, manager.createSpawnAreaForPlayer(2));
+        controller = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(1));
+        otherPlayerController = new AI_Controller(1,manager, manager.createSpawnAreaForPlayer(2));
         initializeGame();
     }
 
     protected void initializeGame(){
         manager.setPlayerController(0, controller);
+        controller.setCurrentTargetTeam(1);
         manager.setPlayerController(1,otherPlayerController);
+        otherPlayerController.setCurrentTargetTeam(0);
         manager.initializeGameForPlayers();
     }
 

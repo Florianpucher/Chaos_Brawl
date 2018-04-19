@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
@@ -42,11 +43,13 @@ public class World implements InputHandler {
     protected Camera camera;
     protected Board board;
     protected PawnController[] playerControllers;
+    protected Entity[] bases;
 
     public World(int map, int players) {
         units = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
+        bases = new Entity[players];
         createEngine();
         createWorld(map);
     }
@@ -138,6 +141,16 @@ public class World implements InputHandler {
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
         Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
         createEntity(entity);
+        if(entityType.equals(UnitType.MAINBUILDING)){
+            bases[teamID] = entity;
+        }
+        MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
+        if(movementComponent != null){
+            //TODO add pathfinding here Florian but maybe with ThreadPool implementation!!!
+            movementComponent.setTargetLocation(bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+        }
+        //Move entity to enemy player
+
     }
 
     public void moveEntity(Vector2 worldCoordinates, long entityID){
