@@ -36,7 +36,7 @@ public abstract class PawnController {
      */
     protected Boundary spawnArea;
     protected ArrayList<Resource> resources;
-    private static final double rate=10.0;
+    private static final double rate=0.1;
 
     public PawnController(InputHandler inputHandler, Boundary spawnArea){
         this.inputHandler = inputHandler;
@@ -48,12 +48,7 @@ public abstract class PawnController {
         for (Resource r :
                 resources) {
             r.add(rate);
-            //float width= WorldSettings.MAX_WIDTH*(float) r.percentageFull();
-            //TODO paint bars somewhere on screen with percentage
-
         }
-
-
     }
     public void startTicking(){
         new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -61,7 +56,7 @@ public abstract class PawnController {
             public void run() {
                 tick();
             }
-        }, 0, 1);
+        }, 0, 100);
     }
     public void createResource(){
         Resource resource=new ResourceGold();

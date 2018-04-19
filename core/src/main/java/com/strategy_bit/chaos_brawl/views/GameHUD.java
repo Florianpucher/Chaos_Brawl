@@ -42,6 +42,7 @@ public class GameHUD extends Table{
     private NinePatchDrawable resourceBar;
     private NinePatchDrawable resourceBarOuter;
     private Stack resourceStack;
+    public ProgressBar manaBar;
 
     public GameHUD(Boundary spawnArea) {
         super(AssetManager.getInstance().defaultSkin);
@@ -61,10 +62,11 @@ public class GameHUD extends Table{
         resourceBarOuter = new NinePatchDrawable(assetManager.resourceSkinOuter);
         resourceBar = new NinePatchDrawable(assetManager.resourceSkinInner);
         ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(resourceBarOuter, resourceBar);
-        ProgressBar manaBar = new ProgressBar(0, 100, 10, false, progressBarStyle);
+        progressBarStyle.knobBefore=progressBarStyle.knob;
+        manaBar = new ProgressBar(0, 100, 0.1f, false, progressBarStyle);
 
         add(manaBar).width(400);
-        manaBar.setValue(75);
+        manaBar.setValue(0);
         ClickListener listener = new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
