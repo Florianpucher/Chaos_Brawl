@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
@@ -15,6 +16,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
+import com.strategy_bit.chaos_brawl.controller.PawnController;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
@@ -39,10 +41,12 @@ public class World implements InputHandler {
     protected MyEngine engine;
     protected Camera camera;
     protected Board board;
+    protected PawnController[] playerControllers;
 
-    public World(int map) {
+    public World(int map, int players) {
         units = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
+        playerControllers = new PawnController[players];
         createEngine();
         createWorld(map);
     }
@@ -50,8 +54,22 @@ public class World implements InputHandler {
     public World() {
         units = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
+        playerControllers = new PawnController[2];
         createEngine();
         createWorld(1);
+    }
+
+    public void setPlayerController(int index, PawnController pawnController){
+        playerControllers[index] = pawnController;
+    }
+
+    public void initializeGameForPlayers(){
+        createEntityWorldCoordinates(new Vector2(3,12), UnitType.TOWER,  playerControllers[0].getTeamID());
+        createEntityWorldCoordinates(new Vector2(3,5), UnitType.TOWER,  playerControllers[0].getTeamID());
+        createEntityWorldCoordinates(new Vector2(2,9), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
+        createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
+        createEntityWorldCoordinates(new Vector2(17,5), UnitType.TOWER,  playerControllers[1].getTeamID());
+        createEntityWorldCoordinates(new Vector2(19,9), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
     }
 
     public void createEntity(Entity entity){
@@ -137,7 +155,7 @@ public class World implements InputHandler {
      * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
      */
     public Boundary createSpawnAreaForPlayer(int playerID){
-        //TODO add spawn Area boundaries and player base positions to board
+        //TODO move spawn Area boundaries and player base positions to board
         //Simple implementation for creating spawn area
         int spawnAreaWidth = 5;
         Boundary spawnArea;
