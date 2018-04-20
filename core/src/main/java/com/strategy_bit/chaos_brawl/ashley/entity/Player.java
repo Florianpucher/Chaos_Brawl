@@ -18,7 +18,6 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  * @since 15.03.2018
  */
 public class Player extends Entity {
-public final static double COST=10.0;
     public Player() {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(new Vector2(5,7.5f));

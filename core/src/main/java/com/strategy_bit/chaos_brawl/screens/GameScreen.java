@@ -46,8 +46,8 @@ public class GameScreen extends AbstractScreen {
         manager.setPlayerController(1,otherPlayerController);
         otherPlayerController.setCurrentTargetTeam(0);
         manager.initializeGameForPlayers();
-        controller.startTicking();
-        otherPlayerController.startTicking();
+        //controller.startTicking();
+        //otherPlayerController.startTicking();
     }
 
     @Override

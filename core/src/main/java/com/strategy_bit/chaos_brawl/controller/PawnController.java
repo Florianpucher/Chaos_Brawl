@@ -65,7 +65,7 @@ public abstract class PawnController {
             r.add(rate);
         }
     }
-    public void startTicking(){
+    /*public void startTicking(){
         //TODO change this
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -75,7 +75,7 @@ public abstract class PawnController {
         }, 0, 1000);
         
         System.out.println("Player "+teamID+" started ticking");
-    }
+    }*/
     public void createResource(){
         Resource resource=new ResourceGold(teamID);
         resources.add(resource);
@@ -91,17 +91,7 @@ public abstract class PawnController {
         return false;
     }
     public boolean spawnUnit(UnitType unitType){
-        double cost=0.0;
-        switch (unitType){
-            case RANGED:
-                cost=PlayerClone.COST;
-                break;
-            case MELEE:
-                cost=Player.COST;
-                break;
-            default:
-                break;
-        }
+        double cost= unitType.getCosts();
         return checkAndSubtract(cost,"Gold");
     }
 }
