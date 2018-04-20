@@ -91,17 +91,7 @@ public abstract class PawnController {
         return false;
     }
     public boolean spawnUnit(UnitType unitType){
-        double cost=0.0;
-        switch (unitType){
-            case RANGED:
-                cost=PlayerClone.COST;
-                break;
-            case MELEE:
-                cost=Player.COST;
-                break;
-            default:
-                break;
-        }
+        double cost= unitType.getCosts();
         return checkAndSubtract(cost,"Gold");
     }
 }
