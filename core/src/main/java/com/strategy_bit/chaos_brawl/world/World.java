@@ -44,6 +44,7 @@ public class World implements InputHandler {
     protected Board board;
     protected PawnController[] playerControllers;
     protected Entity[] bases;
+    protected long resourceTimeStamp;
 
     public World(int map, int players) {
         units = new HashMap<Long, Entity>();
@@ -73,6 +74,7 @@ public class World implements InputHandler {
         createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(17,5), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(19,9), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
+        resourceTimeStamp = System.currentTimeMillis();
     }
 
     public void createEntity(Entity entity){
@@ -111,6 +113,13 @@ public class World implements InputHandler {
     }
 
     public void render(){
+        if(System.currentTimeMillis() - resourceTimeStamp > 1000){
+            for (PawnController controller :
+                    playerControllers) {
+                controller.tick();
+                resourceTimeStamp = System.currentTimeMillis();
+            }
+        }
         engine.update(Gdx.graphics.getDeltaTime());
     }
 

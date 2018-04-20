@@ -65,7 +65,7 @@ public abstract class PawnController {
             r.add(rate);
         }
     }
-    public void startTicking(){
+    /*public void startTicking(){
         //TODO change this
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -75,7 +75,7 @@ public abstract class PawnController {
         }, 0, 1000);
         
         System.out.println("Player "+teamID+" started ticking");
-    }
+    }*/
     public void createResource(){
         Resource resource=new ResourceGold(teamID);
         resources.add(resource);
