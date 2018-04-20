@@ -17,9 +17,7 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
  */
 //TODO move every creation of an entity here
 public class SpawnerImpl {
-    World world;
-    public SpawnerImpl(World world) {
-        this.world=world;
+    public SpawnerImpl() {
     }
 
     public Entity createNewUnit(UnitType unitType, int teamID, Vector2 position) {
