@@ -29,7 +29,16 @@ public class GameScreen extends AbstractScreen {
     }
 
 
-
+    protected void initializeGame(){
+        manager.createEntityWorldCoordinates(new Vector2(5,7.5f), UnitType.MELEE, 9);
+        manager.createEntityWorldCoordinates(new Vector2(3,12), UnitType.TOWER, 9);
+        manager.createEntityWorldCoordinates(new Vector2(3,5), UnitType.TOWER, 9);
+        manager.createEntityWorldCoordinates(new Vector2(2,9), UnitType.MAINBUILDING, 9);
+        manager.createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER, 8);
+        manager.createEntityWorldCoordinates(new Vector2(17,5), UnitType.TOWER, 8);
+        manager.createEntityWorldCoordinates(new Vector2(19,9), UnitType.MAINBUILDING, 8);
+        controller.startTicking();
+    }
 
     @Override
     public void buildStage() {

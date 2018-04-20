@@ -3,13 +3,12 @@ package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
 import com.strategy_bit.chaos_brawl.ashley.entity.Base;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
 import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
 import com.strategy_bit.chaos_brawl.types.UnitType;
-
-import static com.strategy_bit.chaos_brawl.types.UnitType.*;
 
 /**
  * @author AIsopp
@@ -18,7 +17,10 @@ import static com.strategy_bit.chaos_brawl.types.UnitType.*;
  */
 //TODO move every creation of an entity here
 public class SpawnerImpl {
-
+    World world;
+    public SpawnerImpl(World world) {
+        this.world=world;
+    }
 
     public Entity createNewUnit(UnitType unitType, int teamID, Vector2 position) {
         Entity entity = null;
@@ -37,6 +39,7 @@ public class SpawnerImpl {
                 entity = new Tower(position, teamID);
                 break;
         }
+
         return entity;
     }
 }

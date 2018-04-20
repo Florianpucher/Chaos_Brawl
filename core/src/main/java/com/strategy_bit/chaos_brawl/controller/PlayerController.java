@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.controller;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.views.GameHUD;
@@ -48,6 +49,7 @@ public class PlayerController extends PawnController implements InputProcessor {
 
             if(current != null && spawnArea.checkIfVectorIsInside(screenCoordinates)){
                 System.out.println("Click");
+
                 inputHandler.createEntityScreenCoordinates(screenCoordinates,current, teamID);
                 return false;
             }
@@ -95,6 +97,17 @@ public class PlayerController extends PawnController implements InputProcessor {
     public void dispose(){
         if(gameHUD != null){
             gameHUD.dispose();
+        }
+    }
+
+    @Override
+    public void tick() {
+        if(gameHUD!=null){
+        super.tick();
+        for (Resource r :
+                resources) {
+            gameHUD.manaBar.setValue((float)r.percentageFull()*gameHUD.manaBar.getMaxValue());
+        }
         }
     }
 }
