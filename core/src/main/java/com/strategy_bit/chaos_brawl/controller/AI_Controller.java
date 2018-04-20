@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @version 1.0
  * @since 19.04.2018
  */
-public class AI_Controller extends PlayerController {
+public class AI_Controller extends PawnController {
 
     private boolean isRunning;
     private ReentrantLock lock;
