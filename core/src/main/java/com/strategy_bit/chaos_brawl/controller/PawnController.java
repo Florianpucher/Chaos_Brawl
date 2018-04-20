@@ -38,7 +38,7 @@ public abstract class PawnController {
      */
     protected Boundary spawnArea;
     protected ArrayList<Resource> resources;
-    private static final double rate=0.1;
+    private static final double rate=1.0;
 
     public PawnController(int teamID,InputHandler inputHandler, Boundary spawnArea){
         this.inputHandler = inputHandler;
@@ -66,15 +66,18 @@ public abstract class PawnController {
         }
     }
     public void startTicking(){
+        //TODO change this
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 tick();
             }
-        }, 0, 100);
+        }, 0, 1000);
+        
+        System.out.println("Player "+teamID+" started ticking");
     }
     public void createResource(){
-        Resource resource=new ResourceGold();
+        Resource resource=new ResourceGold(teamID);
         resources.add(resource);
     }
 
@@ -88,7 +91,7 @@ public abstract class PawnController {
         return false;
     }
     public boolean spawnUnit(UnitType unitType){
-        double cost=Double.MIN_VALUE;
+        double cost=0.0;
         switch (unitType){
             case RANGED:
                 cost=PlayerClone.COST;

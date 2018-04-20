@@ -140,10 +140,15 @@ public class World implements InputHandler {
     @Override
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
         Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
-        if(entity==null){
-            //not enough resources
-            return;
+        for (PawnController p :
+                playerControllers) {
+            if(p.getTeamID()==teamID&&! playerControllers[teamID].spawnUnit(entityType)){
+                //player does not have enough resources
+
+                return;
+            }
         }
+
         createEntity(entity);
         if(entityType.equals(UnitType.MAINBUILDING)){
             bases[teamID] = entity;
