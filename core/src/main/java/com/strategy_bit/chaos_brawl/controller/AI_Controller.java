@@ -39,7 +39,9 @@ public class AI_Controller extends PawnController {
 
     public void resumeAI() {
         goIntoPause = false;
-        lock.unlock();
+        if(lock.isHeldByCurrentThread()){
+            lock.unlock();
+        }
     }
 
 
