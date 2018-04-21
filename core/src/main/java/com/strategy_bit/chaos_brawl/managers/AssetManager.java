@@ -67,8 +67,8 @@ public class AssetManager {
         mainTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"wall.png"));
 
         defaultSkin = new Skin(Gdx.files.internal(UI_PATH+"default/skin.json"));
-        resourceSkinOuter = new NinePatch(new Texture(UI_PATH+"resourceBarOuterBorder.9.png"));
-        resourceSkinInner = new NinePatch(new Texture(UI_PATH+"resourceBarInner.9.png"));
+        resourceSkinOuter = new NinePatch(new Texture(UI_PATH+"resourceBarOuterBorder.png"),12,12,12,12);
+        resourceSkinInner = new NinePatch(new Texture(UI_PATH+"resourceBarInner.png"),7,7,7,7);
     }
 
 
