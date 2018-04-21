@@ -14,9 +14,11 @@ Updated on 11.04.2018 by Alexander Isopp
 added:
 - More methods for switching screens
  */
+
 /**
  * <p>manager for screen selecting</p>
  * <p>Implementation: Singleton</p>
+ *
  * @author AIsopp
  * @version 1.1
  * @since 22.03.2018
@@ -40,6 +42,7 @@ public class ScreenManager {
 
     /**
      * Singleton implementation for ScreenManager
+     *
      * @return ScreenManager instance
      */
     public static ScreenManager getInstance() {
@@ -51,6 +54,7 @@ public class ScreenManager {
 
     /**
      * initializing within the games class
+     *
      * @param game the game that holds this class
      */
     public void initialize(ChaosBrawlGame game) {
@@ -59,22 +63,23 @@ public class ScreenManager {
 
     /**
      * changes the screen and added currentScreen to screen stack
+     *
      * @param screenEnum the type of screen that will be shown
-     * @param params optional parameters that needs to be passed to new screen
+     * @param params     optional parameters that needs to be passed to new screen
      */
     public void showScreen(ScreenEnum screenEnum, Object... params) {
-        if(currentScreenEnum != null){
+        if (currentScreenEnum != null) {
             lastScreens.add(currentScreenEnum);
         }
-        switchScreen(screenEnum,params);
+        switchScreen(screenEnum, params);
     }
 
     /**
      * <p>switches to the last added screen on the Stack</p>
      * <p>If the last screen stack is empty the manager will close the game</p>
      */
-    public void switchToLastScreen(){
-        if(lastScreens.isEmpty()){
+    public void switchToLastScreen() {
+        if (lastScreens.isEmpty()) {
             // Just for android and desktop
             Gdx.app.exit();
             return;
@@ -85,29 +90,30 @@ public class ScreenManager {
 
     /**
      * changes the screen and clears the screen enum
+     *
      * @param screenEnum the type of screen that will be shown
-     * @param params optional parameters that needs to be passed to new screen
+     * @param params     optional parameters that needs to be passed to new screen
      */
-    public void showScreenAndClearScreenStack(ScreenEnum screenEnum, Object... params){
+    public void showScreenAndClearScreenStack(ScreenEnum screenEnum, Object... params) {
         lastScreens.clear();
-        switchScreen(screenEnum,params);
+        switchScreen(screenEnum, params);
     }
 
     /**
-     *
      * @param screenEnum the type of screen that will be shown
-     * @param params optional parameters that needs to be passed to new screen
+     * @param params     optional parameters that needs to be passed to new screen
      */
-    public void showScreenWithoutAddingOldOneToStack(ScreenEnum screenEnum, Object... params){
-        switchScreen(screenEnum,params);
+    public void showScreenWithoutAddingOldOneToStack(ScreenEnum screenEnum, Object... params) {
+        switchScreen(screenEnum, params);
     }
 
     /**
      * switches screen
+     *
      * @param screenEnum the type of screen that will be shown
-     * @param params optional parameters that needs to be passed to new screen
+     * @param params     optional parameters that needs to be passed to new screen
      */
-    private void switchScreen(ScreenEnum screenEnum, Object... params){
+    private void switchScreen(ScreenEnum screenEnum, Object... params) {
         // Get current screen to dispose it
         Screen currentScreen = game.getScreen();
 

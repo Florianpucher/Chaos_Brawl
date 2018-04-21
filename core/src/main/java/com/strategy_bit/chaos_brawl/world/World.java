@@ -68,11 +68,11 @@ public class World implements InputHandler {
 
     public void initializeGameForPlayers(){
         createEntityWorldCoordinates(new Vector2(3,12), UnitType.TOWER,  playerControllers[0].getTeamID());
-        createEntityWorldCoordinates(new Vector2(3,5), UnitType.TOWER,  playerControllers[0].getTeamID());
-        createEntityWorldCoordinates(new Vector2(2,9), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
+        createEntityWorldCoordinates(new Vector2(3,3), UnitType.TOWER,  playerControllers[0].getTeamID());
+        createEntityWorldCoordinates(new Vector2(2,7), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
-        createEntityWorldCoordinates(new Vector2(17,5), UnitType.TOWER,  playerControllers[1].getTeamID());
-        createEntityWorldCoordinates(new Vector2(19,9), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
+        createEntityWorldCoordinates(new Vector2(17,3), UnitType.TOWER,  playerControllers[1].getTeamID());
+        createEntityWorldCoordinates(new Vector2(19,7), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
     }
 
     public void createEntity(Entity entity){

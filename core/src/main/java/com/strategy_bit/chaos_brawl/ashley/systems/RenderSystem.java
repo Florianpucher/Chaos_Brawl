@@ -15,11 +15,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
+import java.time.temporal.TemporalAmount;
 import java.util.Comparator;
 
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
@@ -31,8 +36,8 @@ import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES
  * <br>
  * handled components
  * <ul>
- *     <li>TextureComponent</li>
- *     <li>TransformComponent</li>
+ * <li>TextureComponent</li>
+ * <li>TransformComponent</li>
  * </ul>
  *
  * @author AIsopp
@@ -42,13 +47,14 @@ import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES
 public class RenderSystem extends IteratingSystem implements DisposeAble {
 
 
-
     private ComponentMapper<TextureComponent> textureMapper;
     private ComponentMapper<TransformComponent> transformMapper;
+    private ComponentMapper<TeamGameObjectComponent> teamGameObjectMapper;
     private SpriteBatch batch;
     private Array<Entity> renderQueue;
     private ZComparator comparator;
     private OrthographicCamera camera;
+
 
     public RenderSystem() {
         //set used entities by components
@@ -56,6 +62,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         //initialize component mapper
         textureMapper = ComponentMapper.getFor(TextureComponent.class);
         transformMapper = ComponentMapper.getFor(TransformComponent.class);
+        teamGameObjectMapper = ComponentMapper.getFor(TeamGameObjectComponent.class);
         //initialize additional used components
         batch = new SpriteBatch();
         renderQueue = new Array<Entity>();
@@ -75,6 +82,8 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+
+        Stage stage = new Stage();
 
         //sort entity by z-index
         //entities with lower z-index will be rendered before entities with higher z-index
@@ -108,25 +117,34 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                     transform.getScale().x * PIXELS_TO_METRES, transform.getScale().y * PIXELS_TO_METRES,
                     MathUtils.radiansToDegrees * transform.getRotation());
 
+            TeamGameObjectComponent teamGameObjectComponent = teamGameObjectMapper.get(entity);
+            if (teamGameObjectComponent != null) {
+                ProgressBar hpBar = new ProgressBar(0, 100, 1, false, AssetManager.getInstance().progressHPbarStyle);
+                hpBar.setValue((float) (teamGameObjectComponent.getHitPoints() / teamGameObjectComponent.getMaxHP() * hpBar.getWidth()));
+                hpBar.setPosition(transform.getPosition().x * width, transform.getPosition().y * height);
+                hpBar.setSize(200, 1);
+                stage.addActor(hpBar);
+            }
         }
         batch.end();
+
+        stage.draw();
+        stage.act();
         //clear render queue
         renderQueue.clear();
     }
 
     @Override
-    public void dispose(){
+    public void dispose() {
         batch.dispose();
     }
 
     /**
-     *
      * @return the used camera
      */
-    public Camera getCamera(){
+    public Camera getCamera() {
         return camera;
     }
-
 
     /**
      * comparator for sorting entities by z-index
@@ -136,7 +154,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
 
         @Override
         public int compare(Entity e1, Entity e2) {
-            return (int)Math.signum(pm.get(e1).getZ() - pm.get(e2).getZ());
+            return (int) Math.signum(pm.get(e1).getZ() - pm.get(e2).getZ());
         }
     }
 }

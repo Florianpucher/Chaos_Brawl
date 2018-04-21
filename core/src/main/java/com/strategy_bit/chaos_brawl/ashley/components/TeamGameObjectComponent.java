@@ -5,15 +5,16 @@ import com.badlogic.ashley.core.Component;
 public class TeamGameObjectComponent implements Component {
 
     private int teamId;
-    private  double hitPoints;
-
+    private double hitPoints;
+    private double maxHP;
 
     public TeamGameObjectComponent(double hitPoints, int teamId) {
         setHitPoints(hitPoints);
         setTeamId(teamId);
+        maxHP = hitPoints;
     }
 
-    public  double getHitPoints() {
+    public double getHitPoints() {
         return hitPoints;
     }
 
@@ -21,7 +22,12 @@ public class TeamGameObjectComponent implements Component {
         this.hitPoints = hitPoints;
     }
 
-    public  int getTeamId() {
+    public double getMaxHP() {
+        return maxHP;
+
+    }
+
+    public int getTeamId() {
         return teamId;
     }
 
