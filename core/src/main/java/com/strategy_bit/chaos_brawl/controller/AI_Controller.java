@@ -39,7 +39,9 @@ public class AI_Controller extends PawnController {
 
     public void resumeAI() {
         goIntoPause = false;
-        lock.unlock();
+        if(lock.isHeldByCurrentThread()){
+            lock.unlock();
+        }
     }
 
 
@@ -75,7 +77,7 @@ public class AI_Controller extends PawnController {
                     @Override
                     public void run() {
                         System.out.println("AI adds object");
-                        inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.MELEE, teamID);
+                        inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.RANGED, teamID);
                     }
                 });
 

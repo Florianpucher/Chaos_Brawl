@@ -1,24 +1,13 @@
 package com.strategy_bit.chaos_brawl.controller;
 
 
-import com.badlogic.ashley.core.Entity;
 import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
 import com.strategy_bit.chaos_brawl.ResourceSystem.ResourceGold;
-import com.strategy_bit.chaos_brawl.ashley.entity.Base;
-import com.strategy_bit.chaos_brawl.ashley.entity.Player;
-import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
-import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
-import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
-import com.strategy_bit.chaos_brawl.world.World;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -74,7 +63,7 @@ public abstract class PawnController {
             }
         }, 0, 1000);
         
-        System.out.println("Player "+teamID+" started ticking");
+        System.out.println("Archer "+teamID+" started ticking");
     }*/
     public void createResource(){
         Resource resource=new ResourceGold(teamID);

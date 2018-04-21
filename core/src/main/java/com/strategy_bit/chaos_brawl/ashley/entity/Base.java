@@ -15,7 +15,7 @@ public class Base extends Entity {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().wallSkin);
+        textureComponent.setTexture(AssetManager.getInstance().mainTowerSkin);
         CombatComponent combatComponent =new CombatComponent(100000.0,4,1,20,true);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(100.0,teamID);
 
