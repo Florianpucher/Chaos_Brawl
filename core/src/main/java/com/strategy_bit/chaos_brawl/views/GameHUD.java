@@ -70,13 +70,19 @@ public class GameHUD extends Table{
                 super.clicked(event, x, y);
                 String name = event.getListenerActor().getName();
                 if(name.equals(NEW_UNIT_1)){
-                    if(nextUnitType == UnitType.MELEE){
-                        setBackground((Drawable) null);
+                    if(nextUnitType == UnitType.RANGED){
                         nextUnitType = null;
                     }else{
-                        setBackground(new TextureRegionDrawable(new TextureRegion(nonSpawnAreaTexture)));
-                        nextUnitType = UnitType.MELEE;
+                        nextUnitType = UnitType.RANGED;
                     }
+                }
+
+
+
+                if(nextUnitType != null){
+                    setBackground(new TextureRegionDrawable(new TextureRegion(nonSpawnAreaTexture)));
+                }else{
+                    setBackground((Drawable) null);
                 }
 
             }

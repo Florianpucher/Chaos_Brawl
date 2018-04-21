@@ -31,7 +31,7 @@ public class ChaosBrawlGame extends Game {
 		// Entry point for application
 		screenManager = ScreenManager.getInstance();
 		screenManager.initialize(this);
-		screenManager.showScreen(ScreenEnum.SPLASH_SCREEN);
+		screenManager.showScreen(ScreenEnum.GAME, 1);
 		assetManager = AssetManager.getInstance();
 		loadGame = true;
 		Executor executor = Executors.newSingleThreadExecutor();
