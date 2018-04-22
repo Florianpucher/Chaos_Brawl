@@ -101,7 +101,7 @@ public class BoardA implements Board {
         return tileBoard;
     }
 
-    public int[][] boardToMatrix(BoardA board){
+    public int[][] boardToMatrix(Board board){
         for(int i = 0; i < BOARD_HEIGHT; i++){
             for (int j = 0; j < BOARD_WIDTH; j++){
                 intBoard[i][j] = tileBoard[i][j].getType().getMoveAble();

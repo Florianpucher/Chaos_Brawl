@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 public interface Board {
     //public BoardType getBoardType();
     public Tile[][] getTileBoard();
-    public int[][] boardToMatrix(BoardA board);
+    public int[][] boardToMatrix(Board board);
 
     /**
      *

@@ -112,6 +112,10 @@ public class World implements InputHandler {
         }
     }
 
+    public int[][] getBoardMatrix() {
+        return board.boardToMatrix(board);
+    }
+
     public void render(){
         if(System.currentTimeMillis() - resourceTimeStamp > 1000){
             for (PawnController controller :

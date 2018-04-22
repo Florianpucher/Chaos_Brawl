@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
+import com.strategy_bit.chaos_brawl.world.World;
 
 /**
  * component that has fields for moving an entity
@@ -15,7 +16,7 @@ import com.badlogic.gdx.utils.Queue;
 
 public class MovementComponent implements Component {
 
-
+    World world = new World();
 
     /**
      * Will be changed over time
@@ -55,7 +56,13 @@ public class MovementComponent implements Component {
             return targetLocation;
         }
         else{
-            return path.last();
+            int[][] target = world.getBoardMatrix();
+            if(target[(int) path.last().x][(int) path.last().y] != 1){
+                return path.last();
+            }
+            else{
+                return targetLocation;
+            }
         }
     }
 
