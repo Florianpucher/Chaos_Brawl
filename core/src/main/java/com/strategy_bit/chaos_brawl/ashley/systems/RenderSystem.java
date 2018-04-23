@@ -46,7 +46,6 @@ import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES
  */
 public class RenderSystem extends IteratingSystem implements DisposeAble {
 
-
     private ComponentMapper<TextureComponent> textureMapper;
     private ComponentMapper<TransformComponent> transformMapper;
     private ComponentMapper<TeamGameObjectComponent> teamGameObjectMapper;
@@ -54,6 +53,8 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     private Array<Entity> renderQueue;
     private ZComparator comparator;
     private OrthographicCamera camera;
+
+    Stage stage = new Stage();
 
 
     public RenderSystem() {
@@ -83,7 +84,6 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        Stage stage = new Stage();
 
         //sort entity by z-index
         //entities with lower z-index will be rendered before entities with higher z-index
@@ -130,6 +130,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
 
         stage.draw();
         stage.act();
+
         //clear render queue
         renderQueue.clear();
     }
@@ -137,6 +138,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     @Override
     public void dispose() {
         batch.dispose();
+        stage.dispose();
     }
 
     /**
