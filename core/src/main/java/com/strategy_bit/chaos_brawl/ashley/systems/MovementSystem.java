@@ -74,10 +74,12 @@ public class MovementSystem extends IteratingSystem {
 
     private void updateTarget(MovementComponent movementComponent, Vector2 position){
         Vector2 targetLocation=movementComponent.getTargetLocation();
-        if(VectorMath.distance(targetLocation,position)<1.1){
+        if(VectorMath.distance(targetLocation,position)<6.0){
             movementComponent.popCurTarget();
             return;
         }else if (movementComponent.hasNoPath()){
+
+            System.out.println(VectorMath.distance(targetLocation,position));
             movementComponent.setPath(calculatePathTo(position, targetLocation));
         }
     }

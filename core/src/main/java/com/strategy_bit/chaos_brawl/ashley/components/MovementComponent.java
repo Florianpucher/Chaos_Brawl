@@ -56,7 +56,7 @@ public class MovementComponent implements Component {
             return targetLocation;
         }
         else{
-            return targetLocation;
+            return path.last();
         }
     }
 

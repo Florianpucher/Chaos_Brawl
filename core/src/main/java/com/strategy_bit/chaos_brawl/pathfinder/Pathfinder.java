@@ -104,7 +104,7 @@ public class Pathfinder {
                         neighbors.add(n);
 
                     }else{
-                        System.out.println("Not move able");
+                        //System.out.println("Not move able");
                     }
                 } catch (IndexOutOfBoundsException ignore){
 
