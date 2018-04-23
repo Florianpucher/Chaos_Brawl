@@ -12,6 +12,7 @@ public class Node implements Comparable<Node> {
     private double gScore;
     private double fScore;
     private Node cameFrom;
+    private boolean moveable;
 
     public Node(int x, int y) {
         this.x = x;
@@ -20,6 +21,12 @@ public class Node implements Comparable<Node> {
         this.fScore=Double.POSITIVE_INFINITY;
         this.cameFrom=null;
     }
+
+    public void setMoveable(boolean moveable){
+        this.moveable = moveable;
+    }
+
+    public boolean getMoveable(){return moveable;}
 
     public double getgScore() {
         return gScore;

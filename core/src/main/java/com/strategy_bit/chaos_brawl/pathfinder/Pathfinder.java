@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.pathfinder;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
+import com.strategy_bit.chaos_brawl.world.World;
 
 import java.util.PriorityQueue;
 
@@ -15,6 +16,8 @@ public class Pathfinder {
     private static Array<Array<Node>> board;
     private static PriorityQueue<Node> closedSet;
     private static PriorityQueue<Node> openSet;
+    private static World world;
+    static int[][] boardMatrix = world.getBoardMatrix();
 
     public static Array<Vector2> findPath(Vector2 start,Vector2 goal) {
         Node startNode=board.get(Math.round(start.x)).get(Math.round(start.y));
@@ -25,8 +28,6 @@ public class Pathfinder {
         openSet = new PriorityQueue<Node>();
         // Initially, only the start node is known.
         openSet.add(startNode);
-
-
 
         // The cost of going from start to start is zero.
         startNode.setgScore(0);
@@ -47,7 +48,7 @@ public class Pathfinder {
                 if (closedSet.contains(neighbor)) {
                     continue;
                 }
-                if (!openSet.contains(neighbor)){
+                if (!openSet.contains(neighbor) && neighbor.getMoveable() == false){
                     openSet.add(neighbor);
                 }
                 double tentatice_gSCore=current.getgScore()+VectorMath.distance(current.getVector(),neighbor.getVector());
@@ -110,10 +111,25 @@ public class Pathfinder {
         board=new Array<Array<Node>>();
         for (int i = 0; i < 10; i++) {
             Array<Node> coloumn=new Array<Node>();
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 15; j++) {
                 coloumn.add(new Node(i,j));
             }
             board.add(coloumn);
         }
+        setMoveable(boardMatrix, board);
     }
+
+    public static void setMoveable(int[][] matrix, Array<Array<Node>> moveBoard){
+        for (int i = 0; i < 10; i++){
+            for (int j = 0; j < 15; j++){
+                if (matrix[i][j] == 0){
+                    continue;
+                }
+                else{
+                    moveBoard.get(i).get(j).setMoveable(true);
+                }
+            }
+        }
+    }
+
 }

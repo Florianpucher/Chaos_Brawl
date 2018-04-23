@@ -41,7 +41,7 @@ public class World implements InputHandler {
     protected SpawnerImpl spawner;
     protected MyEngine engine;
     protected Camera camera;
-    protected Board board;
+    public Board board;
     protected PawnController[] playerControllers;
     protected Entity[] bases;
     protected long resourceTimeStamp;

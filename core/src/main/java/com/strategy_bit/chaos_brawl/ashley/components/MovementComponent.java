@@ -16,7 +16,6 @@ import com.strategy_bit.chaos_brawl.world.World;
 
 public class MovementComponent implements Component {
 
-    World world = new World();
 
     /**
      * Will be changed over time
@@ -56,13 +55,7 @@ public class MovementComponent implements Component {
             return targetLocation;
         }
         else{
-            int[][] target = world.getBoardMatrix();
-            if(target[(int) path.last().x][(int) path.last().y] != 1){
-                return path.last();
-            }
-            else{
-                return targetLocation;
-            }
+            return targetLocation;
         }
     }
 
