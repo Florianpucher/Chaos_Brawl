@@ -3,7 +3,10 @@ package com.strategy_bit.chaos_brawl.pathfinder;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
+import com.strategy_bit.chaos_brawl.world.Board;
+import com.strategy_bit.chaos_brawl.world.Tile;
 import com.strategy_bit.chaos_brawl.world.World;
+import com.strategy_bit.chaos_brawl.screens.GameScreen;
 
 import java.util.PriorityQueue;
 
@@ -16,12 +19,12 @@ public class Pathfinder {
     private static Array<Array<Node>> board;
     private static PriorityQueue<Node> closedSet;
     private static PriorityQueue<Node> openSet;
-    private static World world;
-    static int[][] boardMatrix = world.getBoardMatrix();
+    private static float x=1.0f;
+    private static float y=1.0f;
 
     public static Array<Vector2> findPath(Vector2 start,Vector2 goal) {
-        Node startNode=board.get(Math.round(start.x)).get(Math.round(start.y));
-        Node goalNode=board.get(Math.round(goal.x)).get(Math.round(goal.y));
+        Node startNode=board.get(Math.round(start.x/x)).get(Math.round(start.y/y));
+        Node goalNode=board.get(Math.round(goal.x/x)).get(Math.round(goal.y/y));
         // The set of nodes already evaluated
         closedSet = new PriorityQueue<Node>();
         // The set of currently discovered nodes that are not evaluated yet.
@@ -48,15 +51,15 @@ public class Pathfinder {
                 if (closedSet.contains(neighbor)) {
                     continue;
                 }
-                if (!openSet.contains(neighbor) && neighbor.getMoveable() == false){
+                if (!openSet.contains(neighbor)){
                     openSet.add(neighbor);
                 }
-                double tentatice_gSCore=current.getgScore()+VectorMath.distance(current.getVector(),neighbor.getVector());
-                if (tentatice_gSCore>=neighbor.getgScore()){
+                double tentative_gSCore=current.getgScore()+VectorMath.distance(current.getVector(),neighbor.getVector());
+                if (tentative_gSCore>=neighbor.getgScore()){
                     continue;
                 }
                 neighbor.setCameFrom(current);
-                neighbor.setgScore(tentatice_gSCore);
+                neighbor.setgScore(tentative_gSCore);
                 neighbor.setfScore(neighbor.getgScore()+VectorMath.distance(neighbor.getVector(),goalNode.getVector()));
             }
 
@@ -83,7 +86,10 @@ public class Pathfinder {
                     continue;
                 }
                 try {
-                    neighbors.add(board.get(node.getX()+i).get(node.getY()+j));
+                    Node n=board.get(node.getX()+i).get(node.getY()+j);
+                    if(node.getMoveable()) {
+                        neighbors.add(n);
+                    }
                 } catch (IndexOutOfBoundsException e){
                     e.printStackTrace();
                 }
@@ -107,26 +113,30 @@ public class Pathfinder {
         return lowest;
     }
 
-    public static void initBoard(){
+    public static void initBoard(int lines, int coloms){
         board=new Array<Array<Node>>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < coloms; i++) {
             Array<Node> coloumn=new Array<Node>();
-            for (int j = 0; j < 15; j++) {
+            for (int j = 0; j < lines; j++) {
                 coloumn.add(new Node(i,j));
             }
             board.add(coloumn);
         }
-        setMoveable(boardMatrix, board);
     }
 
-    public static void setMoveable(int[][] matrix, Array<Array<Node>> moveBoard){
-        for (int i = 0; i < 10; i++){
-            for (int j = 0; j < 15; j++){
+    public static void setMoveable(int[][] matrix, Board b){
+        Tile[][] arr=b.getTileBoard();
+        Vector2 v=arr[arr.length-1][arr[0].length-1].getPosition();
+        x=v.x;
+        y=v.y;
+        initBoard(matrix[0].length,matrix.length);
+        for (int i = 0; i < matrix.length; i++){
+            for (int j = 0; j < matrix[0].length; j++){
                 if (matrix[i][j] == 0){
-                    moveBoard.get(i).get(j).setMoveable(false);
+                    board.get(i).get(j).setMoveable(false);
                 }
                 else{
-                    moveBoard.get(i).get(j).setMoveable(true);
+                    board.get(i).get(j).setMoveable(true);
                 }
             }
         }

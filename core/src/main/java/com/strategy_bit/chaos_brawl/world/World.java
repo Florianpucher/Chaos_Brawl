@@ -18,6 +18,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.controller.PawnController;
+import com.strategy_bit.chaos_brawl.pathfinder.Pathfinder;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
@@ -110,11 +111,9 @@ public class World implements InputHandler {
         if(map == 3){
             board = new BoardC(engine);
         }
+        Pathfinder.setMoveable(board.boardToMatrix(),board);
     }
 
-    public int[][] getBoardMatrix() {
-        return board.boardToMatrix(board);
-    }
 
     public void render(){
         if(System.currentTimeMillis() - resourceTimeStamp > 1000){

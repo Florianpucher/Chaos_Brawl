@@ -62,8 +62,6 @@ public class MovementComponent implements Component {
 
     public void setTargetLocation(Vector2 targetLocation) {
             this.targetLocation = targetLocation;
-            //TODO: remove line
-            addToPath(targetLocation);
     }
 
     public Vector2 getVelocity() {

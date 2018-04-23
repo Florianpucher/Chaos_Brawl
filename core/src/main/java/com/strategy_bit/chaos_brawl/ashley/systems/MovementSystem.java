@@ -74,17 +74,17 @@ public class MovementSystem extends IteratingSystem {
 
     private void updateTarget(MovementComponent movementComponent, Vector2 position){
         Vector2 targetLocation=movementComponent.getTargetLocation();
-        if(VectorMath.distance(targetLocation,position)<1.0){
+        if(VectorMath.distance(targetLocation,position)<1.1){
             movementComponent.popCurTarget();
             return;
         }else if (movementComponent.hasNoPath()){
-            movementComponent.setPath(calculatePathTo(targetLocation));
+            movementComponent.setPath(calculatePathTo(position, targetLocation));
         }
     }
-    public Array<Vector2> calculatePathTo(Vector2 dest){
+    public Array<Vector2> calculatePathTo(Vector2 position, Vector2 dest){
         Array<Vector2> path=new Array<Vector2>();
         //TODO: find path
-        path = Pathfinder.findPath(path.first(), dest);
+        path = Pathfinder.findPath(position, dest);
         //path.add(dest);
         return path;
     }
