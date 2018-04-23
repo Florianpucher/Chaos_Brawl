@@ -54,7 +54,6 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     private ZComparator comparator;
     private OrthographicCamera camera;
 
-    Stage stage = new Stage();
 
 
     public RenderSystem() {
@@ -84,6 +83,8 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
+
+        Stage stage = new Stage();
 
         //sort entity by z-index
         //entities with lower z-index will be rendered before entities with higher z-index
@@ -130,6 +131,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
 
         stage.draw();
         stage.act();
+        stage.dispose();
 
         //clear render queue
         renderQueue.clear();
@@ -138,7 +140,6 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     @Override
     public void dispose() {
         batch.dispose();
-        stage.dispose();
     }
 
     /**
