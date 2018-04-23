@@ -18,7 +18,6 @@ import com.strategy_bit.chaos_brawl.world.World;
 
 public class MovementComponent implements Component {
 
-
     /**
      * Will be changed over time
      */
