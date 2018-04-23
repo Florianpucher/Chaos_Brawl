@@ -18,4 +18,5 @@ public interface Board {
      * @return a vector2 that represents the world coordinate of the current tile
      */
     public Vector2 getWorldCoordinateOfTile(int x, int y);
+    public Vector2 getTileBoardPositionDependingOnWorldCoordinates(Vector2 worldCoordinates);
 }
