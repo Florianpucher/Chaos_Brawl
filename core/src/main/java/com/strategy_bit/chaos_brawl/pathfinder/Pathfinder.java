@@ -10,6 +10,11 @@ import com.strategy_bit.chaos_brawl.screens.GameScreen;
 
 import java.util.PriorityQueue;
 
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_HEIGHT;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_WIDTH;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
+
 
 /**
  * Created by A_329_09 on 29/03/2018.
@@ -17,14 +22,20 @@ import java.util.PriorityQueue;
 
 public class Pathfinder {
     private static Array<Array<Node>> board;
+    private static Board gameBoard;
     private static PriorityQueue<Node> closedSet;
     private static PriorityQueue<Node> openSet;
     private static float x=1.0f;
     private static float y=1.0f;
 
     public static Array<Vector2> findPath(Vector2 start,Vector2 goal) {
-        Node startNode=board.get(Math.round(start.x/x)).get(Math.round(start.y/y));
-        Node goalNode=board.get(Math.round(goal.x/x)).get(Math.round(goal.y/y));
+        float multiplicandX = FRUSTUM_WIDTH/ BOARD_WIDTH;
+        float multiplicandY = FRUSTUM_HEIGHT/ BOARD_HEIGHT;
+        //x = multiplicandX/2 + multiplicandX* j => (x - mulX/2)/mulX
+        Vector2 startVector = gameBoard.getTileBoardPositionDependingOnWorldCoordinates(start);
+        Vector2 endVector = gameBoard.getTileBoardPositionDependingOnWorldCoordinates(goal);
+        Node startNode=board.get((int) startVector.x).get((int) startVector.y);
+        Node goalNode=board.get((int) endVector.x).get((int) endVector.y);
         // The set of nodes already evaluated
         closedSet = new PriorityQueue<Node>();
         // The set of currently discovered nodes that are not evaluated yet.
@@ -69,10 +80,12 @@ public class Pathfinder {
 
     private static Array<Vector2> reconstruct_path(Node current){
         Array<Vector2> total_path=new Array<Vector2>();
-        total_path.add(current.getVector());
+        //total_path.add(current.getVector());
+        total_path.add(gameBoard.getWorldCoordinateOfTile((int)current.getVector().y,(int) current.getVector().x));
         while (current.getCameFrom()!=null){
             current=current.getCameFrom();
-            total_path.add(current.getVector());
+            total_path.add(gameBoard.getWorldCoordinateOfTile((int)current.getVector().y,(int) current.getVector().x));
+            //total_path.add(current.getVector());
         }
         total_path.reverse();
         return total_path;
@@ -89,9 +102,12 @@ public class Pathfinder {
                     Node n=board.get(node.getX()+i).get(node.getY()+j);
                     if(node.getMoveable()) {
                         neighbors.add(n);
+
+                    }else{
+                        System.out.println("Not move able");
                     }
-                } catch (IndexOutOfBoundsException e){
-                    e.printStackTrace();
+                } catch (IndexOutOfBoundsException ignore){
+
                 }
             }
         }
@@ -126,6 +142,7 @@ public class Pathfinder {
 
     public static void setMoveable(int[][] matrix, Board b){
         Tile[][] arr=b.getTileBoard();
+        gameBoard = b;
         Vector2 v=arr[arr.length-1][arr[0].length-1].getPosition();
         x=v.x;
         y=v.y;
