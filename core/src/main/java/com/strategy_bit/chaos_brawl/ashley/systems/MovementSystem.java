@@ -12,6 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
+import com.strategy_bit.chaos_brawl.pathfinder.Pathfinder;
 
 
 /**
@@ -80,10 +81,11 @@ public class MovementSystem extends IteratingSystem {
             movementComponent.setPath(calculatePathTo(targetLocation));
         }
     }
-    private Array<Vector2> calculatePathTo(Vector2 dest){
+    public Array<Vector2> calculatePathTo(Vector2 dest){
         Array<Vector2> path=new Array<Vector2>();
         //TODO: find path
-        path.add(dest);
+        path = Pathfinder.findPath(path.first(), dest);
+        //path.add(dest);
         return path;
     }
 }

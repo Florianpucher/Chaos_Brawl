@@ -123,7 +123,7 @@ public class Pathfinder {
         for (int i = 0; i < 10; i++){
             for (int j = 0; j < 15; j++){
                 if (matrix[i][j] == 0){
-                    continue;
+                    moveBoard.get(i).get(j).setMoveable(false);
                 }
                 else{
                     moveBoard.get(i).get(j).setMoveable(true);
