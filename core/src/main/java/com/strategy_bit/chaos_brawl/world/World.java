@@ -15,14 +15,12 @@ import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.controller.PawnController;
 import com.strategy_bit.chaos_brawl.pathfinder.Pathfinder;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
-
 
 import java.util.HashMap;
 
@@ -168,7 +166,10 @@ public class World implements InputHandler {
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
         if(movementComponent != null){
             //TODO add pathfinding here Florian but maybe with ThreadPool implementation!!!
-            movementComponent.setTargetLocation(bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+            Array<Vector2> path=new Array<Vector2>();
+            path = Pathfinder.findPath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+            movementComponent.setPath(path);
+            //movementComponent.setTargetLocation(bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
         }
         //Move entity to enemy player
 
