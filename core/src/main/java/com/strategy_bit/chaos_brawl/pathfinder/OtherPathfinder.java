@@ -6,6 +6,7 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.config.WalkAbleAreas;
 import com.strategy_bit.chaos_brawl.world.Board;
 
 /**
@@ -17,23 +18,50 @@ public class OtherPathfinder {
 
     private Board board;
     IndexedGraph<OtherNode> nodeIndexedGraph;
-    private int nodeAmount;
     private IndexedAStarPathFinder<OtherNode> indexedAStarPathFinder;
     private OtherHeuristic heuristic;
     private Array<OtherNode> graphNodes;
 
     public OtherPathfinder(Board board){
         this.board = board;
-
-
-        this.nodeAmount = 0;
         initializeGraph();
     }
 
+    public Array<OtherNode> getGraphNodes() {
+        return graphNodes;
+    }
 
     private void initializeGraph(){
         graphNodes = new Array<>();
-        //TODO add to graphNodes nodes
+
+        int[][] walkablePort = board.boardToMatrix();
+        int index = 0;
+        //Add nodes to graphNodes
+        for (int i = 0; i < walkablePort.length; i++) {
+            for (int j = 0; j < walkablePort[i].length; j++) {
+
+                if(walkablePort[i][j] == WalkAbleAreas.BLOCKING){
+                    continue;
+                }
+                OtherNode otherNode = new OtherNode(index, new Vector2(i,j));
+                index++;
+                graphNodes.add(otherNode);
+            }
+        }
+
+        //Connect nodes to each other
+        for (int i = 0; i < graphNodes.size; i++) {
+            OtherNode otherNode = graphNodes.get(i);
+            for (int j = 0; j < graphNodes.size; j++) {
+                if(j == i){
+                    continue;
+                }
+                OtherNode possibleSuccessor = graphNodes.get(j);
+                if(otherNode.isAdjacentTo(possibleSuccessor)){
+                    otherNode.addSuccessor(possibleSuccessor);
+                }
+            }
+        }
 
         nodeIndexedGraph = new IndexedGraph<OtherNode>() {
             @Override

@@ -30,4 +30,14 @@ public class OtherConnection implements Connection<OtherNode> {
     public OtherNode getToNode() {
         return toNode;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        OtherConnection otherConnection = (OtherConnection) o;
+
+
+        return toNode.getIndex() == otherConnection.getToNode().getIndex() &&
+                fromNode.getIndex() == otherConnection.getFromNode().getIndex();
+    }
 }
