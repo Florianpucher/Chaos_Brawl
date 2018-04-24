@@ -18,22 +18,22 @@ public class OtherPathfinder {
     private Board board;
     IndexedGraph<OtherNode> nodeIndexedGraph;
     private int nodeAmount;
+    private IndexedAStarPathFinder<OtherNode> indexedAStarPathFinder;
+    private OtherHeuristic heuristic;
+    private Array<OtherNode> graphNodes;
 
     public OtherPathfinder(Board board){
         this.board = board;
 
 
         this.nodeAmount = 0;
-
+        initializeGraph();
     }
 
 
     private void initializeGraph(){
-
-
-
-
-
+        graphNodes = new Array<>();
+        //TODO add to graphNodes nodes
 
         nodeIndexedGraph = new IndexedGraph<OtherNode>() {
             @Override
@@ -43,7 +43,7 @@ public class OtherPathfinder {
 
             @Override
             public int getNodeCount() {
-                return nodeAmount;
+                return graphNodes.size;
             }
 
             @Override
@@ -52,12 +52,26 @@ public class OtherPathfinder {
             }
         };
 
-        IndexedAStarPathFinder<OtherNode> indexedGraphIndexedAStarPathFinder = new IndexedAStarPathFinder<>(nodeIndexedGraph);
-        PathFinderRequest<OtherNode> otherNodePathFinderRequest = new PathFinderRequest<OtherNode>();
+
+        indexedAStarPathFinder = new IndexedAStarPathFinder<>(nodeIndexedGraph);
+        heuristic = new OtherHeuristic();
         //otherNodePathFinderRequest.
     }
 
-    public void calculatePath(Vector2 start, Vector2 goal){
+    public Array<Vector2> calculatePath(Vector2 start, Vector2 goal){
+        OtherNode startNode = getNode(start);
+        OtherNode endNode = getNode(goal);
+        ResultPath path = new ResultPath();
+        PathFinderRequest<OtherNode> otherNodePathFinderRequest = new PathFinderRequest<OtherNode>(startNode, endNode, heuristic, path);
+        otherNodePathFinderRequest.search(indexedAStarPathFinder, 10000);
+        Array<Vector2> pathToReturn = new Array<>();
 
+        return pathToReturn;
+    }
+
+
+    private OtherNode getNode(Vector2 worldCoordinate){
+        //TODO get graphNode from graphNodes here
+        return null;
     }
 }
