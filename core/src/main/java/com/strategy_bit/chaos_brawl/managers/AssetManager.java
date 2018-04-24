@@ -27,6 +27,7 @@ public class AssetManager {
     public TextureRegion projectileSkin;
     public NinePatch resourceSkinOuter;
     public NinePatch resourceSkinInner;
+    public NinePatch resourceSkinMiddle;
     public TextureRegion defaultTile;
     public TextureRegion waterTile;
     public TextureRegion dirtTile;
@@ -68,7 +69,8 @@ public class AssetManager {
 
         defaultSkin = new Skin(Gdx.files.internal(UI_PATH+"default/skin.json"));
         resourceSkinOuter = new NinePatch(new Texture(UI_PATH+"resourceBarOuterBorder.png"),12,12,12,12);
-        resourceSkinInner = new NinePatch(new Texture(UI_PATH+"resourceBarInner.png"),7,7,7,7);
+        resourceSkinInner = new NinePatch(new Texture(UI_PATH+"resourceBarInner.png"),0,16,7,7);
+        resourceSkinMiddle= new NinePatch(new Texture(UI_PATH+"resourceBarMiddle.png"),0,0,21,23);
     }
 
 
@@ -86,5 +88,6 @@ public class AssetManager {
         mainTowerSkin.getTexture().dispose();
         resourceSkinOuter.getTexture().dispose();
         resourceSkinInner.getTexture().dispose();
+        resourceSkinMiddle.getTexture().dispose();
     }
 }
