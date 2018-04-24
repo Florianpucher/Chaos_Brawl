@@ -17,6 +17,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.controller.PawnController;
+import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.pathfinder.Pathfinder;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
@@ -44,6 +45,7 @@ public class World implements InputHandler {
     protected PawnController[] playerControllers;
     protected Entity[] bases;
     protected long resourceTimeStamp;
+    protected OtherPathfinder gdxPathFinder;
 
     public World(int map, int players) {
         units = new HashMap<Long, Entity>();
@@ -109,7 +111,8 @@ public class World implements InputHandler {
         if(map == 3){
             board = new BoardC(engine);
         }
-        Pathfinder.setMoveable(board.boardToMatrix(),board);
+        gdxPathFinder = new OtherPathfinder(board);
+        //Pathfinder.setMoveable(board.boardToMatrix(),board);
     }
 
 
@@ -167,7 +170,8 @@ public class World implements InputHandler {
         if(movementComponent != null){
             //TODO add pathfinding here Florian but maybe with ThreadPool implementation!!!
             Array<Vector2> path=new Array<Vector2>();
-            path = Pathfinder.findPath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+            //path = Pathfinder.findPath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+            path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
             movementComponent.setPath(path);
             //movementComponent.setTargetLocation(bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
         }

@@ -96,13 +96,18 @@ public class OtherPathfinder {
      * @return a Vector2 array containing all way points from start to goal in world coordinates
      */
     public Array<Vector2> calculatePath(Vector2 start, Vector2 goal){
+        System.out.println(start);
+        System.out.println(goal);
         OtherNode startNode = getNode(start);
         OtherNode endNode = getNode(goal);
         ResultPath path = new ResultPath();
         //TODO check if this solution is working
         PathFinderRequest<OtherNode> otherNodePathFinderRequest = new PathFinderRequest<OtherNode>(startNode, endNode, heuristic, path);
         otherNodePathFinderRequest.statusChanged = true;
-        indexedAStarPathFinder.search(otherNodePathFinderRequest, 1000000000);
+        boolean found = indexedAStarPathFinder.search(otherNodePathFinderRequest, 1000000000);
+        if(!found) {
+            System.out.println("Could not find");
+        }
         //otherNodePathFinderRequest.search(indexedAStarPathFinder, 1000000000);
         Array<Vector2> pathToReturn = new Array<>();
         Iterator<OtherNode> nodeIterator = path.iterator();
@@ -111,6 +116,7 @@ public class OtherPathfinder {
             Vector2 worldPosition = getWorldCoordinateOfNode(node);
             pathToReturn.add(worldPosition);
         }
+        System.out.println(pathToReturn);
         return pathToReturn;
     }
 
@@ -132,6 +138,6 @@ public class OtherPathfinder {
     }
 
     private Vector2 getWorldCoordinateOfNode(OtherNode node){
-        return board.getWorldCoordinateOfTile((int)node.getPosition().x,(int) node.getPosition().y);
+        return board.getWorldCoordinateOfTile((int)node.getPosition().y,(int) node.getPosition().x);
     }
 }
