@@ -7,9 +7,7 @@ import com.strategy_bit.chaos_brawl.world.Board;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 
 
@@ -23,6 +21,7 @@ public class PathfinderTest {
 
     private Board board;
     private OtherPathfinder otherPathfinder;
+    private Vector2 start, end;
     @Before
     public void initialize(){
 
@@ -31,6 +30,15 @@ public class PathfinderTest {
                 {0,0,0},
                 {1,1,1},
                 {0,1,1}});
+        otherPathfinder = new OtherPathfinder(board);
+
+        start = new Vector2(1,0);
+        end = new Vector2(1,2);
+        Mockito.when(board.getTileBoardPositionDependingOnWorldCoordinates(start)).thenReturn(new Vector2(1,0));
+        Mockito.when(board.getTileBoardPositionDependingOnWorldCoordinates(end)).thenReturn(new Vector2(1,2));
+        Mockito.when(board.getWorldCoordinateOfTile((int)1, (int)0)).thenReturn(start);
+        Mockito.when(board.getWorldCoordinateOfTile(1,1)).thenReturn(new Vector2(1,1));
+        Mockito.when(board.getWorldCoordinateOfTile((int)1, (int)2)).thenReturn(end);
         otherPathfinder = new OtherPathfinder(board);
     }
 
@@ -71,6 +79,12 @@ public class PathfinderTest {
         }
     }
 
-
+    @Test
+    public void testCalculatePath(){
+        Array<Vector2> finalArray = otherPathfinder.calculatePath(start,end);
+        finalArray = otherPathfinder.calculatePath(start,end);
+        Array<Vector2> expectedArray = new Array<>(new Vector2[]{start, new Vector2(1,1), new Vector2(1,2)});
+        Assert.assertEquals(expectedArray,finalArray);
+    }
 
 }
