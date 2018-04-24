@@ -116,7 +116,7 @@ public class World implements InputHandler {
 
 
     public void render(){
-        if(System.currentTimeMillis() - resourceTimeStamp > 1000){
+        if(System.currentTimeMillis() - resourceTimeStamp > 1){
             for (PawnController controller :
                     playerControllers) {
                 controller.tick();

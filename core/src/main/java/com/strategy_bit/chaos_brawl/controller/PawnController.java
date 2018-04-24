@@ -27,7 +27,7 @@ public abstract class PawnController {
      */
     protected Boundary spawnArea;
     protected ArrayList<Resource> resources;
-    private static final double rate=10.0;
+    private static final double rate=0.075;
 
     public PawnController(int teamID,InputHandler inputHandler, Boundary spawnArea){
         this.inputHandler = inputHandler;

@@ -52,8 +52,8 @@ public class GameHUD extends Table{
 
         NinePatchDrawable resourceBarOuter = new NinePatchDrawable(assetManager.resourceSkinOuter);
         NinePatchDrawable resourceBar = new NinePatchDrawable(assetManager.resourceSkinInner);
-        ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(resourceBarOuter, resourceBar);
-        progressBarStyle.knobBefore=progressBarStyle.knob;
+        ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(resourceBarOuter, new NinePatchDrawable(assetManager.resourceSkinMiddle));
+        progressBarStyle.knobBefore=resourceBar;
         manaBar = new ProgressBar(0, 100, 0.1f, false, progressBarStyle);
 
         manaBar.setValue(0);
