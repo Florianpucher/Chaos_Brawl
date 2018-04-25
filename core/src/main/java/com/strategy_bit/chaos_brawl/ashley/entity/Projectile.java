@@ -13,16 +13,16 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  */
 
 public class Projectile extends Entity {
-    public Projectile(Vector2 start,Vector2 target) {
+    public Projectile(Vector2 start,long target,float damage) {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(start);
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().projectileSkin);
-        MovementComponent movementComponent = new MovementComponent(30,transformComponent);
-        movementComponent.setTargetLocation(target);
+        MovementComponent movementComponent = new MovementComponent(10,transformComponent);
         add(transformComponent);
         add(textureComponent);
         add(movementComponent);
-        add(new BulletComponent(true));
+        add(new BulletComponent(true,target,damage));
     }
+
 }

@@ -10,6 +10,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
+import com.strategy_bit.chaos_brawl.world.World;
 /*
  updated by Alisopp on 24.03.2018
   */
@@ -21,6 +22,7 @@ public class CombatSystem extends IteratingSystem {
     private ComponentMapper<CombatComponent> mCombatComponent;
     private ComponentMapper<TransformComponent> mTransformComponent;
     private ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponentMapper;
+    private World world;
 
     public CombatSystem() {
         super(Family.all(CombatComponent.class, TransformComponent.class, TeamGameObjectComponent.class).get());
@@ -44,6 +46,7 @@ public class CombatSystem extends IteratingSystem {
         double closest=combatComponent.getAttackRadius()+1.0;
         TeamGameObjectComponent closestEnemy=null;
         TransformComponent closestEnemyPosition=null;
+        Entity targetEnemy=null;
         for (Entity enemy : getEngine().getEntitiesFor(Family.all(TeamGameObjectComponent.class).get())) {
             TeamGameObjectComponent eTeamGameObjectComponent= mTeamGameObjectComponentMapper.get(enemy);
             if(teamGameObjectComponent.getTeamId()!=eTeamGameObjectComponent.getTeamId()) {
@@ -59,6 +62,7 @@ public class CombatSystem extends IteratingSystem {
                                 closest=dist;
                                 closestEnemy=eTeamGameObjectComponent;
                                 closestEnemyPosition=eTransformComponent;
+                                targetEnemy=enemy;
                             }
                         }
                     }
@@ -67,19 +71,29 @@ public class CombatSystem extends IteratingSystem {
         }
         if(closestEnemy!=null) {
             combatComponent.setEngagedInCombat(true);
-            attack(combatComponent, closestEnemy,transformComponent,closestEnemyPosition);
+            attack(combatComponent, closestEnemy,transformComponent,closestEnemyPosition,targetEnemy);
         }
         else {
             combatComponent.setEngagedInCombat(false);
         }
     }
 
-    private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, TransformComponent t2){
+    private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, TransformComponent t2, Entity targetEnemy){
         //TODO add here attack logic for different types
+        if(c1.isRanged()){
+            if(c1.attack()){
+                //ready to fire
+                world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage());
+
+            }
+        }else {
         if(c1.attack()){
             c2.setHitPoints(c2.getHitPoints()-c1.getAttackDamage());
-            Projectile projectile=new Projectile(t1.getPosition(),t2.getPosition());
-            getEngine().addEntity(projectile);
         }
+        }
+    }
+
+    public void addWorld(World world){
+        this.world=world;
     }
 }
