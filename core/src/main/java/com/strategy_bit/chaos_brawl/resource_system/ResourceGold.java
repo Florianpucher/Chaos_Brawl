@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.ResourceSystem;
+package com.strategy_bit.chaos_brawl.resource_system;
 
 public class ResourceGold extends Resource {
     public ResourceGold(double resourceAmount, int teamId) {

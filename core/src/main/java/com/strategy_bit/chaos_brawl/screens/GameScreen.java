@@ -3,13 +3,10 @@ package com.strategy_bit.chaos_brawl.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.controller.AI_Controller;
-import com.strategy_bit.chaos_brawl.controller.PawnController;
-import com.strategy_bit.chaos_brawl.types.UnitType;
-import com.strategy_bit.chaos_brawl.views.GameHUD;
+import com.strategy_bit.chaos_brawl.player_input_output.AI_Controller;
+import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.world.World;
-import com.strategy_bit.chaos_brawl.controller.PlayerController;
+import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
 /**
  * gamescreen implementation

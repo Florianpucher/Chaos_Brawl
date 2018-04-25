@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.pathfinder;
+package com.strategy_bit.chaos_brawl.pathfinder.old;
 
 import com.badlogic.gdx.math.Vector2;
 

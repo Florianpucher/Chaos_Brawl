@@ -1,17 +1,11 @@
-package com.strategy_bit.chaos_brawl.pathfinder;
+package com.strategy_bit.chaos_brawl.pathfinder.old;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.Board;
-import com.strategy_bit.chaos_brawl.world.Tile;
 
 import java.util.PriorityQueue;
-
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_HEIGHT;
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_WIDTH;
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
 
 
 /**
