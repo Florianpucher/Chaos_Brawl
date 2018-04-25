@@ -5,10 +5,13 @@ import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.Board;
 import com.strategy_bit.chaos_brawl.world.Tile;
-import com.strategy_bit.chaos_brawl.world.World;
-import com.strategy_bit.chaos_brawl.screens.GameScreen;
 
 import java.util.PriorityQueue;
+
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_HEIGHT;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_WIDTH;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
 
 
 /**
@@ -16,19 +19,21 @@ import java.util.PriorityQueue;
  */
 
 public class Pathfinder {
-    private static Array<Array<Node>> board;
-    private static PriorityQueue<Node> closedSet;
-    private static PriorityQueue<Node> openSet;
-    private static float x=1.0f;
-    private static float y=1.0f;
+    static Array<Array<Node>> board;
+    static Board gameBoard;
+    //private static PriorityQueue<Node> closedSet;
+    //private static PriorityQueue<Node> openSet;
 
     public static Array<Vector2> findPath(Vector2 start,Vector2 goal) {
-        Node startNode=board.get(Math.round(start.x/x)).get(Math.round(start.y/y));
-        Node goalNode=board.get(Math.round(goal.x/x)).get(Math.round(goal.y/y));
+        //x = multiplicandX/2 + multiplicandX* j => (x - mulX/2)/mulX
+        Vector2 startVector = gameBoard.getTileBoardPositionDependingOnWorldCoordinates(start);
+        Vector2 endVector = gameBoard.getTileBoardPositionDependingOnWorldCoordinates(goal);
+        Node startNode=board.get((int) startVector.x).get((int) startVector.y);
+        Node goalNode=board.get((int) endVector.x).get((int) endVector.y);
         // The set of nodes already evaluated
-        closedSet = new PriorityQueue<Node>();
+        PriorityQueue<Node> closedSet = new PriorityQueue<Node>();
         // The set of currently discovered nodes that are not evaluated yet.
-        openSet = new PriorityQueue<Node>();
+        PriorityQueue<Node>openSet = new PriorityQueue<Node>();
         // Initially, only the start node is known.
         openSet.add(startNode);
 
@@ -40,7 +45,7 @@ public class Pathfinder {
         startNode.setfScore(VectorMath.distance(start,goal));
 
         while (!openSet.isEmpty()){
-            Node current=getLowestFScore();
+            Node current=getLowestFScore(openSet);
             if(current==goalNode){
                 return reconstruct_path(current);
             }
@@ -69,12 +74,23 @@ public class Pathfinder {
 
     private static Array<Vector2> reconstruct_path(Node current){
         Array<Vector2> total_path=new Array<Vector2>();
-        total_path.add(current.getVector());
+        //total_path.add(current.getVector());
+        total_path.add(gameBoard.getWorldCoordinateOfTile((int)current.getVector().y,(int) current.getVector().x));
         while (current.getCameFrom()!=null){
             current=current.getCameFrom();
-            total_path.add(current.getVector());
+            total_path.add(gameBoard.getWorldCoordinateOfTile((int)current.getVector().y,(int) current.getVector().x));
+            //total_path.add(current.getVector());
         }
         total_path.reverse();
+        for (Array<Node> nodeArray : board){
+            for (Node node :
+                    nodeArray) {
+                node.setfScore(Double.POSITIVE_INFINITY);
+                node.setgScore(Double.POSITIVE_INFINITY);
+            }
+        }
+
+
         return total_path;
     }
 
@@ -89,16 +105,19 @@ public class Pathfinder {
                     Node n=board.get(node.getX()+i).get(node.getY()+j);
                     if(node.getMoveable()) {
                         neighbors.add(n);
+
+                    }else{
+                        //System.out.println("Not move able");
                     }
-                } catch (IndexOutOfBoundsException e){
-                    e.printStackTrace();
+                } catch (IndexOutOfBoundsException ignore){
+
                 }
             }
         }
         return neighbors;
     }
 
-    private static Node getLowestFScore(){
+    private static Node getLowestFScore(PriorityQueue<Node>openSet){
         double min=Double.POSITIVE_INFINITY;
         Node lowest=null;
             for (Node node :
@@ -125,10 +144,11 @@ public class Pathfinder {
     }
 
     public static void setMoveable(int[][] matrix, Board b){
-        Tile[][] arr=b.getTileBoard();
-        Vector2 v=arr[arr.length-1][arr[0].length-1].getPosition();
-        x=v.x;
-        y=v.y;
+        //Tile[][] arr=b.getTileBoard();
+        gameBoard = b;
+        //Vector2 v=arr[arr.length-1][arr[0].length-1].getPosition();
+        //float x=v.x;
+        //float y=v.y;
         initBoard(matrix[0].length,matrix.length);
         for (int i = 0; i < matrix.length; i++){
             for (int j = 0; j < matrix[0].length; j++){
