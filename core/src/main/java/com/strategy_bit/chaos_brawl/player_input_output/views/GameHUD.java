@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.views;
+package com.strategy_bit.chaos_brawl.player_input_output.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

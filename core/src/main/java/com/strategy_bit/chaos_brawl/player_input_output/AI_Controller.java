@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.controller;
+package com.strategy_bit.chaos_brawl.player_input_output;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
