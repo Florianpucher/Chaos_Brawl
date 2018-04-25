@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.ResourceSystem;
+package com.strategy_bit.chaos_brawl.resource_system;
 
 public class Resource {
     private double resourceAmount;
