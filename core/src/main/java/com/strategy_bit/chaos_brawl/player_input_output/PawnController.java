@@ -91,7 +91,7 @@ public abstract class PawnController {
 
     }
 
-    public void notifyAboutMoving(Array<Vector2> movingPositions){
+    public void notifyAboutMoving(long unitID, Array<Vector2> movingPositions){
 
     }
 }
