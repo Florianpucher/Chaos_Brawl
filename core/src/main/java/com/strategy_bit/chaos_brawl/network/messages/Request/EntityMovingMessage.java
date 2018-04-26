@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.network.messages.Request;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 
 /**
@@ -11,11 +12,11 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
 public class EntityMovingMessage implements Message {
 
     public long entityID;
-    public Vector2 screenCoordinates;
+    public Array<Vector2> wayPoints;
 
-    public EntityMovingMessage(Vector2 screenCoordinates,long entityID ) {
+    public EntityMovingMessage(long entityID, Array<Vector2> wayPoints) {
         this.entityID = entityID;
-        this.screenCoordinates = screenCoordinates;
+        this.wayPoints = wayPoints;
     }
 
     public EntityMovingMessage() {
