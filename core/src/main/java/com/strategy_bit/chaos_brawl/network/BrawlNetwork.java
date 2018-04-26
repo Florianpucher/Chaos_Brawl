@@ -6,6 +6,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.InitializeGameMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
@@ -39,5 +40,9 @@ public class BrawlNetwork {
         kryo.register(ResourceTickMessage.class);
         kryo.register(EntityDeleteMessage.class);
         kryo.register(Array.class);
+        kryo.register(InitializeGameMessage.class);
+        kryo.register(int[].class);
+        kryo.register(Object[].class);
+        kryo.register(Array.ArrayIterable.class);
     }
 }
