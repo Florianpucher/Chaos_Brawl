@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
@@ -34,8 +35,10 @@ import java.util.HashMap;
 public class World implements InputHandler {
 
     protected long lastID = 0;
+    protected long lastProjectileID = 0;
 
     protected HashMap<Long, Entity> units;
+    protected HashMap<Long, Entity> projectiles;
 
     protected SpawnerImpl spawner;
     protected MyEngine engine;
@@ -48,6 +51,7 @@ public class World implements InputHandler {
 
     public World(int map, int players) {
         units = new HashMap<Long, Entity>();
+        projectiles = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
         bases = new Entity[players];
@@ -57,6 +61,7 @@ public class World implements InputHandler {
 
     public World() {
         units = new HashMap<Long, Entity>();
+        projectiles = new HashMap<Long, Entity>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[2];
         createEngine();
@@ -82,14 +87,23 @@ public class World implements InputHandler {
         units.put(lastID, entity);
         lastID++;
     }
+    public void createProjectile(Entity entity){
+        engine.addEntity(entity);
+        projectiles.put(lastProjectileID, entity);
+        lastProjectileID++;
+    }
 
     protected void createEngine(){
         engine = new MyEngine(units);
         //Add some logic
         engine.addSystem(new DeleteSystem());
         engine.addSystem(new MovementSystem());
-        engine.addSystem(new BulletSystem());
-        engine.addSystem(new CombatSystem());
+        BulletSystem bulletSystem=new BulletSystem();
+        engine.addSystem(bulletSystem);
+        bulletSystem.addWorld(this);
+        CombatSystem combatSystem=new CombatSystem();
+        combatSystem.addWorld(this);
+        engine.addSystem(combatSystem);
         //Renderer should be the last system to add
         RenderSystem renderSystem = new RenderSystem();
         engine.addSystem(renderSystem);
@@ -177,6 +191,21 @@ public class World implements InputHandler {
         //Move entity to enemy player
 
     }
+    public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
+        Projectile projectile=new Projectile(worldCoordinates,targetId,damage);
+
+        createProjectile(projectile);
+
+    }
+    public long getIdOfUnit(Entity unit){
+        for (long i = 0; i < lastID; i++) {
+            Entity e=units.get(i);
+            if (unit.equals(e)){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public void moveEntity(Vector2 worldCoordinates, long entityID){
         Entity entity = units.get(entityID);
@@ -230,6 +259,15 @@ public class World implements InputHandler {
         throw new UnsupportedOperationException("Game only supports two player mode at the moment :)");
     }
 
+    public Vector2 getUnitPosition(long unitID){
+        Entity entity=getUnit(unitID);
+        if (entity!=null)
+        return entity.getComponent(TransformComponent.class).getPosition();
+        else return null;
+    }
+    public Entity getUnit(long unitID){
+        return units.get(unitID);
+    }
     public Camera getCamera() {
         return camera;
     }

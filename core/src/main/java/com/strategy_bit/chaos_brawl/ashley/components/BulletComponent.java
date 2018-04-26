@@ -10,9 +10,13 @@ import com.badlogic.ashley.core.Component;
 
 public class BulletComponent implements Component{
     private boolean deleteWhenTargetIsReached;
+    private long targetId;
+    private float damage;
 
-    public BulletComponent(boolean deleteWhenTargetIsReached) {
+    public BulletComponent(boolean deleteWhenTargetIsReached, long targetId,float damage) {
         setDeleteWhenTargetIsReached(deleteWhenTargetIsReached);
+        setTargetId(targetId);
+        setDamage(damage);
     }
 
     public boolean isDeleteWhenTargetIsReached() {
@@ -22,4 +26,21 @@ public class BulletComponent implements Component{
     public void setDeleteWhenTargetIsReached(boolean deleteWhenTargetIsReached) {
         this.deleteWhenTargetIsReached = deleteWhenTargetIsReached;
     }
+
+    public long getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(long targetId) {
+        this.targetId = targetId;
+    }
+
+    public float getDamage() {
+        return damage;
+    }
+
+    public void setDamage(float damage) {
+        this.damage = damage;
+    }
 }
+
