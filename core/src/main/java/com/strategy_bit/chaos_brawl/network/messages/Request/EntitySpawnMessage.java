@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.network.messages.Request;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
+import com.strategy_bit.chaos_brawl.types.UnitType;
 
 /**
  * @author AIsopp
@@ -12,9 +13,9 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
 public class EntitySpawnMessage implements Message {
     public Vector2 position;
     public int teamId;
-    public int entityTypeId;
+    public UnitType entityTypeId;
 
-    public EntitySpawnMessage(Vector2 position, int teamId, int entityTypeId) {
+    public EntitySpawnMessage(Vector2 position, int teamId, UnitType entityTypeId) {
         this.position = position;
         this.teamId = teamId;
         this.entityTypeId = entityTypeId;

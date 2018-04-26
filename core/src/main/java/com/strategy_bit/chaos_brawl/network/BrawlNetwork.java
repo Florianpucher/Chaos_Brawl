@@ -2,10 +2,13 @@ package com.strategy_bit.chaos_brawl.network;
 
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
+import com.strategy_bit.chaos_brawl.network.messages.Request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
+import com.strategy_bit.chaos_brawl.types.UnitType;
 
 /**
  * Registers all Messages
@@ -31,5 +34,8 @@ public class BrawlNetwork {
         kryo.register(NetworkMembersRequestMessage.class);
         kryo.register(EntitySpawnMessage.class);
         kryo.register(Vector2.class);
+        kryo.register(UnitType.class);
+        kryo.register(ResourceTickMessage.class);
+        kryo.register(EntityDeleteMessage.class);
     }
 }
