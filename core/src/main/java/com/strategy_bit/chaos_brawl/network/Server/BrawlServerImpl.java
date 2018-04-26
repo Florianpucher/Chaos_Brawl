@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.network.Server;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
@@ -9,9 +10,12 @@ import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
+import com.strategy_bit.chaos_brawl.network.messages.Request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
+import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
 
 import java.io.IOException;
@@ -38,7 +42,6 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     @Override
     public void sendData(Message msg) {
         server.sendToAllTCP(msg);
-
     }
 
     public void sendDataToAllExcept(Connection connection, Message msg) {
@@ -70,10 +73,6 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
         }
     }
 
-    public void moveEntity(Vector2 screenCoordinates, long entityID){
-        sendData(new EntityMovingMessage(screenCoordinates,entityID));
-    }
-
     @Override
     public Kryo getKryo() {
         return server.getKryo();
@@ -94,19 +93,23 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     }
 
-    public void spawnEntity(Entity entity) {
-        sendData(manager.createEntitySpawnMsg(entity));
+    @Override
+    public void sendTick() {
+        sendData(new ResourceTickMessage());
     }
 
     @Override
-    public MultiplayerWorld getManager() {
-        return manager;
+    public void sendEntitySpawnMsg(Vector2 worldPosition, UnitType unitType, int teamID) {
+        sendData(new EntitySpawnMessage(worldPosition,teamID,unitType));
     }
 
     @Override
-    public void setManager(MultiplayerWorld manager) {
-        this.manager = manager;
+    public void sendEntityDeleteMsg(long entityID) {
+        sendData(new EntityDeleteMessage(entityID));
     }
 
-
+    @Override
+    public void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints) {
+        sendData(new EntityMovingMessage(unitID, wayPoints));
+    }
 }

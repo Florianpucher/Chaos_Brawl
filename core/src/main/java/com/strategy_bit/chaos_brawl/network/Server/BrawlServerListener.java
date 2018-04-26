@@ -40,12 +40,12 @@ public class BrawlServerListener extends Listener {
             public void run() {
                 if (object instanceof EntityMovingMessage) {
                     EntityMovingMessage movingMessage = (EntityMovingMessage) object;
-                    brawlServer.getManager().sendTouchInputLocal(movingMessage.screenCoordinates, movingMessage.entityID);
+                    //brawlServer.getManager().sendTouchInputLocal(movingMessage.screenCoordinates, movingMessage.entityID);
                     brawlServer.sendDataToAllExcept(connection,movingMessage);
                 }
                 else if (object instanceof EntitySpawnMessage){
                     EntitySpawnMessage entitySpawnMessage=(EntitySpawnMessage) object;
-                    brawlServer.getManager().createEntityLocal(entitySpawnMessage.position,entitySpawnMessage.teamId,entitySpawnMessage.entityTypeId);
+                    //brawlServer.getManager().createEntityLocal(entitySpawnMessage.position,entitySpawnMessage.teamId,entitySpawnMessage.entityTypeId);
                     brawlServer.sendDataToAllExcept(connection,entitySpawnMessage);
                 }
                 else if (object instanceof NetworkMembersRequestMessage){

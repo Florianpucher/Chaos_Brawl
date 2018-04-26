@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.network.Client;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -11,10 +12,13 @@ import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkLoungeHandler;
+import com.strategy_bit.chaos_brawl.types.UnitType;
+import com.strategy_bit.chaos_brawl.world.InputHandler;
 import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
 
 import java.io.IOException;
@@ -25,28 +29,28 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
+ * sends data to Host
  * @author AIsopp
  * @version 1.0
  * @since 01.04.2018
  */
 public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
-
-    private MultiplayerWorld manager;
     private Client client;
     private ArrayList<NetworkDiscoveryHandler> discoveryHandlers;
     private ArrayList<NetworkInputHandler> inputHandlers;
     private ArrayList<NetworkLoungeHandler> loungeHandlers;
     protected Connection[] connections;
+    private BrawlClientListener clientListener;
 
     public BrawlClientImpl() {
         client = new Client();
         client.start();
-        client.addListener(new BrawlClientListener(this));
+        clientListener = new BrawlClientListener(this);
+        client.addListener(clientListener);
         discoveryHandlers = new ArrayList<NetworkDiscoveryHandler>();
         inputHandlers = new ArrayList<NetworkInputHandler>();
         loungeHandlers = new ArrayList<NetworkLoungeHandler>();
         connections=null;
-        manager=null;
         BrawlNetwork network = new BrawlNetwork(this);
     }
 
@@ -155,21 +159,24 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
 
     }
 
-    public void spawnEntity(Entity entity) {
-        sendData(manager.createEntitySpawnMsg(entity));
+    @Override
+    public void sendTick() {
+        //Not needed
     }
 
-    public void moveEntity(Vector2 screenCoordinates, long entityID) {
-        sendData(new EntityMovingMessage(screenCoordinates,entityID));
+    @Override
+    public void sendEntitySpawnMsg(Vector2 worldPosition, UnitType unitType, int teamID) {
+        EntitySpawnMessage spawnMessage = new EntitySpawnMessage(worldPosition,teamID,unitType);
+        sendData(spawnMessage);
     }
 
+    @Override
+    public void sendEntityDeleteMsg(long entityID) {
 
-
-    public MultiplayerWorld getManager() {
-        return manager;
     }
 
-    public void setManager(MultiplayerWorld manager) {
-        this.manager = manager;
+    @Override
+    public void sendEntityMovingMessage(long unitID,Array<Vector2> wayPoints) {
+
     }
 }
