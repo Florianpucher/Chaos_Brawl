@@ -1,12 +1,12 @@
 package com.strategy_bit.chaos_brawl.network;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
+import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.types.UnitType;
 
 public interface BrawlMultiplayer {
-    void setManager(MultiplayerWorld manager);
-    MultiplayerWorld getManager();
-    void spawnEntity(Entity entity);
-    void moveEntity(Vector2 screenCoordinates, long entityID);
+    void sendTick();
+    void sendEntitySpawnMsg(Vector2 worldPosition, UnitType unitType, int teamID);
+    void sendEntityDeleteMsg(long entityID);
+    void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints);
 }
