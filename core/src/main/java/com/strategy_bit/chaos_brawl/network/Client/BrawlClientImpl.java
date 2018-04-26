@@ -1,6 +1,5 @@
 package com.strategy_bit.chaos_brawl.network.Client;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -8,18 +7,16 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.strategy_bit.chaos_brawl.config.Network;
+import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkLoungeHandler;
 import com.strategy_bit.chaos_brawl.types.UnitType;
-import com.strategy_bit.chaos_brawl.world.InputHandler;
-import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -178,5 +175,10 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     @Override
     public void sendEntityMovingMessage(long unitID,Array<Vector2> wayPoints) {
 
+    }
+
+    @Override
+    public BrawlConnector getBrawlConnector() {
+        return clientListener;
     }
 }

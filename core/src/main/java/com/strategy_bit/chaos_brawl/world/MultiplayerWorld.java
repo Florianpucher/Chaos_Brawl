@@ -27,14 +27,12 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
 public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     private boolean isServer;
-    private OtherPlayerController serverController;
+    private BrawlMultiplayer multiplayer;
 
-    public MultiplayerWorld(boolean isServer) {
+    public MultiplayerWorld(boolean isServer, BrawlMultiplayer multiplayer, int players) {
+        super(1, players);
         this.isServer = isServer;
-    }
-
-    public void setServerController(OtherPlayerController serverController){
-        this.serverController = serverController;
+        this.multiplayer = multiplayer;
     }
 
     @Override
@@ -47,6 +45,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
                     resourceTimeStamp = System.currentTimeMillis();
                 }
             }
+            multiplayer.sendTick();
         }
         engine.update(Gdx.graphics.getDeltaTime());
     }
@@ -75,17 +74,17 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
         if(isServer){
             Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
             PawnController spawnerController = playerControllers[teamID];
-            Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(),
-                    bases[spawnerController.getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
             createEntity(entity);
-            for (PawnController controller :
-                    playerControllers) {
-                controller.notifyAboutSpawning(worldCoordinates, entityType,teamID);
-                controller.notifyAboutMoving(lastID-1, path);
-            }
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID);
+            if(entity.getComponent(MovementComponent.class) != null){
+                Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(),
+                        bases[spawnerController.getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+                entity.getComponent(MovementComponent.class).setPath(path);
 
+                multiplayer.sendEntityMovingMessage(lastID-1, path);
+            }
         }else {
-            serverController.notifyAboutSpawning(worldCoordinates, entityType,teamID);
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID);
         }
     }
 
@@ -110,5 +109,15 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     @Override
     public void unitAttackLocal(long attackerID, long victimID) {
         //TODO synchronize attacking
+    }
+
+    @Override
+    public void getTick() {
+        for (PawnController controller :
+             playerControllers) {
+            if(controller != null){
+                controller.tick();
+            }
+        }
     }
 }

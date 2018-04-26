@@ -123,4 +123,9 @@ public class ScreenManager {
         game.setScreen(newScreen);
         currentScreenEnum = screenEnum;
     }
+
+
+    public AbstractScreen getCurrentScreen(){
+        return game.getScreen();
+    }
 }

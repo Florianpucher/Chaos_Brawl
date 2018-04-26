@@ -71,9 +71,15 @@ public class World implements InputHandler {
         createEntityWorldCoordinates(new Vector2(3,12), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(3,5), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(2,9), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
+
+        Entity buildingOne = units.get(lastID-1);
+        bases[playerControllers[0].getTeamID()] = buildingOne;
+
         createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(17,5), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(19,9), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
+        Entity buildingTwo = units.get(lastID-1);
+        bases[playerControllers[1].getTeamID()] = buildingTwo;
         resourceTimeStamp = System.currentTimeMillis();
     }
 
@@ -162,9 +168,7 @@ public class World implements InputHandler {
         }
 
         createEntity(entity);
-        if(entityType.equals(UnitType.MAINBUILDING)){
-            bases[teamID] = entity;
-        }
+
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
         if(movementComponent != null){
             //TODO add pathfinding here Florian but maybe with ThreadPool implementation!!!
@@ -198,7 +202,7 @@ public class World implements InputHandler {
         int spawnAreaWidth = 5;
         Boundary spawnArea;
         // current left player
-        if(playerID == 1){
+        if(playerID == 0){
             Vector2 lowerLeftCorner = new Vector2(0.0f - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
             Vector2 upperLeftCorner = new Vector2(0.0f - WorldSettings.FRUSTUM_WIDTH/2f , 0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
             Vector2 lowerRightCorner = new Vector2( board.getWorldCoordinateOfTile(spawnAreaWidth,0).x - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
@@ -212,7 +216,7 @@ public class World implements InputHandler {
             spawnArea = new Boundary(lowerLeftCorner, lowerRightCorner, upperLeftCorner, upperRightCorner);
             return spawnArea;
             //current right player
-        }else if(playerID == 2){
+        }else if(playerID == 1){
             Vector2 lowerRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
             Vector2 upperRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH/2f, 0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
             Vector2 lowerLeftCorner = new Vector2( board.getWorldCoordinateOfTile(WorldSettings.BOARD_WIDTH - 5,0).x  - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);

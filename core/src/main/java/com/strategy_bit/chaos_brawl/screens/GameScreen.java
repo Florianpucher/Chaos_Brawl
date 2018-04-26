@@ -17,26 +17,26 @@ import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
 public class GameScreen extends AbstractScreen {
 
-    private World manager;
-    private PlayerController controller;
+    protected World manager;
+    protected PlayerController controller;
     protected PawnController otherPlayerController;
-
+    private int map;
     public GameScreen(int map) {
-        manager = new World(map,2);
+        this.map = map;
     }
 
 
     @Override
     public void buildStage() {
         super.buildStage();
-
-
+        manager = new World(map,2);
         initializeGame();
     }
 
     protected void initializeGame(){
-        controller = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(1));
-        otherPlayerController = new AI_Controller(1,manager, manager.createSpawnAreaForPlayer(2));
+
+        controller = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0));
+        otherPlayerController = new AI_Controller(1,manager, manager.createSpawnAreaForPlayer(1));
         manager.setPlayerController(0, controller);
         controller.setCurrentTargetTeam(1);
         manager.setPlayerController(1,otherPlayerController);

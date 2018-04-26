@@ -9,4 +9,5 @@ public interface BrawlMultiplayer {
     void sendEntitySpawnMsg(Vector2 worldPosition, UnitType unitType, int teamID);
     void sendEntityDeleteMsg(long entityID);
     void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints);
+    BrawlConnector getBrawlConnector();
 }

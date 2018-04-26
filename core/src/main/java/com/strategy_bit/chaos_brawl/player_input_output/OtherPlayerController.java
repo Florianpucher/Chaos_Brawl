@@ -15,35 +15,7 @@ import com.strategy_bit.chaos_brawl.world.InputHandler;
  * @since 19.04.2018
  */
 public class OtherPlayerController extends PawnController {
-    private BrawlMultiplayer brawlMultiplayer;
-    public OtherPlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea, BrawlMultiplayer brawlMultiplayer) {
+    public OtherPlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
         super(teamID, inputHandler, spawnArea);
-        this.brawlMultiplayer = brawlMultiplayer;
-    }
-
-
-    @Override
-    public void tick() {
-        brawlMultiplayer.sendTick();
-    }
-
-    @Override
-    public void notifyAboutAttacking(long unitID_Attacker, long unitID_Victim) {
-
-    }
-
-    @Override
-    public void notifyAboutDeletingUnit(long unitID) {
-        brawlMultiplayer.sendEntityDeleteMsg(unitID);
-    }
-
-    @Override
-    public void notifyAboutMoving(long unitID, Array<Vector2> movingPositions) {
-        brawlMultiplayer.sendEntityMovingMessage(unitID,movingPositions);
-    }
-
-    @Override
-    public void notifyAboutSpawning(Vector2 worldPosition, UnitType unitType, int teamID) {
-        brawlMultiplayer.sendEntitySpawnMsg(worldPosition, unitType,teamID);
     }
 }
