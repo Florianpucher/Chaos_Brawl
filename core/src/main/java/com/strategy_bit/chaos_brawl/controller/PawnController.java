@@ -2,13 +2,19 @@ package com.strategy_bit.chaos_brawl.controller;
 
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
 import com.strategy_bit.chaos_brawl.ResourceSystem.ResourceGold;
 import com.strategy_bit.chaos_brawl.ashley.entity.Base;
 import com.strategy_bit.chaos_brawl.ashley.entity.Player;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
 import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
+import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
@@ -38,7 +44,11 @@ public abstract class PawnController {
      */
     protected Boundary spawnArea;
     protected ArrayList<Resource> resources;
+
     private static final double rate=0.1;
+
+    private SpriteBatch batch;
+
 
     public PawnController(int teamID,InputHandler inputHandler, Boundary spawnArea){
         this.inputHandler = inputHandler;
@@ -100,5 +110,23 @@ public abstract class PawnController {
                 break;
         }
         return checkAndSubtract(cost,"Gold");
+    }
+
+    public void gameOver (boolean win ) {
+
+        batch = new SpriteBatch();
+
+        if (win == true){
+            Texture victory = AssetManager.getInstance().victoryScreen;
+            batch.begin();
+            batch.draw(victory, 10, 7);
+            batch.end();
+        }
+        else if (win == false){
+            Texture defeat = AssetManager.getInstance().defeatScreen;
+            batch.begin();
+            batch.draw(defeat, 10, 7);
+            batch.end();
+        }
     }
 }

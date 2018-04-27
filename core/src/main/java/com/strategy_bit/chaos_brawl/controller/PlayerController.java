@@ -110,4 +110,9 @@ public class PlayerController extends PawnController implements InputProcessor {
         }
         }
     }
+
+    @Override
+    public void gameOver(boolean win) {
+        System.out.println(win);
+    }
 }

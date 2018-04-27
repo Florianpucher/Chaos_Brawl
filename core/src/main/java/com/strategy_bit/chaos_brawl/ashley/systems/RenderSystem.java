@@ -55,7 +55,6 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     private OrthographicCamera camera;
 
 
-
     public RenderSystem() {
         //set used entities by components
         super(Family.all(TextureComponent.class, TransformComponent.class).get());
@@ -122,6 +121,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
             if (teamGameObjectComponent != null) {
                 ProgressBar hpBar = new ProgressBar(0, 100, 1, false, AssetManager.getInstance().progressHPbarStyle);
                 hpBar.setValue((float) (teamGameObjectComponent.getHitPoints() / teamGameObjectComponent.getMaxHP() * hpBar.getWidth()));
+                // camera.project();
                 hpBar.setPosition(transform.getPosition().x * width, transform.getPosition().y * height);
                 hpBar.setSize(200, 1);
                 stage.addActor(hpBar);

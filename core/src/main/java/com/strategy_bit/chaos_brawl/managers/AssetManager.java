@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -34,6 +35,8 @@ public class AssetManager {
     public TextureRegion BaseSkin;
     public TextureRegion ballistaTowerSkin;
     public TextureRegion wallSkin;
+    public Texture victoryScreen;
+    public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
 
     private static AssetManager instance;
@@ -62,6 +65,8 @@ public class AssetManager {
         BaseSkin = new TextureRegion(new Texture("Base.png"));
         ballistaTowerSkin = new TextureRegion(new Texture("ballista_tower.png"));
         wallSkin = new TextureRegion(new Texture("wall.png"));
+        victoryScreen = new Texture("victory.png");
+        defeatScreen = new Texture("defeat.png");
         resourceSkinOuter = new NinePatch(new Texture("resourceBarOuterBorder.9.png"));
         resourceSkinInner = new NinePatch(new Texture("resourceBarInner.9.png"));
         hpSkinOuter = new NinePatch(new Texture("hpBarbackgroundRed.png"));
@@ -86,6 +91,8 @@ public class AssetManager {
         resourceSkinInner.getTexture().dispose();
         hpSkinOuter.getTexture().dispose();
         hpSkinInner.getTexture().dispose();
+        //victoryScreen.getTexture().dispose();
+        //victoryScreen.getTexture().dispose();
 
     }
 }

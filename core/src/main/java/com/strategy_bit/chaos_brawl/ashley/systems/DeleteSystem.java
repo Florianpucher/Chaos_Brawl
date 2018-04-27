@@ -28,28 +28,6 @@ public class DeleteSystem extends IteratingSystem {
         TeamGameObjectComponent component = mTeamGameObjectComponent.get(entity);
         if(component.getHitPoints() <= 0.0){
             getEngine().removeEntity(entity);
-
-                if (component.getTeamId()== 0){
-                    CharSequence teamR = "Team RED won!!!";
-                    render(teamR);
-
-                } else if (component.getTeamId()== 1) {
-                    CharSequence teamB = "Team BLUE won!!!";
-                    render(teamB);
-                }
         }
-    }
-
-    public void render(CharSequence str){
-
-        SpriteBatch spriteBatch;
-        BitmapFont font;
-        font = new BitmapFont(Gdx.files.internal("data/rayanfont.fnt"), false);
-
-        spriteBatch = new SpriteBatch();
-
-        spriteBatch.begin();
-        font.draw(spriteBatch, str, 10, 10);
-        spriteBatch.end();
     }
 }
