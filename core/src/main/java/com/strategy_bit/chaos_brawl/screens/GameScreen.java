@@ -82,6 +82,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
+        controller.render();
         manager.render();
         super.render(delta);
         act();

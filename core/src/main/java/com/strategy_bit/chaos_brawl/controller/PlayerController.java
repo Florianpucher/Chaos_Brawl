@@ -1,9 +1,11 @@
 package com.strategy_bit.chaos_brawl.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
+import com.strategy_bit.chaos_brawl.ashley.CheatFunction.SensorReader;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.views.GameHUD;
@@ -19,11 +21,25 @@ import com.strategy_bit.chaos_brawl.world.InputHandler;
 public class PlayerController extends PawnController implements InputProcessor {
 
     private GameHUD gameHUD;
+    private SensorReader sensorReader;
+    private static final float minY = 1.0f;
 
 
     public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
         super(teamID,inputHandler, spawnArea);
+
     }
+
+    public void render(){
+        float accelY = Gdx.input.getAccelerometerY();
+        if(Math.abs(accelY) > minY) {
+            String message = "Device acceleration:" + Float.toString(accelY);
+            System.out.println(message);
+        }
+
+    }
+
+
 
     @Override
     public boolean keyDown(int keycode) {
