@@ -10,7 +10,7 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
  * @since 26.04.2018
  */
 public interface MultiplayerInputHandler extends InputHandler {
-    void createEntityLocal(Vector2 worldCoordinates, UnitType entityType, int teamID);
+    void createEntityLocal(Vector2 worldCoordinates, UnitType entityType, int teamID, long unitID);
     void moveEntityLocal(long unitID, Array<Vector2> wayPoints);
     void deleteUnitLocal(long unitID);
     void unitAttackLocal(long attackerID, long victimID);

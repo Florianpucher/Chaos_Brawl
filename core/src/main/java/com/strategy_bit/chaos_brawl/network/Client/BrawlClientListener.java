@@ -35,7 +35,7 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Received Message");
+                //System.out.println("Received Message");
                 if (object instanceof EntityMovingMessage) {
                     EntityMovingMessage movingMessage = (EntityMovingMessage) object;
                     inputHandler.moveEntityLocal(movingMessage.entityID, movingMessage.toLibGdxArray());
@@ -47,7 +47,7 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
 
                 else if (object instanceof EntitySpawnMessage){
                     EntitySpawnMessage entitySpawnMessage=(EntitySpawnMessage) object;
-                    inputHandler.createEntityLocal(entitySpawnMessage.position,entitySpawnMessage.entityTypeId,entitySpawnMessage.teamId);
+                    inputHandler.createEntityLocal(entitySpawnMessage.position,entitySpawnMessage.entityTypeId,entitySpawnMessage.teamId, entitySpawnMessage.unitID);
                 }else if(object instanceof EntityDeleteMessage){
                     EntityDeleteMessage deleteMessage = (EntityDeleteMessage) object;
                     inputHandler.deleteUnitLocal(deleteMessage.unitID);

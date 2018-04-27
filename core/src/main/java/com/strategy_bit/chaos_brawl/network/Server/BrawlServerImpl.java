@@ -115,8 +115,8 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     }
 
     @Override
-    public void sendEntitySpawnMsg(Vector2 worldPosition, UnitType unitType, int teamID) {
-        sendData(new EntitySpawnMessage(worldPosition,teamID,unitType));
+    public void sendEntitySpawnMsg(Vector2 worldPosition, UnitType unitType, int teamID, long unitID) {
+        sendData(new EntitySpawnMessage(worldPosition,teamID,unitType, unitID));
     }
 
     @Override

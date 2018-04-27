@@ -28,11 +28,17 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     private boolean isServer;
     private BrawlMultiplayer multiplayer;
+    private DeleteSystem deleteSystem;
 
     public MultiplayerWorld(boolean isServer, BrawlMultiplayer multiplayer, int players) {
         super(1, players);
         this.isServer = isServer;
         this.multiplayer = multiplayer;
+        if(!isServer){
+            engine.removeSystem(deleteSystem);
+        }else{
+            engine.setInputHandler(this);
+        }
     }
 
     @Override
@@ -50,14 +56,15 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
         engine.update(Gdx.graphics.getDeltaTime());
     }
 
+
+
+
     @Override
     protected void createEngine() {
         engine = new MyEngine(units);
         //Add some logic
-        /*if(isServer){
-            engine.addSystem(new DeleteSystem());
-            engine.addSystem(new CombatSystem());
-        }*/
+        deleteSystem = new DeleteSystem();
+        engine.addSystem(deleteSystem);
         //engine.addSystem(new DeleteSystem());
         engine.addSystem(new MovementSystem());
         engine.addSystem(new BulletSystem());
@@ -66,6 +73,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
         RenderSystem renderSystem = new RenderSystem();
         engine.addSystem(renderSystem);
         camera = renderSystem.getCamera();
+
     }
 
     @Override
@@ -74,24 +82,34 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
         if(isServer){
             Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
             PawnController spawnerController = playerControllers[teamID];
-            createEntity(entity);
-            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID);
+            long id = lastID;
+            createEntityMultiPlayer(entity, id);
+            lastID++;
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID, id);
             if(entity.getComponent(MovementComponent.class) != null){
                 Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(),
                         bases[spawnerController.getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
                 entity.getComponent(MovementComponent.class).setPath(path);
 
-                multiplayer.sendEntityMovingMessage(lastID-1, path);
+                multiplayer.sendEntityMovingMessage(id, path);
             }
         }else {
-            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID);
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID, -1);
         }
     }
 
+
+
+    public void createEntityMultiPlayer(Entity entity, long unitID){
+        engine.addEntity(entity);
+        units.put(unitID, entity);
+    }
+
     @Override
-    public void createEntityLocal(Vector2 worldCoordinates, UnitType entityType, int teamID) {
+    public void createEntityLocal(Vector2 worldCoordinates, UnitType entityType, int teamID, long unitID) {
         Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
-        createEntity(entity);
+        createEntityMultiPlayer(entity, unitID);
+        //createEntity(entity);
     }
 
     @Override
@@ -102,8 +120,13 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     @Override
     public void deleteUnitLocal(long unitID) {
-        Entity unit = units.get(unitID);
-        engine.removeEntity(unit);
+        if(isServer){
+            multiplayer.sendEntityDeleteMsg(unitID);
+        }else{
+            Entity unit = units.get(unitID);
+            engine.removeEntity(unit);
+        }
+
     }
 
     @Override
