@@ -26,7 +26,7 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
         super(teamID, inputHandler, spawnArea);
-        sensorReader = new SensorReader();
+        sensorReader = new SensorReader(this);
     }
 
     public void render(float dt) {

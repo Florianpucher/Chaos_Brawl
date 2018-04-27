@@ -27,7 +27,17 @@ public abstract class PawnController {
      */
     protected Boundary spawnArea;
     protected ArrayList<Resource> resources;
-    private static final double rate=10.0;
+    private static final double rate=1.0;
+
+    public float getNewRate() {
+        return newRate;
+    }
+
+    public void setNewRate(float newRate) {
+        this.newRate = newRate;
+    }
+
+    private float newRate = 1;
 
     public PawnController(int teamID,InputHandler inputHandler, Boundary spawnArea){
         this.inputHandler = inputHandler;
@@ -51,7 +61,7 @@ public abstract class PawnController {
     public void tick(){
         for (Resource r :
                 resources) {
-            r.add(rate);
+            r.add(rate*newRate);
         }
     }
     /*public void startTicking(){

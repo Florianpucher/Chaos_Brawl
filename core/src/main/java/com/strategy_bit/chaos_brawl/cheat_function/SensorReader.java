@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.cheat_function;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.controller.PlayerController;
 
 /**
  * Created by Florian on 27.04.2018.
@@ -10,12 +11,23 @@ import com.badlogic.gdx.utils.Array;
 public class SensorReader {
 
     private static final float min = 1.0f;
-    Array<Float> accelerations = new Array<Float>();
-    float time = 0;
+    private Array<Float> accelerations = new Array<Float>();
+    private float time = 0;
+    private float duration;
+    private PlayerController playerController;
+
+    public SensorReader(PlayerController playerController) {
+        this.playerController = playerController;
+    }
 
     public void update(float dt){
         float accelY;
         time+=dt;
+        duration -= dt;
+
+        if (duration < 0){
+            playerController.setNewRate(1);
+        }
         accelY = Gdx.input.getAccelerometerY();
         if (Math.abs(accelY) > min) {
             accelerations.add(accelY);
@@ -28,6 +40,8 @@ public class SensorReader {
             if (accelerations.size > 50 && average < 0.5f && time < 5000) {
                 String message = "Cheat Function active!";
                 System.out.println(message);
+                playerController.setNewRate(5);
+                duration = 10000;
                 accelerations.clear();
                 time = 0;
             }
