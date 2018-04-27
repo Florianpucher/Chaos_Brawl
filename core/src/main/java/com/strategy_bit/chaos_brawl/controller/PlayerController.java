@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
+import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.views.GameHUD;
@@ -21,40 +22,15 @@ import com.strategy_bit.chaos_brawl.world.InputHandler;
 public class PlayerController extends PawnController implements InputProcessor {
 
     private GameHUD gameHUD;
-    private static final float min = 1.0f;
-    Array<Float> accelerations = new Array<Float>();
-    float time = 0;
-
+    private SensorReader sensorReader;
 
     public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
         super(teamID, inputHandler, spawnArea);
-
+        sensorReader = new SensorReader();
     }
 
     public void render(float dt) {
-        float accelY;
-        time+=dt;
-        accelY = Gdx.input.getAccelerometerY();
-        if (Math.abs(accelY) > min) {
-            accelerations.add(accelY);
-            float average = 0;
-            for (float acc:
-                 accelerations) {
-                average += acc;
-            }
-            average = average / accelerations.size;
-            if (accelerations.size > 50 && average < 0.5f && time < 5000) {
-                String message = "Cheat Function active!";
-                System.out.println(message);
-                accelerations.clear();
-                time = 0;
-            }
-            else if (time > 5000){
-                accelerations.clear();
-                time = 0;
-            }
-        }
-
+        sensorReader.update(dt);
     }
 
 
