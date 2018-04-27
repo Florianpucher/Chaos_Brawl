@@ -28,7 +28,6 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     private boolean isServer;
     private BrawlMultiplayer multiplayer;
-    private DeleteSystem deleteSystem;
 
     public MultiplayerWorld(boolean isServer, BrawlMultiplayer multiplayer, int players) {
         super(1, players);
@@ -44,36 +43,23 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     @Override
     public void render() {
         if(isServer){
-            if(System.currentTimeMillis() - resourceTimeStamp > 1){
-                for (PawnController controller :
-                        playerControllers) {
-                    controller.tick();
-                    resourceTimeStamp = System.currentTimeMillis();
-                }
-            }
-            multiplayer.sendTick();
+            updateResources();
+
         }
         engine.update(Gdx.graphics.getDeltaTime());
     }
 
-
-
-
     @Override
-    protected void createEngine() {
-        engine = new MyEngine(units);
-        //Add some logic
-        deleteSystem = new DeleteSystem();
-        engine.addSystem(deleteSystem);
-        //engine.addSystem(new DeleteSystem());
-        engine.addSystem(new MovementSystem());
-        engine.addSystem(new BulletSystem());
-        engine.addSystem(new CombatSystem());
-        //Renderer should be the last system to add
-        RenderSystem renderSystem = new RenderSystem();
-        engine.addSystem(renderSystem);
-        camera = renderSystem.getCamera();
+    protected void updateResources() {
+        if(System.currentTimeMillis() - resourceTimeStamp > 1){
+            for (PawnController controller :
+                    playerControllers) {
+                controller.tick();
 
+            }
+            resourceTimeStamp = System.currentTimeMillis();
+            multiplayer.sendTick();
+        }
     }
 
     @Override

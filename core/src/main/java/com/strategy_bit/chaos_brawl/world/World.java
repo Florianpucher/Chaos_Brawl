@@ -45,6 +45,7 @@ public class World implements InputHandler {
     protected Entity[] bases;
     protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
+    protected DeleteSystem deleteSystem;
 
     public World(int map, int players) {
         units = new HashMap<Long, Entity>();
@@ -92,7 +93,8 @@ public class World implements InputHandler {
     protected void createEngine(){
         engine = new MyEngine(units);
         //Add some logic
-        engine.addSystem(new DeleteSystem());
+        deleteSystem = new DeleteSystem();
+        engine.addSystem(deleteSystem);
         engine.addSystem(new MovementSystem());
         engine.addSystem(new BulletSystem());
         engine.addSystem(new CombatSystem());
@@ -122,6 +124,12 @@ public class World implements InputHandler {
 
 
     public void render(){
+        updateResources();
+        engine.update(Gdx.graphics.getDeltaTime());
+    }
+
+
+    protected void updateResources(){
         if(System.currentTimeMillis() - resourceTimeStamp > 1){
             for (PawnController controller :
                     playerControllers) {
@@ -129,7 +137,6 @@ public class World implements InputHandler {
                 resourceTimeStamp = System.currentTimeMillis();
             }
         }
-        engine.update(Gdx.graphics.getDeltaTime());
     }
 
 
@@ -158,14 +165,15 @@ public class World implements InputHandler {
     @Override
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
         Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
-        for (PawnController p :
+        //Moved this if condition to pawnController
+        /*for (PawnController p :
                 playerControllers) {
             if(p.getTeamID()==teamID&&! playerControllers[teamID].spawnUnit(entityType)){
                 //player does not have enough resources
 
                 return;
             }
-        }
+        }*/
 
         createEntity(entity);
 
