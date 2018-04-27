@@ -38,7 +38,7 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
                 System.out.println("Received Message");
                 if (object instanceof EntityMovingMessage) {
                     EntityMovingMessage movingMessage = (EntityMovingMessage) object;
-                    inputHandler.moveEntityLocal(movingMessage.entityID, movingMessage.wayPoints);
+                    inputHandler.moveEntityLocal(movingMessage.entityID, movingMessage.toLibGdxArray());
                     //brawlClient.getManager().sendTouchInputLocal(movingMessage.screenCoordinates,movingMessage.entityID);
                 }
                 else if (object instanceof ResourceTickMessage){

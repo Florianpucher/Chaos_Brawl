@@ -43,6 +43,6 @@ public class BrawlNetwork {
         kryo.register(InitializeGameMessage.class);
         kryo.register(int[].class);
         kryo.register(Object[].class);
-        kryo.register(Array.ArrayIterable.class);
+        kryo.register(Vector2[].class);
     }
 }

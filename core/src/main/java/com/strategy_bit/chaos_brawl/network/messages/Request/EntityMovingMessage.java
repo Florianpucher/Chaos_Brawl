@@ -12,13 +12,18 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
 public class EntityMovingMessage implements Message {
 
     public long entityID;
-    public Array<Vector2> wayPoints;
+    public Vector2[] wayPoints;
 
     public EntityMovingMessage(long entityID, Array<Vector2> wayPoints) {
         this.entityID = entityID;
-        this.wayPoints = wayPoints;
+        this.wayPoints = wayPoints.toArray(Vector2.class);
     }
 
     public EntityMovingMessage() {
+    }
+
+
+    public Array<Vector2> toLibGdxArray(){
+        return new Array<Vector2>(wayPoints);
     }
 }
