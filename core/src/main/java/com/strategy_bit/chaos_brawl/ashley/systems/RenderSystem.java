@@ -23,6 +23,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.ashley.entity.HpBar;
 
 import java.time.temporal.TemporalAmount;
 import java.util.Comparator;
@@ -117,13 +118,12 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                     transform.getScale().x * PIXELS_TO_METRES, transform.getScale().y * PIXELS_TO_METRES,
                     MathUtils.radiansToDegrees * transform.getRotation());
 
-            TeamGameObjectComponent teamGameObjectComponent = teamGameObjectMapper.get(entity);
-            if (teamGameObjectComponent != null) {
-                ProgressBar hpBar = new ProgressBar(0, 100, 1, false, AssetManager.getInstance().progressHPbarStyle);
-                hpBar.setValue((float) (teamGameObjectComponent.getHitPoints() / teamGameObjectComponent.getMaxHP() * hpBar.getWidth()));
-                // camera.project();
-                hpBar.setPosition(transform.getPosition().x * width, transform.getPosition().y * height);
-                hpBar.setSize(200, 1);
+            TeamGameObjectComponent unitHP = teamGameObjectMapper.get(entity);
+            if (unitHP != null) {
+                ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().progressHPbarStyle);
+                hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
+                hpBar.setPosition(transform.getPosition().x * 83 - (transform.getPosition().x/20) , transform.getPosition().y * 82 - (transform.getPosition().y/20));
+                hpBar.setSize(150, 1);
                 stage.addActor(hpBar);
             }
         }

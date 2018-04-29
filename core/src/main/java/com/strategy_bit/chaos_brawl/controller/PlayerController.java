@@ -1,13 +1,21 @@
 package com.strategy_bit.chaos_brawl.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.views.GameHUD;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
+
+import org.w3c.dom.events.UIEvent;
 
 /**
  * interface of user interface and other user input
@@ -19,6 +27,13 @@ import com.strategy_bit.chaos_brawl.world.InputHandler;
 public class PlayerController extends PawnController implements InputProcessor {
 
     private GameHUD gameHUD;
+
+    int w = 0;
+    int h = 0;
+    int tw = 0;
+    int th = 0;
+    OrthographicCamera camera = null;
+    private SpriteBatch batch = null;
 
 
     public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
@@ -111,8 +126,33 @@ public class PlayerController extends PawnController implements InputProcessor {
         }
     }
 
-    @Override
     public void gameOver(boolean win) {
+        batch = new SpriteBatch();
+
+        w = Gdx.graphics.getWidth();
+        h = Gdx.graphics.getHeight();
+        OrthographicCamera camera = new OrthographicCamera(w, h);
+        camera.position.set(w / 2, h / 2, 0);
+        camera.update();
+
+        if (win == true){
+            Texture victory = new Texture(Gdx.files.internal("victory.png"));
+            tw = victory.getWidth();
+            th = victory.getHeight();
+
+            batch.begin();
+            batch.draw(victory, camera.position.x - (tw / 2), camera.position.y - (th / 2));
+            batch.end();
+        }
+        else if (win == false){
+            Texture defeat = new Texture(Gdx.files.internal("defeat.png"));
+            tw = defeat.getWidth();
+            th = defeat.getHeight();
+
+            batch.begin();
+            batch.draw(defeat, camera.position.x - (tw / 2), camera.position.y - (th / 2));
+            batch.end();
+        }
         System.out.println(win);
     }
 }

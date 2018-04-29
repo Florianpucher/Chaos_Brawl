@@ -18,6 +18,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
+import com.strategy_bit.chaos_brawl.ashley.entity.HpBar;
 
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.controller.PawnController;
@@ -119,16 +120,16 @@ public class World implements InputHandler {
         engine.update(Gdx.graphics.getDeltaTime());
 
             if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-                if (endGame == false) {                     // for performance reasons
-                    endGame = true;
+                if (endGame == false) {                         // for performance reasons
+                    // endGame = true;
                     playerControllers[0].gameOver(false);
-                    playerControllers[1].gameOver(true);
+                    // playerControllers[1].gameOver(true);     #remove comment lines for multiplayer
                 }
             } else if (bases[1].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
                 if (endGame == false) {
-                    endGame = true;
+                    // endGame = true;
                     playerControllers[0].gameOver(true);
-                    playerControllers[1].gameOver(false);
+                    // playerControllers[1].gameOver(false);    #remove comment lines for multiplayer
                 }
             }
 

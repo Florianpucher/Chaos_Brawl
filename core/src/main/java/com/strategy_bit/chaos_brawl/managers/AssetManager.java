@@ -65,12 +65,12 @@ public class AssetManager {
         BaseSkin = new TextureRegion(new Texture("Base.png"));
         ballistaTowerSkin = new TextureRegion(new Texture("ballista_tower.png"));
         wallSkin = new TextureRegion(new Texture("wall.png"));
-        victoryScreen = new Texture("victory.png");
-        defeatScreen = new Texture("defeat.png");
         resourceSkinOuter = new NinePatch(new Texture("resourceBarOuterBorder.9.png"));
         resourceSkinInner = new NinePatch(new Texture("resourceBarInner.9.png"));
         hpSkinOuter = new NinePatch(new Texture("hpBarbackgroundRed.png"));
         hpSkinInner = new NinePatch(new Texture("hpBarInner.png"));
+        victoryScreen = new Texture("victory.png");
+        defeatScreen = new Texture("defeat.png");
         progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
     }
@@ -91,8 +91,8 @@ public class AssetManager {
         resourceSkinInner.getTexture().dispose();
         hpSkinOuter.getTexture().dispose();
         hpSkinInner.getTexture().dispose();
-        //victoryScreen.getTexture().dispose();
-        //victoryScreen.getTexture().dispose();
+        victoryScreen.dispose();
+        defeatScreen.dispose();
 
     }
 }

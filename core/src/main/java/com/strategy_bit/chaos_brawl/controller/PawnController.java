@@ -47,8 +47,6 @@ public abstract class PawnController {
 
     private static final double rate=0.1;
 
-    private SpriteBatch batch;
-
 
     public PawnController(int teamID,InputHandler inputHandler, Boundary spawnArea){
         this.inputHandler = inputHandler;
@@ -112,21 +110,7 @@ public abstract class PawnController {
         return checkAndSubtract(cost,"Gold");
     }
 
-    public void gameOver (boolean win ) {
+    public void gameOver (boolean win) {
 
-        batch = new SpriteBatch();
-
-        if (win == true){
-            Texture victory = AssetManager.getInstance().victoryScreen;
-            batch.begin();
-            batch.draw(victory, 10, 7);
-            batch.end();
-        }
-        else if (win == false){
-            Texture defeat = AssetManager.getInstance().defeatScreen;
-            batch.begin();
-            batch.draw(defeat, 10, 7);
-            batch.end();
-        }
     }
 }
