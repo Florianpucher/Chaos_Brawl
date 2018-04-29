@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
@@ -134,8 +135,9 @@ public class PlayerController extends PawnController implements InputProcessor {
         camera.position.set(w / 2, h / 2, 0);
         camera.update();
 
+        AssetManager assetManager = AssetManager.getInstance();
         if (win == true){
-            Texture victory = new Texture(Gdx.files.internal("victory.png"));
+            Texture victory = assetManager.victoryScreen;
             tw = victory.getWidth();
             th = victory.getHeight();
 
@@ -144,7 +146,7 @@ public class PlayerController extends PawnController implements InputProcessor {
             batch.end();
         }
         else if (win == false){
-            Texture defeat = new Texture(Gdx.files.internal("defeat.png"));
+            Texture defeat = assetManager.defeatScreen;
             tw = defeat.getWidth();
             th = defeat.getHeight();
 
