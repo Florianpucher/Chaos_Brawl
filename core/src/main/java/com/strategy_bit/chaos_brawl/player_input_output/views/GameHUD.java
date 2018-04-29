@@ -26,7 +26,9 @@ import com.strategy_bit.chaos_brawl.util.Boundary;
  */
 public class GameHUD extends Table{
 
-    private static final String NEW_UNIT_1 = "UNIT_1";
+    private static final String NEW_UNIT_1 = "Archer";
+    private static final String NEW_UNIT_2 = "Fighter";
+    private static final String NEW_UNIT_3 = "Knight";
 
     private UnitType nextUnitType;
     private Texture nonSpawnAreaTexture;
@@ -39,6 +41,12 @@ public class GameHUD extends Table{
 
         final TextButton btnNewUnit1 = new TextButton(NEW_UNIT_1, assetManager.defaultSkin);
         btnNewUnit1.setName(NEW_UNIT_1);
+        setFillParent(true);
+        final TextButton btnNewUnit2 = new TextButton(NEW_UNIT_2, assetManager.defaultSkin);
+        btnNewUnit2.setName(NEW_UNIT_2);
+        setFillParent(true);
+        final TextButton btnNewUnit3 = new TextButton(NEW_UNIT_3, assetManager.defaultSkin);
+        btnNewUnit3.setName(NEW_UNIT_3);
         setFillParent(true);
 
         NinePatchDrawable resourceBarOuter = new NinePatchDrawable(assetManager.resourceSkinOuter);
@@ -62,6 +70,8 @@ public class GameHUD extends Table{
         lowerUI.right();
         add(lowerUI).width(Gdx.graphics.getWidth());
         lowerUI.add(btnNewUnit1).right().height(lowerUI.getPrefHeight());
+        lowerUI.add(btnNewUnit2).right().height(lowerUI.getPrefHeight());
+        lowerUI.add(btnNewUnit3).right().height(lowerUI.getPrefHeight());
 
 
         ClickListener listener = new ClickListener(){
@@ -76,6 +86,20 @@ public class GameHUD extends Table{
                         nextUnitType = UnitType.RANGED;
                     }
                 }
+                if(name.equals( NEW_UNIT_2)){
+                    if(nextUnitType == UnitType.SWORDFIGHTER){
+                        nextUnitType = null;
+                    }else{
+                        nextUnitType = UnitType.SWORDFIGHTER;
+                    }
+                }
+                if(name.equals( NEW_UNIT_3)){
+                    if(nextUnitType == UnitType.KNIGHT){
+                        nextUnitType = null;
+                    }else{
+                        nextUnitType = UnitType.KNIGHT;
+                    }
+                }
 
 
 
@@ -88,6 +112,8 @@ public class GameHUD extends Table{
             }
         };
         btnNewUnit1.addListener(listener);
+        btnNewUnit2.addListener(listener);
+        btnNewUnit3.addListener(listener);
     }
 
     private void initializeNonSpawnAreaShadow(Boundary spawnArea){

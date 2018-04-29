@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
+import javax.xml.soap.Text;
+
 /**
  * manager for holding references to assets
  *
@@ -27,6 +29,7 @@ public class AssetManager {
     public  Skin defaultSkin;
     public TextureRegion archerSkin;
     public TextureRegion swordFighterSkin;
+    public TextureRegion knightSkin;
     public TextureRegion projectileSkin;
     public NinePatch resourceSkinOuter;
     public NinePatch resourceSkinInner;
@@ -64,6 +67,7 @@ public class AssetManager {
 
         archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit.png"));
         swordFighterSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_sword_fighter.png"));
+        knightSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_knight.png"));     // need a new Knightskin
         projectileSkin=new TextureRegion(new Texture(UNIT_PATH+ "arrow.png"));
 
 
@@ -93,6 +97,7 @@ public class AssetManager {
         defaultSkin.dispose();
         archerSkin.getTexture().dispose();
         swordFighterSkin.getTexture().dispose();
+        knightSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();

@@ -17,6 +17,16 @@ public enum UnitType {
         public double getCosts() {
             return 10.0;
         }
+    }, SWORDFIGHTER {
+        @Override
+        public double getCosts() {
+            return 8.0;
+        }
+    }, KNIGHT {
+        @Override
+        public double getCosts() {
+            return 20.0;
+        }
     }, MAINBUILDING {
         @Override
         public double getCosts() {
