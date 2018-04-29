@@ -1,30 +1,13 @@
-package com.strategy_bit.chaos_brawl.controller;
+package com.strategy_bit.chaos_brawl.player_input_output;
 
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
-import com.strategy_bit.chaos_brawl.ResourceSystem.ResourceGold;
-import com.strategy_bit.chaos_brawl.ashley.entity.Base;
-import com.strategy_bit.chaos_brawl.ashley.entity.Player;
-import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
-import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
-import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.config.WorldSettings;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.resource_system.Resource;
+import com.strategy_bit.chaos_brawl.resource_system.ResourceGold;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
-import com.strategy_bit.chaos_brawl.world.World;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -44,8 +27,7 @@ public abstract class PawnController {
      */
     protected Boundary spawnArea;
     protected ArrayList<Resource> resources;
-
-    private static final double rate=0.1;
+    private static final double rate=0.075;
 
 
     public PawnController(int teamID,InputHandler inputHandler, Boundary spawnArea){
@@ -73,16 +55,19 @@ public abstract class PawnController {
             r.add(rate);
         }
     }
-    public void startTicking(){
+    /*public void startTicking(){
+        //TODO change this
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 tick();
             }
-        }, 0, 100);
-    }
+        }, 0, 1000);
+
+        System.out.println("Archer "+teamID+" started ticking");
+    }*/
     public void createResource(){
-        Resource resource=new ResourceGold();
+        Resource resource=new ResourceGold(teamID);
         resources.add(resource);
     }
 
@@ -96,17 +81,7 @@ public abstract class PawnController {
         return false;
     }
     public boolean spawnUnit(UnitType unitType){
-        double cost=Double.MIN_VALUE;
-        switch (unitType){
-            case RANGED:
-                cost=PlayerClone.COST;
-                break;
-            case MELEE:
-                cost=Player.COST;
-                break;
-            default:
-                break;
-        }
+        double cost= unitType.getCosts();
         return checkAndSubtract(cost,"Gold");
     }
 

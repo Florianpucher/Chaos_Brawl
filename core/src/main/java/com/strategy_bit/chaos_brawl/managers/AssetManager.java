@@ -18,22 +18,29 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
  */
 
 public class AssetManager {
+    private static final String UNIT_PATH = "units/";
+    private static final String BUILDING_PATH = "buildings/";
+    private static final String UI_PATH = "user_interface/";
+    private static final String ENVIRONMENT_PATH = "environment/";
 
 
-    public Skin defaultSkin;
-    public TextureRegion playerSkin;
+    public  Skin defaultSkin;
+    public TextureRegion archerSkin;
+    public TextureRegion swordFighterSkin;
     public TextureRegion projectileSkin;
     public NinePatch resourceSkinOuter;
     public NinePatch resourceSkinInner;
+    public NinePatch resourceSkinMiddle;
     public NinePatch hpSkinOuter;
     public NinePatch hpSkinInner;
     public TextureRegion defaultTile;
     public TextureRegion waterTile;
     public TextureRegion dirtTile;
-    public TextureRegion TowerSkin;
-    public TextureRegion TowerSkinP;
-    public TextureRegion BaseSkin;
+    //public TextureRegion TowerSkin;
+    //public TextureRegion TowerSkinP;
+    //public TextureRegion BaseSkin;
     public TextureRegion ballistaTowerSkin;
+    public TextureRegion mainTowerSkin;
     public TextureRegion wallSkin;
     public Texture victoryScreen;
     public Texture defeatScreen;
@@ -53,20 +60,26 @@ public class AssetManager {
 
     }
 
-    public void loadAssets() {
-        defaultSkin = new Skin(Gdx.files.internal("default/skin.json"));
-        playerSkin = new TextureRegion(new Texture("unit.png"));
-        projectileSkin = new TextureRegion(new Texture("projectile.png"));
-        defaultTile = new TextureRegion(new Texture("default_tile.png"));
-        waterTile = new TextureRegion(new Texture("water_tile.png"));
-        dirtTile = new TextureRegion(new Texture("dirt_tile.png"));
-        TowerSkin = new TextureRegion(new Texture("Tower.png"));
-        TowerSkinP = new TextureRegion(new Texture("Towerp.png"));
-        BaseSkin = new TextureRegion(new Texture("Base.png"));
-        ballistaTowerSkin = new TextureRegion(new Texture("ballista_tower.png"));
-        wallSkin = new TextureRegion(new Texture("wall.png"));
-        resourceSkinOuter = new NinePatch(new Texture("resourceBarOuterBorder.9.png"));
-        resourceSkinInner = new NinePatch(new Texture("resourceBarInner.9.png"));
+    public  void loadAssets(){
+
+        archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit.png"));
+        swordFighterSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_sword_fighter.png"));
+        projectileSkin=new TextureRegion(new Texture(UNIT_PATH+ "arrow.png"));
+
+
+        defaultTile = new TextureRegion(new Texture(ENVIRONMENT_PATH+"default_tile.png"));
+        waterTile = new TextureRegion(new Texture ( ENVIRONMENT_PATH+"water_tile.png"));
+        dirtTile = new TextureRegion(new Texture ( ENVIRONMENT_PATH+"dirt_tile.png"));
+        //TowerSkin = new TextureRegion(new Texture("Tower.png"));
+        //TowerSkinP = new TextureRegion(new Texture("Towerp.png"));
+        //BaseSkin = new TextureRegion(new Texture("Base.png"));
+        ballistaTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"ballista_tower.png"));
+        mainTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"wall.png"));
+
+        defaultSkin = new Skin(Gdx.files.internal(UI_PATH+"default/skin.json"));
+        resourceSkinOuter = new NinePatch(new Texture(UI_PATH+"resourceBarOuterBorder.png"),12,12,12,12);
+        resourceSkinInner = new NinePatch(new Texture(UI_PATH+"resourceBarInner.png"),0,16,7,7);
+        resourceSkinMiddle= new NinePatch(new Texture(UI_PATH+"resourceBarMiddle.png"),0,0,21,23);
         hpSkinOuter = new NinePatch(new Texture("hpBarbackgroundRed.png"));
         hpSkinInner = new NinePatch(new Texture("hpBarInner.png"));
         victoryScreen = new Texture("victory.png");
@@ -78,17 +91,19 @@ public class AssetManager {
 
     public void dispose() {
         defaultSkin.dispose();
-        playerSkin.getTexture().dispose();
+        archerSkin.getTexture().dispose();
+        swordFighterSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();
         dirtTile.getTexture().dispose();
-        TowerSkin.getTexture().dispose();
-        BaseSkin.getTexture().dispose();
+        //TowerSkin.getTexture().dispose();
+        //BaseSkin.getTexture().dispose();
         ballistaTowerSkin.getTexture().dispose();
-        wallSkin.getTexture().dispose();
+        mainTowerSkin.getTexture().dispose();
         resourceSkinOuter.getTexture().dispose();
         resourceSkinInner.getTexture().dispose();
+        resourceSkinMiddle.getTexture().dispose();
         hpSkinOuter.getTexture().dispose();
         hpSkinInner.getTexture().dispose();
         victoryScreen.dispose();

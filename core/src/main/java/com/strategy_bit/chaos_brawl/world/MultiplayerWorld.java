@@ -5,16 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.ashley.entity.Player;
+import com.strategy_bit.chaos_brawl.ashley.entity.Archer;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
-import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
-import com.strategy_bit.chaos_brawl.ashley.entity.Base;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
-
-import java.util.HashMap;
 
 public class MultiplayerWorld extends World {
 
@@ -84,13 +80,13 @@ public class MultiplayerWorld extends World {
         //TODO add other cases
         switch (entityTypeId){
             case 1:
-                entity=new Player(position,teamId);
+                entity=new Archer(position,teamId);
                 break;
             case 2:
                 entity=new PlayerClone(position,teamId);
                 break;
             default:
-                entity=new Player(position,teamId);
+                entity=new Archer(position,teamId);
                 break;
         }
         return entity;
@@ -102,7 +98,7 @@ public class MultiplayerWorld extends World {
         //CombatComponent combatComponent=entity.getComponent(CombatComponent.class);
         int entityTypeId=0;
         //TODO add other types
-        if (entity instanceof Player){
+        if (entity instanceof Archer){
             entityTypeId=1;
         }else if(entity instanceof  PlayerClone){
             entityTypeId=2;

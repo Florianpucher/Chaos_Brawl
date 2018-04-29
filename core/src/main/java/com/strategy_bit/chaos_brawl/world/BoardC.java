@@ -106,7 +106,7 @@ public class BoardC implements Board {
         return tileBoard;
     }
 
-    public int[][] boardToMatrix(BoardA board){
+    public int[][] boardToMatrix(){
         for(int i = 0; i < BOARD_HEIGHT; i++){
             for (int j = 0; j < BOARD_WIDTH; j++){
                 intBoard[i][j] = tileBoard[i][j].getType().getMoveAble();
@@ -119,6 +119,11 @@ public class BoardC implements Board {
     public Vector2 getWorldCoordinateOfTile(int x, int y) {
         Tile tile = tileBoard[y][x];
         return new Vector2(tile.getPosition());
+    }
+
+    @Override
+    public Vector2 getTileBoardPositionDependingOnWorldCoordinates(Vector2 worldCoordinates) {
+        return null;
     }
 
 

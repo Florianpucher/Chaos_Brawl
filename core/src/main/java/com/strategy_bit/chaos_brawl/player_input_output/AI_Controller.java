@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.controller;
+package com.strategy_bit.chaos_brawl.player_input_output;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @version 1.0
  * @since 19.04.2018
  */
-public class AI_Controller extends PlayerController {
+public class AI_Controller extends PawnController {
 
     private boolean isRunning;
     private ReentrantLock lock;
@@ -39,7 +39,9 @@ public class AI_Controller extends PlayerController {
 
     public void resumeAI() {
         goIntoPause = false;
-        lock.unlock();
+        if(lock.isHeldByCurrentThread()){
+            lock.unlock();
+        }
     }
 
 
@@ -75,7 +77,7 @@ public class AI_Controller extends PlayerController {
                     @Override
                     public void run() {
                         System.out.println("AI adds object");
-                        inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.MELEE, teamID);
+                        inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.RANGED, teamID);
                     }
                 });
 

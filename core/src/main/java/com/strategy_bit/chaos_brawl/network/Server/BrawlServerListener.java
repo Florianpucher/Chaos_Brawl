@@ -18,8 +18,8 @@ public class BrawlServerListener extends Listener {
 
     @Override
     public void connected(Connection connection) {
-        //Start a 2 Player-Game
-        //TODO: add 3 and 4 Player-Games
+        //Start a 2 Archer-Game
+        //TODO: add 3 and 4 Archer-Games
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {

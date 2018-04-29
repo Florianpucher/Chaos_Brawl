@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.controller;
+package com.strategy_bit.chaos_brawl.player_input_output;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -8,11 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
-import com.strategy_bit.chaos_brawl.views.GameHUD;
+import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 import org.w3c.dom.events.UIEvent;

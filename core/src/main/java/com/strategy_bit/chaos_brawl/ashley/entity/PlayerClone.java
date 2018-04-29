@@ -18,27 +18,11 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  * @since 15.03.2018
  */
 public class PlayerClone extends Entity {
-    public final static double COST=5.0;
-    public PlayerClone(Vector2 position) {
-        TransformComponent transformComponent = new TransformComponent();
-        transformComponent.setPosition(position);
-        TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().playerSkin);
-        MovementComponent movementComponent = new MovementComponent(5,transformComponent);
-        CombatComponent combatComponent = new CombatComponent(100.0,0,1,0,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(25.0,6);
-
-        add(transformComponent);
-        add(textureComponent);
-        add(movementComponent);
-        add(combatComponent);
-        add(teamGameObjectComponent);
-    }
     public PlayerClone(Vector2 position,int teamId) {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().playerSkin);
+        textureComponent.setTexture(AssetManager.getInstance().swordFighterSkin);
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
         //CombatComponent combatComponent=new CombatComponent(100.0,0,1,0,teamId,true);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(100,teamId);
