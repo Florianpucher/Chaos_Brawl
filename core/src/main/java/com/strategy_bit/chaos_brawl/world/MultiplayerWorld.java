@@ -6,7 +6,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entity.Archer;
+import com.strategy_bit.chaos_brawl.ashley.entity.Knight;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
+import com.strategy_bit.chaos_brawl.ashley.entity.SwordFighter;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
@@ -83,6 +85,12 @@ public class MultiplayerWorld extends World {
                 entity=new Archer(position,teamId);
                 break;
             case 2:
+                entity=new SwordFighter(position,teamId);
+                break;
+            case 3:
+                entity=new Knight(position,teamId);
+                break;
+            case 4:
                 entity=new PlayerClone(position,teamId);
                 break;
             default:
