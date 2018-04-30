@@ -77,7 +77,9 @@ public class AI_Controller extends PawnController {
                     @Override
                     public void run() {
                         System.out.println("AI adds object");
-                        inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.RANGED, teamID);
+                        if(spawnUnit(UnitType.RANGED)){
+                            inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.RANGED, teamID);
+                        }
                     }
                 });
 

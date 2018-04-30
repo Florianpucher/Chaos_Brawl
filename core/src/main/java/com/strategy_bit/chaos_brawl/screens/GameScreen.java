@@ -17,32 +17,42 @@ import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
 public class GameScreen extends AbstractScreen {
 
-    private World manager;
-    private PlayerController controller;
-    protected PawnController otherPlayerController;
-
+    protected World manager;
+    protected PlayerController controller;
+    private int map;
+    protected PawnController[] controllers;
     public GameScreen(int map) {
-        manager = new World(map,2);
+        this.map = map;
     }
 
 
     @Override
     public void buildStage() {
         super.buildStage();
-
-        controller = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(1));
-        otherPlayerController = new AI_Controller(1,manager, manager.createSpawnAreaForPlayer(2));
         initializeGame();
     }
 
     protected void initializeGame(){
+        manager = new World(map,2);
+        controllers = new PawnController[2];
+        controller = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0));
+        controllers[0] = controller;
+        AI_Controller otherPlayerController = new AI_Controller(1,manager, manager.createSpawnAreaForPlayer(1));
+        controllers[1] = otherPlayerController;
         manager.setPlayerController(0, controller);
-        controller.setCurrentTargetTeam(1);
+        //controller.setCurrentTargetTeam(1);
         manager.setPlayerController(1,otherPlayerController);
-        otherPlayerController.setCurrentTargetTeam(0);
+        //otherPlayerController.setCurrentTargetTeam(0);
         manager.initializeGameForPlayers();
         //controller.startTicking();
         //otherPlayerController.startTicking();
+        setInitialTargets();
+    }
+
+    protected void setInitialTargets(){
+        for (int i = 0; i < controllers.length; i++) {
+            controllers[i].setCurrentTargetTeam((i + 1) % controllers.length);
+        }
     }
 
     @Override
@@ -55,16 +65,22 @@ public class GameScreen extends AbstractScreen {
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(controller);
         Gdx.input.setInputProcessor(inputMultiplexer);
-        if(otherPlayerController instanceof AI_Controller){
-            ((AI_Controller) otherPlayerController).startAI();
+        for (PawnController controller :
+             controllers) {
+            if(controller instanceof AI_Controller){
+                ((AI_Controller) controller).startAI();
+            }
         }
     }
 
     @Override
     public void pause() {
         super.pause();
-        if(otherPlayerController instanceof AI_Controller){
-            ((AI_Controller) otherPlayerController).pauseAI();
+        for (PawnController controller :
+                controllers) {
+            if(controller instanceof AI_Controller){
+                ((AI_Controller) controller).pauseAI();
+            }
         }
     }
 
@@ -72,8 +88,11 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void resume() {
         super.resume();
-        if(otherPlayerController instanceof AI_Controller){
-            ((AI_Controller) otherPlayerController).resumeAI();
+        for (PawnController controller :
+                controllers) {
+            if(controller instanceof AI_Controller){
+                ((AI_Controller) controller).resumeAI();
+            }
         }
     }
 
@@ -89,8 +108,11 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void hide() {
         super.hide();
-        if(otherPlayerController instanceof AI_Controller){
-            ((AI_Controller) otherPlayerController).stopAI();
+        for (PawnController controller :
+                controllers) {
+            if(controller instanceof AI_Controller){
+                ((AI_Controller) controller).stopAI();
+            }
         }
     }
 

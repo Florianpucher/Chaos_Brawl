@@ -64,8 +64,9 @@ public class PlayerController extends PawnController implements InputProcessor {
 
             if(current != null && spawnArea.checkIfVectorIsInside(screenCoordinates)){
                 System.out.println("Click");
-
-                inputHandler.createEntityScreenCoordinates(screenCoordinates,current, teamID);
+                if(spawnUnit(current)){
+                    inputHandler.createEntityScreenCoordinates(screenCoordinates,current, teamID);
+                }
                 return false;
             }
         }

@@ -1,116 +1,133 @@
 package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entity.Archer;
-import com.strategy_bit.chaos_brawl.ashley.entity.Knight;
 import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
+import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.ashley.entity.SwordFighter;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.player_input_output.OtherPlayerController;
+import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
+import com.strategy_bit.chaos_brawl.types.UnitType;
 
-public class MultiplayerWorld extends World {
+public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
-    private BrawlMultiplayer brawlMultiplayer;
+    private boolean isServer;
+    private BrawlMultiplayer multiplayer;
 
-    public MultiplayerWorld(BrawlMultiplayer brawlMultiplayer) {
-        this.brawlMultiplayer = brawlMultiplayer;
-        if (brawlMultiplayer instanceof BrawlServerImpl) {
-            //spawn own starting units
-            //createPlayer();
-            /*for (Connection connection : ((BrawlServerImpl) brawlMultiplayer).getNetworkMembers()) {
-                //spawn starting units for other players
-                //createEntity(new PlayerClone(new Vector2(15, 7.5f)));
-            }*/
+    public MultiplayerWorld(boolean isServer, BrawlMultiplayer multiplayer, int players) {
+        super(1, players);
+        this.isServer = isServer;
+        this.multiplayer = multiplayer;
+        if(!isServer){
+            engine.removeSystem(deleteSystem);
+        }else{
+            engine.setInputHandler(this);
         }
     }
-
-
-    public void createEntity(Entity entity) {
-        super.createEntity(entity);
-        //Check if brawlMultiplayer has been set
-        if(brawlMultiplayer instanceof BrawlServer){
-            brawlMultiplayer.spawnEntity(entity);
-        }
-    }
-
-    public void createEntity(Vector2 position, int teamId, int entityTypeId) {
-        createEntity(toEntity(position,teamId,entityTypeId));
-    }
-
 
     @Override
     public void render() {
-        super.render();
+        if(isServer){
+            updateResources();
+
+        }
+        engine.update(Gdx.graphics.getDeltaTime());
     }
 
     @Override
-    public void dispose() {
-        super.dispose();
+    protected void updateResources() {
+        if(System.currentTimeMillis() - resourceTimeStamp > 1){
+            for (PawnController controller :
+                    playerControllers) {
+                controller.tick();
+
+            }
+            resourceTimeStamp = System.currentTimeMillis();
+            multiplayer.sendTick();
+        }
     }
 
     @Override
-    public void sendTouchInput(Vector2 screenCoordinates, long entityID) {
+    public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
+        //super.createEntityWorldCoordinates(worldCoordinates, entityType, teamID);
+        if(isServer){
+            Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
+            PawnController spawnerController = playerControllers[teamID];
+            long id = lastID;
+            createEntityMultiPlayer(entity, id);
+            lastID++;
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID, id);
+            if(entity.getComponent(MovementComponent.class) != null){
+                Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(),
+                        bases[spawnerController.getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+                entity.getComponent(MovementComponent.class).setPath(path);
 
-        Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
-        Vector3 translated = camera.unproject(withZCoordinate);
-        Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        super.moveEntity(targetLocation, entityID);
-        brawlMultiplayer.moveEntity(targetLocation, entityID);
-    }
-
-    //creates entity without notifying other Players
-    public void createEntityLocal(Entity entity) {
-        super.createEntity(entity);
-    }
-    public void createEntityLocal(Vector2 position, int teamId, int entityTypeId) {
-        createEntityLocal(toEntity(position, teamId, entityTypeId));
-    }
-
-    //sets target location without notifying other Players
-    public void sendTouchInputLocal(Vector2 worldCoordinates, long entityID) {
-        super.moveEntity(worldCoordinates, entityID);
-    }
-
-    private Entity toEntity(Vector2 position, int teamId, int entityTypeId){
-        Entity entity;
-        //TODO add other cases
-        switch (entityTypeId){
-            case 1:
-                entity=new Archer(position,teamId);
-                break;
-            case 2:
-                entity=new SwordFighter(position,teamId);
-                break;
-            case 3:
-                entity=new Knight(position,teamId);
-                break;
-            case 4:
-                entity=new PlayerClone(position,teamId);
-                break;
-            default:
-                entity=new Archer(position,teamId);
-                break;
+                multiplayer.sendEntityMovingMessage(id, path);
+            }
+        }else {
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID, -1);
         }
-        return entity;
     }
 
-    public EntitySpawnMessage createEntitySpawnMsg(Entity entity){
-        TransformComponent transformComponent=entity.getComponent(TransformComponent.class);
-        TeamGameObjectComponent teamGameObjectComponent = entity.getComponent(TeamGameObjectComponent.class);
-        //CombatComponent combatComponent=entity.getComponent(CombatComponent.class);
-        int entityTypeId=0;
-        //TODO add other types
-        if (entity instanceof Archer){
-            entityTypeId=1;
-        }else if(entity instanceof  PlayerClone){
-            entityTypeId=2;
+
+
+    public void createEntityMultiPlayer(Entity entity, long unitID){
+        engine.addEntity(entity);
+        units.put(unitID, entity);
+    }
+
+    @Override
+    public void createEntityLocal(Vector2 worldCoordinates, UnitType entityType, int teamID, long unitID) {
+        Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
+        createEntityMultiPlayer(entity, unitID);
+        //createEntity(entity);
+    }
+
+    @Override
+    public void moveEntityLocal(long unitID, Array<Vector2> wayPoints) {
+        Entity unit = units.get(unitID);
+        unit.getComponent(MovementComponent.class).setPath(wayPoints);
+    }
+
+    @Override
+    public void deleteUnitLocal(long unitID) {
+        if(isServer){
+            multiplayer.sendEntityDeleteMsg(unitID);
+        }else{
+            Entity unit = units.get(unitID);
+            engine.removeEntity(unit);
         }
-        return new EntitySpawnMessage(transformComponent.getPosition(),teamGameObjectComponent.getTeamId(),entityTypeId);
+
+    }
+
+    @Override
+    public void unitAttackLocal(long attackerID, long victimID) {
+        //TODO synchronize attacking
+    }
+
+    @Override
+    public void getTick() {
+        for (PawnController controller :
+             playerControllers) {
+            if(controller != null){
+                controller.tick();
+            }
+        }
     }
 }

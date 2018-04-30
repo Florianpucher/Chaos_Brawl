@@ -51,7 +51,7 @@ public class OtherNode {
     public boolean isAdjacentTo(OtherNode otherNode){
         float xDistance = Math.abs(otherNode.position.x - position.x);
         float yDistance = Math.abs(otherNode.position.y - position.y);
-        return (xDistance <= 1 && yDistance == 0) || (xDistance == 0 && yDistance <= 1);
+        return (xDistance <= 1 && yDistance <= 1);
     }
 
     @Override

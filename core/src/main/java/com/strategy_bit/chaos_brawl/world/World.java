@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
@@ -53,6 +54,7 @@ public class World implements InputHandler {
     protected Entity[] bases;
     protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
+    protected DeleteSystem deleteSystem;
 
     boolean endGame = false;
 
@@ -83,9 +85,15 @@ public class World implements InputHandler {
         createEntityWorldCoordinates(new Vector2(3,12), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(3,3), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(2,7.5f), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
+
+        Entity buildingOne = units.get(lastID-1);
+        bases[playerControllers[0].getTeamID()] = buildingOne;
+
         createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(17,3), UnitType.TOWER,  playerControllers[1].getTeamID());
-        createEntityWorldCoordinates(new Vector2(18,7.5f), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
+        createEntityWorldCoordinates(new Vector2(19,7.5f), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
+        Entity buildingTwo = units.get(lastID-1);
+        bases[playerControllers[1].getTeamID()] = buildingTwo;
         resourceTimeStamp = System.currentTimeMillis();
     }
 
@@ -103,7 +111,8 @@ public class World implements InputHandler {
     protected void createEngine(){
         engine = new MyEngine(units);
         //Add some logic
-        engine.addSystem(new DeleteSystem());
+        deleteSystem = new DeleteSystem();
+        engine.addSystem(deleteSystem);
         engine.addSystem(new MovementSystem());
         BulletSystem bulletSystem=new BulletSystem();
         engine.addSystem(bulletSystem);
@@ -137,6 +146,26 @@ public class World implements InputHandler {
 
 
     public void render(){
+        updateResources();
+        engine.update(Gdx.graphics.getDeltaTime());
+
+        if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
+            if (endGame == false) {                         // for performance reasons
+                // endGame = true;
+                playerControllers[0].gameOver(false);
+                // playerControllers[1].gameOver(true);     #remove comment lines for multiplayer
+            }
+        } else if (bases[1].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
+            if (endGame == false) {
+                // endGame = true;
+                playerControllers[0].gameOver(true);
+                // playerControllers[1].gameOver(false);    #remove comment lines for multiplayer
+            }
+        }
+    }
+
+
+    protected void updateResources(){
         if(System.currentTimeMillis() - resourceTimeStamp > 1){
             for (PawnController controller :
                     playerControllers) {
@@ -144,23 +173,10 @@ public class World implements InputHandler {
                 resourceTimeStamp = System.currentTimeMillis();
             }
         }
-        engine.update(Gdx.graphics.getDeltaTime());
-
-            if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-                if (endGame == false) {                         // for performance reasons
-                    // endGame = true;
-                    playerControllers[0].gameOver(false);
-                    // playerControllers[1].gameOver(true);     #remove comment lines for multiplayer
-                }
-            } else if (bases[1].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-                if (endGame == false) {
-                    // endGame = true;
-                    playerControllers[0].gameOver(true);
-                    // playerControllers[1].gameOver(false);    #remove comment lines for multiplayer
-                }
-            }
-
     }
+
+
+
 
 
     public void dispose() {
@@ -187,19 +203,18 @@ public class World implements InputHandler {
     @Override
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
         Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
-        for (PawnController p :
+        //Moved this if condition to pawnController
+        /*for (PawnController p :
                 playerControllers) {
             if(p.getTeamID()==teamID&&! playerControllers[teamID].spawnUnit(entityType)){
                 //player does not have enough resources
 
                 return;
             }
-        }
+        }*/
 
         createEntity(entity);
-        if(entityType.equals(UnitType.MAINBUILDING)){
-            bases[teamID] = entity;
-        }
+
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
         if(movementComponent != null){
             //TODO add pathfinding here Florian but maybe with ThreadPool implementation!!!
@@ -237,6 +252,7 @@ public class World implements InputHandler {
     }
 
     /**
+     *
      * NOTE: current playerID can be only 1 or 2
      *
      * @param playerID for which player the spawn area will be created
@@ -248,7 +264,7 @@ public class World implements InputHandler {
         int spawnAreaWidth = 5;
         Boundary spawnArea;
         // current left player
-        if(playerID == 1){
+        if(playerID == 0){
             Vector2 lowerLeftCorner = new Vector2(0.0f - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
             Vector2 upperLeftCorner = new Vector2(0.0f - WorldSettings.FRUSTUM_WIDTH/2f , 0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
             Vector2 lowerRightCorner = new Vector2( board.getWorldCoordinateOfTile(spawnAreaWidth,0).x - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
@@ -262,7 +278,7 @@ public class World implements InputHandler {
             spawnArea = new Boundary(lowerLeftCorner, lowerRightCorner, upperLeftCorner, upperRightCorner);
             return spawnArea;
             //current right player
-        }else if(playerID == 2){
+        }else if(playerID == 1){
             Vector2 lowerRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
             Vector2 upperRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH/2f, 0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
             Vector2 lowerLeftCorner = new Vector2( board.getWorldCoordinateOfTile(WorldSettings.BOARD_WIDTH - 5,0).x  - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);

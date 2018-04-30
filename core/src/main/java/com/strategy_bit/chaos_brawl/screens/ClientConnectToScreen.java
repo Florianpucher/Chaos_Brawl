@@ -73,7 +73,7 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
                 else if (name.equals(DIRECT)){
                     try {
                         brawlClient.connectToServer(DIRECT);
-                        screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME,brawlClient);
+                        //screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME,brawlClient);
                     }catch (IOException e){
                         e.printStackTrace();
                     }
