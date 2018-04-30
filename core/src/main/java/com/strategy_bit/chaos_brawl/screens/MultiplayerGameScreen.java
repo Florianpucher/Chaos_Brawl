@@ -7,6 +7,7 @@ import com.strategy_bit.chaos_brawl.network.Client.BrawlClientListener;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerListener;
 import com.strategy_bit.chaos_brawl.player_input_output.OtherPlayerController;
+import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
@@ -17,7 +18,7 @@ public class MultiplayerGameScreen extends GameScreen {
     private BrawlMultiplayer brawlMultiplayer;
     private BrawlConnector listener;
     private int player;
-    private int[] players;
+
 
     public MultiplayerGameScreen(BrawlMultiplayer brawlMultiplayer,  int[] players) {
         super(1);
@@ -27,7 +28,7 @@ public class MultiplayerGameScreen extends GameScreen {
                 this.player = i;
             }
         }
-        this.players = players;
+        controllers = new PawnController[players.length];
         this.listener = brawlMultiplayer.getBrawlConnector();
         //this.listener = listener;
     }
@@ -43,7 +44,7 @@ public class MultiplayerGameScreen extends GameScreen {
         if(brawlMultiplayer instanceof BrawlServer){
             isServer = true;
         }
-        manager = new MultiplayerWorld(isServer, brawlMultiplayer, players.length);
+        manager = new MultiplayerWorld(isServer, brawlMultiplayer, controllers.length);
         listener.setMultiplayerInputHandler((MultiplayerInputHandler) manager);
         initializeGame();
     }
@@ -55,30 +56,21 @@ public class MultiplayerGameScreen extends GameScreen {
 
     @Override
     protected void initializeGame(){
-        if(brawlMultiplayer instanceof BrawlServer){
-            controller = new PlayerController(player, manager, manager.createSpawnAreaForPlayer(player));
-            //TODO current attack target implementation will only work for two players
-            manager.setPlayerController(player, controller);
-            OtherPlayerController otherPlayerController = null;
-            int otherPlayer = 0;
-            for (int i = 0; i < players.length; i++) {
-                if(i == player){
-                    continue;
-                }
-                otherPlayerController = new OtherPlayerController(i,manager, manager.createSpawnAreaForPlayer(i));
-                otherPlayer = i;
+        for (int i = 0; i < controllers.length; i++) {
+            if(i == player){
+                controller = new PlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
+                manager.setPlayerController(i, controller);
+                controllers[i] = controller;
+            }else{
+                PawnController otherPlayerController = new OtherPlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
+                controllers[i] = otherPlayerController;
                 manager.setPlayerController(i, otherPlayerController);
             }
-            //While there are only two players set themselve as enemies
-            manager.initializeGameForPlayers();
-            if (otherPlayerController != null) {
-                controller.setCurrentTargetTeam(otherPlayer);
-                otherPlayerController.setCurrentTargetTeam(player);
-            }
+        }
 
-        }else{
-            controller = new PlayerController(player, manager, manager.createSpawnAreaForPlayer(player));
-            manager.setPlayerController(player, controller);
+        setInitialTargets();
+        if(brawlMultiplayer instanceof BrawlServer){
+            manager.initializeGameForPlayers();
         }
     }
 }
