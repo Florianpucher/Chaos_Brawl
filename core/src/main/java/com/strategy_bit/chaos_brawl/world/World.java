@@ -86,22 +86,18 @@ public class World implements InputHandler {
         createEntityWorldCoordinates(new Vector2(3,3), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(2,7.5f), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
 
-        Entity buildingOne = units.get(lastID-1);
-        bases[playerControllers[0].getTeamID()] = buildingOne;
+        //Entity buildingOne = units.get(lastID-1);
+        //bases[playerControllers[0].getTeamID()] = buildingOne;
 
         createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(17,3), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(19,7.5f), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
-        Entity buildingTwo = units.get(lastID-1);
-        bases[playerControllers[1].getTeamID()] = buildingTwo;
+        //Entity buildingTwo = units.get(lastID-1);
+        //bases[playerControllers[1].getTeamID()] = buildingTwo;
         resourceTimeStamp = System.currentTimeMillis();
     }
 
-    public void createEntity(Entity entity){
-        engine.addEntity(entity);
-        units.put(lastID, entity);
-        lastID++;
-    }
+
     public void createProjectile(Entity entity){
         engine.addEntity(entity);
         projectiles.put(lastProjectileID, entity);
@@ -148,18 +144,25 @@ public class World implements InputHandler {
     public void render(){
         updateResources();
         engine.update(Gdx.graphics.getDeltaTime());
+        checkWinningLosing();
+    }
 
+
+    protected void checkWinningLosing(){
+        //TODO update this method to support different amount of players
         if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-            if (endGame == false) {                         // for performance reasons
+            if (!endGame) {                         // for performance reasons
                 // endGame = true;
                 playerControllers[0].gameOver(false);
-                // playerControllers[1].gameOver(true);     #remove comment lines for multiplayer
+                playerControllers[1].gameOver(true);     //#remove comment lines for multiplayer
+                //endGame = true;
             }
         } else if (bases[1].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-            if (endGame == false) {
+            if (!endGame) {
                 // endGame = true;
                 playerControllers[0].gameOver(true);
-                // playerControllers[1].gameOver(false);    #remove comment lines for multiplayer
+                playerControllers[1].gameOver(false);   // #remove comment lines for multiplayer
+                //endGame = true;
             }
         }
     }
@@ -202,18 +205,10 @@ public class World implements InputHandler {
 
     @Override
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
-        Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
+        Entity entity = createEntityInternal(entityType, lastID, worldCoordinates, teamID);
+        lastID++;
         //Moved this if condition to pawnController
-        /*for (PawnController p :
-                playerControllers) {
-            if(p.getTeamID()==teamID&&! playerControllers[teamID].spawnUnit(entityType)){
-                //player does not have enough resources
 
-                return;
-            }
-        }*/
-
-        createEntity(entity);
 
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
         if(movementComponent != null){
@@ -227,6 +222,19 @@ public class World implements InputHandler {
         //Move entity to enemy player
 
     }
+
+    public Entity createEntityInternal(UnitType entityType, long unitID, Vector2 worldCoordinates, int teamID){
+        Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
+        engine.addEntity(entity);
+        units.put(unitID, entity);
+        if(entityType.equals(UnitType.MAINBUILDING)){
+            bases[teamID] = entity;
+        }
+
+        return entity;
+    }
+
+
     public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
         Projectile projectile=new Projectile(worldCoordinates,targetId,damage);
 

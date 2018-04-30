@@ -97,4 +97,9 @@ public class AI_Controller extends PawnController {
             }
         }
     };
+
+    @Override
+    public void gameOver(boolean win) {
+        isRunning = false;
+    }
 }

@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.Array;
@@ -22,8 +24,10 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
+import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.ashley.entity.HpBar;
+import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import java.time.temporal.TemporalAmount;
 import java.util.Comparator;
@@ -122,11 +126,18 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
             if (unitHP != null) {
                 ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().progressHPbarStyle);
                 hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
-                hpBar.setPosition(transform.getPosition().x * 83 - (transform.getPosition().x/20) , transform.getPosition().y * 82 - (transform.getPosition().y/20));
-                hpBar.setSize(150, 1);
+
+
+                Vector3 position = new Vector3(transform.getPosition().x ,transform.getPosition().y ,0.0f);
+                // Get position of unit in screenCoordinates
+                Vector2 screenPosition = VectorMath.vector3ToVector2(camera.project(position));
+                // Set position of hp bar above unit
+                hpBar.setPosition(screenPosition.x - width/4, screenPosition.y + height/1.5f);
+                hpBar.setSize(width/2, 1);
                 stage.addActor(hpBar);
             }
         }
+
         batch.end();
 
         stage.draw();
