@@ -128,6 +128,7 @@ public class PlayerController extends PawnController implements InputProcessor {
     }
 
     public void gameOver(boolean win) {
+        //TODO Other Solution for rendering winning screen
         batch = new SpriteBatch();
 
         w = Gdx.graphics.getWidth();
@@ -155,6 +156,5 @@ public class PlayerController extends PawnController implements InputProcessor {
             batch.draw(defeat, camera.position.x - (tw / 2), camera.position.y - (th / 2));
             batch.end();
         }
-        System.out.println(win);
     }
 }

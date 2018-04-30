@@ -181,4 +181,13 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     public BrawlConnector getBrawlConnector() {
         return clientListener;
     }
+
+    @Override
+    public void dispose() {
+        try {
+            disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

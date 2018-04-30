@@ -126,9 +126,12 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
             if (unitHP != null) {
                 ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().progressHPbarStyle);
                 hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
-                //0.0f - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f
+
+
                 Vector3 position = new Vector3(transform.getPosition().x ,transform.getPosition().y ,0.0f);
+                // Get position of unit in screenCoordinates
                 Vector2 screenPosition = VectorMath.vector3ToVector2(camera.project(position));
+                // Set position of hp bar above unit
                 hpBar.setPosition(screenPosition.x - width/4, screenPosition.y + height/1.5f);
                 hpBar.setSize(width/2, 1);
                 stage.addActor(hpBar);

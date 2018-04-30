@@ -23,7 +23,7 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
 
     @Override
     public void connected(Connection connection) {
-
+        //TODO add here network lounge
     }
 
     @Override

@@ -10,4 +10,5 @@ public interface BrawlMultiplayer {
     void sendEntityDeleteMsg(long entityID);
     void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints);
     BrawlConnector getBrawlConnector();
+    void dispose();
 }

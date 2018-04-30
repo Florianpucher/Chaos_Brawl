@@ -73,4 +73,15 @@ public class MultiplayerGameScreen extends GameScreen {
             manager.initializeGameForPlayers();
         }
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        brawlMultiplayer.dispose();
+    }
+
+    @Override
+    protected void handleBackKey() {
+        screenManager.showScreenAndClearScreenStack(ScreenEnum.NETWORK_SCREEN);
+    }
 }

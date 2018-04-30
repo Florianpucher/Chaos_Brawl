@@ -28,7 +28,6 @@ import java.io.IOException;
  */
 public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
-    private MultiplayerWorld manager;
     private Server server;
     private boolean serverIsRunning;
     private BrawlServerListener serverListener;
@@ -132,5 +131,10 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     @Override
     public BrawlConnector getBrawlConnector() {
         return serverListener;
+    }
+
+    @Override
+    public void dispose() {
+        closeServer();
     }
 }

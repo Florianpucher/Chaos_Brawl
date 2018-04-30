@@ -3,25 +3,11 @@ package com.strategy_bit.chaos_brawl.world;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
-import com.strategy_bit.chaos_brawl.ashley.entity.Archer;
-import com.strategy_bit.chaos_brawl.ashley.entity.PlayerClone;
-import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
-import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
-import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
-import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
-import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.ashley.entity.SwordFighter;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
-import com.strategy_bit.chaos_brawl.player_input_output.OtherPlayerController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 
@@ -29,6 +15,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     private boolean isServer;
     private BrawlMultiplayer multiplayer;
+    private boolean isInitialized = false;
 
     public MultiplayerWorld(boolean isServer, BrawlMultiplayer multiplayer, int players) {
         super(1, players);
@@ -48,6 +35,23 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
         }
         engine.update(Gdx.graphics.getDeltaTime());
+        //Check if bases are already initialized
+        if(!isInitialized){
+            boolean basesAreUp = true;
+            for (Entity base :
+                    bases) {
+                if(base == null){
+                    basesAreUp = false;
+                    break;
+                }
+            }
+            if(basesAreUp){
+                isInitialized = true;
+            }
+        }else{
+            checkWinningLosing();
+        }
+
     }
 
     @Override
@@ -67,10 +71,10 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
         //super.createEntityWorldCoordinates(worldCoordinates, entityType, teamID);
         if(isServer){
-            Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
+
             PawnController spawnerController = playerControllers[teamID];
             long id = lastID;
-            createEntityMultiPlayer(entity, id);
+            Entity entity = createEntityInternal(entityType, id,worldCoordinates, teamID);
             lastID++;
             multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID, id);
             if(entity.getComponent(MovementComponent.class) != null){
@@ -85,18 +89,10 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
         }
     }
 
-
-
-    public void createEntityMultiPlayer(Entity entity, long unitID){
-        engine.addEntity(entity);
-        units.put(unitID, entity);
-    }
-
     @Override
     public void createEntityLocal(Vector2 worldCoordinates, UnitType entityType, int teamID, long unitID) {
-        Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
-        createEntityMultiPlayer(entity, unitID);
-        //createEntity(entity);
+        createEntityInternal(entityType, unitID, worldCoordinates, teamID);
+
     }
 
     @Override
@@ -111,6 +107,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
             multiplayer.sendEntityDeleteMsg(unitID);
         }else{
             Entity unit = units.get(unitID);
+            unit.getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
             engine.removeEntity(unit);
         }
 
