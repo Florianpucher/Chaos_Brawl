@@ -59,6 +59,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     private ZComparator comparator;
     private OrthographicCamera camera;
 
+    private Stage hpBarStage;
 
     public RenderSystem() {
         //set used entities by components
@@ -71,7 +72,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         batch = new SpriteBatch();
         renderQueue = new Array<Entity>();
         comparator = new ZComparator();
-
+        hpBarStage = new Stage();
         //initialize camera with size
         camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
@@ -88,14 +89,15 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         super.update(deltaTime);
 
 
-        Stage stage = new Stage();
-
+        //Stage stage = new Stage();
         //sort entity by z-index
         //entities with lower z-index will be rendered before entities with higher z-index
         renderQueue.sort(comparator);
         //update camera
         camera.update();
         batch.setProjectionMatrix(camera.combined);
+
+        hpBarStage.clear();
         //draw over old scene
         Gdx.gl.glClearColor(.135f, .206f, .235f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -134,15 +136,13 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                 // Set position of hp bar above unit
                 hpBar.setPosition(screenPosition.x - width/4, screenPosition.y + height/1.5f);
                 hpBar.setSize(width/2, 1);
-                stage.addActor(hpBar);
+                hpBarStage.addActor(hpBar);
             }
         }
 
         batch.end();
-
-        stage.draw();
-        stage.act();
-        stage.dispose();
+        hpBarStage.draw();
+        //hpBarStage.act();
 
         //clear render queue
         renderQueue.clear();
