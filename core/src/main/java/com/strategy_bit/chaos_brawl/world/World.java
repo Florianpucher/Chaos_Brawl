@@ -30,6 +30,8 @@ import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Central manager for game
@@ -242,10 +244,11 @@ public class World implements InputHandler {
 
     }
     public long getIdOfUnit(Entity unit){
-        for (long i = 0; i < lastID; i++) {
-            Entity e=units.get(i);
-            if (unit.equals(e)){
-                return i;
+        Iterator<Map.Entry<Long,Entity>> iterator = units.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<Long, Entity> entry = iterator.next();
+            if(entry.getValue().equals(unit)){
+                return entry.getKey();
             }
         }
         return -1;
