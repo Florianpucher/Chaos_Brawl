@@ -120,6 +120,7 @@ public class PlayerController extends PawnController implements InputProcessor {
         if(gameHUD != null){
             gameHUD.dispose();
         }
+        batch.dispose();
     }
 
     @Override

@@ -151,6 +151,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     @Override
     public void dispose() {
         batch.dispose();
+        hpBarStage.dispose();
     }
 
     /**
