@@ -38,6 +38,12 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
         super(teamID,inputHandler, spawnArea);
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera(w, h);
+        w = Gdx.graphics.getWidth();
+        h = Gdx.graphics.getHeight();
+        camera.position.set(w / 2, h / 2, 0);
+
     }
 
     @Override
@@ -129,12 +135,8 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     public void gameOver(boolean win) {
         //TODO Other Solution for rendering winning screen
-        batch = new SpriteBatch();
 
-        w = Gdx.graphics.getWidth();
-        h = Gdx.graphics.getHeight();
-        OrthographicCamera camera = new OrthographicCamera(w, h);
-        camera.position.set(w / 2, h / 2, 0);
+
         camera.update();
 
         AssetManager assetManager = AssetManager.getInstance();
