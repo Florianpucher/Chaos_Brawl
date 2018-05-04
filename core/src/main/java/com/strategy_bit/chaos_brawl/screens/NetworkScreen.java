@@ -20,15 +20,11 @@ public class NetworkScreen extends AbstractScreen {
     private final static String HOST_GAME = "Host Game";
     private final static String CLIENT_GAME = "Connect to Game";
 
-    private AssetManager assetManager;
-    private ScreenManager screenManager;
     private OrthographicCamera camera;
 
     @Override
     public void buildStage() {
         super.buildStage();
-        assetManager = AssetManager.getInstance();
-        screenManager = ScreenManager.getInstance();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnHostGame = new TextButton(HOST_GAME, assetManager.defaultSkin);

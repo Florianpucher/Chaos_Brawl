@@ -25,14 +25,10 @@ public class MainMenuScreen extends AbstractScreen{
     private final static String MULTIPLAYER = "Multiplayer";
 
     private OrthographicCamera camera;
-    private AssetManager assetManager;
-    private ScreenManager screenManager;
 
     @Override
     public void buildStage() {
         super.buildStage();
-        assetManager = AssetManager.getInstance();
-        screenManager = ScreenManager.getInstance();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnNewGame = new TextButton(NEW_GAME, assetManager.defaultSkin);

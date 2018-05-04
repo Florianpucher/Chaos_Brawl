@@ -30,7 +30,6 @@ public class MultiplayerGameScreen extends GameScreen {
         }
         controllers = new PawnController[players.length];
         this.listener = brawlMultiplayer.getBrawlConnector();
-        //this.listener = listener;
     }
 
     public void setListener(BrawlConnector listener){

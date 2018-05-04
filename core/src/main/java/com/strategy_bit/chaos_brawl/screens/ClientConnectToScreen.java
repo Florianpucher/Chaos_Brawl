@@ -27,8 +27,6 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
     private final static String REFRESH = "Refresh";
     private static String DIRECT = "10.0.2.2";
 
-    private AssetManager assetManager;
-    private ScreenManager screenManager;
     private OrthographicCamera camera;
 
     private BrawlClient brawlClient;
@@ -42,8 +40,6 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
     @Override
     public void buildStage() {
         super.buildStage();
-        assetManager = AssetManager.getInstance();
-        screenManager = ScreenManager.getInstance();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnHostGame = new TextButton(REFRESH, assetManager.defaultSkin);

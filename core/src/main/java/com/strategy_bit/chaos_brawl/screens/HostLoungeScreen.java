@@ -24,7 +24,6 @@ public class HostLoungeScreen extends AbstractScreen {
     private final static String START_SERVER = "Start Server";
 
     private AssetManager assetManager;
-    private ScreenManager screenManager;
     private OrthographicCamera camera;
     private BrawlServer brawlServer;
 

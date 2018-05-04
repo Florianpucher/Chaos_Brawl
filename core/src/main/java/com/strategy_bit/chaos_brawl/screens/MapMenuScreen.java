@@ -22,14 +22,11 @@ public class MapMenuScreen extends AbstractScreen {
     private final static String MAP_3 = "MAP 3";
 
     private OrthographicCamera camera;
-    private AssetManager assetManager;
-    private ScreenManager screenManager;
+
 
     @Override
     public void buildStage() {
         super.buildStage();
-        assetManager = AssetManager.getInstance();
-        screenManager = ScreenManager.getInstance();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnNewMap1 = new TextButton(MAP_1, assetManager.defaultSkin);
