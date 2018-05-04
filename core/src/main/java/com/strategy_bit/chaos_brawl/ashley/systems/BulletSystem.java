@@ -13,6 +13,8 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.World;
 
+import java.util.HashMap;
+
 /**
  * @author AIsopp
  * @version 1.0
@@ -23,7 +25,7 @@ public class BulletSystem extends IteratingSystem {
     protected ComponentMapper<MovementComponent> mMovementComponent;
     protected ComponentMapper<BulletComponent> mBulletComponent;
     protected ComponentMapper<TransformComponent> mTransformComponent;
-    private static final float TARGET_RADIUS=0.3f;
+    private static final float TARGET_RADIUS = 0.3f;
     private World world;
 
     public BulletSystem() {
@@ -39,25 +41,26 @@ public class BulletSystem extends IteratingSystem {
         MovementComponent movementComponent = mMovementComponent.get(entity);
         TransformComponent transformComponent = mTransformComponent.get(entity);
         BulletComponent bulletComponent = mBulletComponent.get(entity);
-        Vector2 newTargetLocation=world.getUnitPosition(bulletComponent.getTargetId());
-        updateTargetLocation(newTargetLocation,movementComponent);
+        Vector2 newTargetLocation = world.getUnitPosition(bulletComponent.getTargetId());
+        updateTargetLocation(newTargetLocation, movementComponent);
         Vector2 targetLocation = movementComponent.getTargetLocation();
         Vector2 position = transformComponent.getPosition();
-if (newTargetLocation==null&&VectorMath.distance(targetLocation,position)<TARGET_RADIUS){
-    //target died already
-    getEngine().removeEntity(entity);
-}
-        else if(bulletComponent.isDeleteWhenTargetIsReached()&&VectorMath.distance(targetLocation,position)<TARGET_RADIUS){
-            TeamGameObjectComponent enemyTeamGameObjectComponent=world.getUnit(bulletComponent.getTargetId()).getComponent(TeamGameObjectComponent.class);
-            enemyTeamGameObjectComponent.setHitPoints(enemyTeamGameObjectComponent.getHitPoints()-bulletComponent.getDamage());
+        if (newTargetLocation == null && VectorMath.distance(targetLocation, position) < TARGET_RADIUS) {
+            //target died already
+            getEngine().removeEntity(entity);
+        } else if (bulletComponent.isDeleteWhenTargetIsReached() && VectorMath.distance(targetLocation, position) < TARGET_RADIUS) {
+            TeamGameObjectComponent enemyTeamGameObjectComponent = world.getUnit(bulletComponent.getTargetId()).getComponent(TeamGameObjectComponent.class);
+            enemyTeamGameObjectComponent.setHitPoints(enemyTeamGameObjectComponent.getHitPoints() - bulletComponent.getDamage());
             getEngine().removeEntity(entity);
         }
     }
-    public void addWorld(World world){
-        this.world=world;
+
+    public void addWorld(World world) {
+        this.world = world;
     }
-    private void updateTargetLocation(Vector2 newLocation,MovementComponent movementComponent){
-        if (newLocation!=null){
+
+    private void updateTargetLocation(Vector2 newLocation, MovementComponent movementComponent) {
+        if (newLocation != null) {
             movementComponent.setTargetLocation(newLocation);
         }
     }

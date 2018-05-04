@@ -1,6 +1,8 @@
 package com.strategy_bit.chaos_brawl.player_input_output;
 
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.resource_system.ResourceGold;
 import com.strategy_bit.chaos_brawl.types.UnitType;
@@ -49,23 +51,16 @@ public abstract class PawnController {
     public void setCurrentTargetTeam(int currentTargetTeam) {
         this.currentTargetTeam = currentTargetTeam;
     }
+
+
+
     public void tick(){
         for (Resource r :
                 resources) {
             r.add(rate);
         }
     }
-    /*public void startTicking(){
-        //TODO change this
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                tick();
-            }
-        }, 0, 1000);
 
-        System.out.println("Archer "+teamID+" started ticking");
-    }*/
     public void createResource(){
         Resource resource=new ResourceGold(teamID);
         resources.add(resource);
@@ -83,6 +78,22 @@ public abstract class PawnController {
     public boolean spawnUnit(UnitType unitType){
         double cost= unitType.getCosts();
         return checkAndSubtract(cost,"Gold");
+    }
+
+    public void notifyAboutSpawning(Vector2 worldPosition, UnitType unitType, int teamID){
+
+    }
+
+    public void notifyAboutDeletingUnit(long unitID){
+
+    }
+
+    public void notifyAboutAttacking(long unitID_Attacker, long unitID_Victim){
+
+    }
+
+    public void notifyAboutMoving(long unitID, Array<Vector2> movingPositions){
+
     }
 
     public void gameOver (boolean win) {

@@ -65,10 +65,18 @@ public class MovementSystem extends IteratingSystem {
         // velocity = normalVector(targetLocation - position) * speed
         Vector2 velocity = VectorMath.scl(VectorMath.nor(VectorMath.sub(targetLocation, position)), speed);
         movementComponent.setVelocity(velocity);
+        float angle = getRotation(velocity);
+        transform.setRotation(angle);
         //TODO Florian rotate entities here try to find out the direction of velocity
         // position = position + (velocity * deltaTime)
         transform.setPosition(VectorMath.add(position, VectorMath.scl(movementComponent.getVelocity(), Gdx.graphics.getDeltaTime())));
 
+    }
+
+    public float getRotation(Vector2 v){
+        Vector2 yAxis = new Vector2(0.0f, 1.0f);
+        float angle = (float) (yAxis.angle(v)) - 0.4f;
+        return angle;
     }
 
     private void updateTarget(MovementComponent movementComponent, Vector2 position){

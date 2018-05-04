@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.Array;
@@ -22,8 +24,10 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
+import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.ashley.entity.HpBar;
+import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import java.time.temporal.TemporalAmount;
 import java.util.Comparator;
@@ -55,6 +59,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     private ZComparator comparator;
     private OrthographicCamera camera;
 
+    private Stage hpBarStage;
 
     public RenderSystem() {
         //set used entities by components
@@ -67,7 +72,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         batch = new SpriteBatch();
         renderQueue = new Array<Entity>();
         comparator = new ZComparator();
-
+        hpBarStage = new Stage();
         //initialize camera with size
         camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
@@ -84,14 +89,15 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         super.update(deltaTime);
 
 
-        Stage stage = new Stage();
-
+        //Stage stage = new Stage();
         //sort entity by z-index
         //entities with lower z-index will be rendered before entities with higher z-index
         renderQueue.sort(comparator);
         //update camera
         camera.update();
         batch.setProjectionMatrix(camera.combined);
+
+        hpBarStage.clear();
         //draw over old scene
         Gdx.gl.glClearColor(.135f, .206f, .235f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -122,16 +128,21 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
             if (unitHP != null) {
                 ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().progressHPbarStyle);
                 hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
-                hpBar.setPosition(transform.getPosition().x * 83 - (transform.getPosition().x/20) , transform.getPosition().y * 82 - (transform.getPosition().y/20));
-                hpBar.setSize(150, 1);
-                stage.addActor(hpBar);
+
+
+                Vector3 position = new Vector3(transform.getPosition().x ,transform.getPosition().y ,0.0f);
+                // Get position of unit in screenCoordinates
+                Vector2 screenPosition = VectorMath.vector3ToVector2(camera.project(position));
+                // Set position of hp bar above unit
+                hpBar.setPosition(screenPosition.x - width/4, screenPosition.y + height/1.5f);
+                hpBar.setSize(width/2, 1);
+                hpBarStage.addActor(hpBar);
             }
         }
-        batch.end();
 
-        stage.draw();
-        stage.act();
-        stage.dispose();
+        batch.end();
+        hpBarStage.draw();
+        //hpBarStage.act();
 
         //clear render queue
         renderQueue.clear();
@@ -140,6 +151,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     @Override
     public void dispose() {
         batch.dispose();
+        hpBarStage.dispose();
     }
 
     /**

@@ -38,6 +38,12 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
         super(teamID,inputHandler, spawnArea);
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera(w, h);
+        w = Gdx.graphics.getWidth();
+        h = Gdx.graphics.getHeight();
+        camera.position.set(w / 2, h / 2, 0);
+
     }
 
     @Override
@@ -64,8 +70,9 @@ public class PlayerController extends PawnController implements InputProcessor {
 
             if(current != null && spawnArea.checkIfVectorIsInside(screenCoordinates)){
                 System.out.println("Click");
-
-                inputHandler.createEntityScreenCoordinates(screenCoordinates,current, teamID);
+                if(spawnUnit(current)){
+                    inputHandler.createEntityScreenCoordinates(screenCoordinates,current, teamID);
+                }
                 return false;
             }
         }
@@ -113,6 +120,7 @@ public class PlayerController extends PawnController implements InputProcessor {
         if(gameHUD != null){
             gameHUD.dispose();
         }
+        batch.dispose();
     }
 
     @Override
@@ -127,12 +135,9 @@ public class PlayerController extends PawnController implements InputProcessor {
     }
 
     public void gameOver(boolean win) {
-        batch = new SpriteBatch();
+        //TODO Other Solution for rendering winning screen
 
-        w = Gdx.graphics.getWidth();
-        h = Gdx.graphics.getHeight();
-        OrthographicCamera camera = new OrthographicCamera(w, h);
-        camera.position.set(w / 2, h / 2, 0);
+
         camera.update();
 
         AssetManager assetManager = AssetManager.getInstance();
@@ -154,6 +159,5 @@ public class PlayerController extends PawnController implements InputProcessor {
             batch.draw(defeat, camera.position.x - (tw / 2), camera.position.y - (th / 2));
             batch.end();
         }
-        System.out.println(win);
     }
 }

@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.config.Z_Index;
 
 /**
