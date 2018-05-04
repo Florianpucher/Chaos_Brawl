@@ -18,7 +18,7 @@ public class ChaosBrawlGameTestIntegration {
 
     @Before
     public void initialize() {
-        chaosBrawlGame = new ChaosBrawlGame();
+        //chaosBrawlGame = new ChaosBrawlGame();
 
     }
 
