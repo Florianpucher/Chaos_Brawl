@@ -16,13 +16,13 @@ import java.util.concurrent.locks.ReentrantLock;
  * @version 1.0
  * @since 19.04.2018
  */
-public class AI_Controller extends PawnController {
+public class AiController extends PawnController {
 
     private boolean isRunning;
     private ReentrantLock lock;
     private boolean goIntoPause;
 
-    public AI_Controller(int teamID, InputHandler inputHandler, Boundary spawnArea) {
+    public AiController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
         super(teamID, inputHandler, spawnArea);
         isRunning = false;
         goIntoPause = false;
@@ -39,7 +39,7 @@ public class AI_Controller extends PawnController {
 
     public void resumeAI() {
         goIntoPause = false;
-        if(lock.isHeldByCurrentThread()){
+        if (lock.isHeldByCurrentThread()) {
             lock.unlock();
         }
     }
@@ -59,41 +59,41 @@ public class AI_Controller extends PawnController {
     private Runnable aiRunnable = new Runnable() {
         @Override
         public void run() {
-            while (isRunning) {
-                int xFrom;
-                int xTo;
-                if (spawnArea.getLowerLeft().x < spawnArea.getLowerRight().x) {
-                    xFrom = (int) spawnArea.getLowerLeft().x;
-                    xTo = (int) spawnArea.getLowerRight().x;
-                } else {
-                    xTo = (int) spawnArea.getLowerLeft().x;
-                    xFrom = (int) spawnArea.getLowerRight().x;
-                }
+            try {
 
-                int x = MathUtils.random(xFrom, xTo);
-                int y = (int) MathUtils.random(spawnArea.getLowerLeft().y, spawnArea.getUpperLeft().y);
-                final Vector2 spawnPosition = new Vector2(x, y);
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
+
+                while (isRunning) {
+                    int xFrom;
+                    int xTo;
+                    if (spawnArea.getLowerLeft().x < spawnArea.getLowerRight().x) {
+                        xFrom = (int) spawnArea.getLowerLeft().x;
+                        xTo = (int) spawnArea.getLowerRight().x;
+                    } else {
+                        xTo = (int) spawnArea.getLowerLeft().x;
+                        xFrom = (int) spawnArea.getLowerRight().x;
+                    }
+
+                    int x = MathUtils.random(xFrom, xTo);
+                    int y = (int) MathUtils.random(spawnArea.getLowerLeft().y, spawnArea.getUpperLeft().y);
+                    final Vector2 spawnPosition = new Vector2(x, y);
+                    Gdx.app.postRunnable(() -> {
                         System.out.println("AI adds object");
-                        if(spawnUnit(UnitType.RANGED)){
+                        if (spawnUnit(UnitType.RANGED)) {
                             inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.RANGED, teamID);
                         }
-                    }
-                });
+                    });
 
 
-                try {
                     Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (goIntoPause) {
 
-                    lock.lock();
-                    lock.unlock();
+                    if (goIntoPause) {
+
+                        lock.lock();
+                        lock.unlock();
+                    }
                 }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     };
