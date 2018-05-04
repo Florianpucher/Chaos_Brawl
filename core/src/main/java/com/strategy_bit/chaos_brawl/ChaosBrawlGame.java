@@ -71,13 +71,10 @@ public class ChaosBrawlGame extends Game {
 	private Runnable loadAssets = new Runnable() {
 		@Override
 		public void run() {
-			Gdx.app.postRunnable(new Runnable() {
-				@Override
-				public void run() {
-					assetManager.loadAssets();
-					loadGame = false;
-				}
-			});
+			Gdx.app.postRunnable(() -> {
+                assetManager.loadAssets();
+                loadGame = false;
+            });
 		}
 	};
 }
