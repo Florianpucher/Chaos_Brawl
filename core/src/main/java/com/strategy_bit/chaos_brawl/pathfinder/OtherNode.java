@@ -56,6 +56,9 @@ public class OtherNode {
 
     @Override
     public boolean equals(Object o) {
+        if(o == null){
+            return false;
+        }
         OtherNode otherNode = (OtherNode) o;
         if(index == otherNode.index && position.equals(otherNode.getPosition())){
             if(otherNode.connections.size == connections.size){
