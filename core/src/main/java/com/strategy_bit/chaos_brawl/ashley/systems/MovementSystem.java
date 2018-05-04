@@ -42,7 +42,6 @@ public class MovementSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        //TODO moved this code part to somewhere else
         CombatComponent combatComponent=mCombatComponent.get(entity);
         if (combatComponent!=null){
             //Unit is attacking
@@ -61,15 +60,13 @@ public class MovementSystem extends IteratingSystem {
         Vector2 targetLocation = movementComponent.getTargetLocation();
 
         float speed = movementComponent.getSpeed();
-        //TODO maybe velocity is not needed to be a field of movementComponent
         // velocity = normalVector(targetLocation - position) * speed
         Vector2 velocity = VectorMath.scl(VectorMath.nor(VectorMath.sub(targetLocation, position)), speed);
-        movementComponent.setVelocity(velocity);
         float angle = getRotation(velocity);
         transform.setRotation(angle);
-        //TODO Florian rotate entities here try to find out the direction of velocity
+
         // position = position + (velocity * deltaTime)
-        transform.setPosition(VectorMath.add(position, VectorMath.scl(movementComponent.getVelocity(), Gdx.graphics.getDeltaTime())));
+        transform.setPosition(VectorMath.add(position, VectorMath.scl(velocity, Gdx.graphics.getDeltaTime())));
 
     }
 
@@ -81,17 +78,7 @@ public class MovementSystem extends IteratingSystem {
     private void updateTarget(MovementComponent movementComponent, Vector2 position){
         Vector2 targetLocation=movementComponent.getTargetLocation();
         if(VectorMath.distance(targetLocation,position)<0.2){
-            //System.out.println("POP");
             movementComponent.popCurTarget();
-            return;
-        }/*else if (movementComponent.hasNoPath()){
-            movementComponent.setPath(calculatePathTo(position, targetLocation));
-        }*/
+        }
     }
-    /*public Array<Vector2> calculatePathTo(Vector2 position, Vector2 dest){
-        Array<Vector2> path=new Array<Vector2>();
-        path = Pathfinder.findPath(position, dest);
-        //path.add(dest);
-        return path;
-    }*/
 }
