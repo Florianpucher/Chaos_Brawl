@@ -16,9 +16,14 @@ buildscript {
     }
 }
 
+plugins {
+    id "org.sonarqube" version "2.6"
+}
+
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+    apply plugin: "jacoco"
 
     version = '1.0'
     ext {
@@ -38,6 +43,7 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         google()
+        jcenter()
     }
 }
 
