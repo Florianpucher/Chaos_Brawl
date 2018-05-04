@@ -5,12 +5,14 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
+import com.strategy_bit.chaos_brawl.network.messages.Request.ClientConnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.InitializeGameMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
+import com.strategy_bit.chaos_brawl.screens.ClientLobbyScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
@@ -61,7 +63,12 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
                 }else if(object instanceof InitializeGameMessage) {
                     InitializeGameMessage initializeGameMessage = (InitializeGameMessage) object;
                     ScreenManager screenManager = ScreenManager.getInstance();
-                    screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, brawlClient, this, initializeGameMessage.controllers);
+                    screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, brawlClient, initializeGameMessage.controllers);
+                }
+                else if(object instanceof ClientConnectedMessage) {
+                    ClientConnectedMessage clientConnectedMessage = (ClientConnectedMessage) object;
+                    ScreenManager screenManager = ScreenManager.getInstance();
+                    ((ClientLobbyScreen)(screenManager.getCurrentScreen())).addClient(clientConnectedMessage.name);
                 }
             }
         });

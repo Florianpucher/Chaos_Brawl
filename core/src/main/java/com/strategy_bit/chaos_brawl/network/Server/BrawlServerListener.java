@@ -6,10 +6,12 @@ import com.esotericsoftware.kryonet.Listener;
 import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
+import com.strategy_bit.chaos_brawl.network.messages.Request.ClientConnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
+import com.strategy_bit.chaos_brawl.screens.HostLobbyScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
@@ -24,7 +26,9 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
     public void connected(Connection connection) {
         //Start a 2 Archer-Game
         //TODO: add 3 and 4 Archer-Games
-        Gdx.app.postRunnable(new Runnable() {
+        ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).addClient(connection.getRemoteAddressTCP().getHostName());
+        brawlServer.sendData(new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName()));
+        /*Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
                 //just two players
@@ -33,6 +37,7 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
                 ScreenManager.getInstance().showScreen(ScreenEnum.MULTIPLAYERGAME,brawlServer,this,players);
             }
         });
+        */
 
     }
 
