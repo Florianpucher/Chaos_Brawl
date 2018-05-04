@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.network.messages.Response;
+package com.strategy_bit.chaos_brawl.network.messages.response;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.strategy_bit.chaos_brawl.network.messages.Message;

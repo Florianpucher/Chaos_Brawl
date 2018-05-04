@@ -1,6 +1,5 @@
-package com.strategy_bit.chaos_brawl.network.Server;
+package com.strategy_bit.chaos_brawl.network.server;
 
-import com.badlogic.gdx.net.ServerSocket;
 import com.strategy_bit.chaos_brawl.network.BrawlNetworkInterface;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 

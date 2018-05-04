@@ -1,6 +1,5 @@
-package com.strategy_bit.chaos_brawl.network.messages.Request;
+package com.strategy_bit.chaos_brawl.network.messages.request;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 import com.strategy_bit.chaos_brawl.types.UnitType;

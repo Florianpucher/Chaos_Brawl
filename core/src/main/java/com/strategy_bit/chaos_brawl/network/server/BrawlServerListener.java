@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.network.Server;
+package com.strategy_bit.chaos_brawl.network.server;
 
 import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryonet.Connection;
@@ -6,10 +6,10 @@ import com.esotericsoftware.kryonet.Listener;
 import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
-import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
-import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
+import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 

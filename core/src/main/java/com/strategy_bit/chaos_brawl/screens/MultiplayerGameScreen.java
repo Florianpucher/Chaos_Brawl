@@ -3,9 +3,7 @@ package com.strategy_bit.chaos_brawl.screens;
 import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
-import com.strategy_bit.chaos_brawl.network.Client.BrawlClientListener;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServerListener;
+import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
 import com.strategy_bit.chaos_brawl.player_input_output.OtherPlayerController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
@@ -30,7 +28,6 @@ public class MultiplayerGameScreen extends GameScreen {
         }
         controllers = new PawnController[players.length];
         this.listener = brawlMultiplayer.getBrawlConnector();
-        //this.listener = listener;
     }
 
     public void setListener(BrawlConnector listener){

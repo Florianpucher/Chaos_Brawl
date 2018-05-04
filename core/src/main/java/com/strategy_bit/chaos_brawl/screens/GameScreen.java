@@ -3,7 +3,7 @@ package com.strategy_bit.chaos_brawl.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.strategy_bit.chaos_brawl.player_input_output.AI_Controller;
+import com.strategy_bit.chaos_brawl.player_input_output.AiController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.world.World;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
@@ -37,7 +37,7 @@ public class GameScreen extends AbstractScreen {
         controllers = new PawnController[2];
         controller = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0));
         controllers[0] = controller;
-        AI_Controller otherPlayerController = new AI_Controller(1,manager, manager.createSpawnAreaForPlayer(1));
+        AiController otherPlayerController = new AiController(1,manager, manager.createSpawnAreaForPlayer(1));
         controllers[1] = otherPlayerController;
         manager.setPlayerController(0, controller);
         //controller.setCurrentTargetTeam(1);
@@ -67,8 +67,8 @@ public class GameScreen extends AbstractScreen {
         Gdx.input.setInputProcessor(inputMultiplexer);
         for (PawnController controller :
              controllers) {
-            if(controller instanceof AI_Controller){
-                ((AI_Controller) controller).startAI();
+            if(controller instanceof AiController){
+                ((AiController) controller).startAI();
             }
         }
     }
@@ -78,8 +78,8 @@ public class GameScreen extends AbstractScreen {
         super.pause();
         for (PawnController controller :
                 controllers) {
-            if(controller instanceof AI_Controller){
-                ((AI_Controller) controller).pauseAI();
+            if(controller instanceof AiController){
+                ((AiController) controller).pauseAI();
             }
         }
     }
@@ -90,8 +90,8 @@ public class GameScreen extends AbstractScreen {
         super.resume();
         for (PawnController controller :
                 controllers) {
-            if(controller instanceof AI_Controller){
-                ((AI_Controller) controller).resumeAI();
+            if(controller instanceof AiController){
+                ((AiController) controller).resumeAI();
             }
         }
     }
@@ -111,8 +111,8 @@ public class GameScreen extends AbstractScreen {
         super.hide();
         for (PawnController controller :
                 controllers) {
-            if(controller instanceof AI_Controller){
-                ((AI_Controller) controller).stopAI();
+            if(controller instanceof AiController){
+                ((AiController) controller).stopAI();
             }
         }
     }

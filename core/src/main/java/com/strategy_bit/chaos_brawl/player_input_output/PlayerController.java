@@ -5,18 +5,15 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
-import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
+import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
-import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
-
-import org.w3c.dom.events.UIEvent;
 
 /**
  * interface of user interface and other user input
@@ -29,18 +26,16 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     private GameHUD gameHUD;
 
-    int w = 0;
-    int h = 0;
-    int tw = 0;
-    int th = 0;
-    OrthographicCamera camera = null;
-    private SpriteBatch batch = null;
+    private OrthographicCamera camera;
+    private SpriteBatch batch;
 
     private SensorReader sensorReader;
 
     public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
-        super(teamID,inputHandler, spawnArea);
+        super(teamID, inputHandler, spawnArea);
         batch = new SpriteBatch();
+        int w = 0;
+        int h = 0;
         camera = new OrthographicCamera(w, h);
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
@@ -78,15 +73,12 @@ public class PlayerController extends PawnController implements InputProcessor {
 
             if (current != null && spawnArea.checkIfVectorIsInside(screenCoordinates)) {
                 System.out.println("Click");
-                if(spawnUnit(current)){
-                    inputHandler.createEntityScreenCoordinates(screenCoordinates,current, teamID);
+                if (spawnUnit(current)) {
+                    inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
                 }
-
                 inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
-                return false;
             }
         }
-        //inputHandler.sendTouchInput(screenCoordinates,0);
         return false;
     }
 
@@ -152,7 +144,9 @@ public class PlayerController extends PawnController implements InputProcessor {
         camera.update();
 
         AssetManager assetManager = AssetManager.getInstance();
-        if (win == true){
+        int tw;
+        int th;
+        if (win) {
             Texture victory = assetManager.victoryScreen;
             tw = victory.getWidth();
             th = victory.getHeight();
@@ -160,8 +154,7 @@ public class PlayerController extends PawnController implements InputProcessor {
             batch.begin();
             batch.draw(victory, camera.position.x - (tw / 2), camera.position.y - (th / 2));
             batch.end();
-        }
-        else if (win == false){
+        } else {
             Texture defeat = assetManager.defeatScreen;
             tw = defeat.getWidth();
             th = defeat.getHeight();

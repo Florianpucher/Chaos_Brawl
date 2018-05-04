@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.network.Client;
+package com.strategy_bit.chaos_brawl.network.client;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -11,8 +11,8 @@ import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
-import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkLoungeHandler;
@@ -148,17 +148,9 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
         }
     }
 
-    private void updateNetworkInputHandler() {
-
-    }
-
-    private void updateNetworkLoungeHandler() {
-
-    }
-
     @Override
     public void sendTick() {
-        //Not needed
+        throw new UnsupportedOperationException("Only the host sends tick messages");
     }
 
     @Override
@@ -169,12 +161,12 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
 
     @Override
     public void sendEntityDeleteMsg(long entityID) {
-
+        throw new UnsupportedOperationException("Only the host sends deleting messages");
     }
 
     @Override
     public void sendEntityMovingMessage(long unitID,Array<Vector2> wayPoints) {
-
+        throw new UnsupportedOperationException("Only the host sends moving messages");
     }
 
     @Override

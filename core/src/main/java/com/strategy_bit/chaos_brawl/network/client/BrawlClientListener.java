@@ -1,16 +1,16 @@
-package com.strategy_bit.chaos_brawl.network.Client;
+package com.strategy_bit.chaos_brawl.network.client;
 
 import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntityDeleteMessage;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
-import com.strategy_bit.chaos_brawl.network.messages.Request.InitializeGameMessage;
-import com.strategy_bit.chaos_brawl.network.messages.Request.ResourceTickMessage;
-import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntityDeleteMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.ResourceTickMessage;
+import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 

@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.screens;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 
 /**
@@ -14,9 +15,11 @@ import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 public class AbstractScreen extends Stage implements Screen {
 
     protected ScreenManager screenManager;
+    protected AssetManager assetManager;
 
     public AbstractScreen() {
         this.screenManager = ScreenManager.getInstance();
+        this.assetManager = AssetManager.getInstance();
     }
 
     @Override

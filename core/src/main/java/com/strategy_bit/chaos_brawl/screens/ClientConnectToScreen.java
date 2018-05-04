@@ -8,10 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.network.Client.BrawlClient;
-import com.strategy_bit.chaos_brawl.network.Client.BrawlClientImpl;
+import com.strategy_bit.chaos_brawl.network.client.BrawlClient;
+import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -27,8 +25,6 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
     private final static String REFRESH = "Refresh";
     private static String DIRECT = "10.0.2.2";
 
-    private AssetManager assetManager;
-    private ScreenManager screenManager;
     private OrthographicCamera camera;
 
     private BrawlClient brawlClient;
@@ -42,8 +38,6 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
     @Override
     public void buildStage() {
         super.buildStage();
-        assetManager = AssetManager.getInstance();
-        screenManager = ScreenManager.getInstance();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnHostGame = new TextButton(REFRESH, assetManager.defaultSkin);
