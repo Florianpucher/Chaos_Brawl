@@ -23,6 +23,7 @@ plugins {
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+    apply plugin: "jacoco"
 
     version = '1.0'
     ext {
