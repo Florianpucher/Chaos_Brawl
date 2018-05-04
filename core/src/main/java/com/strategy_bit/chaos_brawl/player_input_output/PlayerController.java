@@ -10,8 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
-import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
 import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
@@ -47,7 +45,7 @@ public class PlayerController extends PawnController implements InputProcessor {
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         camera.position.set(w / 2, h / 2, 0);
-        sensorReader = new SensorReader();
+        sensorReader = new SensorReader(this);
     }
 
     public void render(float dt) {

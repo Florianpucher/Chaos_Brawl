@@ -2,7 +2,7 @@ package com.strategy_bit.chaos_brawl.cheat_function;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.controller.PlayerController;
+import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
 /**
  * Created by Florian on 27.04.2018.
