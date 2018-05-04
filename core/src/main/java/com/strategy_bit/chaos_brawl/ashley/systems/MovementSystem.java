@@ -74,8 +74,7 @@ public class MovementSystem extends IteratingSystem {
     }
 
     public float getRotation(Vector2 v){
-        Vector2 yAxis = new Vector2(0.0f, 1.0f);
-        float angle = (float) (yAxis.angle(v)) - 0.4f;
+        float angle = (float) (Math.atan2(v.y, v.x)) + (float) (Math.PI/2.0);
         return angle;
     }
 

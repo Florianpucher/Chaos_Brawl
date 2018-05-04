@@ -65,7 +65,7 @@ public class AssetManager {
 
     public  void loadAssets(){
 
-        archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit.png"));
+        archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_archer.png"));
         swordFighterSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_sword_fighter.png"));
         knightSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_knight.png"));     // need a new Knightskin
         projectileSkin=new TextureRegion(new Texture(UNIT_PATH+ "arrow.png"));
