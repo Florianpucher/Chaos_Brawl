@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.World;
 /*
@@ -35,13 +34,7 @@ public class CombatSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         CombatComponent combatComponent=mCombatComponent.get(entity);
         TeamGameObjectComponent teamGameObjectComponent = mTeamGameObjectComponentMapper.get(entity);
-        // Remove entity if hitpoints lower than 0
-        /*if(teamGameObjectComponent.getHitPoints()<=0.0){
-            getEngine().removeEntity(entity);
-            //PlayerClone playerClone=new PlayerClone(new Vector2((float) (Math.random()*20),(float) (Math.random()*10)));
-            //getEngine().addEntity(playerClone);
-            return;
-        }*/
+
         TransformComponent transformComponent=mTransformComponent.get(entity);
         double closest=combatComponent.getAttackRadius()+1.0;
         TeamGameObjectComponent closestEnemy=null;
