@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
+import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.ResourceSystem.Resource;
+import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
@@ -35,6 +38,7 @@ public class PlayerController extends PawnController implements InputProcessor {
     OrthographicCamera camera = null;
     private SpriteBatch batch = null;
 
+    private SensorReader sensorReader;
 
     public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
         super(teamID,inputHandler, spawnArea);
@@ -43,8 +47,13 @@ public class PlayerController extends PawnController implements InputProcessor {
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         camera.position.set(w / 2, h / 2, 0);
-
+        sensorReader = new SensorReader();
     }
+
+    public void render(float dt) {
+        sensorReader.update(dt);
+    }
+
 
     @Override
     public boolean keyDown(int keycode) {
@@ -64,15 +73,17 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 screenCoordinates = new Vector2(screenX,screenY);
-        if(gameHUD != null){
+        Vector2 screenCoordinates = new Vector2(screenX, screenY);
+        if (gameHUD != null) {
             UnitType current = gameHUD.getUnitToSpawn();
 
-            if(current != null && spawnArea.checkIfVectorIsInside(screenCoordinates)){
+            if (current != null && spawnArea.checkIfVectorIsInside(screenCoordinates)) {
                 System.out.println("Click");
                 if(spawnUnit(current)){
                     inputHandler.createEntityScreenCoordinates(screenCoordinates,current, teamID);
                 }
+
+                inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
                 return false;
             }
         }
@@ -102,22 +113,23 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     /**
      * adds the game hud to a stage
+     *
      * @param stage the stage where the gameHUD will be added
      */
-    public void addGameHUD(Stage stage){
-        if(gameHUD == null){
+    public void addGameHUD(Stage stage) {
+        if (gameHUD == null) {
             gameHUD = new GameHUD(spawnArea);
         }
-        if(!stage.getActors().contains(gameHUD, false)){
+        if (!stage.getActors().contains(gameHUD, false)) {
             stage.addActor(gameHUD);
-        }else{
+        } else {
             throw new IllegalStateException("GameHUD was already added to current Stage: " + stage.getClass().getName());
         }
     }
 
 
-    public void dispose(){
-        if(gameHUD != null){
+    public void dispose() {
+        if (gameHUD != null) {
             gameHUD.dispose();
         }
         batch.dispose();
@@ -125,12 +137,12 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     @Override
     public void tick() {
-        if(gameHUD!=null){
-        super.tick();
-        for (Resource r :
-                resources) {
-            gameHUD.manaBar.setValue((float)r.percentageFull()*gameHUD.manaBar.getMaxValue());
-        }
+        if (gameHUD != null) {
+            super.tick();
+            for (Resource r :
+                    resources) {
+                gameHUD.manaBar.setValue((float) r.percentageFull() * gameHUD.manaBar.getMaxValue());
+            }
         }
     }
 
