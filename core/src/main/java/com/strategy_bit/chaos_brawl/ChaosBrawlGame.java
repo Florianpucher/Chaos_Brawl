@@ -54,6 +54,7 @@ public class ChaosBrawlGame extends Game {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 		logger.log();
 		if(!loadGame){
+			assetManager.music.play();
 			screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAIN_MENU);
 			loadGame = true;
 		}
@@ -62,6 +63,7 @@ public class ChaosBrawlGame extends Game {
 	@Override
 	public void dispose () {
 		currentScreen.dispose();
+		assetManager.music.stop();
 		assetManager.dispose();
 	}
 

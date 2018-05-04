@@ -29,7 +29,7 @@ public abstract class PawnController {
      */
     protected Boundary spawnArea;
     protected ArrayList<Resource> resources;
-    private static final double rate=1.0;
+    private static final double rate=0.5;
 
     public float getNewRate() {
         return newRate;

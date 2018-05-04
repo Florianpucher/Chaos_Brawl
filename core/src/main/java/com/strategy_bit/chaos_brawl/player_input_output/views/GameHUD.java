@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.UnitType;
@@ -33,20 +34,25 @@ public class GameHUD extends Table{
     private UnitType nextUnitType;
     private Texture nonSpawnAreaTexture;
     public ProgressBar manaBar;
+    private Array<BrawlButton> brawlButtons;
 
     public GameHUD(Boundary spawnArea) {
         super(AssetManager.getInstance().defaultSkin);
         AssetManager assetManager = AssetManager.getInstance();
         initializeNonSpawnAreaShadow(spawnArea);
 
-        final TextButton btnNewUnit1 = new TextButton(NEW_UNIT_1, assetManager.defaultSkin);
+        final BrawlButton btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin,UnitType.RANGED);
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
-        final TextButton btnNewUnit2 = new TextButton(NEW_UNIT_2, assetManager.defaultSkin);
+        final BrawlButton btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin,UnitType.SWORDFIGHTER);
         btnNewUnit2.setName(NEW_UNIT_2);
         setFillParent(true);
-        final TextButton btnNewUnit3 = new TextButton(NEW_UNIT_3, assetManager.defaultSkin);
+        final BrawlButton btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin,UnitType.KNIGHT);
         btnNewUnit3.setName(NEW_UNIT_3);
+        brawlButtons=new Array<>();
+        brawlButtons.add(btnNewUnit1);
+        brawlButtons.add(btnNewUnit2);
+        brawlButtons.add(btnNewUnit3);
         setFillParent(true);
 
         NinePatchDrawable resourceBarOuter = new NinePatchDrawable(assetManager.resourceSkinOuter);
@@ -79,21 +85,21 @@ public class GameHUD extends Table{
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 String name = event.getListenerActor().getName();
-                if(name.equals(NEW_UNIT_1)){
+                if(name.equals(NEW_UNIT_1)&&brawlButtons.get(0).isActivated()){
                     if(nextUnitType == UnitType.RANGED){
                         nextUnitType = null;
                     }else{
                         nextUnitType = UnitType.RANGED;
                     }
                 }
-                if(name.equals( NEW_UNIT_2)){
+                if(name.equals( NEW_UNIT_2)&&brawlButtons.get(1).isActivated()){
                     if(nextUnitType == UnitType.SWORDFIGHTER){
                         nextUnitType = null;
                     }else{
                         nextUnitType = UnitType.SWORDFIGHTER;
                     }
                 }
-                if(name.equals( NEW_UNIT_3)){
+                if(name.equals( NEW_UNIT_3)&&brawlButtons.get(2).isActivated()){
                     if(nextUnitType == UnitType.KNIGHT){
                         nextUnitType = null;
                     }else{
@@ -143,10 +149,12 @@ public class GameHUD extends Table{
     public void dispose(){
         nonSpawnAreaTexture.dispose();
     }
-
-    public void updateResourceBar(Resource resource){
-
+public void updateBtns(float v){
+    for (BrawlButton brawlButton:
+         brawlButtons) {
+        brawlButton.update(v);
     }
+}
 
 
 }

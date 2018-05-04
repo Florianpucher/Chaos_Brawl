@@ -75,12 +75,14 @@ public class MainMenuScreen extends AbstractScreen{
         super.show();
         Gdx.input.setInputProcessor((Stage)this);
         System.out.println(Gdx.input.getInputProcessor().getClass().getName());
+
     }
 
     @Override
     public void hide() {
         super.hide();
         Gdx.input.setInputProcessor(null);
+
     }
 
     @Override

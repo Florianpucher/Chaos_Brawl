@@ -25,8 +25,8 @@ public class Resource {
         this.teamId = teamId;
     }
 
-    public double getResourceAmount() {
-        return resourceAmount;
+    public float getResourceAmount() {
+        return (float)resourceAmount;
     }
 
     public void setResourceAmount(double resources) {

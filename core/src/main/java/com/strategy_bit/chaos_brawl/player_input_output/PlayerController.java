@@ -49,6 +49,7 @@ public class PlayerController extends PawnController implements InputProcessor {
     }
 
     public void render(float dt) {
+        gameHUD.updateBtns(resources.get(0).getResourceAmount());
         sensorReader.update(dt);
     }
 

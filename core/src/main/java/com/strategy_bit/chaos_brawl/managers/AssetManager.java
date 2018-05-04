@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.managers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -38,6 +39,7 @@ public class AssetManager {
     public NinePatch hpSkinInner;
     public TextureRegion defaultTile;
     public TextureRegion waterTile;
+    public Music music;
     public TextureRegion dirtTile;
     //public TextureRegion TowerSkin;
     //public TextureRegion TowerSkinP;
@@ -90,6 +92,9 @@ public class AssetManager {
         defeatScreen = new Texture("defeat.png");
         progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3"));
+        music.setVolume(1f);
+        music.setLooping(true);
     }
 
 
@@ -113,6 +118,7 @@ public class AssetManager {
         hpSkinInner.getTexture().dispose();
         victoryScreen.dispose();
         defeatScreen.dispose();
+        music.dispose();
 
     }
 }
