@@ -5,18 +5,13 @@ import com.strategy_bit.chaos_brawl.BaseTest;
 import com.strategy_bit.chaos_brawl.ChaosBrawlGame;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.network.Client.BrawlClientImpl;
-import com.strategy_bit.chaos_brawl.network.Client.BrawlClientListener;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServerListener;
-import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
-import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
+import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
+import com.strategy_bit.chaos_brawl.network.client.BrawlClientListener;
+import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
+import com.strategy_bit.chaos_brawl.network.server.BrawlServerListener;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
-import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,10 +21,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 
 /**
  * @author AIsopp

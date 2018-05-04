@@ -22,4 +22,8 @@ public class WorldSettings {
     public static final float FRUSTUM_WIDTH = 20;
     public static final float FRUSTUM_HEIGHT = 15;
     public static final float PIXELS_TO_METRES = 1.0f / 32.0f;
+
+
+
+    public static final double RATE = 1.0d;
 }

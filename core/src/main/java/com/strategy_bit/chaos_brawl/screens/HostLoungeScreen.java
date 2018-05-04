@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
+import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
+import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
 
 import java.io.IOException;
 

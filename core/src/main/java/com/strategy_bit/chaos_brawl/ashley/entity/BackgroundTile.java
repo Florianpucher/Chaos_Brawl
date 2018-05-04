@@ -8,7 +8,7 @@ import com.strategy_bit.chaos_brawl.world.BoardA;
 import com.strategy_bit.chaos_brawl.world.Tile;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.config.Z_Index;
+import com.strategy_bit.chaos_brawl.config.ZIndex;
 
 /**
  * Representing the tiles used by {@link BoardA}
@@ -27,7 +27,7 @@ public class BackgroundTile extends Entity implements Tile{
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(new TextureRegion(tileType.getTexture()));
         TransformComponent transformComponent = new TransformComponent();
-        transformComponent.setZ(Z_Index.BACKGROUND);
+        transformComponent.setZ(ZIndex.BACKGROUND);
         add(textureComponent);
         add(transformComponent);
     }

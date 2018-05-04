@@ -8,10 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.network.Client.BrawlClient;
-import com.strategy_bit.chaos_brawl.network.Client.BrawlClientImpl;
+import com.strategy_bit.chaos_brawl.network.client.BrawlClient;
+import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
 
 import java.io.IOException;
 import java.net.InetAddress;

@@ -10,7 +10,7 @@ import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
 public class SensorReader {
 
-    private static final float min = 1.0f;
+    private static final float MIN = 1.0f;
     private Array<Float> accelerations = new Array<Float>();
     private float time = 0;
     private float duration;
@@ -29,7 +29,7 @@ public class SensorReader {
             playerController.setNewRate(1);
         }
         accelY = Gdx.input.getAccelerometerY();
-        if (Math.abs(accelY) > min) {
+        if (Math.abs(accelY) > MIN) {
             accelerations.add(accelY);
             float average = 0;
             for (float acc:

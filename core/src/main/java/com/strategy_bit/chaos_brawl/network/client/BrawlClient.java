@@ -1,15 +1,11 @@
-package com.strategy_bit.chaos_brawl.network.Client;
+package com.strategy_bit.chaos_brawl.network.client;
 
-import com.badlogic.gdx.net.Socket;
 import com.strategy_bit.chaos_brawl.network.BrawlNetworkInterface;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
-import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkLoungeHandler;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.util.List;
 
 /**
  * @author AIsopp

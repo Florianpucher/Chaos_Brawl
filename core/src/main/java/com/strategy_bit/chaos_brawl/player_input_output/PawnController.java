@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.player_input_output;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.resource_system.ResourceGold;
 import com.strategy_bit.chaos_brawl.types.UnitType;
@@ -29,7 +30,6 @@ public abstract class PawnController {
      */
     protected Boundary spawnArea;
     protected ArrayList<Resource> resources;
-    private static final double rate=0.5;
 
     public float getNewRate() {
         return newRate;
@@ -66,7 +66,7 @@ public abstract class PawnController {
     public void tick(){
         for (Resource r :
                 resources) {
-            r.add(rate*newRate);
+            r.add(WorldSettings.RATE *newRate);
         }
     }
 
@@ -87,22 +87,6 @@ public abstract class PawnController {
     public boolean spawnUnit(UnitType unitType){
         double cost= unitType.getCosts();
         return checkAndSubtract(cost,"Gold");
-    }
-
-    public void notifyAboutSpawning(Vector2 worldPosition, UnitType unitType, int teamID){
-
-    }
-
-    public void notifyAboutDeletingUnit(long unitID){
-
-    }
-
-    public void notifyAboutAttacking(long unitID_Attacker, long unitID_Victim){
-
-    }
-
-    public void notifyAboutMoving(long unitID, Array<Vector2> movingPositions){
-
     }
 
     public void gameOver (boolean win) {

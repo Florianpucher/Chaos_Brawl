@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.network.messages.Request;
+package com.strategy_bit.chaos_brawl.network.messages.request;
 
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 
