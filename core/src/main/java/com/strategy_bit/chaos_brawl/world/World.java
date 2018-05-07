@@ -23,8 +23,10 @@ import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.ashley.entity.HpBar;
 
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
+import com.strategy_bit.chaos_brawl.screens.GameOverScreen;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
@@ -155,16 +157,22 @@ public class World implements InputHandler {
         if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
             if (!endGame) {                         // for performance reasons
                 // endGame = true;
+
+                // ScreenManager.game.setScreen(new GameOverScreen(ScreenManager.game));
                 playerControllers[0].gameOver(false);
-                playerControllers[1].gameOver(true);     //#remove comment lines for multiplayer
-                //endGame = true;
+                playerControllers[1].gameOver(true);
+
+                // dispose();
             }
         } else if (bases[1].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
             if (!endGame) {
                 // endGame = true;
+
+                // ScreenManager.game.setScreen(new GameOverScreen(ScreenManager.game));
                 playerControllers[0].gameOver(true);
-                playerControllers[1].gameOver(false);   // #remove comment lines for multiplayer
-                //endGame = true;
+                playerControllers[1].gameOver(false);
+
+                // dispose();
             }
         }
     }
