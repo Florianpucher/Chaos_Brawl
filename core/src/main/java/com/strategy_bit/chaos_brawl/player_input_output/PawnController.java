@@ -8,7 +8,7 @@ import com.strategy_bit.chaos_brawl.resource_system.ResourceGold;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
-
+import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
 import java.util.ArrayList;
 
 
@@ -24,6 +24,7 @@ public abstract class PawnController {
     protected int teamID;
     protected InputHandler inputHandler;
     protected int currentTargetTeam;
+    protected boolean cheatFunctionActive;
     /**
      * in screen Coordinates
      */
@@ -47,6 +48,7 @@ public abstract class PawnController {
         this.teamID = teamID;
         this.resources = new ArrayList<Resource>();
         createResource();
+
     }
 
     public int getTeamID() {
@@ -107,5 +109,13 @@ public abstract class PawnController {
 
     public void gameOver (boolean win) {
 
+    }
+
+    public boolean isCheatFunctionActive() {
+        return cheatFunctionActive;
+    }
+
+    public void setCheatFunctionActive(boolean cheatFunctionActive) {
+        this.cheatFunctionActive = cheatFunctionActive;
     }
 }
