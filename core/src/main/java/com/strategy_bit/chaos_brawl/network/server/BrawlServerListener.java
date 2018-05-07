@@ -6,6 +6,8 @@ import com.esotericsoftware.kryonet.Listener;
 import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
+import com.strategy_bit.chaos_brawl.network.messages.request.ClientConnectedMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
@@ -28,7 +30,7 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
         //TODO: add 3 and 4 Archer-Games
         if (ScreenManager.getInstance().getCurrentScreen() instanceof HostLobbyScreen)
         ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).addClient(connection.getRemoteAddressTCP().getHostName(),connection.getID());
-        brawlServer.sendDataToAllExcept(connection,new com.strategy_bit.chaos_brawl.network.messages.Request.ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName(),connection.getID()));
+        brawlServer.sendDataToAllExcept(connection,new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName(),connection.getID()));
         /*Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
@@ -46,7 +48,7 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
     public void disconnected(Connection connection) {
         if (ScreenManager.getInstance().getCurrentScreen() instanceof HostLobbyScreen){
             ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).removeClient(connection.getID());
-            brawlServer.sendData(new com.strategy_bit.chaos_brawl.network.messages.Request.ClientDisconnectedMessage(connection.getRemoteAddressUDP().getHostName(),connection.getID()));
+            brawlServer.sendData(new ClientDisconnectedMessage(connection.getRemoteAddressUDP().getHostName(),connection.getID()));
         }
     }
 

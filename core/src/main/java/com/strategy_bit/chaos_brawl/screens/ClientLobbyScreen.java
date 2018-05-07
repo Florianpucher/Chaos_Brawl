@@ -2,16 +2,12 @@ package com.strategy_bit.chaos_brawl.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
 
 /**
  * @author AIsopp

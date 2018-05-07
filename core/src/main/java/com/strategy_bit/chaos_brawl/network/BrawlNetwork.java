@@ -3,6 +3,8 @@ package com.strategy_bit.chaos_brawl.network;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryo.Kryo;
+import com.strategy_bit.chaos_brawl.network.messages.request.ClientConnectedMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
@@ -44,8 +46,8 @@ public class BrawlNetwork {
         kryo.register(int[].class);
         kryo.register(Object[].class);
         kryo.register(Vector2[].class);
-        kryo.register(com.strategy_bit.chaos_brawl.network.messages.Request.ClientConnectedMessage.class);
+        kryo.register(ClientConnectedMessage.class);
         kryo.register(String[].class);
-        kryo.register(com.strategy_bit.chaos_brawl.network.messages.Request.ClientDisconnectedMessage.class);
+        kryo.register(ClientDisconnectedMessage.class);
     }
 }

@@ -11,9 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
-
-import java.io.IOException;
+import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
 
 /**
  * @author AIsopp

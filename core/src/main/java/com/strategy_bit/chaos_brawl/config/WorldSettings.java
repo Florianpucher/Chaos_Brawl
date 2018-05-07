@@ -25,5 +25,5 @@ public class WorldSettings {
 
 
 
-    public static final double RATE = 1.0d;
+    public static final double RATE = 0.1d;
 }
