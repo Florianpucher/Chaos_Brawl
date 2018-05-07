@@ -31,6 +31,7 @@ abstract class LobbyScreen extends AbstractScreen {
     protected Array<TextButton> textButtons;
     protected Array<String> playerNames;
     protected Array<Integer> playerIds;
+    protected int c=0;
 
     public LobbyScreen() {
 
@@ -86,7 +87,7 @@ abstract class LobbyScreen extends AbstractScreen {
         }
     }
     public void removeClient(int id){
-        String ip=(playerNames.get(id));
+        String ip=(playerNames.get(id-c++));
         if (playerNames==null){
             return;
         }else{

@@ -74,7 +74,12 @@ public class ClientLobbyScreen extends LobbyScreen {
 
 
     public void returnToSearch(){
-        screenManager.switchToLastScreen();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                screenManager.switchToLastScreen();
+            }
+        });
     }
 
 
