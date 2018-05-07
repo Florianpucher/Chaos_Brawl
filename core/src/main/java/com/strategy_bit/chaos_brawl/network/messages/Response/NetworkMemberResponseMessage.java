@@ -9,10 +9,15 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
  * @since 02.04.2018
  */
 public class NetworkMemberResponseMessage implements Message {
-    public Connection[] members;
+    public String[] members;
 
     public NetworkMemberResponseMessage(Connection[] members) {
-        this.members = members;
+        this.members=new String[members.length];
+        int i=0;
+        for (Connection connection:
+             members) {
+            this.members[i++]=connection.getRemoteAddressTCP().getHostName();
+        }
     }
 
     public NetworkMemberResponseMessage() {

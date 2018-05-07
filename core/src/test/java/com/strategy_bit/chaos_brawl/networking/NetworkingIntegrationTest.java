@@ -11,6 +11,8 @@ import com.strategy_bit.chaos_brawl.network.Client.BrawlClientListener;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerImpl;
 import com.strategy_bit.chaos_brawl.network.Server.BrawlServerListener;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
@@ -89,6 +91,7 @@ public class NetworkingIntegrationTest extends BaseTest{
         } catch (BrokenBarrierException ignored) {
 
         }
+        server.closeServer();
     }
 
     @Test
@@ -126,7 +129,21 @@ public class NetworkingIntegrationTest extends BaseTest{
 
         //MultiplayerWorld worldClient = new MultiplayerWorld(client);
         //MultiplayerWorld worldServer = new MultiplayerWorld(server);
+        client.disconnect();
+        server.closeServer();
 
+    }
+
+    @Test
+    public void testNetworkMemberMessage() throws IOException {
+        server.startServer();
+        client.connectToServer("127.0.0.1");
+        //NetworkMembersRequestMessage networkMembersRequestMessage = new NetworkMembersRequestMessage();
+        //client.sendData(networkMembersRequestMessage);
+        server.sendData(new NetworkMemberResponseMessage(server.getNetworkMembers()));
+
+        client.disconnect();
+        server.closeServer();
     }
 
 }

@@ -134,8 +134,6 @@ public class HostLobbyScreen extends AbstractScreen {
     public void addClient(String ip){
         System.out.println(ip);
         textButtons.get(players++).setText(ip);
-        /*if(players>3){
-            players=0;
-        }*/
     }
+
 }

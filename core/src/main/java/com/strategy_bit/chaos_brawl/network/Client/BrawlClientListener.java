@@ -10,6 +10,7 @@ import com.strategy_bit.chaos_brawl.network.messages.Request.EntityDeleteMessage
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.InitializeGameMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.screens.ClientLobbyScreen;
@@ -26,6 +27,7 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
     @Override
     public void connected(Connection connection) {
         //TODO add here network lounge
+        brawlClient.sendData(new NetworkMembersRequestMessage());
     }
 
     @Override
@@ -56,10 +58,17 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
                 }
                 else if (object instanceof NetworkMemberResponseMessage) {
                     NetworkMemberResponseMessage replyMessage = (NetworkMemberResponseMessage) object;
-                    brawlClient.connections=replyMessage.members;
-                    synchronized (brawlClient.connections){
-                        brawlClient.connections.notify();
+                    //brawlClient.connections=replyMessage.members;
+                    ScreenManager screenManager = ScreenManager.getInstance();
+                    if (screenManager.getCurrentScreen() instanceof ClientLobbyScreen){
+                        for (String ip:
+                                ((NetworkMemberResponseMessage) object).members) {
+                            ((ClientLobbyScreen)(screenManager.getCurrentScreen())).addClient(ip);
+                        }
                     }
+
+
+
                 }else if(object instanceof InitializeGameMessage) {
                     InitializeGameMessage initializeGameMessage = (InitializeGameMessage) object;
                     ScreenManager screenManager = ScreenManager.getInstance();

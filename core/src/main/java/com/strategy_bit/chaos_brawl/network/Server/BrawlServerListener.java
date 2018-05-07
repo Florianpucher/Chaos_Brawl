@@ -26,8 +26,9 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
     public void connected(Connection connection) {
         //Start a 2 Archer-Game
         //TODO: add 3 and 4 Archer-Games
+        if (ScreenManager.getInstance().getCurrentScreen() instanceof HostLobbyScreen)
         ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).addClient(connection.getRemoteAddressTCP().getHostName());
-        brawlServer.sendData(new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName()));
+        brawlServer.sendDataToAllExcept(connection,new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName()));
         /*Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
@@ -64,7 +65,7 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
                     //brawlServer.sendDataToAllExcept(connection,entitySpawnMessage);
                 }
                 else if (object instanceof NetworkMembersRequestMessage){
-                    brawlServer.sendData(new NetworkMemberResponseMessage(brawlServer.getNetworkMembers()));
+                    brawlServer.sendDataOnlyTo(connection,new NetworkMemberResponseMessage(brawlServer.getNetworkMembers()));
                 }
             }
         });

@@ -13,6 +13,8 @@ import com.strategy_bit.chaos_brawl.network.messages.Response.NetworkMemberRespo
 import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 
+import java.sql.Connection;
+
 /**
  * Registers all Messages
  * <br>
@@ -46,5 +48,6 @@ public class BrawlNetwork {
         kryo.register(Object[].class);
         kryo.register(Vector2[].class);
         kryo.register(ClientConnectedMessage.class);
+        kryo.register(String[].class);
     }
 }

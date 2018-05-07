@@ -64,6 +64,11 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     }
 
+    public void sendDataOnlyTo(Connection connection, Message msg) {
+        server.sendToTCP(connection.getID(),msg);
+
+    }
+
     @Override
     public boolean isServerIsRunning() {
         return serverIsRunning;

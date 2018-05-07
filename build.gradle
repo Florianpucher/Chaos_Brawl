@@ -80,7 +80,7 @@ project(":core") {
         implementation "com.badlogicgames.ashley:ashley:$ashleyVersion"
         implementation "com.esotericsoftware.kryo:kryo:$kryoVersion"
         implementation "com.esotericsoftware:kryonet:$kryonetVersion"
-        implementation "com.badlogicgames.gdx:gdx-ai:1.8.1"
+        compile "com.badlogicgames.gdx:gdx-ai:1.8.1"
         //implementation 'kryonet:kryonet:2.21'
         testImplementation "org.mockito:mockito-core:2.8.9"
         //testImplementation group: 'org.powermock', name: 'powermock', version: '1.6.5'
