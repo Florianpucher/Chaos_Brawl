@@ -9,7 +9,7 @@ android:
     - extra-android-m2repository
     - addon-google_apis-google-26
     - sys-img-armeabi-v7a-android-26
-  script:
+script:
     - chmod +x ./gradlew
     - ./gradlew build
     - ./gradlew test
