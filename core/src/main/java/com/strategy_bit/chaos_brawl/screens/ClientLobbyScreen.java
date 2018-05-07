@@ -18,19 +18,7 @@ import com.strategy_bit.chaos_brawl.network.Server.BrawlServer;
  * @version 1.0
  * @since 02.04.2018
  */
-public class ClientLobbyScreen extends AbstractScreen {
-
-    private final static String PLAYER_1 = "1";
-    private final static String PLAYER_2 = "2";
-    private final static String PLAYER_3 = "3";
-    private final static String PLAYER_4 = "4";
-
-    private AssetManager assetManager;
-    private ScreenManager screenManager;
-    private OrthographicCamera camera;
-    private BrawlServer brawlServer;
-    private Array<TextButton> textButtons;
-    private int players=0;
+public class ClientLobbyScreen extends LobbyScreen {
 
     public ClientLobbyScreen() {
 
@@ -73,36 +61,21 @@ public class ClientLobbyScreen extends AbstractScreen {
 
     }
 
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        act();
-        draw();
-        camera.update();
-    }
+
 
     @Override
     public void show() {
         super.show();
         System.out.println("SHOW LOBBY");
         Gdx.input.setInputProcessor(this);
-        addClient("self");
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-        Gdx.input.setInputProcessor(null);
+        addClient("self",0);
     }
 
 
-    @Override
-    protected void handleBackKey() {
-        super.handleBackKey();
+
+    public void returnToSearch(){
+        screenManager.switchToLastScreen();
     }
 
-    public void addClient(String ip){
-        System.out.println(ip);
-        textButtons.get(players++).setText(ip);
-    }
+
 }

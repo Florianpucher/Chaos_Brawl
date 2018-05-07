@@ -142,4 +142,8 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     public void dispose() {
         closeServer();
     }
+
+    public void closeConnectionTo(int id){
+        server.getConnections()[id].close();
+    }
 }

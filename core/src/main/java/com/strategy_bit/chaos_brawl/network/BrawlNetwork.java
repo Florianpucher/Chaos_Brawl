@@ -49,5 +49,6 @@ public class BrawlNetwork {
         kryo.register(Vector2[].class);
         kryo.register(ClientConnectedMessage.class);
         kryo.register(String[].class);
+        kryo.register(com.strategy_bit.chaos_brawl.network.messages.Request.ClientDisconnectedMessage.class);
     }
 }

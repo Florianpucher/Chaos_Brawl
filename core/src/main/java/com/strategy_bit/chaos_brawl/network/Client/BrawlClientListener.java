@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.messages.Request.ClientConnectedMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.ClientDisconnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
@@ -32,6 +33,9 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
 
     @Override
     public void disconnected(Connection connection) {
+        if (ScreenManager.getInstance().getCurrentScreen() instanceof ClientLobbyScreen){
+            ((ClientLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).returnToSearch();
+        }
     }
 
     @Override
@@ -61,9 +65,10 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
                     //brawlClient.connections=replyMessage.members;
                     ScreenManager screenManager = ScreenManager.getInstance();
                     if (screenManager.getCurrentScreen() instanceof ClientLobbyScreen){
+                        int i=1;
                         for (String ip:
                                 ((NetworkMemberResponseMessage) object).members) {
-                            ((ClientLobbyScreen)(screenManager.getCurrentScreen())).addClient(ip);
+                            ((ClientLobbyScreen)(screenManager.getCurrentScreen())).addClient(ip,i++);
                         }
                     }
 
@@ -77,7 +82,13 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
                 else if(object instanceof ClientConnectedMessage) {
                     ClientConnectedMessage clientConnectedMessage = (ClientConnectedMessage) object;
                     ScreenManager screenManager = ScreenManager.getInstance();
-                    ((ClientLobbyScreen)(screenManager.getCurrentScreen())).addClient(clientConnectedMessage.name);
+                    ((ClientLobbyScreen)(screenManager.getCurrentScreen())).addClient(clientConnectedMessage.name,clientConnectedMessage.id);
+                }
+                else if (object instanceof ClientDisconnectedMessage){
+                    ClientDisconnectedMessage clientDisconnectedMessage = (ClientDisconnectedMessage) object;
+                    ScreenManager screenManager = ScreenManager.getInstance();
+                    if (screenManager.getCurrentScreen() instanceof ClientLobbyScreen)
+                    ((ClientLobbyScreen)(screenManager.getCurrentScreen())).removeClient(clientDisconnectedMessage.id);
                 }
             }
         });

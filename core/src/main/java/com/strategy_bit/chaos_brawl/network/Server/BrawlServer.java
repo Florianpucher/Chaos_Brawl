@@ -22,4 +22,5 @@ public interface BrawlServer extends BrawlNetworkInterface {
     void startServer() throws IOException;
     void closeServer();
     boolean isServerIsRunning();
+    void closeConnectionTo(int id);
 }

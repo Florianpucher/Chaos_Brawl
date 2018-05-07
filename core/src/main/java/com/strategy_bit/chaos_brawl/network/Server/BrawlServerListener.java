@@ -7,6 +7,7 @@ import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.messages.Request.ClientConnectedMessage;
+import com.strategy_bit.chaos_brawl.network.messages.Request.ClientDisconnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.Request.NetworkMembersRequestMessage;
@@ -27,8 +28,8 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
         //Start a 2 Archer-Game
         //TODO: add 3 and 4 Archer-Games
         if (ScreenManager.getInstance().getCurrentScreen() instanceof HostLobbyScreen)
-        ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).addClient(connection.getRemoteAddressTCP().getHostName());
-        brawlServer.sendDataToAllExcept(connection,new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName()));
+        ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).addClient(connection.getRemoteAddressTCP().getHostName(),connection.getID());
+        brawlServer.sendDataToAllExcept(connection,new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName(),connection.getID()));
         /*Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
@@ -44,6 +45,10 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
 
     @Override
     public void disconnected(Connection connection) {
+        if (ScreenManager.getInstance().getCurrentScreen() instanceof HostLobbyScreen){
+            ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).removeClient(connection.getID());
+            brawlServer.sendData(new ClientDisconnectedMessage(connection.getRemoteAddressUDP().getHostName(),connection.getID()));
+        }
     }
 
     @Override

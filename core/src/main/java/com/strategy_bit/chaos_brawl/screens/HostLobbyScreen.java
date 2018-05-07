@@ -20,20 +20,13 @@ import java.io.IOException;
  * @version 1.0
  * @since 02.04.2018
  */
-public class HostLobbyScreen extends AbstractScreen {
+public class HostLobbyScreen extends LobbyScreen {
 
     private final static String START_GAME = "Start Game";
-    private final static String PLAYER_1 = "1";
-    private final static String PLAYER_2 = "2";
-    private final static String PLAYER_3 = "3";
-    private final static String PLAYER_4 = "4";
 
-    private AssetManager assetManager;
-    private ScreenManager screenManager;
-    private OrthographicCamera camera;
+
     private BrawlServer brawlServer;
-    private Array<TextButton> textButtons;
-    private int players=0;
+
 
     public HostLobbyScreen(BrawlServer brawlServer) {
         this.brawlServer=brawlServer;
@@ -86,35 +79,38 @@ public class HostLobbyScreen extends AbstractScreen {
                 if(name.equals(START_GAME)){
                     startGame();
                 }
+                else if (name.equals(PLAYER_2)&&playerIds.size>1){
+                    brawlServer.closeConnectionTo(0);
+                }
+                else if (name.equals(PLAYER_3)&&playerIds.size>2){
+                    brawlServer.closeConnectionTo(1);
+                }
+                else if (name.equals(PLAYER_4)&&playerIds.size>3){
+                    brawlServer.closeConnectionTo(2);
+                }
             }
         };
         btnStartGame.addListener(listener);
+        btnPlayer2.addListener(listener);
+        btnPlayer3.addListener(listener);
+        btnPlayer4.addListener(listener);
     }
 
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        act();
-        draw();
-        camera.update();
-    }
+
 
     @Override
     public void show() {
         super.show();
         System.out.println("SHOW LOBBY");
         Gdx.input.setInputProcessor(this);
-        addClient("host");
+        addClient("host",0);
     }
 
-    @Override
-    public void hide() {
-        super.hide();
-        Gdx.input.setInputProcessor(null);
-    }
+
 
     private void startGame() {
-        if(players<2)return;
+        //TODO: For now only allow 2 player games
+        if(playerNames.size!=2)return;
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
@@ -124,16 +120,6 @@ public class HostLobbyScreen extends AbstractScreen {
                 ScreenManager.getInstance().showScreen(ScreenEnum.MULTIPLAYERGAME,brawlServer,players);
             }
         });
-    }
-
-    @Override
-    protected void handleBackKey() {
-        super.handleBackKey();
-    }
-
-    public void addClient(String ip){
-        System.out.println(ip);
-        textButtons.get(players++).setText(ip);
     }
 
 }
