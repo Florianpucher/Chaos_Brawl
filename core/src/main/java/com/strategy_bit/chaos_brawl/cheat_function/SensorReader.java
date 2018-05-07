@@ -37,7 +37,7 @@ public class SensorReader {
                 average += acc;
             }
             average = average / accelerations.size;
-            if (accelerations.size > 50 && average < 0.5f && time < 5000) {
+            if (accelerations.size > 50 && average < 0.5f && time < 5000 && playerController.isCheatFunctionActive()) {
                 String message = "Cheat Function active!";
                 System.out.println(message);
                 playerController.setNewRate(5);
