@@ -7,6 +7,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.strategy_bit.chaos_brawl.config.Network;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
@@ -16,6 +17,7 @@ import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersReque
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkLoungeHandler;
+import com.strategy_bit.chaos_brawl.screens.ClientLobbyScreen;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 
 import java.io.IOException;
@@ -47,7 +49,7 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
         discoveryHandlers = new ArrayList<NetworkDiscoveryHandler>();
         inputHandlers = new ArrayList<NetworkInputHandler>();
         loungeHandlers = new ArrayList<NetworkLoungeHandler>();
-        connections=null;
+        connections=new Connection[0];
         BrawlNetwork network = new BrawlNetwork(this);
     }
 
@@ -100,13 +102,11 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     @Override
     public Connection[] getNetworkMembers() {
         sendData(new NetworkMembersRequestMessage());
-        synchronized (connections){
             try {
                 connections.wait();
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
-        }
         return connections;
     }
 

@@ -10,6 +10,8 @@ import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
+import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
+import com.strategy_bit.chaos_brawl.screens.HostLobbyScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
@@ -24,7 +26,10 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
     public void connected(Connection connection) {
         //Start a 2 Archer-Game
         //TODO: add 3 and 4 Archer-Games
-        Gdx.app.postRunnable(new Runnable() {
+        if (ScreenManager.getInstance().getCurrentScreen() instanceof HostLobbyScreen)
+        ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).addClient(connection.getRemoteAddressTCP().getHostName(),connection.getID());
+        brawlServer.sendDataToAllExcept(connection,new com.strategy_bit.chaos_brawl.network.messages.Request.ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName(),connection.getID()));
+        /*Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
                 //just two players
@@ -33,11 +38,16 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
                 ScreenManager.getInstance().showScreen(ScreenEnum.MULTIPLAYERGAME,brawlServer,this,players);
             }
         });
+        */
 
     }
 
     @Override
     public void disconnected(Connection connection) {
+        if (ScreenManager.getInstance().getCurrentScreen() instanceof HostLobbyScreen){
+            ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).removeClient(connection.getID());
+            brawlServer.sendData(new com.strategy_bit.chaos_brawl.network.messages.Request.ClientDisconnectedMessage(connection.getRemoteAddressUDP().getHostName(),connection.getID()));
+        }
     }
 
     @Override
@@ -59,7 +69,7 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
                     //brawlServer.sendDataToAllExcept(connection,entitySpawnMessage);
                 }
                 else if (object instanceof NetworkMembersRequestMessage){
-                    brawlServer.sendData(new NetworkMemberResponseMessage(brawlServer.getNetworkMembers()));
+                    brawlServer.sendDataOnlyTo(connection,new NetworkMemberResponseMessage(brawlServer.getNetworkMembers()));
                 }
             }
         });

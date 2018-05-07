@@ -5,12 +5,16 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
+import com.strategy_bit.chaos_brawl.network.messages.request.ClientConnectedMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
+import com.strategy_bit.chaos_brawl.screens.ClientLobbyScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
@@ -24,10 +28,14 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
     @Override
     public void connected(Connection connection) {
         //TODO add here network lounge
+        brawlClient.sendData(new NetworkMembersRequestMessage());
     }
 
     @Override
     public void disconnected(Connection connection) {
+        if (ScreenManager.getInstance().getCurrentScreen() instanceof ClientLobbyScreen){
+            ((ClientLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).returnToSearch();
+        }
     }
 
     @Override
@@ -54,14 +62,33 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
                 }
                 else if (object instanceof NetworkMemberResponseMessage) {
                     NetworkMemberResponseMessage replyMessage = (NetworkMemberResponseMessage) object;
-                    brawlClient.connections=replyMessage.members;
-                    synchronized (brawlClient.connections){
-                        brawlClient.connections.notify();
+                    //brawlClient.connections=replyMessage.members;
+                    ScreenManager screenManager = ScreenManager.getInstance();
+                    if (screenManager.getCurrentScreen() instanceof ClientLobbyScreen){
+                        int i=1;
+                        for (String ip:
+                                ((NetworkMemberResponseMessage) object).members) {
+                            ((ClientLobbyScreen)(screenManager.getCurrentScreen())).addClient(ip,i++);
+                        }
                     }
+
+
+
                 }else if(object instanceof InitializeGameMessage) {
                     InitializeGameMessage initializeGameMessage = (InitializeGameMessage) object;
                     ScreenManager screenManager = ScreenManager.getInstance();
-                    screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, brawlClient, this, initializeGameMessage.controllers);
+                    screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, brawlClient, initializeGameMessage.controllers);
+                }
+                else if(object instanceof ClientConnectedMessage) {
+                    ClientConnectedMessage clientConnectedMessage = (ClientConnectedMessage) object;
+                    ScreenManager screenManager = ScreenManager.getInstance();
+                    ((ClientLobbyScreen)(screenManager.getCurrentScreen())).addClient(clientConnectedMessage.name,clientConnectedMessage.id);
+                }
+                else if (object instanceof ClientDisconnectedMessage){
+                    ClientDisconnectedMessage clientDisconnectedMessage = (ClientDisconnectedMessage) object;
+                    ScreenManager screenManager = ScreenManager.getInstance();
+                    if (screenManager.getCurrentScreen() instanceof ClientLobbyScreen)
+                    ((ClientLobbyScreen)(screenManager.getCurrentScreen())).removeClient(clientDisconnectedMessage.id);
                 }
             }
         });

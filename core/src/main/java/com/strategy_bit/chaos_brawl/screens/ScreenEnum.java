@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.screens;
 
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
+import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
 
 /**
  * @author AIsopp
@@ -39,9 +40,19 @@ public enum ScreenEnum {
             return new HostLoungeScreen();
         }
     },
+    HOST_LOBBY_SCREEN {
+        public AbstractScreen getScreen(Object... params) {
+            return new HostLobbyScreen((BrawlServer) params[0]);
+        }
+    },
+    CLIENT_LOBBY_SCREEN {
+        public AbstractScreen getScreen(Object... params) {
+            return new ClientLobbyScreen();
+        }
+    },
     MULTIPLAYERGAME {
         public AbstractScreen getScreen(Object... params) {
-            return new MultiplayerGameScreen((BrawlMultiplayer) params[0], (int[]) params[2]);
+            return new MultiplayerGameScreen((BrawlMultiplayer) params[0], (int[]) params[1]);
         }
     },
     GAME {

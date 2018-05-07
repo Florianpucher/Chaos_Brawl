@@ -1,8 +1,6 @@
 package com.strategy_bit.chaos_brawl.player_input_output;
 
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.resource_system.ResourceGold;

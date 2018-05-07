@@ -63,6 +63,11 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     }
 
+    public void sendDataOnlyTo(Connection connection, Message msg) {
+        server.sendToTCP(connection.getID(),msg);
+
+    }
+
     @Override
     public boolean isServerIsRunning() {
         return serverIsRunning;
@@ -135,5 +140,9 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     @Override
     public void dispose() {
         closeServer();
+    }
+
+    public void closeConnectionTo(int id){
+        server.getConnections()[id].close();
     }
 }

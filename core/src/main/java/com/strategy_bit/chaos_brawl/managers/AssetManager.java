@@ -93,7 +93,7 @@ public class AssetManager {
         progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3"));
-        music.setVolume(1f);
+        music.setVolume(0f);
         music.setLooping(true);
     }
 

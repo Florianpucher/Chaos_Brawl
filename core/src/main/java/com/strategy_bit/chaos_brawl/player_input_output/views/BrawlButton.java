@@ -1,5 +1,6 @@
 package com.strategy_bit.chaos_brawl.player_input_output.views;
 
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.strategy_bit.chaos_brawl.types.UnitType;
@@ -22,8 +23,12 @@ public class BrawlButton extends TextButton {
     }
     public void update(float res){
         if (unitType.getCosts()>res){
+            setDisabled(true);
+            setTouchable(Touchable.disabled);
             setActivated(false);
         }else {
+            setTouchable(Touchable.enabled);
+            setDisabled(false);
             setActivated(true);
         }
     }

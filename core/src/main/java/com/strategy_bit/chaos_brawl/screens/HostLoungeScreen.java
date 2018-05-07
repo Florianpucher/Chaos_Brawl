@@ -96,6 +96,7 @@ public class HostLoungeScreen extends AbstractScreen {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        ScreenManager.getInstance().showScreen(ScreenEnum.HOST_LOBBY_SCREEN,brawlServer);
     }
 
     @Override
