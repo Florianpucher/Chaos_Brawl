@@ -1,0 +1,15 @@
+sudo: false
+language: android
+android:
+  components:
+    - build-tools-27.0.3
+    - android-26
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-26
+    - sys-img-armeabi-v7a-android-26
+script:
+    - ./gradlew build
+    - ./gradlew test
+- ./gradlew sonarqube -Dsonar.organization=hypeo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.branch.name=$TRAVIS_BRANCH
