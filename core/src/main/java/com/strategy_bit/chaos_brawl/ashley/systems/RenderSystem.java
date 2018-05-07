@@ -7,11 +7,8 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -24,12 +21,9 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
-import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
-import com.strategy_bit.chaos_brawl.ashley.entity.HpBar;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
-import java.time.temporal.TemporalAmount;
 import java.util.Comparator;
 
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
@@ -134,8 +128,8 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                 // Get position of unit in screenCoordinates
                 Vector2 screenPosition = VectorMath.vector3ToVector2(camera.project(position));
                 // Set position of hp bar above unit
-                hpBar.setPosition(screenPosition.x - width/4, screenPosition.y + height/1.5f);
-                hpBar.setSize(width/2, 1);
+                hpBar.setPosition((screenPosition.x - width/4)-(width/2), (screenPosition.y + height/1.5f)+50);
+                hpBar.setSize(width*1.5f, 1);
                 hpBarStage.addActor(hpBar);
             }
         }

@@ -10,7 +10,6 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 
 public class Base extends Entity {
-
     public Base (Vector2 position, int teamID){
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
