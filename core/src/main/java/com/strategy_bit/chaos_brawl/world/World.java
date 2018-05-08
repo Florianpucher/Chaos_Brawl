@@ -152,7 +152,7 @@ public class World implements InputHandler {
     }
 
 
-    protected void checkWinningLosing(){
+    public boolean checkWinningLosing(){
         //TODO update this method to support different amount of players
         if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
             if (!endGame) {                         // for performance reasons
@@ -161,6 +161,7 @@ public class World implements InputHandler {
                 // ScreenManager.game.setScreen(new GameOverScreen(ScreenManager.game));
                 playerControllers[0].gameOver(false);
                 playerControllers[1].gameOver(true);
+                return true;
 
                 // dispose();
             }
@@ -171,10 +172,12 @@ public class World implements InputHandler {
                 // ScreenManager.game.setScreen(new GameOverScreen(ScreenManager.game));
                 playerControllers[0].gameOver(true);
                 playerControllers[1].gameOver(false);
+                return true;
 
                 // dispose();
             }
         }
+        return false;
     }
 
 
