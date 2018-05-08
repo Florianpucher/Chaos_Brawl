@@ -103,6 +103,9 @@ public class GameScreen extends AbstractScreen {
         super.render(delta);
         act();
         draw();
+        if(manager.checkWinningLosing()){
+            clear();
+        }
         //manager.getCamera().update();
     }
 

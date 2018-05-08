@@ -16,7 +16,7 @@ public class Base extends Entity {
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().mainTowerSkin);
         CombatComponent combatComponent =new CombatComponent(100000.0,4,1,20,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(100.0,teamID);
+        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(1000.0,teamID);
 
         add(textureComponent);
         add(transformComponent);
