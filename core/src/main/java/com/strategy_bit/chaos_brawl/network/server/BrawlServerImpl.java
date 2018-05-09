@@ -83,7 +83,8 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     @Override
     public void closeServer() {
-        server.close();
+        //server.close();
+        server.stop();
         serverIsRunning=false;
         try {
             server.dispose();
@@ -104,12 +105,12 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     @Override
     public void addNetworkInputHandler(NetworkInputHandler inputHandler) {
-
+        // not needed
     }
 
     @Override
     public void removeNetworkInputHandler(NetworkInputHandler inputHandler) {
-
+        // not needed
     }
 
     @Override

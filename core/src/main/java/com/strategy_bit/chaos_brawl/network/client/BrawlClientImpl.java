@@ -60,7 +60,8 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
 
     @Override
     public void disconnect() throws IOException{
-        client.close();
+        //client.close();
+        client.stop();
         try {
             client.dispose();
         } catch (IOException e) {
