@@ -153,6 +153,12 @@ public class World implements InputHandler {
 
 
     public boolean checkWinningLosing(){
+        //TODO change check if bases are already spawned
+        for (Entity base: bases){
+            if(base == null){
+                return false;
+            }
+        }
         //TODO update this method to support different amount of players
         if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
             if (!endGame) {                         // for performance reasons
