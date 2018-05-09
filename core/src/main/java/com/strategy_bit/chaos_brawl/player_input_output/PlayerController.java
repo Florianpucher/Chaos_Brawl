@@ -77,7 +77,6 @@ public class PlayerController extends PawnController implements InputProcessor {
                 if (spawnUnit(current)) {
                     inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
                 }
-                inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
             }
         }
         return false;
