@@ -5,11 +5,15 @@ Chaos Brawl is a round / real-time strategy game for two to four players. Each p
 ![preview_scene](https://github.com/Florianpucher/Chaos_Brawl/blob/master/project_files/scene_preview.png)
 ## Technical Details
 ### Frameworks
-* [Libgdx 1.9.8](https://libgdx.badlogicgames.com/) 
+* [Libgdx 1.9.8](https://libgdx.badlogicgames.com/) (Java game engine framework)
 * [Ashley 1.7.0](https://github.com/libgdx/ashley)  (ECS Framework for Libgdx)
+* [Kryonet/Kryo](https://github.com/EsotericSoftware/kryonet) (API for efficient TCP and UDP client/server network communication using NIO)
 ### Testing Frameworks
 * [Junit 4.12](https://junit.org/junit4/)
 * [Mockito 2.8.9](https://github.com/mockito/mockito)
 * [PowerMock 1.7.3](https://github.com/powermock/powermock)
-## Class diagram
+### Other
+* Code quality: [Sonarcloud repository](https://sonarcloud.io/organizations/alisopp-github/projects)
+* Build : [Travis CI](https://travis-ci.org/Florianpucher/Chaos_Brawl)
+## Class diagram (deprecated)
 ![class diagram](https://github.com/Florianpucher/Chaos_Brawl/blob/master/project_files/class_diagram.png)
