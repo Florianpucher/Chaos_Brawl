@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.Queue;
 
 public class MovementComponent implements Component {
     //TODO maybe remove targetLocation and replace it completely with path
-    //TODO give movementComponent a field that tells him to stop move but twhich that will be set from different systems
     /**
      * Will be changed over time
      */

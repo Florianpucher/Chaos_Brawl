@@ -190,12 +190,14 @@ public class World implements InputHandler {
     }
 
 
+    @Deprecated
     @Override
     public void sendTouchInput(Vector2 screenCoordinates, long entityID) {
+
         Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        moveEntity(targetLocation, entityID);
+        //moveEntity(targetLocation, entityID);
     }
 
     @Override
@@ -211,8 +213,6 @@ public class World implements InputHandler {
         Entity entity = createEntityInternal(entityType, lastID, worldCoordinates, teamID);
         lastID++;
 
-
-
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
         //Move entity to enemy player
         if(movementComponent != null){
@@ -226,7 +226,7 @@ public class World implements InputHandler {
 
     }
 
-    public Entity createEntityInternal(UnitType entityType, long unitID, Vector2 worldCoordinates, int teamID){
+    Entity createEntityInternal(UnitType entityType, long unitID, Vector2 worldCoordinates, int teamID){
         Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
         engine.addEntity(entity);
         units.put(unitID, entity);
@@ -255,13 +255,7 @@ public class World implements InputHandler {
         return -1;
     }
 
-    public void moveEntity(Vector2 worldCoordinates, long entityID){
-        Entity entity = units.get(entityID);
-        if(entity == null){
-            return;
-        }
-        entity.getComponent(MovementComponent.class).setTargetLocation(worldCoordinates);
-    }
+
 
     /**
      *
