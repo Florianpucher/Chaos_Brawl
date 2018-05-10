@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.screens;
+package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
+import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
+import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
  * class that represents the main menu screen
@@ -19,18 +21,14 @@ import com.strategy_bit.chaos_brawl.managers.ScreenManager;
  * @version 1.0
  * @since 22.03.2018
  */
-public class MainMenuScreen extends AbstractScreen{
+public class MainMenuScreen extends MenuScreen {
 
     private final static String NEW_GAME = "New GAME";
     private final static String MULTIPLAYER = "Multiplayer";
 
-    private OrthographicCamera camera;
-
     @Override
     public void buildStage() {
         super.buildStage();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnNewGame = new TextButton(NEW_GAME, assetManager.defaultSkin);
         btnNewGame.setName(NEW_GAME);
         final TextButton btnMultiplayer = new TextButton(MULTIPLAYER, assetManager.defaultSkin);
@@ -64,34 +62,5 @@ public class MainMenuScreen extends AbstractScreen{
         btnNewGame.addListener(listener);
         btnMultiplayer.addListener(listener);
 
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        Gdx.input.setInputProcessor((Stage)this);
-        System.out.println(Gdx.input.getInputProcessor().getClass().getName());
-
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-        Gdx.input.setInputProcessor(null);
-
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        act();
-        draw();
-        camera.update();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        camera = null;
     }
 }

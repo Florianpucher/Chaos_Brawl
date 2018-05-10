@@ -1,8 +1,8 @@
 package com.strategy_bit.chaos_brawl.managers;
 
 import com.strategy_bit.chaos_brawl.ChaosBrawlGame;
-import com.strategy_bit.chaos_brawl.screens.GameScreen;
-import com.strategy_bit.chaos_brawl.screens.MainMenuScreen;
+import com.strategy_bit.chaos_brawl.screens.game_screens.GameScreen;
+import com.strategy_bit.chaos_brawl.screens.menu_screens.MainMenuScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.screens.SplashScreen;
 

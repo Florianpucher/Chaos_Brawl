@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.screens;
+package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -6,55 +6,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
+import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 
 /**
  * @author AIsopp
  * @version 1.0
  * @since 02.04.2018
  */
-abstract class LobbyScreen extends AbstractScreen {
+abstract class LobbyScreen extends MenuScreen {
 
     protected final static String PLAYER_1 = "1";
     protected final static String PLAYER_2 = "2";
     protected final static String PLAYER_3 = "3";
     protected final static String PLAYER_4 = "4";
 
-    protected AssetManager assetManager;
-    protected ScreenManager screenManager;
-    protected OrthographicCamera camera;
     protected Array<TextButton> textButtons;
     protected Array<String> playerNames;
     protected Array<Integer> playerIds;
     protected int c=0;
-
-    public LobbyScreen() {
-
-    }
-
-    @Override
-    public void buildStage() {
-        super.buildStage();
-
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        act();
-        draw();
-        camera.update();
-    }
-
-    @Override
-    public void show() {
-        super.show();
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-        Gdx.input.setInputProcessor(null);
-    }
 
 
     @Override

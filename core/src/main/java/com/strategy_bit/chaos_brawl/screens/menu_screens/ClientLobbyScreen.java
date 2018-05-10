@@ -1,13 +1,10 @@
-package com.strategy_bit.chaos_brawl.screens;
+package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 
 /**
  * @author AIsopp
@@ -23,10 +20,6 @@ public class ClientLobbyScreen extends LobbyScreen {
     @Override
     public void buildStage() {
         super.buildStage();
-        assetManager = AssetManager.getInstance();
-        screenManager = ScreenManager.getInstance();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnPlayer1 = new TextButton(PLAYER_1, assetManager.defaultSkin);
         btnPlayer1.setName(PLAYER_1);
         final TextButton btnPlayer2 = new TextButton(PLAYER_2, assetManager.defaultSkin);
@@ -57,18 +50,6 @@ public class ClientLobbyScreen extends LobbyScreen {
 
     }
 
-
-
-    @Override
-    public void show() {
-        super.show();
-        System.out.println("SHOW LOBBY");
-        Gdx.input.setInputProcessor(this);
-        addClient("self",0);
-    }
-
-
-
     public void returnToSearch(){
         Gdx.app.postRunnable(new Runnable() {
             @Override
@@ -78,5 +59,8 @@ public class ClientLobbyScreen extends LobbyScreen {
         });
     }
 
-
+    @Override
+    protected void handleBackKey() {
+        super.handleBackKey();
+    }
 }

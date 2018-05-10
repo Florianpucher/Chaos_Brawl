@@ -10,8 +10,8 @@ import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
-import com.strategy_bit.chaos_brawl.screens.ClientLobbyScreen;
-import com.strategy_bit.chaos_brawl.screens.HostLobbyScreen;
+import com.strategy_bit.chaos_brawl.screens.menu_screens.ClientLobbyScreen;
+import com.strategy_bit.chaos_brawl.screens.menu_screens.HostLobbyScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
@@ -41,7 +41,7 @@ import java.util.concurrent.CyclicBarrier;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({RenderSystem.class, ScreenEnum.class})
-public class NetworkingTest extends BaseTest {
+public class NetworkingTest extends BaseTest{
 
     private BrawlClientImpl client;
     private BrawlClientImpl client2;

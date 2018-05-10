@@ -14,7 +14,7 @@ import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessa
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
-import com.strategy_bit.chaos_brawl.screens.ClientLobbyScreen;
+import com.strategy_bit.chaos_brawl.screens.menu_screens.ClientLobbyScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 

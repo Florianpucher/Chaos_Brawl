@@ -1,15 +1,15 @@
-package com.strategy_bit.chaos_brawl.screens;
+package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.client.BrawlClient;
 import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
+import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
+import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -20,12 +20,11 @@ import java.util.List;
  * @version 1.0
  * @since 02.04.2018
  */
-public class ClientConnectToScreen extends AbstractScreen implements NetworkDiscoveryHandler{
+public class ClientConnectToScreen extends MenuScreen implements NetworkDiscoveryHandler{
 
     private final static String REFRESH = "Refresh";
     private static String DIRECT = "10.0.2.2";
 
-    private OrthographicCamera camera;
 
     private BrawlClient brawlClient;
     private TextButton btnDirectConnect;
@@ -38,8 +37,6 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
     @Override
     public void buildStage() {
         super.buildStage();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnHostGame = new TextButton(REFRESH, assetManager.defaultSkin);
         btnHostGame.setName(REFRESH);
         btnDirectConnect= new TextButton(DIRECT, assetManager.defaultSkin);
@@ -78,26 +75,6 @@ public class ClientConnectToScreen extends AbstractScreen implements NetworkDisc
         };
         btnHostGame.addListener(listener);
         btnDirectConnect.addListener(listener);
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        act();
-        draw();
-        camera.update();
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        Gdx.input.setInputProcessor(this);
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-        Gdx.input.setInputProcessor(null);
     }
 
 

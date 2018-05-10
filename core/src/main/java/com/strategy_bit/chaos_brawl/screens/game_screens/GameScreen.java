@@ -1,10 +1,11 @@
-package com.strategy_bit.chaos_brawl.screens;
+package com.strategy_bit.chaos_brawl.screens.game_screens;
 
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.strategy_bit.chaos_brawl.player_input_output.AiController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
+import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.world.World;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
@@ -101,8 +102,7 @@ public class GameScreen extends AbstractScreen {
         controller.render(delta);
         manager.render();
         super.render(delta);
-        act();
-        draw();
+
         if(manager.checkWinningLosing()){
             clear();
         }

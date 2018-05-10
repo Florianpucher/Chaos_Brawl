@@ -29,7 +29,8 @@ public class AbstractScreen extends Stage implements Screen {
 
     @Override
     public void render(float delta) {
-
+        act();
+        draw();
     }
 
     @Override
@@ -64,7 +65,6 @@ public class AbstractScreen extends Stage implements Screen {
 
     @Override
     public boolean keyDown(int keyCode) {
-        System.out.println("Received Input: " + keyCode);
         if(keyCode == Input.Keys.BACK || keyCode == Input.Keys.ESCAPE){
             handleBackKey();
         }

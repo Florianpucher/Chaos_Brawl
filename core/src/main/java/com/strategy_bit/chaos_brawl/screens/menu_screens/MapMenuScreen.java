@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.screens;
+package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,25 +10,23 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
+import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
+import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
  * Created by Florian on 11.04.2018.
  */
 
-public class MapMenuScreen extends AbstractScreen {
+public class MapMenuScreen extends MenuScreen{
     private final static String CHOOSE_MAP = "Choose Map";
     private final static String MAP_1 = "MAP 1";
     private final static String MAP_2 = "MAP 2";
     private final static String MAP_3 = "MAP 3";
 
-    private OrthographicCamera camera;
-
 
     @Override
     public void buildStage() {
         super.buildStage();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         final TextButton btnNewMap1 = new TextButton(MAP_1, assetManager.defaultSkin);
         final TextButton btnNewMap2 = new TextButton(MAP_2, assetManager.defaultSkin);
         final TextButton btnNewMap3 = new TextButton(MAP_3, assetManager.defaultSkin);
@@ -69,32 +67,5 @@ public class MapMenuScreen extends AbstractScreen {
         btnNewMap1.addListener(listener);
         btnNewMap2.addListener(listener);
         btnNewMap3.addListener(listener);
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        Gdx.input.setInputProcessor((Stage)this);
-        System.out.println(Gdx.input.getInputProcessor().getClass().getName());
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-        Gdx.input.setInputProcessor(null);
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        act();
-        draw();
-        camera.update();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        camera = null;
     }
 }
