@@ -4,13 +4,10 @@ package com.strategy_bit.chaos_brawl.world;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
-import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
@@ -20,13 +17,10 @@ import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.ashley.entity.HpBar;
 
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
-import com.strategy_bit.chaos_brawl.screens.GameOverScreen;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
@@ -63,8 +57,8 @@ public class World implements InputHandler {
     boolean endGame = false;
 
     public World(int map, int players) {
-        units = new HashMap<Long, Entity>();
-        projectiles = new HashMap<Long, Entity>();
+        units = new HashMap<>();
+        projectiles = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
         bases = new Entity[players];
@@ -73,8 +67,8 @@ public class World implements InputHandler {
     }
 
     public World() {
-        units = new HashMap<Long, Entity>();
-        projectiles = new HashMap<Long, Entity>();
+        units = new HashMap<>();
+        projectiles = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[2];
         createEngine();
@@ -90,14 +84,9 @@ public class World implements InputHandler {
         createEntityWorldCoordinates(new Vector2(3,3), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(2,7.5f), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
 
-        //Entity buildingOne = units.get(lastID-1);
-        //bases[playerControllers[0].getTeamID()] = buildingOne;
-
         createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(17,3), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(19,7.5f), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
-        //Entity buildingTwo = units.get(lastID-1);
-        //bases[playerControllers[1].getTeamID()] = buildingTwo;
         resourceTimeStamp = System.currentTimeMillis();
     }
 
@@ -141,7 +130,6 @@ public class World implements InputHandler {
             board = new BoardC(engine);
         }
         gdxPathFinder = new OtherPathfinder(board);
-        //Pathfinder.setMoveable(board.boardToMatrix(),board);
     }
 
 
@@ -153,7 +141,7 @@ public class World implements InputHandler {
 
 
     public boolean checkWinningLosing(){
-        //TODO change check if bases are already spawned
+
         for (Entity base: bases){
             if(base == null){
                 return false;
@@ -162,25 +150,21 @@ public class World implements InputHandler {
         //TODO update this method to support different amount of players
         if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
             if (!endGame) {                         // for performance reasons
-                // endGame = true;
 
-                // ScreenManager.game.setScreen(new GameOverScreen(ScreenManager.game));
                 playerControllers[0].gameOver(false);
                 playerControllers[1].gameOver(true);
                 return true;
 
-                // dispose();
+
             }
         } else if (bases[1].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
             if (!endGame) {
-                // endGame = true;
 
-                // ScreenManager.game.setScreen(new GameOverScreen(ScreenManager.game));
                 playerControllers[0].gameOver(true);
                 playerControllers[1].gameOver(false);
                 return true;
 
-                // dispose();
+
             }
         }
         return false;
@@ -226,19 +210,19 @@ public class World implements InputHandler {
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
         Entity entity = createEntityInternal(entityType, lastID, worldCoordinates, teamID);
         lastID++;
-        //Moved this if condition to pawnController
+
 
 
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
+        //Move entity to enemy player
         if(movementComponent != null){
             //TODO add pathfinding here Florian but maybe with ThreadPool implementation!!!
             Array<Vector2> path=new Array<Vector2>();
-            //path = Pathfinder.findPath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
             path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
             movementComponent.setPath(path);
-            //movementComponent.setTargetLocation(bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+
         }
-        //Move entity to enemy player
+
 
     }
 
