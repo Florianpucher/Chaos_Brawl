@@ -128,8 +128,8 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                 // Get position of unit in screenCoordinates
                 Vector2 screenPosition = VectorMath.vector3ToVector2(camera.project(position));
                 // Set position of hp bar above unit
-                hpBar.setPosition((screenPosition.x - width/4)-(width/2), (screenPosition.y + height/1.5f)+50);
-                hpBar.setSize(width*1.5f, 1);
+                hpBar.setPosition(screenPosition.x - width/4, screenPosition.y + height/1.5f);
+                hpBar.setSize(width/2, 1);
                 hpBarStage.addActor(hpBar);
             }
         }
