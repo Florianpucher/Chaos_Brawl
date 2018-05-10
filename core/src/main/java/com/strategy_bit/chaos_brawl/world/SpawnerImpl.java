@@ -18,7 +18,7 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
 public class SpawnerImpl {
 
     public Entity createNewUnit(UnitType unitType, int teamID, Vector2 position) {
-        Entity entity = null;
+        Entity entity;
 
         switch (unitType) {
             case RANGED:
@@ -36,6 +36,8 @@ public class SpawnerImpl {
             case TOWER:
                 entity = new Tower(position, teamID);
                 break;
+            default:
+                throw new UnsupportedOperationException("This unitType is not registered by SpawnerImpl");
         }
 
         return entity;
