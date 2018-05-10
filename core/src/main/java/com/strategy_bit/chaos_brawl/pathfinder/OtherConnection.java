@@ -18,7 +18,7 @@ public class OtherConnection implements Connection<OtherNode> {
 
     @Override
     public float getCost() {
-        return 1;
+        return fromNode.calculateDistanceToOtherNode(toNode);
     }
 
     @Override
