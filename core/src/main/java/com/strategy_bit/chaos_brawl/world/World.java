@@ -134,9 +134,12 @@ public class World implements InputHandler {
 
 
     public void render(){
+        /*if(endGame){
+            return;
+        }*/
         updateResources();
         engine.update(Gdx.graphics.getDeltaTime());
-        checkWinningLosing();
+        endGame = checkWinningLosing();
     }
 
 
@@ -147,25 +150,24 @@ public class World implements InputHandler {
                 return false;
             }
         }
-        //TODO update this method to support different amount of players
-        if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-            if (!endGame) {                         // for performance reasons
 
-                playerControllers[0].gameOver(false);
-                playerControllers[1].gameOver(true);
-                return true;
-
-
+        // Send losing messages
+        int aliveCounter = 0;
+        int lastAlive = -1;
+        for (int i = 0; i < bases.length; i++) {
+            if(bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0){
+                playerControllers[i].gameOver(false);
+            }else{
+                aliveCounter++;
+                lastAlive = i;
             }
-        } else if (bases[1].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-            if (!endGame) {
-
-                playerControllers[0].gameOver(true);
-                playerControllers[1].gameOver(false);
-                return true;
-
-
-            }
+        }
+        if(aliveCounter == 1){
+            playerControllers[lastAlive].gameOver(true);
+            return true;
+        }else if(aliveCounter == 0){
+            System.err.println("A draw happens suddenly");
+            return true;
         }
         return false;
     }
