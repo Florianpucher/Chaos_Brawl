@@ -83,6 +83,10 @@ public class MovementComponent implements Component {
         }
     }
 
+    public Queue<Vector2> getPath() {
+        return path;
+    }
+
     public void setPath(Array<Vector2> path){
         this.path.clear();
         for (Vector2 vector2:path) {

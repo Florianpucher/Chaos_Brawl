@@ -124,6 +124,9 @@ public class PlayerController extends PawnController implements InputProcessor {
     }
 
     public void gameOver(boolean win) {
-        gameHUD.showWinningScreen(win);
+        if(gameHUD != null){
+            gameHUD.showWinningScreen(win);
+        }
+
     }
 }
