@@ -2,30 +2,33 @@ package com.strategy_bit.chaos_brawl.player_input_output.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 
 /**
  * holds information of the gameHUD
+ *
  * @author AIsopp
  * @version 1.0
  * @since 16.04.2018
  */
-public class GameHUD extends Table{
+public class GameHUD extends Table {
 
     private static final String NEW_UNIT_1 = "Archer";
     private static final String NEW_UNIT_2 = "Fighter";
@@ -36,20 +39,23 @@ public class GameHUD extends Table{
     public ProgressBar manaBar;
     private Array<BrawlButton> brawlButtons;
 
+    private OrthographicCamera camera;
+    private SpriteBatch batch;
+
     public GameHUD(Boundary spawnArea) {
         super(AssetManager.getInstance().defaultSkin);
         AssetManager assetManager = AssetManager.getInstance();
         initializeNonSpawnAreaShadow(spawnArea);
 
-        final BrawlButton btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin,UnitType.RANGED);
+        final BrawlButton btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, UnitType.RANGED);
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
-        final BrawlButton btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin,UnitType.SWORDFIGHTER);
+        final BrawlButton btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, UnitType.SWORDFIGHTER);
         btnNewUnit2.setName(NEW_UNIT_2);
         setFillParent(true);
-        final BrawlButton btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin,UnitType.KNIGHT);
+        final BrawlButton btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, UnitType.KNIGHT);
         btnNewUnit3.setName(NEW_UNIT_3);
-        brawlButtons=new Array<>();
+        brawlButtons = new Array<>();
         brawlButtons.add(btnNewUnit1);
         brawlButtons.add(btnNewUnit2);
         brawlButtons.add(btnNewUnit3);
@@ -58,7 +64,7 @@ public class GameHUD extends Table{
         NinePatchDrawable resourceBarOuter = new NinePatchDrawable(assetManager.resourceSkinOuter);
         NinePatchDrawable resourceBar = new NinePatchDrawable(assetManager.resourceSkinInner);
         ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(resourceBarOuter, new NinePatchDrawable(assetManager.resourceSkinMiddle));
-        progressBarStyle.knobBefore=resourceBar;
+        progressBarStyle.knobBefore = resourceBar;
         manaBar = new ProgressBar(0, 100, 0.1f, false, progressBarStyle);
 
         manaBar.setValue(0);
@@ -67,10 +73,10 @@ public class GameHUD extends Table{
         //debugCell();
         top();
         //add actors to UI
-        add(manaBar).top().width(Gdx.graphics.getWidth()/2).height(Gdx.graphics.getHeight()/9);
-        row().height(7 * Gdx.graphics.getHeight()/9 );
+        add(manaBar).top().width(Gdx.graphics.getWidth() / 2).height(Gdx.graphics.getHeight() / 9);
+        row().height(7 * Gdx.graphics.getHeight() / 9);
         add();
-        row().height(Gdx.graphics.getHeight()/9 ).width(Gdx.graphics.getWidth());
+        row().height(Gdx.graphics.getHeight() / 9).width(Gdx.graphics.getWidth());
         // add own table for organizing buttons
         Table lowerUI = new Table(assetManager.defaultSkin);
         lowerUI.right();
@@ -80,38 +86,37 @@ public class GameHUD extends Table{
         lowerUI.add(btnNewUnit3).right().height(lowerUI.getPrefHeight());
 
 
-        ClickListener listener = new ClickListener(){
+        ClickListener listener = new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 String name = event.getListenerActor().getName();
-                if(name.equals(NEW_UNIT_1)&&brawlButtons.get(0).isActivated()){
-                    if(nextUnitType == UnitType.RANGED){
+                if (name.equals(NEW_UNIT_1) && brawlButtons.get(0).isActivated()) {
+                    if (nextUnitType == UnitType.RANGED) {
                         nextUnitType = null;
-                    }else{
+                    } else {
                         nextUnitType = UnitType.RANGED;
                     }
                 }
-                if(name.equals( NEW_UNIT_2)&&brawlButtons.get(1).isActivated()){
-                    if(nextUnitType == UnitType.SWORDFIGHTER){
+                if (name.equals(NEW_UNIT_2) && brawlButtons.get(1).isActivated()) {
+                    if (nextUnitType == UnitType.SWORDFIGHTER) {
                         nextUnitType = null;
-                    }else{
+                    } else {
                         nextUnitType = UnitType.SWORDFIGHTER;
                     }
                 }
-                if(name.equals( NEW_UNIT_3)&&brawlButtons.get(2).isActivated()){
-                    if(nextUnitType == UnitType.KNIGHT){
+                if (name.equals(NEW_UNIT_3) && brawlButtons.get(2).isActivated()) {
+                    if (nextUnitType == UnitType.KNIGHT) {
                         nextUnitType = null;
-                    }else{
+                    } else {
                         nextUnitType = UnitType.KNIGHT;
                     }
                 }
 
 
-
-                if(nextUnitType != null){
+                if (nextUnitType != null) {
                     setBackground(new TextureRegionDrawable(new TextureRegion(nonSpawnAreaTexture)));
-                }else{
+                } else {
                     setBackground((Drawable) null);
                 }
 
@@ -120,41 +125,81 @@ public class GameHUD extends Table{
         btnNewUnit1.addListener(listener);
         btnNewUnit2.addListener(listener);
         btnNewUnit3.addListener(listener);
+
+        batch = new SpriteBatch();
+        int w = 0;
+        int h = 0;
+        camera = new OrthographicCamera(w, h);
+        w = Gdx.graphics.getWidth();
+        h = Gdx.graphics.getHeight();
+        camera.position.set(w / 2, h / 2, 0);
     }
 
-    private void initializeNonSpawnAreaShadow(Boundary spawnArea){
+    private void initializeNonSpawnAreaShadow(Boundary spawnArea) {
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
-        pixmap.setColor(0,0,0,150);
+        pixmap.setColor(0, 0, 0, 150);
         //pixmap.drawRectangle(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        pixmap.fillRectangle(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        pixmap.fillRectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         pixmap.setColor(Color.CLEAR);
-        pixmap.fillRectangle((int)(spawnArea.getUpperLeft().x), (int)(spawnArea.getUpperLeft().y),
-                (int)(spawnArea.getUpperRight().x - spawnArea.getUpperLeft().x),
+        pixmap.fillRectangle((int) (spawnArea.getUpperLeft().x), (int) (spawnArea.getUpperLeft().y),
+                (int) (spawnArea.getUpperRight().x - spawnArea.getUpperLeft().x),
                 (int) (spawnArea.getLowerRight().y - spawnArea.getUpperRight().y));
-        System.out.println((int)(spawnArea.getUpperLeft().x) +","+ (int)(spawnArea.getUpperLeft().y)+","+
-                (int)(spawnArea.getUpperRight().x - spawnArea.getUpperLeft().x)+","+
-                (int) (spawnArea.getLowerLeft().y - spawnArea.getUpperRight().y));
         nonSpawnAreaTexture = new Texture(pixmap);
         pixmap.dispose();
     }
 
-    public UnitType getUnitToSpawn(){
+    public UnitType getUnitToSpawn() {
         setBackground((Drawable) null);
         UnitType current = nextUnitType;
         nextUnitType = null;
         return current;
     }
 
-    public void dispose(){
+    public void dispose() {
         nonSpawnAreaTexture.dispose();
+        batch.dispose();
     }
-public void updateBtns(float v){
-    for (BrawlButton brawlButton:
-         brawlButtons) {
-        brawlButton.update(v);
+
+    public void updateBtns(float v) {
+        for (BrawlButton brawlButton :
+                brawlButtons) {
+            brawlButton.update(v);
+        }
     }
-}
+
+    public void showWinningScreen(boolean win){
+        clear();
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);           // clear screen
+
+        camera.update();
+
+        AssetManager assetManager = AssetManager.getInstance();
+        int tw;
+        int th;
+        if (win) {
+            Texture victory = assetManager.victoryScreen;
+            tw = victory.getWidth();
+            th = victory.getHeight();
+
+            batch.begin();
+            batch.draw(victory, camera.position.x - (tw / 2), camera.position.y - (th / 2));
+            batch.end();
+        } else {
+            Texture defeat = assetManager.defeatScreen;
+            tw = defeat.getWidth();
+            th = defeat.getHeight();
+
+            batch.begin();
+            batch.draw(defeat, camera.position.x - (tw / 2), camera.position.y - (th / 2));
+            batch.end();
+        }
+    }
+
+    public void updateManaBar(Resource r){
+        manaBar.setValue((float) r.percentageFull() * manaBar.getMaxValue());
+    }
 
 
 }
