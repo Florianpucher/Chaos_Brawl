@@ -1,10 +1,11 @@
-package com.strategy_bit.chaos_brawl.screens;
+package com.strategy_bit.chaos_brawl.screens.game_screens;
 
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.strategy_bit.chaos_brawl.player_input_output.AiController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
+import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.world.World;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
@@ -40,16 +41,14 @@ public class GameScreen extends AbstractScreen {
         AiController otherPlayerController = new AiController(1,manager, manager.createSpawnAreaForPlayer(1));
         controllers[1] = otherPlayerController;
         manager.setPlayerController(0, controller);
-        //controller.setCurrentTargetTeam(1);
+
         manager.setPlayerController(1,otherPlayerController);
-        //otherPlayerController.setCurrentTargetTeam(0);
+
         manager.initializeGameForPlayers();
-        //controller.startTicking();
-        //otherPlayerController.startTicking();
         setInitialTargets();
     }
 
-    protected void setInitialTargets(){
+    void setInitialTargets(){
         for (int i = 0; i < controllers.length; i++) {
             controllers[i].setCurrentTargetTeam((i + 1) % controllers.length);
         }
@@ -101,12 +100,6 @@ public class GameScreen extends AbstractScreen {
         controller.render(delta);
         manager.render();
         super.render(delta);
-        act();
-        draw();
-        if(manager.checkWinningLosing()){
-            clear();
-        }
-        //manager.getCamera().update();
     }
 
     @Override

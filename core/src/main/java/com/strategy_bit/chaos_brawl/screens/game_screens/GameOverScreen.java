@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.screens;
+package com.strategy_bit.chaos_brawl.screens.game_screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

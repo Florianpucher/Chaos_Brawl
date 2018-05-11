@@ -7,17 +7,14 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.strategy_bit.chaos_brawl.config.Network;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
+import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
-import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
-import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkLoungeHandler;
-import com.strategy_bit.chaos_brawl.screens.ClientLobbyScreen;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 
 import java.io.IOException;
@@ -36,8 +33,6 @@ import java.util.concurrent.Executors;
 public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     private Client client;
     private ArrayList<NetworkDiscoveryHandler> discoveryHandlers;
-    private ArrayList<NetworkInputHandler> inputHandlers;
-    private ArrayList<NetworkLoungeHandler> loungeHandlers;
     protected Connection[] connections;
     private BrawlClientListener clientListener;
 
@@ -46,9 +41,7 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
         client.start();
         clientListener = new BrawlClientListener(this);
         client.addListener(clientListener);
-        discoveryHandlers = new ArrayList<NetworkDiscoveryHandler>();
-        inputHandlers = new ArrayList<NetworkInputHandler>();
-        loungeHandlers = new ArrayList<NetworkLoungeHandler>();
+        discoveryHandlers = new ArrayList<>();
         connections=new Connection[0];
         BrawlNetwork network = new BrawlNetwork(this);
     }
@@ -60,7 +53,8 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
 
     @Override
     public void disconnect() throws IOException{
-        client.close();
+
+        client.stop();
         try {
             client.dispose();
         } catch (IOException e) {
@@ -72,18 +66,15 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     public void discoverServers() {
 
         Executor executor = Executors.newSingleThreadExecutor();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                final List<InetAddress> addresses = client.discoverHosts(Network.UDP_PORT, Network.TIME_OUT);
+        Runnable runnable = () -> {
+            final List<InetAddress> addresses = client.discoverHosts(Network.UDP_PORT, Network.TIME_OUT);
 
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateDiscoveryHandler(addresses);
-                    }
-                });
-            }
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    updateDiscoveryHandler(addresses);
+                }
+            });
         };
         executor.execute(runnable);
     }
@@ -116,15 +107,6 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
         discoveryHandlers.add(discoveryHandler);
     }
 
-    @Override
-    public void addNetworkInputHandler(NetworkInputHandler inputHandler) {
-        inputHandlers.add(inputHandler);
-    }
-
-    @Override
-    public void addNetworkLoungeHandler(NetworkLoungeHandler loungeHandler) {
-        loungeHandlers.add(loungeHandler);
-    }
 
     @Override
     public void removeNetworkDiscoveryHandler(NetworkDiscoveryHandler discoveryHandler) {
@@ -132,13 +114,14 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     }
 
     @Override
-    public void removeNetworkInputHandler(NetworkInputHandler inputHandler) {
-        inputHandlers.remove(inputHandler);
+    public String getName() {
+        return "client";
     }
 
+
     @Override
-    public void removeNetworkLoungeHandler(NetworkLoungeHandler loungeHandler) {
-        loungeHandlers.remove(loungeHandler);
+    public void setNetworkConnectionHandler(NetworkConnectionHandler connectionHandler) {
+        clientListener.setNetworkConnectionHandler(connectionHandler);
     }
 
     private void updateDiscoveryHandler(List<InetAddress> addresses) {

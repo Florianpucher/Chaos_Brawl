@@ -1,30 +1,29 @@
-package com.strategy_bit.chaos_brawl.screens;
+package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
  * @author AIsopp
  * @version 1.0
  * @since 02.04.2018
  */
-public class NetworkScreen extends AbstractScreen {
+public class NetworkScreen extends MenuScreen {
 
     private final static String HOST_GAME = "Host Game";
     private final static String CLIENT_GAME = "Connect to Game";
 
-    private OrthographicCamera camera;
+
 
     @Override
     public void buildStage() {
         super.buildStage();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         final TextButton btnHostGame = new TextButton(HOST_GAME, assetManager.defaultSkin);
         btnHostGame.setName(HOST_GAME);
         final TextButton btnConnectToGame = new TextButton(CLIENT_GAME, assetManager.defaultSkin);
@@ -34,11 +33,11 @@ public class NetworkScreen extends AbstractScreen {
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
         root.setFillParent(true);
-        float height = Gdx.graphics.getHeight()/8;
+        float height = Gdx.graphics.getHeight()/8f;
         root.center();
-        root.add(btnHostGame).width(Gdx.graphics.getWidth()/2).height(height);
+        root.add(btnHostGame).width(Gdx.graphics.getWidth()/2f).height(height);
         root.row().space(10);
-        root.add(btnConnectToGame).width(Gdx.graphics.getWidth()/2).height(height);
+        root.add(btnConnectToGame).width(Gdx.graphics.getWidth()/2f).height(height);
         addActor(root);
 
         ClickListener listener = new ClickListener(){
@@ -56,33 +55,5 @@ public class NetworkScreen extends AbstractScreen {
         };
         btnHostGame.addListener(listener);
         btnConnectToGame.addListener(listener);
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        Gdx.input.setInputProcessor(this);
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-        System.out.println("HIDE NETWORK");
-        Gdx.input.setInputProcessor(null);
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        act();
-        draw();
-        camera.update();
-    }
-
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        camera = null;
     }
 }

@@ -4,13 +4,10 @@ package com.strategy_bit.chaos_brawl.world;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
-import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
@@ -20,13 +17,9 @@ import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.ashley.entity.HpBar;
-
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
-import com.strategy_bit.chaos_brawl.screens.GameOverScreen;
+import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
@@ -63,8 +56,8 @@ public class World implements InputHandler {
     boolean endGame = false;
 
     public World(int map, int players) {
-        units = new HashMap<Long, Entity>();
-        projectiles = new HashMap<Long, Entity>();
+        units = new HashMap<>();
+        projectiles = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
         bases = new Entity[players];
@@ -73,8 +66,8 @@ public class World implements InputHandler {
     }
 
     public World() {
-        units = new HashMap<Long, Entity>();
-        projectiles = new HashMap<Long, Entity>();
+        units = new HashMap<>();
+        projectiles = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[2];
         createEngine();
@@ -86,18 +79,14 @@ public class World implements InputHandler {
     }
 
     public void initializeGameForPlayers(){
+        //TODO support variable player length
         createEntityWorldCoordinates(new Vector2(3,12), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(3,3), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(2,7.5f), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
 
-        //Entity buildingOne = units.get(lastID-1);
-        //bases[playerControllers[0].getTeamID()] = buildingOne;
-
         createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(17,3), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(19,7.5f), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
-        //Entity buildingTwo = units.get(lastID-1);
-        //bases[playerControllers[1].getTeamID()] = buildingTwo;
         resourceTimeStamp = System.currentTimeMillis();
     }
 
@@ -141,41 +130,44 @@ public class World implements InputHandler {
             board = new BoardC(engine);
         }
         gdxPathFinder = new OtherPathfinder(board);
-        //Pathfinder.setMoveable(board.boardToMatrix(),board);
     }
 
 
     public void render(){
+        /*if(endGame){
+            return;
+        }*/
         updateResources();
         engine.update(Gdx.graphics.getDeltaTime());
-        checkWinningLosing();
+        endGame = checkWinningLosing();
     }
 
 
     public boolean checkWinningLosing(){
-        //TODO update this method to support different amount of players
-        if (bases[0].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-            if (!endGame) {                         // for performance reasons
-                // endGame = true;
 
-                // ScreenManager.game.setScreen(new GameOverScreen(ScreenManager.game));
-                playerControllers[0].gameOver(false);
-                playerControllers[1].gameOver(true);
-                return true;
-
-                // dispose();
+        for (Entity base: bases){
+            if(base == null){
+                return false;
             }
-        } else if (bases[1].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-            if (!endGame) {
-                // endGame = true;
+        }
 
-                // ScreenManager.game.setScreen(new GameOverScreen(ScreenManager.game));
-                playerControllers[0].gameOver(true);
-                playerControllers[1].gameOver(false);
-                return true;
-
-                // dispose();
+        // Send losing messages
+        int aliveCounter = 0;
+        int lastAlive = -1;
+        for (int i = 0; i < bases.length; i++) {
+            if(bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0){
+                playerControllers[i].gameOver(false);
+            }else{
+                aliveCounter++;
+                lastAlive = i;
             }
+        }
+        if(aliveCounter == 1){
+            playerControllers[lastAlive].gameOver(true);
+            return true;
+        }else if(aliveCounter == 0){
+            System.err.println("A draw happens suddenly");
+            return true;
         }
         return false;
     }
@@ -200,12 +192,14 @@ public class World implements InputHandler {
     }
 
 
+    @Deprecated
     @Override
     public void sendTouchInput(Vector2 screenCoordinates, long entityID) {
+
         Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        moveEntity(targetLocation, entityID);
+        //moveEntity(targetLocation, entityID);
     }
 
     @Override
@@ -220,23 +214,21 @@ public class World implements InputHandler {
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
         Entity entity = createEntityInternal(entityType, lastID, worldCoordinates, teamID);
         lastID++;
-        //Moved this if condition to pawnController
-
 
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
+        //Move entity to enemy player
         if(movementComponent != null){
             //TODO add pathfinding here Florian but maybe with ThreadPool implementation!!!
             Array<Vector2> path=new Array<Vector2>();
-            //path = Pathfinder.findPath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
             path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
             movementComponent.setPath(path);
-            //movementComponent.setTargetLocation(bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+
         }
-        //Move entity to enemy player
+
 
     }
 
-    public Entity createEntityInternal(UnitType entityType, long unitID, Vector2 worldCoordinates, int teamID){
+    Entity createEntityInternal(UnitType entityType, long unitID, Vector2 worldCoordinates, int teamID){
         Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
         engine.addEntity(entity);
         units.put(unitID, entity);
@@ -265,13 +257,7 @@ public class World implements InputHandler {
         return -1;
     }
 
-    public void moveEntity(Vector2 worldCoordinates, long entityID){
-        Entity entity = units.get(entityID);
-        if(entity == null){
-            return;
-        }
-        entity.getComponent(MovementComponent.class).setTargetLocation(worldCoordinates);
-    }
+
 
     /**
      *

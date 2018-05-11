@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.Queue;
 
 public class MovementComponent implements Component {
     //TODO maybe remove targetLocation and replace it completely with path
-    //TODO give movementComponent a field that tells him to stop move but twhich that will be set from different systems
     /**
      * Will be changed over time
      */
@@ -82,6 +81,10 @@ public class MovementComponent implements Component {
         if(!(path.size<1)) {
             path.removeLast();
         }
+    }
+
+    public Queue<Vector2> getPath() {
+        return path;
     }
 
     public void setPath(Array<Vector2> path){

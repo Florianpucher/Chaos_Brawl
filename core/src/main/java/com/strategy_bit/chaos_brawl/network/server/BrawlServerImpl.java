@@ -15,7 +15,7 @@ import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ResourceTickMessage;
-import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkInputHandler;
+import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 
 import java.io.IOException;
@@ -50,11 +50,10 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     @Override
     public void sendGameInitializingMessage(int[] players){
         Connection[] connections = server.getConnections();
-        connections[0].getID();
         for (int i = 0; i < connections.length; i++) {
             int[] playersToSend = new int[]{Network.SERVER_PLAYER, Network.YOUR_CLIENT_CONTROLLER};
             InitializeGameMessage gameMessage = new InitializeGameMessage(playersToSend);
-            server.sendToTCP(connections[0].getID(), gameMessage);
+            server.sendToTCP(connections[i].getID(), gameMessage);
         }
     }
 
@@ -83,7 +82,8 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     @Override
     public void closeServer() {
-        server.close();
+        //server.close();
+        server.stop();
         serverIsRunning=false;
         try {
             server.dispose();
@@ -103,13 +103,13 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     }
 
     @Override
-    public void addNetworkInputHandler(NetworkInputHandler inputHandler) {
-
+    public void setNetworkConnectionHandler(NetworkConnectionHandler connectionHandler) {
+        serverListener.setNetworkConnectionHandler(connectionHandler);
     }
 
     @Override
-    public void removeNetworkInputHandler(NetworkInputHandler inputHandler) {
-
+    public String getName() {
+        return "host";
     }
 
     @Override

@@ -34,7 +34,7 @@ public class OtherConnection implements Connection<OtherNode> {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null){
+        if(o == null || !(o instanceof OtherConnection)){
             return false;
         }
 
@@ -43,5 +43,10 @@ public class OtherConnection implements Connection<OtherNode> {
 
         return toNode.getIndex() == otherConnection.getToNode().getIndex() &&
                 fromNode.getIndex() == otherConnection.getFromNode().getIndex();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

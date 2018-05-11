@@ -56,7 +56,7 @@ public class OtherNode {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null){
+        if(o == null || !(o instanceof OtherNode)){
             return false;
         }
         OtherNode otherNode = (OtherNode) o;
@@ -71,6 +71,11 @@ public class OtherNode {
             }
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @Override

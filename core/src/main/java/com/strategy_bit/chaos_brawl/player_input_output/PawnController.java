@@ -73,6 +73,10 @@ public abstract class PawnController {
         resources.add(resource);
     }
 
+    public Resource getMana(){
+        return resources.get(0);
+    }
+
     public boolean checkAndSubtract(double cost,String resource){
         for (Resource r :
                 resources) {
