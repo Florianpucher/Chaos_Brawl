@@ -217,5 +217,9 @@ public class WorldTest extends BaseTest {
     @Test
     public void testWinningLosing(){
         //TODO Engin implement here test for winning losing with four players
+        // Get first bases of players by looping through units hashmap
+
+        //Then set the health points of one to 0 and use world.checkWinningLosing
+        // after that check if the gameOver method of the pawnController to which this base belonged to had been used
     }
 }
