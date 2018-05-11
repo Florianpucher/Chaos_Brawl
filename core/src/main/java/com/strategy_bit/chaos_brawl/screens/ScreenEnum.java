@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.screens;
 
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
+import com.strategy_bit.chaos_brawl.network.client.BrawlClient;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
 import com.strategy_bit.chaos_brawl.screens.game_screens.GameScreen;
 import com.strategy_bit.chaos_brawl.screens.game_screens.MultiplayerGameScreen;
@@ -56,7 +57,7 @@ public enum ScreenEnum {
     },
     CLIENT_LOBBY_SCREEN {
         public AbstractScreen getScreen(Object... params) {
-            return new ClientLobbyScreen();
+            return new ClientLobbyScreen((BrawlClient) params[0]);
         }
     },
     MULTIPLAYERGAME {

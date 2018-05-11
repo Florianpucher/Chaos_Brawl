@@ -3,76 +3,51 @@ package com.strategy_bit.chaos_brawl.network.server;
 import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.messages.request.ClientConnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedMessage;
-import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
-import com.strategy_bit.chaos_brawl.screens.menu_screens.HostLobbyScreen;
+import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
 public class BrawlServerListener extends Listener implements BrawlConnector {
     private BrawlServerImpl brawlServer;
     private MultiplayerInputHandler multiplayerInputHandler;
+    private NetworkConnectionHandler connectionHandler;
+
     public BrawlServerListener(BrawlServerImpl brawlServer) {
-        this.brawlServer=brawlServer;
+        this.brawlServer = brawlServer;
     }
 
     @Override
     public void connected(Connection connection) {
-        //Start a 2 Archer-Game
-        //TODO: add 3 and 4 Archer-Games
-        if (ScreenManager.getInstance().getCurrentScreen() instanceof HostLobbyScreen)
-        ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).addClient(connection.getRemoteAddressTCP().getHostName(),connection.getID());
-        brawlServer.sendDataToAllExcept(connection,new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName(),connection.getID()));
-        /*Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                //just two players
-                int[] players = new int[]{Network.YOUR_CLIENT_CONTROLLER,Network.OTHER_CLIENT_CONTROLLER};
-                brawlServer.sendGameInitializingMessage(players);
-                ScreenManager.getInstance().showScreen(ScreenEnum.MULTIPLAYERGAME,brawlServer,this,players);
-            }
-        });
-        */
+        if (connectionHandler != null) {
+            connectionHandler.anotherClientConnected(connection.getRemoteAddressTCP().getHostName(), connection.getID());
+        }
+        brawlServer.sendDataToAllExcept(connection, new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName(), connection.getID()));
 
     }
 
     @Override
     public void disconnected(Connection connection) {
-        if (ScreenManager.getInstance().getCurrentScreen() instanceof HostLobbyScreen){
-            ((HostLobbyScreen)ScreenManager.getInstance().getCurrentScreen()).removeClient(connection.getID());
-            brawlServer.sendData(new ClientDisconnectedMessage(connection.getRemoteAddressUDP().getHostName(),connection.getID()));
+        if (connectionHandler != null) {
+            connectionHandler.anotherClientDisconnected(connection.getID());
         }
+        brawlServer.sendData(new ClientDisconnectedMessage(connection.getRemoteAddressUDP().getHostName(), connection.getID()));
     }
 
     @Override
-    public void received(final Connection connection,final  Object object) {
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                if (object instanceof EntityMovingMessage) {
-                    //There should not come any kind of those messages atm
-                    //EntityMovingMessage movingMessage = (EntityMovingMessage) object;
-                    //brawlServer.getManager().sendTouchInputLocal(movingMessage.screenCoordinates, movingMessage.entityID);
-                    //brawlServer.sendDataToAllExcept(connection,movingMessage);
-                    //multiplayerInputHandler.
-                }
-                else if (object instanceof EntitySpawnMessage){
-                    EntitySpawnMessage entitySpawnMessage=(EntitySpawnMessage) object;
-                    //brawlServer.getManager().createEntityLocal(entitySpawnMessage.position,entitySpawnMessage.teamId,entitySpawnMessage.entityTypeId);
-                    multiplayerInputHandler.createEntityWorldCoordinates(entitySpawnMessage.position,entitySpawnMessage.entityTypeId, entitySpawnMessage.teamId);
-                    //brawlServer.sendDataToAllExcept(connection,entitySpawnMessage);
-                }
-                else if (object instanceof NetworkMembersRequestMessage){
-                    brawlServer.sendDataOnlyTo(connection,new NetworkMemberResponseMessage(brawlServer.getNetworkMembers()));
-                }
+    public void received(final Connection connection, final Object object) {
+        Gdx.app.postRunnable(() -> {
+            if (object instanceof EntitySpawnMessage) {
+                EntitySpawnMessage entitySpawnMessage = (EntitySpawnMessage) object;
+                multiplayerInputHandler.createEntityWorldCoordinates(entitySpawnMessage.position, entitySpawnMessage.entityTypeId, entitySpawnMessage.teamId);
+            } else if (object instanceof NetworkMembersRequestMessage) {
+                brawlServer.sendDataOnlyTo(connection, new NetworkMemberResponseMessage(brawlServer.getName(), brawlServer.getNetworkMembers()));
             }
         });
-
     }
 
     @Override
@@ -83,5 +58,10 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
     @Override
     public void setMultiplayerInputHandler(MultiplayerInputHandler multiplayerInputHandler) {
         this.multiplayerInputHandler = multiplayerInputHandler;
+    }
+
+    @Override
+    public void setNetworkConnectionHandler(NetworkConnectionHandler connectionHandler) {
+        this.connectionHandler = connectionHandler;
     }
 }

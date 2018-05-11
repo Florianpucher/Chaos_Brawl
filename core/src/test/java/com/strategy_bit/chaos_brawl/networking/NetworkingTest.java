@@ -1,18 +1,11 @@
 package com.strategy_bit.chaos_brawl.networking;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.BaseTest;
-import com.strategy_bit.chaos_brawl.ChaosBrawlGame;
-import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
-import com.strategy_bit.chaos_brawl.screens.menu_screens.ClientLobbyScreen;
-import com.strategy_bit.chaos_brawl.screens.menu_screens.HostLobbyScreen;
-import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
@@ -20,13 +13,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -39,8 +26,6 @@ import java.util.concurrent.CyclicBarrier;
  * @version 1.0
  * @since 21.04.2018
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({RenderSystem.class, ScreenEnum.class})
 public class NetworkingTest extends BaseTest{
 
     private BrawlClientImpl client;
@@ -48,9 +33,9 @@ public class NetworkingTest extends BaseTest{
     private BrawlClientImpl client3;
 
     private BrawlServerImpl server;
-    private ChaosBrawlGame game;
 
     private MultiplayerInputHandler inputHandler;
+
 
     @Before
     public void initialize() throws Exception {
@@ -59,45 +44,23 @@ public class NetworkingTest extends BaseTest{
         client3 = new BrawlClientImpl();
         server = new BrawlServerImpl();
 
-
         inputHandler = Mockito.mock(MultiplayerInputHandler.class);
         client.getBrawlConnector().setMultiplayerInputHandler(inputHandler);
         client2.getBrawlConnector().setMultiplayerInputHandler(inputHandler);
         client3.getBrawlConnector().setMultiplayerInputHandler(inputHandler);
         server.getBrawlConnector().setMultiplayerInputHandler(inputHandler);
 
-        game = Mockito.mock(ChaosBrawlGame.class);
-
-        ClientLobbyScreen clientLobbyScreen = Mockito.mock(ClientLobbyScreen.class);
-        HostLobbyScreen hostLobbyScreen = Mockito.mock(HostLobbyScreen.class);
-        Mockito.when(game.getScreen()).thenReturn(clientLobbyScreen);
-        SpriteBatch spriteBatch = Mockito.mock(SpriteBatch.class);
-        PowerMockito.whenNew(SpriteBatch.class).withNoArguments().thenReturn(spriteBatch);
-
-        ScreenManager manager = ScreenManager.getInstance();
-        manager.initialize(game);
-
-        Mockito.doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Mockito.when(game.getScreen()).thenReturn(hostLobbyScreen);
-                return null;
-            }
-        }).when(game).setScreen(Mockito.any(HostLobbyScreen.class));
-
-        Mockito.doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Mockito.when(game.getScreen()).thenReturn(clientLobbyScreen);
-                return null;
-            }
-        }).when(game).setScreen(Mockito.any(ClientLobbyScreen.class));
         server.startServer();
     }
 
     @After
     public void after() {
         server.closeServer();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test(timeout = 10000)
@@ -160,17 +123,19 @@ public class NetworkingTest extends BaseTest{
 
     @Test(timeout = 10000)
     public void testConnectMultipleClients() throws IOException {
-        connectMultipleClients();
-        Assert.assertEquals(3, server.getNetworkMembers().length);
-        disconnectMultipleClients();
-        Assert.assertEquals(0, server.getNetworkMembers().length);
+        connectMultipleClients("ConMultiMsg");
+        int networkMembers = server.getNetworkMembers().length;
+        Assert.assertEquals(3, networkMembers);
+        disconnectMultipleClients("ConMultiMsg");
+        networkMembers = server.getNetworkMembers().length;
+        Assert.assertEquals(0, networkMembers);
 
     }
 
 
     @Test(timeout = 10000)
     public void testSendMultipleMessages() throws IOException {
-        connectMultipleClients();
+        connectMultipleClients("MultMsg");
         EntitySpawnMessage spawnMessage = new EntitySpawnMessage(new Vector2(0, 0), 0, UnitType.SWORDFIGHTER, 0);
         server.sendData(spawnMessage);
         try {
@@ -189,7 +154,7 @@ public class NetworkingTest extends BaseTest{
         }
         Mockito.verify(inputHandler, Mockito.atLeast(1)).createEntityWorldCoordinates(Mockito.any(Vector2.class), Mockito.eq(UnitType.MAINBUILDING), Mockito.eq(0));
 
-        disconnectMultipleClients();
+        disconnectMultipleClients("MultMsg");
     }
     //TODO add tests for every messages
 
@@ -197,13 +162,15 @@ public class NetworkingTest extends BaseTest{
 --------------------------Helper Methods------------------------------------
  --------------------------------------------------------------------------*/
 
-    private void connectMultipleClients() throws IOException {
+    private void connectMultipleClients(String test) throws IOException {
+        System.out.println(test+": Connect clients");
         client.connectToServer("127.0.0.1");
         client2.connectToServer("127.0.0.1");
         client3.connectToServer("127.0.0.1");
     }
 
-    private void disconnectMultipleClients() throws IOException {
+    private void disconnectMultipleClients(String test) throws IOException {
+        System.out.println(test+": Disconnect clients");
         client.disconnect();
         client2.disconnect();
         client3.disconnect();

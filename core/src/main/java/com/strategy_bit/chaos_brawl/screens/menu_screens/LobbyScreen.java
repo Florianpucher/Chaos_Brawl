@@ -1,19 +1,15 @@
 package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
+import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
 
 /**
  * @author AIsopp
  * @version 1.0
  * @since 02.04.2018
  */
-abstract class LobbyScreen extends MenuScreen {
+abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandler{
 
     protected final static String PLAYER_1 = "1";
     protected final static String PLAYER_2 = "2";
@@ -25,6 +21,11 @@ abstract class LobbyScreen extends MenuScreen {
     protected Array<Integer> playerIds;
     protected int c=0;
 
+    public LobbyScreen(){
+        playerNames=new Array<>();
+        playerIds=new Array<>();
+    }
+
 
     @Override
     protected void handleBackKey() {
@@ -32,12 +33,6 @@ abstract class LobbyScreen extends MenuScreen {
     }
 
     public void addClient(String ip,int id){
-        if (playerNames==null){
-            playerNames=new Array<>();
-        }
-        if (playerIds==null){
-            playerIds=new Array<>();
-        }
         playerIds.add(id);
         System.out.println(id+"\n"+ip);
         playerNames.add(ip);

@@ -27,6 +27,7 @@ public class HostLobbyScreen extends LobbyScreen {
 
     public HostLobbyScreen(BrawlServer brawlServer) {
         this.brawlServer = brawlServer;
+        brawlServer.setNetworkConnectionHandler(this);
     }
 
     @Override
@@ -84,6 +85,8 @@ public class HostLobbyScreen extends LobbyScreen {
         btnPlayer2.addListener(listener);
         btnPlayer3.addListener(listener);
         btnPlayer4.addListener(listener);
+
+        addClient(brawlServer.getName(),0);
     }
 
 
@@ -95,6 +98,26 @@ public class HostLobbyScreen extends LobbyScreen {
         brawlServer.sendGameInitializingMessage(players);
         ScreenManager.getInstance().showScreen(ScreenEnum.MULTIPLAYERGAME, brawlServer, players);
 
+    }
+
+    @Override
+    public void connected() {
+
+    }
+
+    @Override
+    public void disconnected() {
+
+    }
+
+    @Override
+    public void anotherClientConnected(String clientName, int id) {
+        addClient(clientName, id);
+    }
+
+    @Override
+    public void anotherClientDisconnected(int id) {
+        removeClient(id);
     }
 
     @Override

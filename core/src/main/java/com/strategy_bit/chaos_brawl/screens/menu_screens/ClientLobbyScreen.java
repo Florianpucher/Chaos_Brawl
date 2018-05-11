@@ -5,16 +5,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.network.client.BrawlClient;
+import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 
 /**
  * @author AIsopp
  * @version 1.0
  * @since 02.04.2018
  */
-public class ClientLobbyScreen extends LobbyScreen {
+public class ClientLobbyScreen extends LobbyScreen{
 
-    public ClientLobbyScreen() {
+    private BrawlClient brawlClient;
 
+    public ClientLobbyScreen(BrawlClient brawlClient) {
+        this.brawlClient = brawlClient;
+        brawlClient.setNetworkConnectionHandler(this);
+        brawlClient.sendData(new NetworkMembersRequestMessage());
     }
 
     @Override
@@ -51,16 +57,31 @@ public class ClientLobbyScreen extends LobbyScreen {
     }
 
     public void returnToSearch(){
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                screenManager.switchToLastScreen();
-            }
-        });
+        screenManager.switchToLastScreen();
     }
 
     @Override
     protected void handleBackKey() {
         super.handleBackKey();
+    }
+
+    @Override
+    public void connected() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void disconnected() {
+        returnToSearch();
+    }
+
+    @Override
+    public void anotherClientConnected(String clientName, int id) {
+        addClient(clientName, id);
+    }
+
+    @Override
+    public void anotherClientDisconnected(int id) {
+        removeClient(id);
     }
 }
