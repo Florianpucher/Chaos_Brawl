@@ -136,10 +136,11 @@ public class NetworkingTest extends BaseTest{
     @Test(timeout = 10000)
     public void testSendMultipleMessages() throws IOException {
         connectMultipleClients("MultMsg");
+
         EntitySpawnMessage spawnMessage = new EntitySpawnMessage(new Vector2(0, 0), 0, UnitType.SWORDFIGHTER, 0);
         server.sendData(spawnMessage);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -148,7 +149,7 @@ public class NetworkingTest extends BaseTest{
         client.sendData(spawnMessage);
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -167,6 +168,11 @@ public class NetworkingTest extends BaseTest{
         client.connectToServer("127.0.0.1");
         client2.connectToServer("127.0.0.1");
         client3.connectToServer("127.0.0.1");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void disconnectMultipleClients(String test) throws IOException {
@@ -174,5 +180,10 @@ public class NetworkingTest extends BaseTest{
         client.disconnect();
         client2.disconnect();
         client3.disconnect();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -65,7 +65,7 @@ public class GameHUD extends Table {
         NinePatchDrawable resourceBar = new NinePatchDrawable(assetManager.resourceSkinInner);
         ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(resourceBarOuter, new NinePatchDrawable(assetManager.resourceSkinMiddle));
         progressBarStyle.knobBefore = resourceBar;
-        manaBar = new ProgressBar(0, 100, 0.1f, false, progressBarStyle);
+        manaBar = new ProgressBar(0f, 100f, 0.1f, false, progressBarStyle);
 
         manaBar.setValue(0);
         setBackground((Drawable) null);
@@ -73,14 +73,14 @@ public class GameHUD extends Table {
         //debugCell();
         top();
         //add actors to UI
-        add(manaBar).top().width(Gdx.graphics.getWidth() / 2).height(Gdx.graphics.getHeight() / 9);
-        row().height(7 * Gdx.graphics.getHeight() / 9);
+        add(manaBar).top().width(Gdx.graphics.getWidth() / 2f).height(Gdx.graphics.getHeight() / 9f);
+        row().height(7 * Gdx.graphics.getHeight() / 9f);
         add();
-        row().height(Gdx.graphics.getHeight() / 9).width(Gdx.graphics.getWidth());
+        row().height(Gdx.graphics.getHeight() / 9f).width((float) Gdx.graphics.getWidth());
         // add own table for organizing buttons
         Table lowerUI = new Table(assetManager.defaultSkin);
         lowerUI.right();
-        add(lowerUI).width(Gdx.graphics.getWidth());
+        add(lowerUI).width((float) Gdx.graphics.getWidth());
         lowerUI.add(btnNewUnit1).right().height(lowerUI.getPrefHeight());
         lowerUI.add(btnNewUnit2).right().height(lowerUI.getPrefHeight());
         lowerUI.add(btnNewUnit3).right().height(lowerUI.getPrefHeight());
@@ -125,13 +125,15 @@ public class GameHUD extends Table {
         btnNewUnit1.addListener(listener);
         btnNewUnit2.addListener(listener);
         btnNewUnit3.addListener(listener);
+        initializeGameOverView();
+    }
 
+
+    private void initializeGameOverView(){
         batch = new SpriteBatch();
-        int w = 0;
-        int h = 0;
+        float w = (float) Gdx.graphics.getWidth();
+        float h = (float) Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
-        w = Gdx.graphics.getWidth();
-        h = Gdx.graphics.getHeight();
         camera.position.set(w / 2, h / 2, 0);
     }
 
@@ -176,25 +178,21 @@ public class GameHUD extends Table {
         camera.update();
 
         AssetManager assetManager = AssetManager.getInstance();
-        int tw;
-        int th;
+        float tw;
+        float th;
+        Texture gameOverView;
         if (win) {
-            Texture victory = assetManager.victoryScreen;
-            tw = victory.getWidth();
-            th = victory.getHeight();
-
-            batch.begin();
-            batch.draw(victory, camera.position.x - (tw / 2), camera.position.y - (th / 2));
-            batch.end();
-        } else {
-            Texture defeat = assetManager.defeatScreen;
-            tw = defeat.getWidth();
-            th = defeat.getHeight();
-
-            batch.begin();
-            batch.draw(defeat, camera.position.x - (tw / 2), camera.position.y - (th / 2));
-            batch.end();
+            gameOverView = assetManager.victoryScreen;
+        }else{
+            gameOverView = assetManager.defeatScreen;
         }
+
+        tw = (float)gameOverView.getWidth();
+        th = (float)gameOverView.getHeight();
+
+        batch.begin();
+        batch.draw(gameOverView, camera.position.x - (tw / 2), camera.position.y - (th / 2));
+        batch.end();
     }
 
     public void updateManaBar(Resource r){

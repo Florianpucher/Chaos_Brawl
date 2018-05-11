@@ -30,8 +30,8 @@ public class SplashScreen extends AbstractScreen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         size = Gdx.graphics.getWidth() > Gdx.graphics.getHeight() ? Gdx.graphics.getHeight() : Gdx.graphics.getWidth();
         position = new Vector2();
-        position.x = Gdx.graphics.getWidth() / 2 - size / 2;
-        position.y = Gdx.graphics.getHeight() / 2 - size / 2;
+        position.x = Gdx.graphics.getWidth() / 2f - size / 2f;
+        position.y = Gdx.graphics.getHeight() / 2f - size / 2f;
     }
 
     @Override

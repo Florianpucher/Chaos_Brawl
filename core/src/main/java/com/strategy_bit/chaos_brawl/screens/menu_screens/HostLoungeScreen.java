@@ -1,17 +1,14 @@
 package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
-import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 import java.io.IOException;
@@ -42,9 +39,9 @@ public class HostLoungeScreen extends MenuScreen {
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
         root.setFillParent(true);
-        float height = Gdx.graphics.getHeight()/8;
+        float height = Gdx.graphics.getHeight()/8f;
         root.center();
-        root.add(btnStartServer).width(Gdx.graphics.getWidth()/4).height(height);
+        root.add(btnStartServer).width(Gdx.graphics.getWidth()/4f).height(height);
         addActor(root);
 
         ClickListener listener = new ClickListener(){

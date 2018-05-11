@@ -163,7 +163,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
 
         @Override
         public int compare(Entity e1, Entity e2) {
-            return (int) Math.signum(pm.get(e1).getZ() - pm.get(e2).getZ());
+            return (int) Math.signum((float)(pm.get(e1).getZ() - pm.get(e2).getZ()));
         }
     }
 }

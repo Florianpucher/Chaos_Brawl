@@ -33,11 +33,11 @@ public class NetworkScreen extends MenuScreen {
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
         root.setFillParent(true);
-        float height = Gdx.graphics.getHeight()/8;
+        float height = Gdx.graphics.getHeight()/8f;
         root.center();
-        root.add(btnHostGame).width(Gdx.graphics.getWidth()/2).height(height);
+        root.add(btnHostGame).width(Gdx.graphics.getWidth()/2f).height(height);
         root.row().space(10);
-        root.add(btnConnectToGame).width(Gdx.graphics.getWidth()/2).height(height);
+        root.add(btnConnectToGame).width(Gdx.graphics.getWidth()/2f).height(height);
         addActor(root);
 
         ClickListener listener = new ClickListener(){

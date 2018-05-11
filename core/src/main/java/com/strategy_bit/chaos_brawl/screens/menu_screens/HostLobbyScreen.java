@@ -52,17 +52,17 @@ public class HostLobbyScreen extends LobbyScreen {
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
         root.setFillParent(true);
-        float height = Gdx.graphics.getHeight() / 8;
+        float height = Gdx.graphics.getHeight() / 8f;
         root.top();
-        root.add(btnPlayer1).width(Gdx.graphics.getWidth() / 4).height(height);
+        root.add(btnPlayer1).width(Gdx.graphics.getWidth() / 4f).height(height);
         root.row();
-        root.add(btnPlayer2).width(Gdx.graphics.getWidth() / 4).height(height);
+        root.add(btnPlayer2).width(Gdx.graphics.getWidth() / 4f).height(height);
         root.row();
-        root.add(btnPlayer3).width(Gdx.graphics.getWidth() / 4).height(height);
+        root.add(btnPlayer3).width(Gdx.graphics.getWidth() / 4f).height(height);
         root.row();
-        root.add(btnPlayer4).width(Gdx.graphics.getWidth() / 4).height(height);
+        root.add(btnPlayer4).width(Gdx.graphics.getWidth() / 4f).height(height);
         root.row();
-        root.add(btnStartGame).width(Gdx.graphics.getWidth() / 4).height(height);
+        root.add(btnStartGame).width(Gdx.graphics.getWidth() / 4f).height(height);
         addActor(root);
 
         ClickListener listener = new ClickListener() {

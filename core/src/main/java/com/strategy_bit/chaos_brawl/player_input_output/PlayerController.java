@@ -114,8 +114,8 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     @Override
     public void tick() {
+        super.tick();
         if (gameHUD != null) {
-            super.tick();
             for (Resource r :
                     resources) {
                 gameHUD.updateManaBar(r);
