@@ -139,7 +139,7 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     public void gameOver(boolean win) {
         //TODO Other Solution for rendering winning screen
-
+        gameHUD.clear();
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);           // clear screen
 
