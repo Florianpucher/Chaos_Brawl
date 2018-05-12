@@ -2,10 +2,13 @@ package com.strategy_bit.chaos_brawl.networking;
 
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.BaseTest;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
+import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
+import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
@@ -14,6 +17,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -156,6 +161,35 @@ public class NetworkingTest extends BaseTest{
         Mockito.verify(inputHandler, Mockito.atLeast(1)).createEntityWorldCoordinates(Mockito.any(Vector2.class), Mockito.eq(UnitType.MAINBUILDING), Mockito.eq(0));
 
         disconnectMultipleClients("MultMsg");
+    }
+
+    @PrepareForTest(com.strategy_bit.chaos_brawl.managers.ScreenManager.class)
+    @Test(timeout = 10000)
+    public void testGameInit() throws IOException {
+        ScreenManager screenmanager =Mockito.mock (ScreenManager.class);
+        PowerMockito.mockStatic(ScreenManager.class);
+        try {
+            PowerMockito.when(ScreenManager.class,ScreenManager.getInstance()).thenReturn(screenmanager);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        connectMultipleClients("GameInit");
+
+        //start game
+        server.sendGameInitializingMessage();
+        //wait for all clients to enter game
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //check
+
+
+        disconnectMultipleClients("GameInit");
     }
     //TODO add tests for every messages
 

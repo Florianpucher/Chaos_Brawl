@@ -16,7 +16,7 @@ public interface BrawlServer extends BrawlNetworkInterface {
 
 
 
-    void sendGameInitializingMessage(int[] players);
+    void sendGameInitializingMessage();
     void sendData(Message msg);
     void startServer() throws IOException;
     void closeServer();

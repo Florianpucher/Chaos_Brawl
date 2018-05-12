@@ -93,10 +93,7 @@ public class HostLobbyScreen extends LobbyScreen {
     private void startGame() {
         //TODO: For now only allow 2 player games
         //if (playerNames.size != 2) return;
-
-        int[] players = new int[]{Network.YOUR_CLIENT_CONTROLLER, Network.OTHER_CLIENT_CONTROLLER};
-        brawlServer.sendGameInitializingMessage(players);
-        ScreenManager.getInstance().showScreen(ScreenEnum.MULTIPLAYERGAME, brawlServer, players);
+        brawlServer.sendGameInitializingMessage();
 
     }
 

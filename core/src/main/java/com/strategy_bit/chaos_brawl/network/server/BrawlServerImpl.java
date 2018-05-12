@@ -6,6 +6,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import com.strategy_bit.chaos_brawl.config.Network;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
@@ -16,6 +17,7 @@ import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
+import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 
 import java.io.IOException;
@@ -48,13 +50,26 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     //TODO implementation for 3 or 4 multiplayer
     @Override
-    public void sendGameInitializingMessage(int[] players){
+    public void sendGameInitializingMessage(){
         Connection[] connections = server.getConnections();
+        System.out.println("Server: starting game with "+connections.length+" connections");
+        int[] playersToSend=new int[connections.length+1];
+        for (int i = 0; i < playersToSend.length; i++) {
+            playersToSend[i]=i;
+        }
         for (int i = 0; i < connections.length; i++) {
-            int[] playersToSend = new int[]{Network.SERVER_PLAYER, Network.YOUR_CLIENT_CONTROLLER};
+            //int[] playersToSend = new int[]{Network.SERVER_PLAYER, Network.YOUR_CLIENT_CONTROLLER};
+            for (int j = 0; j < playersToSend.length; j++) {
+                playersToSend[j]=(playersToSend[j]+1)%playersToSend.length;
+            }
             InitializeGameMessage gameMessage = new InitializeGameMessage(playersToSend);
             server.sendToTCP(connections[i].getID(), gameMessage);
         }
+        for (int j = 0; j < playersToSend.length; j++) {
+            playersToSend[j]=(playersToSend[j]+1)%playersToSend.length;
+        }
+        ScreenManager screenManager = ScreenManager.getInstance();
+        screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, this, playersToSend);
     }
 
     public void sendDataToAllExcept(Connection connection, Message msg) {
