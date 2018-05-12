@@ -48,7 +48,6 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     }
 
-    //TODO implementation for 3 or 4 multiplayer
     @Override
     public void sendGameInitializingMessage(){
         Connection[] connections = server.getConnections();

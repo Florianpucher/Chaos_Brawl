@@ -16,9 +16,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -31,6 +33,8 @@ import java.util.concurrent.CyclicBarrier;
  * @version 1.0
  * @since 21.04.2018
  */
+@PrepareForTest(com.strategy_bit.chaos_brawl.managers.ScreenManager.class)
+@RunWith(PowerMockRunner.class)
 public class NetworkingTest extends BaseTest{
 
     private BrawlClientImpl client;
@@ -163,13 +167,13 @@ public class NetworkingTest extends BaseTest{
         disconnectMultipleClients("MultMsg");
     }
 
-    @PrepareForTest(com.strategy_bit.chaos_brawl.managers.ScreenManager.class)
-    @Test(timeout = 10000)
+
+    @Test
     public void testGameInit() throws IOException {
         ScreenManager screenmanager =Mockito.mock (ScreenManager.class);
         PowerMockito.mockStatic(ScreenManager.class);
         try {
-            PowerMockito.when(ScreenManager.class,ScreenManager.getInstance()).thenReturn(screenmanager);
+            PowerMockito.when(ScreenManager.getInstance()).thenReturn(screenmanager);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -187,6 +191,25 @@ public class NetworkingTest extends BaseTest{
             e.printStackTrace();
         }
         //check
+        int[] arr=new int[4];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=i;
+        }
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,server,arr);
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=(arr[i]+1)%arr.length;
+        }
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client3,arr);
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=(arr[i]+1)%arr.length;
+        }
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client2,arr);
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=(arr[i]+1)%arr.length;
+        }
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client,arr);
+
+
 
 
         disconnectMultipleClients("GameInit");
