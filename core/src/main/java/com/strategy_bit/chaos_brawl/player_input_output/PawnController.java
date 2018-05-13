@@ -4,6 +4,7 @@ package com.strategy_bit.chaos_brawl.player_input_output;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.resource_system.ResourceGold;
+import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
@@ -92,6 +93,15 @@ public abstract class PawnController {
     }
 
     public void gameOver (boolean win) {
+
+    }
+
+    /**
+     *
+     * @param type the type of the event
+     * @param params additional parameter
+     */
+    public void triggeredEvent(EventType type, Object... params){
 
     }
 }
