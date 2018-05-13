@@ -91,8 +91,8 @@ public class HostLobbyScreen extends LobbyScreen {
 
 
     private void startGame() {
-        //TODO: For now only allow 2 player games
-        //if (playerNames.size != 2) return;
+        //dont start game if only the host or more than 4 are players are in the lobby
+        if (playerNames.size < 2||playerNames.size>4) return;
         brawlServer.sendGameInitializingMessage();
 
     }
@@ -108,12 +108,19 @@ public class HostLobbyScreen extends LobbyScreen {
     }
 
     @Override
-    public void anotherClientConnected(String clientName, int id) {
+    public void anotherClientConnected(String clientName, int id) throws IllegalStateException {
+        if (playerNames.size>3){
+            throw new IllegalStateException("Client limit reached (only a maximum of 4 players are allowed)");
+        }
         addClient(clientName, id);
     }
 
     @Override
-    public void anotherClientDisconnected(int id) {
+    public void anotherClientDisconnected(int id) throws IllegalStateException {
+        //if id >=4 the client has never entered the lobby
+        if (id>3){
+            throw new IllegalStateException("Client wasn't in the lobby (only a maximum of 4 players are allowed)");
+        }
         removeClient(id);
     }
 
