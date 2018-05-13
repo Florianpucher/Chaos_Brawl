@@ -204,7 +204,7 @@ public class World implements InputHandler {
         //iterate over everyBase
         for (int i = 0; i < bases.length; i++) {
             Entity base = bases[i];
-            if(i == controller.getTeamID()){
+            if(base == null || i == controller.getTeamID() ||base.getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0f){
                 continue;
             }
 
