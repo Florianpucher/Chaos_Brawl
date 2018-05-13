@@ -6,6 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -41,6 +45,12 @@ public class BaseTest {
         Mockito.when(Gdx.graphics.getGL20()).thenReturn(Gdx.gl20);
         Mockito.when(Gdx.graphics.getHeight()).thenReturn(480);
         Mockito.when(Gdx.graphics.getWidth()).thenReturn(840);
+
+        AssetManager assetManager = AssetManager.getInstance();
+        Pixmap pixmap = new Pixmap(100,100, Pixmap.Format.RGB888);
+        Texture texture = new Texture(pixmap);
+        assetManager.mainTowerSkin = new TextureRegion(texture);
+        pixmap.dispose();
     }
 
     // After we are done, clean up the application
@@ -49,5 +59,6 @@ public class BaseTest {
         // Exit the application first
         application.exit();
         application = null;
+        AssetManager.getInstance().mainTowerSkin.getTexture().dispose();
     }
 }

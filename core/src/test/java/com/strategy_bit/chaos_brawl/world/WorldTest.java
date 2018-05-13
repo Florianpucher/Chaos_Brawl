@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.BaseTest;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
@@ -22,8 +23,11 @@ import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.types.UnitType;
+import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +67,7 @@ public class WorldTest extends BaseTest {
         OtherPathfinder pathfinder = Mockito.mock(OtherPathfinder.class);
         camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
+        camera.update();
         Mockito.when(renderSystem.getCamera()).thenReturn(camera);
         BoardA boardA = Mockito.mock(BoardA.class);
         Mockito.when(boardA.getWorldCoordinateOfTile(5,0)).thenReturn(new Vector2(5, 0));
@@ -80,11 +85,11 @@ public class WorldTest extends BaseTest {
         PowerMockito.whenNew(BoardA.class).withAnyArguments().thenReturn(boardA);
         PowerMockito.whenNew(OtherPathfinder.class).withArguments(boardA).thenReturn(pathfinder);
         world = new World(1,4);
-
-        player1 = Mockito.mock(PlayerController.class);
-        player2 = Mockito.mock(PawnController.class);
-        player3 = Mockito.mock(PawnController.class);
-        player4 = Mockito.mock(PawnController.class);
+        Boundary boundary = new Boundary(new Vector2(), new Vector2(), new Vector2(), new Vector2());
+        player1 = new PlayerController(0,world,boundary);
+        player2 = new PlayerController(1,world,boundary);
+        player3 = new PlayerController(2,world,boundary);
+        player4 = new PlayerController(3,world,boundary);
 
         world.setPlayerController(0, player1);
         world.setPlayerController(1,player2);
@@ -97,6 +102,7 @@ public class WorldTest extends BaseTest {
     public void after(){
         player1.dispose();
         world.dispose();
+
     }
 
     // Does not work
@@ -209,10 +215,6 @@ public class WorldTest extends BaseTest {
 
 
     // Test for multiple players
-    @Test
-    public void testGetCurrentPlayerTarget(){
-
-    }
 
     @Test
     public void testWinningLosing(){
@@ -221,5 +223,20 @@ public class WorldTest extends BaseTest {
 
         //Then set the health points of one to 0 and use world.checkWinningLosing
         // after that check if the gameOver method of the pawnController to which this base belonged to had been used
+    }
+
+    @Test
+    public void testChangePlayerTarget(){
+        Vector3 worldPosition1 = new Vector3(world.bases[0].getComponent(TransformComponent.class).getPosition(),0);
+
+        Vector3 screenPosition = camera.project(worldPosition1);
+
+        Vector3 worldPosition2 = new Vector3(world.bases[1].getComponent(TransformComponent.class).getPosition(),0);
+
+        Vector3 screenPosition2 = camera.project(worldPosition2);
+        world.sendTouchInput(VectorMath.vector3ToVector2(screenPosition), player3);
+        world.sendTouchInput(VectorMath.vector3ToVector2(screenPosition2), player4);
+        Assert.assertEquals(player1.getTeamID(), player3.getCurrentTargetTeam());
+        Assert.assertEquals(player2.getTeamID(), player4.getCurrentTargetTeam());
     }
 }

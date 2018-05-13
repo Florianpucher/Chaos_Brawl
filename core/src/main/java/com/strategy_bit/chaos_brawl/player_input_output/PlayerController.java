@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
 import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
+import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
@@ -63,6 +64,8 @@ public class PlayerController extends PawnController implements InputProcessor {
                 if (spawnUnit(current)) {
                     inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
                 }
+            } else if(current == null){
+                inputHandler.sendTouchInput(screenCoordinates, this);
             }
         }
         return false;
@@ -128,5 +131,14 @@ public class PlayerController extends PawnController implements InputProcessor {
             gameHUD.showWinningScreen(win);
         }
 
+    }
+
+    @Override
+    public void triggeredEvent(EventType type, Object... params) {
+        if(type == EventType.CLICKED_ON_ENEMY_BASE){
+            int targetIndex = (Integer) params[0];
+            setCurrentTargetTeam(targetIndex);
+            System.out.println("New target " + targetIndex);
+        }
     }
 }

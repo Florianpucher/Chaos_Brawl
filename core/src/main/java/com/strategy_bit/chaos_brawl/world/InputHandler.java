@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 
 /**
@@ -14,9 +15,9 @@ public interface InputHandler {
     /**
      * moves an entity to the screenCoordinates
      * @param screenCoordinates moves an entity to these screenCoordinates
-     * @param entityID which entity do you want to move
+     * @param controller the controller that triggered the touch
      */
-    void sendTouchInput(Vector2 screenCoordinates, long entityID);
+    void sendTouchInput(Vector2 screenCoordinates, PawnController controller);
 
     /**
      * spawns an entity on the given coordinates for the given team

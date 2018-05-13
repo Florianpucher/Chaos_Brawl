@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.ashley.components.BoundaryComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
@@ -20,6 +21,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
+import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
@@ -192,14 +194,26 @@ public class World implements InputHandler {
     }
 
 
-    @Deprecated
+
     @Override
-    public void sendTouchInput(Vector2 screenCoordinates, long entityID) {
+    public void sendTouchInput(Vector2 screenCoordinates, PawnController controller) {
 
         Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        //moveEntity(targetLocation, entityID);
+        //iterate over everyBase
+        for (int i = 0; i < bases.length; i++) {
+            Entity base = bases[i];
+            if(base == null || i == controller.getTeamID() ||base.getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0f){
+                continue;
+            }
+
+            if (base.getComponent(BoundaryComponent.class).isWithinBorders(targetLocation)) {
+                controller.triggeredEvent(EventType.CLICKED_ON_ENEMY_BASE, i);
+                return;
+            }
+        }
+
     }
 
     @Override
