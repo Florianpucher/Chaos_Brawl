@@ -21,11 +21,7 @@ public class MultiplayerGameScreen extends GameScreen {
     public MultiplayerGameScreen(BrawlMultiplayer brawlMultiplayer,  int[] players) {
         super(1);
         this.brawlMultiplayer = brawlMultiplayer;
-        for (int i = 0; i < players.length; i++) {
-            if(players[i] == Network.YOUR_CLIENT_CONTROLLER){
-                this.player = i;
-            }
-        }
+        this.player=players[0];
         controllers = new PawnController[players.length];
         this.listener = brawlMultiplayer.getBrawlConnector();
     }

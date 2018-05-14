@@ -3,13 +3,16 @@ package com.strategy_bit.chaos_brawl.network.server;
 import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.messages.request.ClientConnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
+import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
 public class BrawlServerListener extends Listener implements BrawlConnector {
@@ -23,19 +26,39 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
 
     @Override
     public void connected(Connection connection) {
+        boolean informOther=true;
         if (connectionHandler != null) {
-            connectionHandler.anotherClientConnected(connection.getRemoteAddressTCP().getHostName(), connection.getID());
+            //refuse connection if the lobby is full
+            try {
+                connectionHandler.anotherClientConnected(connection.getRemoteAddressTCP().getHostName(), connection.getID());
+            }catch (IllegalStateException e){
+                System.out.println(e.getMessage());
+                informOther=false;
+                //kick client
+                connection.close();
+            }
         }
-        brawlServer.sendDataToAllExcept(connection, new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName(), connection.getID()));
-
+        if (informOther) {
+            brawlServer.sendDataToAllExcept(connection, new ClientConnectedMessage(connection.getRemoteAddressTCP().getHostName(), connection.getID()));
+        }
     }
 
     @Override
     public void disconnected(Connection connection) {
+        boolean informOther=true;
         if (connectionHandler != null) {
-            connectionHandler.anotherClientDisconnected(connection.getID());
+            //connection was never in lobby:
+            // - do nothing
+            try {
+                connectionHandler.anotherClientDisconnected(connection.getID());
+            }catch (IllegalStateException e){
+                System.out.println(e.getMessage());
+                informOther=false;
+            }
         }
-        brawlServer.sendData(new ClientDisconnectedMessage(connection.getRemoteAddressUDP().getHostName(), connection.getID()));
+        if (informOther) {
+            brawlServer.sendData(new ClientDisconnectedMessage(connection.getRemoteAddressUDP().getHostName(), connection.getID()));
+        }
     }
 
     @Override

@@ -2,10 +2,13 @@ package com.strategy_bit.chaos_brawl.networking;
 
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.BaseTest;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
+import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
+import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
@@ -13,7 +16,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -26,6 +33,8 @@ import java.util.concurrent.CyclicBarrier;
  * @version 1.0
  * @since 21.04.2018
  */
+@PrepareForTest(com.strategy_bit.chaos_brawl.managers.ScreenManager.class)
+@RunWith(PowerMockRunner.class)
 public class NetworkingTest extends BaseTest{
 
     private BrawlClientImpl client;
@@ -156,6 +165,54 @@ public class NetworkingTest extends BaseTest{
         Mockito.verify(inputHandler, Mockito.atLeast(1)).createEntityWorldCoordinates(Mockito.any(Vector2.class), Mockito.eq(UnitType.MAINBUILDING), Mockito.eq(0));
 
         disconnectMultipleClients("MultMsg");
+    }
+
+
+    @Test
+    public void testGameInit() throws IOException {
+        ScreenManager screenmanager =Mockito.mock (ScreenManager.class);
+        PowerMockito.mockStatic(ScreenManager.class);
+        try {
+            PowerMockito.when(ScreenManager.getInstance()).thenReturn(screenmanager);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        connectMultipleClients("GameInit");
+
+        //start game
+        server.sendGameInitializingMessage();
+        //wait for all clients to enter game
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //check
+        int[] arr=new int[4];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=i;
+        }
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,server,arr);
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=(arr[i]+1)%arr.length;
+        }
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client3,arr);
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=(arr[i]+1)%arr.length;
+        }
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client2,arr);
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=(arr[i]+1)%arr.length;
+        }
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client,arr);
+
+
+
+
+        disconnectMultipleClients("GameInit");
     }
     //TODO add tests for every messages
 

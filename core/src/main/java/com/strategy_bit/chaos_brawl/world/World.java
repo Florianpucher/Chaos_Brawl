@@ -281,6 +281,8 @@ public class World implements InputHandler {
      * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
      */
     public Boundary createSpawnAreaForPlayer(int playerID){
+        //TODO: modulo 2 for experimental 3-4players
+        playerID=playerID%2;
         //TODO move spawn Area boundaries and player base positions to board
         //Simple implementation for creating spawn area
         int spawnAreaWidth = 5;
