@@ -201,7 +201,15 @@ public class World implements InputHandler {
         Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        //iterate over everyBase
+        int baseIndex = checkIfClickHappensOnBase(targetLocation, controller);
+        if(baseIndex >= 0){
+            controller.triggeredEvent(EventType.CLICKED_ON_ENEMY_BASE, baseIndex);
+            return;
+        }
+    }
+
+
+    protected int checkIfClickHappensOnBase(Vector2 targetLocation, PawnController controller){
         for (int i = 0; i < bases.length; i++) {
             Entity base = bases[i];
             if(base == null || i == controller.getTeamID() ||base.getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0f){
@@ -209,11 +217,10 @@ public class World implements InputHandler {
             }
 
             if (base.getComponent(BoundaryComponent.class).isWithinBorders(targetLocation)) {
-                controller.triggeredEvent(EventType.CLICKED_ON_ENEMY_BASE, i);
-                return;
+                return i;
             }
         }
-
+        return -1;
     }
 
     @Override

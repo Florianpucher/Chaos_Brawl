@@ -119,6 +119,28 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     }
 
     @Override
+    public void sendTouchInput(Vector2 screenCoordinates, PawnController controller) {
+
+        super.sendTouchInput(screenCoordinates, controller);
+    }
+
+    @Override
+    protected int checkIfClickHappensOnBase(Vector2 targetLocation, PawnController controller) {
+        int baseIndex = super.checkIfClickHappensOnBase(targetLocation, controller);
+        if(isServer){
+            return baseIndex;
+        }else{
+            multiplayer.sendNewTargetMsg(controller.getTeamID(), baseIndex);
+            return baseIndex;
+        }
+    }
+
+    @Override
+    public void playerChangesTarget(int playerIndex, int targetIndex) {
+        playerControllers[playerIndex].setCurrentTargetTeam(targetIndex);
+    }
+
+    @Override
     public void getTick() {
         for (PawnController controller :
              playerControllers) {

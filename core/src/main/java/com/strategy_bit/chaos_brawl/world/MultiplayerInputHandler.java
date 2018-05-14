@@ -14,5 +14,6 @@ public interface MultiplayerInputHandler extends InputHandler {
     void moveEntityLocal(long unitID, Array<Vector2> wayPoints);
     void deleteUnitLocal(long unitID);
     void unitAttackLocal(long attackerID, long victimID);
+    void playerChangesTarget(int playerIndex, int targetIndex);
     void getTick();
 }

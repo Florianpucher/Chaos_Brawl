@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
 import com.strategy_bit.chaos_brawl.BaseTest;
 import com.strategy_bit.chaos_brawl.ChaosBrawlGame;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
@@ -60,6 +62,8 @@ public class MultiplayerWorldTest extends BaseTest {
 
     private Queue<Vector2> targetPath;
 
+    private Camera camera;
+
     @Before
     public void initialize() throws Exception {
         // world 0 is the world of the server
@@ -68,7 +72,8 @@ public class MultiplayerWorldTest extends BaseTest {
         playersPerWorld = new PawnController[PLAYERS][PLAYERS];
         RenderSystem renderSystem = Mockito.mock(RenderSystem.class);
         OtherPathfinder pathfinder = Mockito.mock(OtherPathfinder.class);
-        Camera camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+
+        camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
         Mockito.when(renderSystem.getCamera()).thenReturn(camera);
 
@@ -134,7 +139,7 @@ public class MultiplayerWorldTest extends BaseTest {
                 }
             }
         }
-
+        camera.update();
     }
 
     private void initializePlayersForWorld(int worldIndex) {
@@ -265,6 +270,28 @@ public class MultiplayerWorldTest extends BaseTest {
                 }
 
             }
+        }
+    }
+
+    @Test
+    public void testPlayerChangesTarget() throws InterruptedException {
+        for (int i = 0; i < PLAYERS; i++) {
+            for (int j = 0; j < PLAYERS; j++) {
+                playersPerWorld[i][j].setCurrentTargetTeam(-1);
+            }
+        }
+        Thread.sleep(1000);
+
+        for (int i = 0; i < PLAYERS; i++) {
+            Entity base = worlds[i].bases[(i+1)%PLAYERS];
+            TransformComponent transformComponent = base.getComponent(TransformComponent.class);
+            Vector3 worldPosition = new Vector3(transformComponent.getPosition(),0);
+            Vector3 screenPosition = camera.project(worldPosition);
+
+            ((PlayerController)playersPerWorld[i][i]).touchDown((int)screenPosition.x,(int)screenPosition.y,0,0);
+            Thread.sleep(1000);
+            Assert.assertEquals((i+1)%PLAYERS ,playersPerWorld[0][i].getCurrentTargetTeam());
+
         }
     }
 }

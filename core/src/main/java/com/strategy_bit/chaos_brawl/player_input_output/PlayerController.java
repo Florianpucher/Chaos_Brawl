@@ -56,17 +56,20 @@ public class PlayerController extends PawnController implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 screenCoordinates = new Vector2(screenX, screenY);
+        UnitType current = null;
         if (gameHUD != null) {
-            UnitType current = gameHUD.getUnitToSpawn();
-
+            current = gameHUD.getUnitToSpawn();
             if (current != null && spawnArea.checkIfVectorIsInside(screenCoordinates)) {
                 System.out.println("Click");
                 if (spawnUnit(current)) {
                     inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
                 }
-            } else if(current == null){
-                inputHandler.sendTouchInput(screenCoordinates, this);
+                return false;
             }
+        }
+
+        if(current == null){
+            inputHandler.sendTouchInput(screenCoordinates, this);
         }
         return false;
     }

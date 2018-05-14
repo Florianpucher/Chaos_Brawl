@@ -8,6 +8,7 @@ import com.strategy_bit.chaos_brawl.network.messages.request.ClientConnectedMess
 import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.PlayerSelectedNewTargetMessage;
 import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
@@ -46,6 +47,9 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
                 multiplayerInputHandler.createEntityWorldCoordinates(entitySpawnMessage.position, entitySpawnMessage.entityTypeId, entitySpawnMessage.teamId);
             } else if (object instanceof NetworkMembersRequestMessage) {
                 brawlServer.sendDataOnlyTo(connection, new NetworkMemberResponseMessage(brawlServer.getName(), brawlServer.getNetworkMembers()));
+            } else if(object instanceof PlayerSelectedNewTargetMessage){
+                PlayerSelectedNewTargetMessage selectedNewTargetMessage = (PlayerSelectedNewTargetMessage) object;
+                multiplayerInputHandler.playerChangesTarget(selectedNewTargetMessage.playerTeamID, selectedNewTargetMessage.targetTeamID);
             }
         });
     }
