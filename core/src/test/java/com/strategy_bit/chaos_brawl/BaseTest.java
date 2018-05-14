@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -51,6 +52,12 @@ public class BaseTest {
         Texture texture = new Texture(pixmap);
         assetManager.mainTowerSkin = new TextureRegion(texture);
         pixmap.dispose();
+        Sound sound = Mockito.mock(Sound.class);
+        assetManager.draw_katana = sound;
+        assetManager.attack_bow = sound;
+        assetManager.attack_sword = sound;
+        assetManager.hit_arrow = sound;
+        assetManager.draw_sword = sound;
     }
 
     // After we are done, clean up the application
