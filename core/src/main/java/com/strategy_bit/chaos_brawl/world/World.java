@@ -259,7 +259,7 @@ public class World implements InputHandler {
         }else if (entityType.equals(UnitType.KNIGHT)) {
             AssetManager.getInstance().draw_sword.play(1f);
         } else if (entityType.equals(UnitType.SWORDFIGHTER)) {
-            AssetManager.getInstance().draw_katana.play(1f);
+            AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
         }
 
         return entity;
