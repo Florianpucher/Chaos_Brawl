@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.world;
 
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -12,6 +13,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entity.Explosion;
 import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
@@ -27,6 +29,7 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -46,17 +49,21 @@ public class World implements InputHandler {
     protected HashMap<Long, Entity> units;
     protected HashMap<Long, Entity> projectiles;
 
+    ArrayList<Explosion> explosions;
+
     protected SpawnerImpl spawner;
     protected MyEngine engine;
     protected Camera camera;
     public Board board;
     protected PawnController[] playerControllers;
     protected Entity[] bases;
+    protected Entity[] tower;
     protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
 
     boolean endGame = false;
+    boolean buildingDestroyed = false;
 
     public World(int map, int players) {
         units = new HashMap<>();
@@ -64,6 +71,8 @@ public class World implements InputHandler {
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
         bases = new Entity[players];
+        tower = new Entity[players];
+        explosions = new ArrayList<Explosion>();
         createEngine();
         createWorld(map);
     }
@@ -143,6 +152,7 @@ public class World implements InputHandler {
         updateResources();
         engine.update(Gdx.graphics.getDeltaTime());
         endGame = checkWinningLosing();
+        buildingDestroyed = checkBuildingDestroyed();
     }
 
 
@@ -158,24 +168,65 @@ public class World implements InputHandler {
         int aliveCounter = 0;
         int lastAlive = -1;
         for (int i = 0; i < bases.length; i++) {
-            if(bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0){
+            if (bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
                 playerControllers[i].gameOver(false);
-            }else{
+            } else {
                 aliveCounter++;
                 lastAlive = i;
             }
         }
-        if(aliveCounter == 1){
+        if (aliveCounter == 1) {
             playerControllers[lastAlive].gameOver(true);
             return true;
-        }else if(aliveCounter == 0){
+        } else if (aliveCounter == 0) {
             System.err.println("A draw happens suddenly");
             return true;
         }
         return false;
     }
 
+    public boolean checkBuildingDestroyed() {
+        for (Entity base : bases) {
+            if (base == null) {
+                return false;
+            }
+        }
+        for (Entity tower : tower) {
+            if (tower == null) {
+                return false;
+            }
+        }
+        for (int i = 0; i < bases.length; i++) {
+            if (bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
+                explosions.add(new Explosion(bases[i].getComponent(TransformComponent.class).getPosition().x, bases[i].getComponent(TransformComponent.class).getPosition().y));
+                return true;
+            }
+        }
+        for (int i = 0; i < tower.length; i++) {
+            if (tower[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
+                explosions.add(new Explosion(tower[i].getComponent(TransformComponent.class).getPosition().x, tower[i].getComponent(TransformComponent.class).getPosition().y));
+                return true;
+            }
+        }
+        return false;
+    }
 
+    // there is a Problem with the deltatime
+
+    // update explosions
+    /*
+    ArrayList<Explosion> ExplosionsToRemove = new ArrayList<Explosion>();
+
+    for(Explosion explosion: explosions){
+        explosion.update(deltaTime);
+        if (explosion.remove){
+            ExplosionsToRemove.add(explosion);
+        }
+    }
+    explosions.removeAll(ExplosionsToRemove);
+    */
+
+    // update recources
     protected void updateResources(){
         if(System.currentTimeMillis() - resourceTimeStamp > 1){
             for (PawnController controller :
@@ -187,13 +238,9 @@ public class World implements InputHandler {
     }
 
 
-
-
-
     public void dispose() {
         engine.dispose();
     }
-
 
 
     @Override
