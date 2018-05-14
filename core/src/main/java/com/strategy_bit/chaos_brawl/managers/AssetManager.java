@@ -34,6 +34,7 @@ public class AssetManager {
     public TextureRegion swordFighterSkin;
     public TextureRegion knightSkin;
     public TextureRegion projectileSkin;
+    public TextureRegion explosionSkin;
     public NinePatch resourceSkinOuter;
     public NinePatch resourceSkinInner;
     public NinePatch resourceSkinMiddle;
@@ -90,6 +91,7 @@ public class AssetManager {
         //BaseSkin = new TextureRegion(new Texture("Base.png"));
         ballistaTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"ballista_tower.png"));
         mainTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"wall.png"));
+        explosionSkin = new TextureRegion(new Texture(BUILDING_PATH+ "explosion.png"));
 
         defaultSkin = new Skin(Gdx.files.internal(UI_PATH+"default/skin.json"));
         resourceSkinOuter = new NinePatch(new Texture(UI_PATH+"resourceBarOuterBorder.png"),12,12,12,12);
@@ -131,6 +133,7 @@ public class AssetManager {
         swordFighterSkin.getTexture().dispose();
         knightSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
+        explosionSkin.getTexture().dispose();
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();
         dirtTile.getTexture().dispose();
