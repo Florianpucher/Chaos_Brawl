@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.World;
 /*
@@ -76,11 +77,13 @@ public class CombatSystem extends IteratingSystem {
         if(c1.isRanged()){
             if(c1.attack()){
                 //ready to fire
+                AssetManager.getInstance().attack_bow.play(0.6f);
                 world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage());
 
             }
         }else {
         if(c1.attack()){
+            AssetManager.getInstance().attack_sword.play(1f);
             c2.setHitPoints(c2.getHitPoints()-c1.getAttackDamage());
         }
         }

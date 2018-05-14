@@ -19,6 +19,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.EventType;
@@ -255,6 +256,10 @@ public class World implements InputHandler {
         units.put(unitID, entity);
         if(entityType.equals(UnitType.MAINBUILDING)){
             bases[teamID] = entity;
+        }else if (entityType.equals(UnitType.KNIGHT)) {
+            AssetManager.getInstance().draw_sword.play(1f);
+        } else if (entityType.equals(UnitType.SWORDFIGHTER)) {
+            AssetManager.getInstance().draw_katana.play(1f);
         }
 
         return entity;

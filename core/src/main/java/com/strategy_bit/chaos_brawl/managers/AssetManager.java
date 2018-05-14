@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -50,6 +51,12 @@ public class AssetManager {
     public Texture victoryScreen;
     public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
+    public Sound attack_bow;
+    public Sound attack_sword;
+    public Sound hit_arrow;
+    public Sound draw_sword;
+    public Sound draw_katana;
+
 
     private static AssetManager instance;
 
@@ -93,8 +100,14 @@ public class AssetManager {
         progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3"));
-        music.setVolume(0f);
+        music.setVolume(0.5f);
         music.setLooping(true);
+        attack_sword=Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
+        attack_bow=Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.mp3"));
+        hit_arrow=Gdx.audio.newSound(Gdx.files.internal("sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3"));
+        draw_sword=Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Sabre,Draw,Scabbard,Fast,Loose,Rough.mp3"));
+        draw_katana=Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Replace,Scabbard,Fast,Ripple.mp3"));
+
     }
 
 
@@ -119,6 +132,11 @@ public class AssetManager {
         victoryScreen.dispose();
         defeatScreen.dispose();
         music.dispose();
+        attack_bow.dispose();
+        attack_sword.dispose();
+        hit_arrow.dispose();
+        draw_sword.dispose();
+        draw_katana.dispose();
 
     }
 }
