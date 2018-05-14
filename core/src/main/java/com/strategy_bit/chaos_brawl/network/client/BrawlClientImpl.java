@@ -13,6 +13,7 @@ import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.PlayerSelectedNewTargetMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.types.UnitType;
@@ -164,5 +165,10 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void sendNewTargetMsg(int playerIndex, int targetIndex) {
+        client.sendTCP(new PlayerSelectedNewTargetMessage(playerIndex, targetIndex));
     }
 }

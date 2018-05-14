@@ -156,6 +156,11 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
         closeServer();
     }
 
+    @Override
+    public void sendNewTargetMsg(int playerIndex, int targetIndex) {
+        throw new UnsupportedOperationException("Server does not send any messages of this type");
+    }
+
     public void closeConnectionTo(int id){
         server.getConnections()[id].close();
     }
