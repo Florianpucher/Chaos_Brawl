@@ -4,16 +4,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 public class Explosion {
 
+    //TODO Engin rewrite implementation
     public static final float FRAME_LENGTH = 0.8f; // time between each frame of the animation
     public static final int OFFSET = 8;
     public static final int SIZE = 32;
 
     public static Animation anim = null;
-    float x, y;
+    float x;
+    float y;
     float statetime;
 
     public boolean remove = false;                  // check if object needs to be removed
@@ -25,6 +26,7 @@ public class Explosion {
 
 
         if (anim == null){
+            //TODO do not load animation from file system load it in the assetmanager
             anim = new Animation(FRAME_LENGTH, TextureRegion.split(new Texture("explosion.png"), SIZE, SIZE)[0]);
         }
     }

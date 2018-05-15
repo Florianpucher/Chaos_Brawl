@@ -25,7 +25,7 @@ public class OtherNode {
         this.position = new Vector2(position);
     }
 
-    public void addSuccessor(OtherNode node){
+    public void addSuccessor(OtherNode node) {
         OtherConnection connection = new OtherConnection(this, node);
         connections.add(connection);
     }
@@ -39,16 +39,15 @@ public class OtherNode {
     }
 
 
-    public float calculateDistanceToOtherNode(OtherNode otherNode){
+    public float calculateDistanceToOtherNode(OtherNode otherNode) {
         return (float) VectorMath.distance(this.position, otherNode.position);
     }
 
     /**
-     *
      * @param otherNode the node to check if it is a neighbour
      * @return true if the otherNode is a neighbour of the current one
      */
-    public boolean isAdjacentTo(OtherNode otherNode){
+    public boolean isAdjacentTo(OtherNode otherNode) {
         float xDistance = Math.abs(otherNode.position.x - position.x);
         float yDistance = Math.abs(otherNode.position.y - position.y);
         return (xDistance <= 1 && yDistance <= 1);
@@ -56,19 +55,19 @@ public class OtherNode {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null || !(o instanceof OtherNode)){
+        if (!(o instanceof OtherNode)) {
             return false;
         }
         OtherNode otherNode = (OtherNode) o;
-        if(index == otherNode.index && position.equals(otherNode.getPosition())){
-            if(otherNode.connections.size == connections.size){
-                for (int i = 0; i < connections.size; i++) {
-                    if(!connections.get(i).equals(otherNode.connections.get(i))){
-                        return false;
-                    }
+        if (index == otherNode.index && position.equals(otherNode.getPosition()) && otherNode.connections.size == connections.size) {
+
+            for (int i = 0; i < connections.size; i++) {
+                if (!connections.get(i).equals(otherNode.connections.get(i))) {
+                    return false;
                 }
-                return true;
             }
+            return true;
+
         }
         return false;
     }
@@ -80,6 +79,6 @@ public class OtherNode {
 
     @Override
     public String toString() {
-        return "Index: " + index +", Position: " + position;
+        return "Index: " + index + ", Position: " + position;
     }
 }

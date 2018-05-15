@@ -70,7 +70,6 @@ public class GameHUD extends Table {
         manaBar.setValue(0);
         setBackground((Drawable) null);
 
-        //debugCell();
         top();
         //add actors to UI
         add(manaBar).top().width(Gdx.graphics.getWidth() / 2f).height(Gdx.graphics.getHeight() / 9f);
@@ -86,47 +85,50 @@ public class GameHUD extends Table {
         lowerUI.add(btnNewUnit3).right().height(lowerUI.getPrefHeight());
 
 
-        ClickListener listener = new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                String name = event.getListenerActor().getName();
-                if (name.equals(NEW_UNIT_1) && brawlButtons.get(0).isActivated()) {
-                    if (nextUnitType == UnitType.RANGED) {
-                        nextUnitType = null;
-                    } else {
-                        nextUnitType = UnitType.RANGED;
-                    }
-                }
-                if (name.equals(NEW_UNIT_2) && brawlButtons.get(1).isActivated()) {
-                    if (nextUnitType == UnitType.SWORDFIGHTER) {
-                        nextUnitType = null;
-                    } else {
-                        nextUnitType = UnitType.SWORDFIGHTER;
-                    }
-                }
-                if (name.equals(NEW_UNIT_3) && brawlButtons.get(2).isActivated()) {
-                    if (nextUnitType == UnitType.KNIGHT) {
-                        nextUnitType = null;
-                    } else {
-                        nextUnitType = UnitType.KNIGHT;
-                    }
-                }
 
-
-                if (nextUnitType != null) {
-                    setBackground(new TextureRegionDrawable(new TextureRegion(nonSpawnAreaTexture)));
-                } else {
-                    setBackground((Drawable) null);
-                }
-
-            }
-        };
         btnNewUnit1.addListener(listener);
         btnNewUnit2.addListener(listener);
         btnNewUnit3.addListener(listener);
         initializeGameOverView();
     }
+
+
+    private ClickListener listener = new ClickListener(){
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            super.clicked(event, x, y);
+            String name = event.getListenerActor().getName();
+            if (name.equals(NEW_UNIT_1) && brawlButtons.get(0).isActivated()) {
+                if (nextUnitType == UnitType.RANGED) {
+                    nextUnitType = null;
+                } else {
+                    nextUnitType = UnitType.RANGED;
+                }
+            }
+            if (name.equals(NEW_UNIT_2) && brawlButtons.get(1).isActivated()) {
+                if (nextUnitType == UnitType.SWORDFIGHTER) {
+                    nextUnitType = null;
+                } else {
+                    nextUnitType = UnitType.SWORDFIGHTER;
+                }
+            }
+            if (name.equals(NEW_UNIT_3) && brawlButtons.get(2).isActivated()) {
+                if (nextUnitType == UnitType.KNIGHT) {
+                    nextUnitType = null;
+                } else {
+                    nextUnitType = UnitType.KNIGHT;
+                }
+            }
+
+
+            if (nextUnitType != null) {
+                setBackground(new TextureRegionDrawable(new TextureRegion(nonSpawnAreaTexture)));
+            } else {
+                setBackground((Drawable) null);
+            }
+
+        }
+    };
 
 
     private void initializeGameOverView(){
@@ -141,7 +143,7 @@ public class GameHUD extends Table {
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
         pixmap.setColor(0, 0, 0, 150);
-        //pixmap.drawRectangle(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         pixmap.fillRectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         pixmap.setColor(Color.CLEAR);
         pixmap.fillRectangle((int) (spawnArea.getUpperLeft().x), (int) (spawnArea.getUpperLeft().y),

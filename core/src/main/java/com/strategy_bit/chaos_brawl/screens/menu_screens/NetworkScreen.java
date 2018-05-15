@@ -15,8 +15,8 @@ import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
  */
 public class NetworkScreen extends MenuScreen {
 
-    private final static String HOST_GAME = "Host Game";
-    private final static String CLIENT_GAME = "Connect to Game";
+    private static final String HOST_GAME = "Host Game";
+    private static final String CLIENT_GAME = "Connect to Game";
 
 
 
@@ -47,7 +47,6 @@ public class NetworkScreen extends MenuScreen {
                 String name = event.getListenerActor().getName();
                 if(name.equals(HOST_GAME)){
                     screenManager.showScreen(ScreenEnum.HOST_LOUNGE_SCREEN);
-                    //screenManager.showScreen(ScreenEnum.GAME);
                 }else if(name.endsWith(CLIENT_GAME)){
                     screenManager.showScreen(ScreenEnum.CLIENT_CONNECT_SCREEN);
                 }

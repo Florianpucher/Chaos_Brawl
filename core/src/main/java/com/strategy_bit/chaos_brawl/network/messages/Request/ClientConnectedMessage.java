@@ -7,6 +7,7 @@ public class ClientConnectedMessage implements Message {
     public int id;
 
     public ClientConnectedMessage() {
+        // empty constructor is needed for kryo
     }
 
     public ClientConnectedMessage(String name, int id) {

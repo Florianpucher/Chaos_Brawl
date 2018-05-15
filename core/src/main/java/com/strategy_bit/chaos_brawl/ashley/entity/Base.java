@@ -29,6 +29,5 @@ public class Base extends Entity {
         add(transformComponent);
         add(combatComponent);
         add(teamGameObjectComponent);
-        // add(new BuildingComponent(true));
     }
 }

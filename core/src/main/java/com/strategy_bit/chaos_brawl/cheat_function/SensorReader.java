@@ -11,7 +11,7 @@ import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 public class SensorReader {
 
     private static final float MIN = 1.0f;
-    private Array<Float> accelerations = new Array<Float>();
+    private Array<Float> accelerations = new Array<>();
     private float time = 0;
     private float duration;
     private PlayerController playerController;
@@ -38,8 +38,7 @@ public class SensorReader {
             }
             average = average / accelerations.size;
             if (accelerations.size > 50 && average < 0.5f && time < 5000) {
-                String message = "Cheat Function active!";
-                System.out.println(message);
+                Gdx.app.log("CHEAT", "Cheat Function active!");
                 playerController.setNewRate(5);
                 duration = 10000;
                 accelerations.clear();

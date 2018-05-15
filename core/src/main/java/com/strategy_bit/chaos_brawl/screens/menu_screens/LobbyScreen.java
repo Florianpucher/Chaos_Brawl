@@ -11,10 +11,10 @@ import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHa
  */
 abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandler{
 
-    protected final static String PLAYER_1 = "1";
-    protected final static String PLAYER_2 = "2";
-    protected final static String PLAYER_3 = "3";
-    protected final static String PLAYER_4 = "4";
+    protected static final String PLAYER_1 = "1";
+    protected static final String PLAYER_2 = "2";
+    protected static final String PLAYER_3 = "3";
+    protected static final String PLAYER_4 = "4";
 
     protected Array<TextButton> textButtons;
     protected Array<String> playerNames;
@@ -26,15 +26,9 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
         playerIds=new Array<>();
     }
 
-
-    @Override
-    protected void handleBackKey() {
-        super.handleBackKey();
-    }
-
     public void addClient(String ip,int id){
         playerIds.add(id);
-        System.out.println(id+"\n"+ip);
+
         playerNames.add(ip);
         textButtons.get(0).setText(PLAYER_1);
         textButtons.get(1).setText(PLAYER_2);
@@ -49,7 +43,7 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
         if (playerNames==null){
             return;
         }else{
-            System.out.println(ip);
+
             playerNames.removeValue(ip,true);
         }
         textButtons.get(0).setText(PLAYER_1);

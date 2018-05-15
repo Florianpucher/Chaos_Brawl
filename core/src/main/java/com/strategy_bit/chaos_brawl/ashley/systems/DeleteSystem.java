@@ -4,10 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 /**

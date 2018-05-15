@@ -8,4 +8,5 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
  * @since 26.04.2018
  */
 public class ResourceTickMessage implements Message {
+    // empty constructor is needed for kryo
 }

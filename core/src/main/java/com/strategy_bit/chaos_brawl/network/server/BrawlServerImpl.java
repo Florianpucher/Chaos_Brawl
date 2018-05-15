@@ -34,12 +34,11 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     private BrawlServerListener serverListener;
 
     public BrawlServerImpl(){
-        System.out.println("INIT");
         server = new Server();
         serverListener = new BrawlServerListener(this);
         server.addListener(serverListener);
         serverIsRunning = false;
-        BrawlNetwork network = new BrawlNetwork(this);
+        BrawlNetwork.initializeKryo(this);
     }
 
     @Override
@@ -51,13 +50,13 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     @Override
     public void sendGameInitializingMessage(){
         Connection[] connections = server.getConnections();
-        System.out.println("Server: starting game with "+connections.length+" connections");
+
         int[] playersToSend=new int[connections.length+1];
         for (int i = 0; i < playersToSend.length; i++) {
             playersToSend[i]=i;
         }
         for (int i = 0; i < connections.length; i++) {
-            //int[] playersToSend = new int[]{Network.SERVER_PLAYER, Network.YOUR_CLIENT_CONTROLLER};
+
             for (int j = 0; j < playersToSend.length; j++) {
                 playersToSend[j]=(playersToSend[j]+1)%playersToSend.length;
             }
@@ -96,7 +95,6 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     @Override
     public void closeServer() {
-        //server.close();
         server.stop();
         serverIsRunning=false;
         try {

@@ -12,7 +12,7 @@ import com.strategy_bit.chaos_brawl.managers.ScreenManager;
  * @since 22.03.2018
  */
 
-public class AbstractScreen extends Stage implements Screen {
+public abstract class AbstractScreen extends Stage implements Screen {
 
     protected ScreenManager screenManager;
     protected AssetManager assetManager;
@@ -24,7 +24,7 @@ public class AbstractScreen extends Stage implements Screen {
 
     @Override
     public void show() {
-
+        // declare in sub classes
     }
 
     @Override
@@ -35,26 +35,26 @@ public class AbstractScreen extends Stage implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        // declare in sub classes
     }
 
     @Override
     public void pause() {
-
+        // declare in sub classes
     }
 
     @Override
     public void resume() {
-
+        // declare in sub classes
     }
 
     @Override
     public void hide() {
-
+        // declare in sub classes
     }
 
     public void buildStage(){
-
+        // declare in sub classes
     }
 
     @Override

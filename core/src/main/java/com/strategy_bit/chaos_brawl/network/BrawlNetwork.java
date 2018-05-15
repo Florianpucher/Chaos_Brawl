@@ -27,12 +27,17 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
  */
 public class BrawlNetwork {
 
+
+    private BrawlNetwork() {
+        // Config class
+    }
+
     /**
      *
      * registers all messages
      * @param brawlNetworkInterface network interface that contains Kryonet implementation
      */
-    public BrawlNetwork(BrawlNetworkInterface brawlNetworkInterface) {
+    public static void initializeKryo(BrawlNetworkInterface brawlNetworkInterface){
         Kryo kryo = brawlNetworkInterface.getKryo();
         kryo.register(EntityMovingMessage.class);
         kryo.register(NetworkMemberResponseMessage.class);

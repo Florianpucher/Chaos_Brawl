@@ -23,8 +23,8 @@ import java.util.List;
  */
 public class ClientConnectToScreen extends MenuScreen implements NetworkDiscoveryHandler, NetworkConnectionHandler {
 
-    private final static String REFRESH = "Refresh";
-    private static String DIRECT = "10.0.2.2";
+    private static final String REFRESH = "Refresh";
+    private String direct = "10.0.2.2";
 
 
     private BrawlClient brawlClient;
@@ -41,8 +41,8 @@ public class ClientConnectToScreen extends MenuScreen implements NetworkDiscover
         super.buildStage();
         final TextButton btnHostGame = new TextButton(REFRESH, assetManager.defaultSkin);
         btnHostGame.setName(REFRESH);
-        btnDirectConnect = new TextButton(DIRECT, assetManager.defaultSkin);
-        btnDirectConnect.setName(DIRECT);
+        btnDirectConnect = new TextButton(direct, assetManager.defaultSkin);
+        btnDirectConnect.setName(direct);
 
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
@@ -62,9 +62,9 @@ public class ClientConnectToScreen extends MenuScreen implements NetworkDiscover
                 String name = event.getListenerActor().getName();
                 if (name.equals(REFRESH)) {
                     brawlClient.discoverServers();
-                } else if (name.equals(DIRECT)) {
+                } else if (name.equals(direct)) {
                     try {
-                        brawlClient.connectToServer(DIRECT);
+                        brawlClient.connectToServer(direct);
                         brawlClient.removeNetworkDiscoveryHandler(discoveryHandler);
 
                     } catch (IOException e) {
@@ -81,14 +81,11 @@ public class ClientConnectToScreen extends MenuScreen implements NetworkDiscover
 
     @Override
     public void receiveHosts(List<InetAddress> hostIPs) {
-        for (InetAddress address :
-                hostIPs) {
-            System.out.format("HostAddress: %s \nHostName: %s \n", address.getHostAddress(), address.getHostName());
-        }
+
         if (!hostIPs.isEmpty()) {
-            DIRECT = hostIPs.get(0).getHostAddress();
-            btnDirectConnect.setName(DIRECT);
-            btnDirectConnect.setText(DIRECT);
+            direct = hostIPs.get(0).getHostAddress();
+            btnDirectConnect.setName(direct);
+            btnDirectConnect.setText(direct);
         }
     }
 

@@ -1,7 +1,5 @@
 package com.strategy_bit.chaos_brawl;
 
-import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +12,6 @@ import org.junit.Test;
 public class ChaosBrawlGameTestIntegration {
 
     private ChaosBrawlGame chaosBrawlGame;
-    //Todo run integration test with GdxTestRunner
 
     @Before
     public void initialize() {

@@ -22,5 +22,6 @@ public class NetworkMemberResponseMessage implements Message {
     }
 
     public NetworkMemberResponseMessage() {
+        // empty constructor is needed for kryo
     }
 }

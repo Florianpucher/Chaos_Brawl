@@ -3,14 +3,13 @@ package com.strategy_bit.chaos_brawl;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 
 
 /**
@@ -34,8 +33,14 @@ public class ChaosBrawlGame extends Game {
 		screenManager.showScreen(ScreenEnum.SPLASH_SCREEN);
 		assetManager = AssetManager.getInstance();
 		loadGame = true;
+		// Load assets here
 		Executor executor = Executors.newSingleThreadExecutor();
-		executor.execute(loadAssets);
+		executor.execute(() -> {
+			Gdx.app.postRunnable(() -> {
+				assetManager.loadAssets();
+				loadGame = false;
+			});
+        });
 	}
 
 	public void setScreen(AbstractScreen screen){
@@ -43,6 +48,7 @@ public class ChaosBrawlGame extends Game {
 		this.currentScreen = screen;
 	}
 
+	@Override
 	public AbstractScreen getScreen(){
 		return currentScreen;
 	}
@@ -66,15 +72,4 @@ public class ChaosBrawlGame extends Game {
 		assetManager.music.stop();
 		assetManager.dispose();
 	}
-
-
-	private Runnable loadAssets = new Runnable() {
-		@Override
-		public void run() {
-			Gdx.app.postRunnable(() -> {
-                assetManager.loadAssets();
-                loadGame = false;
-            });
-		}
-	};
 }

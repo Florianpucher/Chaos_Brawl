@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.ashley.entity;
 
 public class HpBar {
 
+    //TODO Engin add this class to project or remove it
     private int hpBarSizeX;
     private int hpBarSizeY;
     private int hpBarValue;

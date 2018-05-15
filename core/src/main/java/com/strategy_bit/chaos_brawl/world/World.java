@@ -1,7 +1,6 @@
 package com.strategy_bit.chaos_brawl.world;
 
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -20,7 +19,6 @@ import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
@@ -32,7 +30,6 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -73,7 +70,7 @@ public class World implements InputHandler {
         playerControllers = new PawnController[players];
         bases = new Entity[players];
         tower = new Entity[players];
-        explosions = new ArrayList<Explosion>();
+        explosions = new ArrayList<>();
         createEngine();
         createWorld(map);
     }
@@ -250,7 +247,6 @@ public class World implements InputHandler {
         int baseIndex = checkIfClickHappensOnBase(targetLocation, controller);
         if(baseIndex >= 0){
             controller.triggeredEvent(EventType.CLICKED_ON_ENEMY_BASE, baseIndex);
-            return;
         }
     }
 
@@ -286,8 +282,7 @@ public class World implements InputHandler {
         //Move entity to enemy player
         if(movementComponent != null){
             //TODO add pathfinding here Florian but maybe with ThreadPool implementation!!!
-            Array<Vector2> path=new Array<Vector2>();
-            path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+            Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
             movementComponent.setPath(path);
 
         }
@@ -302,7 +297,7 @@ public class World implements InputHandler {
         if(entityType.equals(UnitType.MAINBUILDING)){
             bases[teamID] = entity;
         }else if (entityType.equals(UnitType.KNIGHT)) {
-            AssetManager.getInstance().draw_sword.play(1f);
+            AssetManager.getInstance().drawSword.play(1f);
         } else if (entityType.equals(UnitType.SWORDFIGHTER)) {
             AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
         }
@@ -318,10 +313,8 @@ public class World implements InputHandler {
 
     }
     public long getIdOfUnit(Entity unit){
-        Iterator<Map.Entry<Long,Entity>> iterator = units.entrySet().iterator();
-        while (iterator.hasNext()){
-            Map.Entry<Long, Entity> entry = iterator.next();
-            if(entry.getValue().equals(unit)){
+        for (Map.Entry<Long, Entity> entry : units.entrySet()) {
+            if (entry.getValue().equals(unit)) {
                 return entry.getKey();
             }
         }

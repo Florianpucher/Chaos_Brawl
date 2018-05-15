@@ -10,5 +10,6 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
 public class NetworkMembersRequestMessage implements Message {
 
     public NetworkMembersRequestMessage() {
+        // empty constructor is needed for kryo
     }
 }

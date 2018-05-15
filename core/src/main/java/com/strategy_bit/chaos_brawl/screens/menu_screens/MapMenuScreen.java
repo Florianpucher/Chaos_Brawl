@@ -13,10 +13,9 @@ import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
  */
 
 public class MapMenuScreen extends MenuScreen{
-    private final static String CHOOSE_MAP = "Choose Map";
-    private final static String MAP_1 = "MAP 1";
-    private final static String MAP_2 = "MAP 2";
-    private final static String MAP_3 = "MAP 3";
+    private static final String MAP_1 = "MAP 1";
+    private static final String MAP_2 = "MAP 2";
+    private static final String MAP_3 = "MAP 3";
 
 
     @Override

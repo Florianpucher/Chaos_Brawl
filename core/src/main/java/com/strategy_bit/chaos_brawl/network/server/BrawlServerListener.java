@@ -3,17 +3,14 @@ package com.strategy_bit.chaos_brawl.network.server;
 import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.messages.request.ClientConnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
-import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.PlayerSelectedNewTargetMessage;
 import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
-import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
 public class BrawlServerListener extends Listener implements BrawlConnector {
@@ -33,7 +30,6 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
             try {
                 connectionHandler.anotherClientConnected(connection.getRemoteAddressTCP().getHostName(), connection.getID());
             }catch (IllegalStateException e){
-                System.out.println(e.getMessage());
                 informOther=false;
                 //kick client
                 connection.close();
@@ -53,7 +49,6 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
             try {
                 connectionHandler.anotherClientDisconnected(connection.getID());
             }catch (IllegalStateException e){
-                System.out.println(e.getMessage());
                 informOther=false;
             }
         }

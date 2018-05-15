@@ -23,5 +23,6 @@ public class EntitySpawnMessage implements Message {
     }
 
     public EntitySpawnMessage() {
+        // empty constructor is needed for kryo
     }
 }

@@ -14,18 +14,9 @@ import com.badlogic.gdx.utils.Queue;
  */
 
 public class MovementComponent implements Component {
-    //TODO maybe remove targetLocation and replace it completely with path
-    /**
-     * Will be changed over time
-     */
-    private Vector2 targetLocation;
 
-    /**
-     * will be changed by movementsystem
-     * <br>
-     * do not change
-     */
-    private Vector2 velocity;
+
+    private TransformComponent transformComponent;
 
     /**
      * speed of an entity
@@ -42,31 +33,18 @@ public class MovementComponent implements Component {
 
     public MovementComponent(float speed, TransformComponent transformComponent) {
         this.speed = speed;
+        this.transformComponent = transformComponent;
         // initial target is current position
-        this.targetLocation = transformComponent.getPosition();
-        this.velocity = new Vector2(0,0);
-        path=new Queue<Vector2>();
+        path= new Queue<>();
     }
 
     public Vector2 getTargetLocation() {
         if(path.size<1) {
-            return targetLocation;
+            return transformComponent.getPosition();
         }
         else{
             return path.last();
         }
-    }
-
-    public void setTargetLocation(Vector2 targetLocation) {
-            this.targetLocation = targetLocation;
-    }
-
-    public Vector2 getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(Vector2 velocity) {
-        this.velocity = velocity;
     }
 
     public float getSpeed() {
@@ -78,7 +56,7 @@ public class MovementComponent implements Component {
     }
 
     public void popCurTarget(){
-        if(!(path.size<1)) {
+        if((path.size>0)) {
             path.removeLast();
         }
     }
@@ -95,15 +73,14 @@ public class MovementComponent implements Component {
     }
 
     public boolean hasNoPath(){
-        if(path.size<1){
-            return true;
-        }else {
-            return false;
-        }
+        return path.size < 1;
     }
 
     public void addToPath(Vector2 point){
         this.path.addFirst(point);
     }
 
+    public void setTargetLocation(Vector2 targetLocation) {
+        path.addFirst(targetLocation);
+    }
 }

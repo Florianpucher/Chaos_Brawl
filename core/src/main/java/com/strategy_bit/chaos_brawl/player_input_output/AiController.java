@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @version 1.0
  * @since 19.04.2018
  */
-public class AiController extends PawnController {
+public class AiController extends PawnController implements Runnable{
 
     private boolean isRunning;
     private ReentrantLock lock;
@@ -34,7 +34,7 @@ public class AiController extends PawnController {
     public void startAI() {
         isRunning = true;
         Executor aiExecutor = Executors.newSingleThreadExecutor();
-        aiExecutor.execute(aiRunnable);
+        aiExecutor.execute(this);
     }
 
     public void resumeAI() {
@@ -55,51 +55,45 @@ public class AiController extends PawnController {
 
     }
 
-
-    private Runnable aiRunnable = new Runnable() {
-        @Override
-        public void run() {
-            try {
-
-
-                while (isRunning) {
-                    int xFrom;
-                    int xTo;
-                    if (spawnArea.getLowerLeft().x < spawnArea.getLowerRight().x) {
-                        xFrom = (int) spawnArea.getLowerLeft().x;
-                        xTo = (int) spawnArea.getLowerRight().x;
-                    } else {
-                        xTo = (int) spawnArea.getLowerLeft().x;
-                        xFrom = (int) spawnArea.getLowerRight().x;
-                    }
-
-                    int x = MathUtils.random(xFrom, xTo);
-                    int y = (int) MathUtils.random(spawnArea.getLowerLeft().y, spawnArea.getUpperLeft().y);
-                    final Vector2 spawnPosition = new Vector2(x, y);
-                    Gdx.app.postRunnable(() -> {
-                        System.out.println("AI adds object");
-                        if (spawnUnit(UnitType.RANGED)) {
-                            inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.RANGED, teamID);
-                        }
-                    });
-
-
-                    Thread.sleep(3000);
-
-                    if (goIntoPause) {
-
-                        lock.lock();
-                        lock.unlock();
-                    }
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
     @Override
     public void gameOver(boolean win) {
         isRunning = false;
+    }
+
+    @Override
+    public void run() {
+        try {
+            while (isRunning) {
+                int xFrom;
+                int xTo;
+                if (spawnArea.getLowerLeft().x < spawnArea.getLowerRight().x) {
+                    xFrom = (int) spawnArea.getLowerLeft().x;
+                    xTo = (int) spawnArea.getLowerRight().x;
+                } else {
+                    xTo = (int) spawnArea.getLowerLeft().x;
+                    xFrom = (int) spawnArea.getLowerRight().x;
+                }
+
+                int x = MathUtils.random(xFrom, xTo);
+                int y = (int) MathUtils.random(spawnArea.getLowerLeft().y, spawnArea.getUpperLeft().y);
+                final Vector2 spawnPosition = new Vector2(x, y);
+                Gdx.app.postRunnable(() -> {
+                    if (spawnUnit(UnitType.RANGED)) {
+                        inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.RANGED, teamID);
+                    }
+                });
+
+
+                Thread.sleep(3000);
+
+                if (goIntoPause) {
+
+                    lock.lock();
+                    lock.unlock();
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

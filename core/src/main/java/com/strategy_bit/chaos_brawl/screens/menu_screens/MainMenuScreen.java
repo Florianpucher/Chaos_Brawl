@@ -17,8 +17,8 @@ import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
  */
 public class MainMenuScreen extends MenuScreen {
 
-    private final static String NEW_GAME = "New GAME";
-    private final static String MULTIPLAYER = "Multiplayer";
+    private static final String NEW_GAME = "New GAME";
+    private static final String MULTIPLAYER = "Multiplayer";
 
     @Override
     public void buildStage() {

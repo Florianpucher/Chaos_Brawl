@@ -25,26 +25,21 @@ import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES
 public class Board implements BoardInterface {
 
     private Tile[][] tileBoard;
-    private Vector2 tileSize;
-    float multiplicandX = FRUSTUM_WIDTH / BOARD_WIDTH;
-    float multiplicandY = FRUSTUM_HEIGHT / BOARD_HEIGHT;
+
+    private float multiplicandX = FRUSTUM_WIDTH / BOARD_WIDTH;
+    private float multiplicandY = FRUSTUM_HEIGHT / BOARD_HEIGHT;
 
     public Board(Engine engine, int map) {
         tileBoard = new Tile[BOARD_HEIGHT][BOARD_WIDTH];
-        Vector2 origin = new Vector2(0, 0);
 
         int[][] mapArray = new int[BOARD_HEIGHT][BOARD_WIDTH];
 
         TextureRegion defaultTile = AssetManager.getInstance().defaultTile;
         Vector2 size = new Vector2(multiplicandX / (defaultTile.getRegionWidth() * PIXELS_TO_METRES), multiplicandY / (defaultTile.getRegionHeight() * PIXELS_TO_METRES));
-        System.out.println(size);
-        tileSize = new Vector2(multiplicandX, multiplicandY);
+
         Array<FileHandle> maps = AssetManager.getInstance().maps;
         //TODO fix this
         map = map-1;
-        if(map >= maps.size){
-            throw new UnsupportedOperationException("Map not found");
-        }
         mapArray = fileReader(maps.get(map).readString(), mapArray);
         matrixToBoard(mapArray, size);
         createTileBoard(engine);
@@ -60,8 +55,6 @@ public class Board implements BoardInterface {
 
     private int[][] fileReader(String file, int[][] mapArray) {
         try {
-            //BufferedReader reader = new BufferedReader(new FileReader(file));
-            //String line;
             Scanner scanner = new Scanner((file));
             for (int i = 0; i < BOARD_HEIGHT; i++) {
                 for (int j = 0; j < BOARD_WIDTH; j++) {

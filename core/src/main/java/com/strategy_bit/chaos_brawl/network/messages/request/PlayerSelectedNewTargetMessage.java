@@ -13,6 +13,7 @@ public class PlayerSelectedNewTargetMessage implements Message {
     public int targetTeamID;
 
     public PlayerSelectedNewTargetMessage() {
+        // empty constructor is needed for kryo
     }
 
     public PlayerSelectedNewTargetMessage(int playerTeamID, int targetTeamID) {

@@ -8,7 +8,6 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -22,11 +21,11 @@ import java.util.Map;
 
 public class MyEngine extends Engine {
 
-    protected HashMap<Long, Entity> units;
-    //Only for multipPlayerGames
-    protected MultiplayerInputHandler inputHandler;
+    private Map<Long, Entity> units;
+    //Only for multiPlayerGames
+    private MultiplayerInputHandler inputHandler;
 
-    public MyEngine(HashMap<Long, Entity> units) {
+    public MyEngine(Map<Long, Entity> units) {
         this.units = units;
     }
 

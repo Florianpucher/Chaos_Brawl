@@ -44,7 +44,7 @@ public abstract class PawnController {
         this.inputHandler = inputHandler;
         this.spawnArea = spawnArea;
         this.teamID = teamID;
-        this.resources = new ArrayList<Resource>();
+        this.resources = new ArrayList<>();
         createResource();
     }
 

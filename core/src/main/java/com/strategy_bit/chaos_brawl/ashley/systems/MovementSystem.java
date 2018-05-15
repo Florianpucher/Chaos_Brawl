@@ -7,8 +7,8 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
@@ -18,8 +18,8 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
  * <br>
  * handled components
  * <ul>
- *     <li>MovementComponent</li>
- *     <li>TransformComponent</li>
+ * <li>MovementComponent</li>
+ * <li>TransformComponent</li>
  * </ul>
  *
  * @author AIsopp
@@ -37,25 +37,21 @@ public class MovementSystem extends IteratingSystem {
         super(Family.all(TransformComponent.class, MovementComponent.class).get());
         mTransformComponent = ComponentMapper.getFor(TransformComponent.class);
         mMovementComponent = ComponentMapper.getFor(MovementComponent.class);
-        mCombatComponent=ComponentMapper.getFor(CombatComponent.class);
+        mCombatComponent = ComponentMapper.getFor(CombatComponent.class);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        CombatComponent combatComponent=mCombatComponent.get(entity);
-        if (combatComponent!=null){
-            //Unit is attacking
-            if(combatComponent.isEngagedInCombat()){
-                //stop moving
-                return;
-            }
+        CombatComponent combatComponent = mCombatComponent.get(entity);
+        if (combatComponent != null && combatComponent.isEngagedInCombat()) {
+            return;
         }
         TransformComponent transform = mTransformComponent.get(entity);
         MovementComponent movementComponent = mMovementComponent.get(entity);
         // get actual position of entity
         Vector2 position = transform.getPosition();
 
-        updateTarget(movementComponent,position);
+        updateTarget(movementComponent, position);
         //get target position of entity
         Vector2 targetLocation = movementComponent.getTargetLocation();
 
@@ -70,14 +66,13 @@ public class MovementSystem extends IteratingSystem {
 
     }
 
-    public float getRotation(Vector2 v){
-        float angle = (float) (Math.atan2(v.y, v.x)) + (float) (Math.PI/2.0);
-        return angle;
+    public float getRotation(Vector2 v) {
+        return (float) (Math.atan2(v.y, v.x)) + (float) (Math.PI / 2.0);
     }
 
-    private void updateTarget(MovementComponent movementComponent, Vector2 position){
-        Vector2 targetLocation=movementComponent.getTargetLocation();
-        if(VectorMath.distance(targetLocation,position)<0.2){
+    private void updateTarget(MovementComponent movementComponent, Vector2 position) {
+        Vector2 targetLocation = movementComponent.getTargetLocation();
+        if (VectorMath.distance(targetLocation, position) < 0.2) {
             movementComponent.popCurTarget();
         }
     }

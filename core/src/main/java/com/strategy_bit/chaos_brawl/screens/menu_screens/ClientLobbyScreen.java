@@ -15,6 +15,7 @@ import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersReque
  */
 public class ClientLobbyScreen extends LobbyScreen{
 
+    //TODO start game here
     private BrawlClient brawlClient;
 
     public ClientLobbyScreen(BrawlClient brawlClient) {
@@ -58,11 +59,6 @@ public class ClientLobbyScreen extends LobbyScreen{
 
     public void returnToSearch(){
         screenManager.switchToLastScreen();
-    }
-
-    @Override
-    protected void handleBackKey() {
-        super.handleBackKey();
     }
 
     @Override

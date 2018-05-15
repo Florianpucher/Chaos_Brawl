@@ -8,13 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.BulletComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
-import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.World;
-
-import java.util.HashMap;
 
 /**
  * @author AIsopp
@@ -53,7 +50,7 @@ public class BulletSystem extends IteratingSystem {
             TeamGameObjectComponent enemyTeamGameObjectComponent = world.getUnit(bulletComponent.getTargetId()).getComponent(TeamGameObjectComponent.class);
             enemyTeamGameObjectComponent.setHitPoints(enemyTeamGameObjectComponent.getHitPoints() - bulletComponent.getDamage());
             getEngine().removeEntity(entity);
-            AssetManager.getInstance().hit_arrow.play(1f);
+            AssetManager.getInstance().hitArrow.play(1f);
         }
     }
 

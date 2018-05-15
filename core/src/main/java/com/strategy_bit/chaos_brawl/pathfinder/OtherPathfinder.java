@@ -9,8 +9,6 @@ import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.WalkAbleAreas;
 import com.strategy_bit.chaos_brawl.world.BoardInterface;
 
-import java.util.Iterator;
-
 /**
  * @author AIsopp
  * @version 1.0
@@ -85,7 +83,6 @@ public class OtherPathfinder {
 
         indexedAStarPathFinder = new IndexedAStarPathFinder<>(nodeIndexedGraph);
         heuristic = new OtherHeuristic();
-        //otherNodePathFinderRequest.
     }
 
     /**
@@ -95,23 +92,17 @@ public class OtherPathfinder {
      * @return a Vector2 array containing all way points from start to goal in world coordinates
      */
     public Array<Vector2> calculatePath(Vector2 start, Vector2 goal){
-        System.out.println(start);
-        System.out.println(goal);
         OtherNode startNode = getNode(start);
         OtherNode endNode = getNode(goal);
         ResultPath path = new ResultPath();
-        //TODO check if this solution is working
-        PathFinderRequest<OtherNode> otherNodePathFinderRequest = new PathFinderRequest<OtherNode>(startNode, endNode, heuristic, path);
+
+        PathFinderRequest<OtherNode> otherNodePathFinderRequest = new PathFinderRequest<>(startNode, endNode, heuristic, path);
         otherNodePathFinderRequest.statusChanged = true;
-        boolean found = indexedAStarPathFinder.search(otherNodePathFinderRequest, 1000000000);
-        if(!found) {
-            System.out.println("Could not find");
-        }
-        //otherNodePathFinderRequest.search(indexedAStarPathFinder, 1000000000);
+        indexedAStarPathFinder.search(otherNodePathFinderRequest, 1000000000);
+
+
         Array<Vector2> pathToReturn = new Array<>();
-        Iterator<OtherNode> nodeIterator = path.iterator();
-        while (nodeIterator.hasNext()){
-            OtherNode node = nodeIterator.next();
+        for (OtherNode node : path) {
             Vector2 worldPosition = getWorldCoordinateOfNode(node);
             pathToReturn.add(worldPosition);
         }
@@ -123,9 +114,8 @@ public class OtherPathfinder {
      *
      * @param worldCoordinate the world coordinates to check
      * @return a Node representing the tile that includes the worldCoordinate
-     * @throws IllegalStateException if no node could be found
      */
-    private OtherNode getNode(Vector2 worldCoordinate) throws IllegalStateException{
+    private OtherNode getNode(Vector2 worldCoordinate){
         Vector2 indexVector = boardInterface.getTileBoardPositionDependingOnWorldCoordinates(worldCoordinate);
         for (OtherNode node :
                 graphNodes) {

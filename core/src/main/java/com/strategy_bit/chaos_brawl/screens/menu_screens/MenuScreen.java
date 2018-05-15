@@ -3,7 +3,6 @@ package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 
 /**
@@ -25,8 +24,7 @@ abstract class MenuScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-        Gdx.input.setInputProcessor((Stage)this);
-        System.out.println(Gdx.input.getInputProcessor().getClass().getName());
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override

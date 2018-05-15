@@ -20,7 +20,7 @@ import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 public class BrawlClientListener extends Listener implements BrawlConnector {
     private BrawlClientImpl brawlClient;
     private MultiplayerInputHandler inputHandler;
-    public BrawlClientListener(BrawlClientImpl brawlClient) {
+    BrawlClientListener(BrawlClientImpl brawlClient) {
         this.brawlClient=brawlClient;
     }
     private NetworkConnectionHandler connectionHandler;
@@ -44,52 +44,79 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
     @Override
     public void received(final Connection connection,final Object object) {
         Gdx.app.postRunnable(() -> {
-
-            if (object instanceof EntityMovingMessage) {
-                EntityMovingMessage movingMessage = (EntityMovingMessage) object;
-                inputHandler.moveEntityLocal(movingMessage.entityID, movingMessage.toLibGdxArray());
-            }
-            else if (object instanceof ResourceTickMessage){
-                inputHandler.getTick();
-            }
-
-            else if (object instanceof EntitySpawnMessage){
-                EntitySpawnMessage entitySpawnMessage=(EntitySpawnMessage) object;
-                inputHandler.createEntityLocal(entitySpawnMessage.position,entitySpawnMessage.entityTypeId,entitySpawnMessage.teamId, entitySpawnMessage.unitID);
-            }else if(object instanceof EntityDeleteMessage){
-                EntityDeleteMessage deleteMessage = (EntityDeleteMessage) object;
-                inputHandler.deleteUnitLocal(deleteMessage.unitID);
-            }
-            else if (object instanceof NetworkMemberResponseMessage) {
-                if(connectionHandler != null){
-                    int i=1;
-                    for (String ip:
-                            ((NetworkMemberResponseMessage) object).members) {
-                        connectionHandler.anotherClientConnected(ip, i++);
-                    }
-                }
-            }else if(object instanceof InitializeGameMessage) {
-                InitializeGameMessage initializeGameMessage = (InitializeGameMessage) object;
-                //TODO move screen switch out of networking
-                connectionHandler = null;
-                ScreenManager screenManager = ScreenManager.getInstance();
-                screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, brawlClient, initializeGameMessage.controllers);
-            }
-            else if(object instanceof ClientConnectedMessage) {
-                ClientConnectedMessage clientConnectedMessage = (ClientConnectedMessage) object;
-                if(connectionHandler != null){
-                    connectionHandler.anotherClientConnected(clientConnectedMessage.name,clientConnectedMessage.id);
-                }
-            }
-            else if (object instanceof ClientDisconnectedMessage){
-                ClientDisconnectedMessage clientDisconnectedMessage = (ClientDisconnectedMessage) object;
-                if(connectionHandler != null){
-                    connectionHandler.anotherClientDisconnected(clientDisconnectedMessage.id);
+            if(!handleGameMessages(object)){
+                if(!handleSetupMessages(object)){
+                    Gdx.app.log("NETWORK","Received unknown message");
                 }
             }
         });
+    }
 
+    /**
+     * consists all methods for messages that should interact with the game
+     * @param object message
+     * @return true if message is handled by this method
+     */
+    private boolean handleGameMessages(final Object object){
+        if (object instanceof EntityMovingMessage) {
+            EntityMovingMessage movingMessage = (EntityMovingMessage) object;
+            inputHandler.moveEntityLocal(movingMessage.entityID, movingMessage.toLibGdxArray());
+            return true;
+        }
+        else if (object instanceof ResourceTickMessage){
+            inputHandler.getTick();
+            return true;
+        }
 
+        else if (object instanceof EntitySpawnMessage){
+            EntitySpawnMessage entitySpawnMessage=(EntitySpawnMessage) object;
+            inputHandler.createEntityLocal(entitySpawnMessage.position,entitySpawnMessage.entityTypeId,entitySpawnMessage.teamId, entitySpawnMessage.unitID);
+            return true;
+        }else if(object instanceof EntityDeleteMessage){
+            EntityDeleteMessage deleteMessage = (EntityDeleteMessage) object;
+            inputHandler.deleteUnitLocal(deleteMessage.unitID);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * consists all methods for messages that should interact with the game setup
+     * @param object message
+     * @return true if message is handled by this method
+     */
+    private boolean handleSetupMessages(final Object object){
+        if (object instanceof NetworkMemberResponseMessage) {
+            if(connectionHandler != null){
+                int i=1;
+                for (String ip:
+                        ((NetworkMemberResponseMessage) object).members) {
+                    connectionHandler.anotherClientConnected(ip, i++);
+                }
+            }
+            return true;
+        }else if(object instanceof InitializeGameMessage) {
+            InitializeGameMessage initializeGameMessage = (InitializeGameMessage) object;
+            connectionHandler = null;
+            ScreenManager screenManager = ScreenManager.getInstance();
+            screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, brawlClient, initializeGameMessage.controllers);
+            return true;
+        }
+        else if(object instanceof ClientConnectedMessage) {
+            ClientConnectedMessage clientConnectedMessage = (ClientConnectedMessage) object;
+            if(connectionHandler != null){
+                connectionHandler.anotherClientConnected(clientConnectedMessage.name,clientConnectedMessage.id);
+            }
+            return true;
+        }
+        else if (object instanceof ClientDisconnectedMessage){
+            ClientDisconnectedMessage clientDisconnectedMessage = (ClientDisconnectedMessage) object;
+            if(connectionHandler != null){
+                connectionHandler.anotherClientDisconnected(clientDisconnectedMessage.id);
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override

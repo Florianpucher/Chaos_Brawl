@@ -64,7 +64,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         teamGameObjectMapper = ComponentMapper.getFor(TeamGameObjectComponent.class);
         //initialize additional used components
         batch = new SpriteBatch();
-        renderQueue = new Array<Entity>();
+        renderQueue = new Array<>();
         comparator = new ZComparator();
         hpBarStage = new Stage();
         //initialize camera with size
@@ -83,7 +83,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         super.update(deltaTime);
 
 
-        //Stage stage = new Stage();
+
         //sort entity by z-index
         //entities with lower z-index will be rendered before entities with higher z-index
         renderQueue.sort(comparator);
@@ -136,7 +136,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
 
         batch.end();
         hpBarStage.draw();
-        //hpBarStage.act();
+
 
         //clear render queue
         renderQueue.clear();

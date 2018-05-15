@@ -7,9 +7,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public interface BoardInterface {
-    //public BoardType getBoardType();
+
     public Tile[][] getTileBoard();
-    //TODO Florian let the board
+
     /**
      * returns a matrix like<br>
      * current implementation 0 entries stays for not walkable and 1 for walkable<br>

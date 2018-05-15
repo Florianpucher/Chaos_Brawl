@@ -69,7 +69,6 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     @Override
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
-        //super.createEntityWorldCoordinates(worldCoordinates, entityType, teamID);
         if(isServer){
 
             PawnController spawnerController = playerControllers[teamID];
@@ -119,20 +118,12 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     }
 
     @Override
-    public void sendTouchInput(Vector2 screenCoordinates, PawnController controller) {
-
-        super.sendTouchInput(screenCoordinates, controller);
-    }
-
-    @Override
     protected int checkIfClickHappensOnBase(Vector2 targetLocation, PawnController controller) {
         int baseIndex = super.checkIfClickHappensOnBase(targetLocation, controller);
-        if(isServer){
-            return baseIndex;
-        }else{
+        if(!isServer){
             multiplayer.sendNewTargetMsg(controller.getTeamID(), baseIndex);
-            return baseIndex;
         }
+        return baseIndex;
     }
 
     @Override

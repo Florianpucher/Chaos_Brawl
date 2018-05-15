@@ -9,4 +9,9 @@ public class ZIndex {
     public static final int BACKGROUND = 0;
     public static final int FOREGROUND = 1;
     public static final int DEFAULT = 1;
+
+
+    private ZIndex(){
+        // Do not initialize
+    }
 }

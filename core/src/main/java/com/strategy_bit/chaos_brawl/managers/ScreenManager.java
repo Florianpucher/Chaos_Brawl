@@ -2,13 +2,12 @@ package com.strategy_bit.chaos_brawl.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ChaosBrawlGame;
 import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 /*
 Updated on 11.04.2018 by Alexander Isopp
 added:
@@ -29,16 +28,13 @@ public class ScreenManager {
 
     // Reference to game
     private ChaosBrawlGame game;
-    private Stack<ScreenEnum> lastScreens;
-    //private ScreenEnum[] screenThatShouldNotBeAddedToStack;
+    private Deque<ScreenEnum> lastScreens;
     private ScreenEnum currentScreenEnum;
 
     // Singleton: private constructor
     private ScreenManager() {
-        super();
-        lastScreens = new Stack<ScreenEnum>();
-        //screenThatShouldNotBeAddedToStack = new ScreenEnum[]{ScreenEnum.SPLASH_SCREEN,ScreenEnum.GAME};
-    }
+        lastScreens = new ArrayDeque<>();
+}
 
     /**
      * Singleton implementation for ScreenManager
@@ -89,7 +85,7 @@ public class ScreenManager {
     }
 
     /**
-     * changes the screen and clears the screen enum
+     * changes the screen and clears the screen stack
      *
      * @param screenEnum the type of screen that will be shown
      * @param params     optional parameters that needs to be passed to new screen
@@ -128,10 +124,5 @@ public class ScreenManager {
         }
         game.setScreen(newScreen);
         currentScreenEnum = screenEnum;
-    }
-
-
-    public AbstractScreen getCurrentScreen(){
-        return game.getScreen();
     }
 }

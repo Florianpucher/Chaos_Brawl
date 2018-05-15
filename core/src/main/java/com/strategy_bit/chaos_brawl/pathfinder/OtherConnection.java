@@ -34,7 +34,7 @@ public class OtherConnection implements Connection<OtherNode> {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null || !(o instanceof OtherConnection)){
+        if(!(o instanceof OtherConnection)){
             return false;
         }
 

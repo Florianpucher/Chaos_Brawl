@@ -23,7 +23,6 @@ public class Tower extends Entity {
         add(transformComponent);
         add(combatComponent);
         add(teamGameObjectComponent);
-        // add(new BuildingComponent(true));
     }
 
 }

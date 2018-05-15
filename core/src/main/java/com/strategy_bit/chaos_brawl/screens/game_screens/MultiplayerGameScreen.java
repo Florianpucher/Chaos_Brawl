@@ -1,6 +1,5 @@
 package com.strategy_bit.chaos_brawl.screens.game_screens;
 
-import com.strategy_bit.chaos_brawl.config.Network;
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
@@ -12,7 +11,7 @@ import com.strategy_bit.chaos_brawl.world.MultiplayerWorld;
 
 public class MultiplayerGameScreen extends GameScreen {
 
-    //private MultiplayerWorld manager;
+
     private BrawlMultiplayer brawlMultiplayer;
     private BrawlConnector listener;
     private int player;
@@ -43,17 +42,12 @@ public class MultiplayerGameScreen extends GameScreen {
     }
 
     @Override
-    public void render(float delta) {
-        super.render(delta);
-    }
-
-    @Override
     protected void initializeGame(){
         for (int i = 0; i < controllers.length; i++) {
             if(i == player){
-                controller = new PlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
-                manager.setPlayerController(i, controller);
-                controllers[i] = controller;
+                playerController = new PlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
+                manager.setPlayerController(i, playerController);
+                controllers[i] = playerController;
             }else{
                 PawnController otherPlayerController = new OtherPlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
                 controllers[i] = otherPlayerController;

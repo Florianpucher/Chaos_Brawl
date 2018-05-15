@@ -15,6 +15,7 @@ public class InitializeGameMessage implements Message {
     }
 
     public InitializeGameMessage() {
+        // empty constructor is needed for kryo
 
     }
 }

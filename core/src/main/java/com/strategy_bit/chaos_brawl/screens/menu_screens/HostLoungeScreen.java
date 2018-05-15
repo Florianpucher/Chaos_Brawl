@@ -20,7 +20,7 @@ import java.io.IOException;
  */
 public class HostLoungeScreen extends MenuScreen {
 
-    private final static String START_SERVER = "Start Server";
+    private static final String START_SERVER = "Start Server";
 
 
     private BrawlServer brawlServer;

@@ -11,7 +11,6 @@ public class OtherHeuristic implements Heuristic<OtherNode>{
 
     @Override
     public float estimate(OtherNode node, OtherNode endNode) {
-        //TODO check if this calculation does no errors
         return node.calculateDistanceToOtherNode(endNode);
     }
 }

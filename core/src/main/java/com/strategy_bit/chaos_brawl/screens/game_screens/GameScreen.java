@@ -5,9 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.strategy_bit.chaos_brawl.player_input_output.AiController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
+import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.world.World;
-import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
 /**
  * gamescreen implementation
@@ -19,7 +19,7 @@ import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 public class GameScreen extends AbstractScreen {
 
     protected World manager;
-    protected PlayerController controller;
+    protected PlayerController playerController;
     private int map;
     protected PawnController[] controllers;
     public GameScreen(int map) {
@@ -36,11 +36,11 @@ public class GameScreen extends AbstractScreen {
     protected void initializeGame(){
         manager = new World(map,2);
         controllers = new PawnController[2];
-        controller = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0));
-        controllers[0] = controller;
+        playerController = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0));
+        controllers[0] = playerController;
         AiController otherPlayerController = new AiController(1,manager, manager.createSpawnAreaForPlayer(1));
         controllers[1] = otherPlayerController;
-        manager.setPlayerController(0, controller);
+        manager.setPlayerController(0, playerController);
 
         manager.setPlayerController(1,otherPlayerController);
 
@@ -59,10 +59,10 @@ public class GameScreen extends AbstractScreen {
         super.show();
         //TODO input needs to be changed
         // The order of adding the input processors plays an important role!!!
-        controller.addGameHUD(this);
+        playerController.addGameHUD(this);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
-        inputMultiplexer.addProcessor(controller);
+        inputMultiplexer.addProcessor(playerController);
         Gdx.input.setInputProcessor(inputMultiplexer);
         for (PawnController controller :
              controllers) {
@@ -97,7 +97,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        controller.render(delta);
+        playerController.render(delta);
         manager.render();
         super.render(delta);
     }
@@ -117,7 +117,7 @@ public class GameScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
         manager.dispose();
-        controller.dispose();
+        playerController.dispose();
     }
 
 

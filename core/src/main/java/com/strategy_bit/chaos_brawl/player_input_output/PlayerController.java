@@ -1,5 +1,6 @@
 package com.strategy_bit.chaos_brawl.player_input_output;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -60,16 +61,15 @@ public class PlayerController extends PawnController implements InputProcessor {
         if (gameHUD != null) {
             current = gameHUD.getUnitToSpawn();
             if (current != null && spawnArea.checkIfVectorIsInside(screenCoordinates)) {
-                System.out.println("Click");
                 if (spawnUnit(current)) {
                     inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
                 }
-                return false;
+                return true;
             }
         }
-
         if(current == null){
             inputHandler.sendTouchInput(screenCoordinates, this);
+            return true;
         }
         return false;
     }
@@ -129,6 +129,7 @@ public class PlayerController extends PawnController implements InputProcessor {
         }
     }
 
+    @Override
     public void gameOver(boolean win) {
         if(gameHUD != null){
             gameHUD.showWinningScreen(win);
@@ -141,7 +142,7 @@ public class PlayerController extends PawnController implements InputProcessor {
         if(type == EventType.CLICKED_ON_ENEMY_BASE){
             int targetIndex = (Integer) params[0];
             setCurrentTargetTeam(targetIndex);
-            System.out.println("New target " + targetIndex);
+            Gdx.app.log("PLAYER_CONTROLLER", String.valueOf(targetIndex));
         }
     }
 }

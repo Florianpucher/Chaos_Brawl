@@ -15,6 +15,6 @@ public class EntityDeleteMessage implements Message{
     }
 
     public EntityDeleteMessage(){
-
+        // empty constructor is needed for kryo
     }
 }

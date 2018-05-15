@@ -44,7 +44,7 @@ public class Resource {
     public void setTeamId(int teamId) {
         this.teamId = teamId;
     }
-    synchronized public  boolean  add(double a){
+    public synchronized boolean  add(double a){
         if(a<0&&-a>getResourceAmount()){
             return false;
         }

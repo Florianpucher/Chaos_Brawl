@@ -9,13 +9,12 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
  * @version 1.0
  * @since 15.03.2018
  */
-//TODO add more methods for interaction with pawnControllers and his subclasses
 public interface InputHandler {
 
     /**
      * moves an entity to the screenCoordinates
      * @param screenCoordinates moves an entity to these screenCoordinates
-     * @param controller the controller that triggered the touch
+     * @param controller the playerController that triggered the touch
      */
     void sendTouchInput(Vector2 screenCoordinates, PawnController controller);
 

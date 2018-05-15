@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Random;
+
 /**
  * manager for holding references to assets
  *
@@ -45,16 +47,15 @@ public class AssetManager {
     public Array<FileHandle> maps;
     public TextureRegion ballistaTowerSkin;
     public TextureRegion mainTowerSkin;
-    public TextureRegion wallSkin;
     public Texture victoryScreen;
     public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
-    public Sound attack_bow;
-    public Sound attack_sword;
-    public Sound hit_arrow;
-    public Sound draw_sword;
-    public Sound draw_katana;
-    private Array<Sound> draw_katanas;
+    public Sound attackBow;
+    public Sound attackSword;
+    public Sound hitArrow;
+    public Sound drawSword;
+    public Sound drawKatana;
+    private Array<Sound> drawKatanas;
 
 
     private static AssetManager instance;
@@ -82,9 +83,6 @@ public class AssetManager {
         defaultTile = new TextureRegion(new Texture(ENVIRONMENT_PATH+"default_tile.png"));
         waterTile = new TextureRegion(new Texture ( ENVIRONMENT_PATH+"water_tile.png"));
         dirtTile = new TextureRegion(new Texture ( ENVIRONMENT_PATH+"dirt_tile.png"));
-        //TowerSkin = new TextureRegion(new Texture("Tower.png"));
-        //TowerSkinP = new TextureRegion(new Texture("Towerp.png"));
-        //BaseSkin = new TextureRegion(new Texture("Base.png"));
         ballistaTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"ballista_tower.png"));
         mainTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"wall.png"));
         explosionSkin = new TextureRegion(new Texture(BUILDING_PATH+ "explosion.png"));
@@ -107,22 +105,22 @@ public class AssetManager {
         maps.add(Gdx.files.internal("maps/map2.txt"));
         maps.add(Gdx.files.internal("maps/map3.txt"));
 
-        attack_sword=Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
-        attack_bow=Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.mp3"));
-        hit_arrow=Gdx.audio.newSound(Gdx.files.internal("sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3"));
-        draw_sword=Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Sabre,Draw,Scabbard,Fast,Loose,Rough.mp3"));
-        draw_katana=Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Replace,Scabbard,Fast,Ripple.mp3"));
-        draw_katanas=new Array<>();
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Deep.mp3")));
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Deep.mp3")));
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Determined.mp3")));
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Shuffle.mp3")));
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Steady.mp3")));
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Strong.mp3")));
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast.mp3")));
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Complex.mp3")));
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Methodical.mp3")));
-        draw_katanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Steady.mp3")));
+        attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
+        attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.mp3"));
+        hitArrow =Gdx.audio.newSound(Gdx.files.internal("sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3"));
+        drawSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Sabre,Draw,Scabbard,Fast,Loose,Rough.mp3"));
+        drawKatana =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Replace,Scabbard,Fast,Ripple.mp3"));
+        drawKatanas =new Array<>();
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Deep.mp3")));
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Deep.mp3")));
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Determined.mp3")));
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Shuffle.mp3")));
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Steady.mp3")));
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Strong.mp3")));
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast.mp3")));
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Complex.mp3")));
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Methodical.mp3")));
+        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Steady.mp3")));
 
 
     }
@@ -138,8 +136,6 @@ public class AssetManager {
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();
         dirtTile.getTexture().dispose();
-        //TowerSkin.getTexture().dispose();
-        //BaseSkin.getTexture().dispose();
         ballistaTowerSkin.getTexture().dispose();
         mainTowerSkin.getTexture().dispose();
         resourceSkinOuter.getTexture().dispose();
@@ -150,19 +146,20 @@ public class AssetManager {
         victoryScreen.dispose();
         defeatScreen.dispose();
         music.dispose();
-        attack_bow.dispose();
-        attack_sword.dispose();
-        hit_arrow.dispose();
-        draw_sword.dispose();
-        draw_katana.dispose();
+        attackBow.dispose();
+        attackSword.dispose();
+        hitArrow.dispose();
+        drawSword.dispose();
+        drawKatana.dispose();
         for (Sound s:
-             draw_katanas) {
+                drawKatanas) {
             s.dispose();
         }
 
     }
 
     public Sound getRandomDrawKatanaSound(){
-        return draw_katanas.get((int)(Math.random()*draw_katanas.size));
+        Random random = new Random();
+        return drawKatanas.get(random.nextInt(drawKatanas.size));
     }
 }

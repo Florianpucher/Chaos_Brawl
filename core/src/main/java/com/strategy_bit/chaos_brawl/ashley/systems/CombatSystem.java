@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
@@ -37,53 +38,48 @@ public class CombatSystem extends IteratingSystem {
         TeamGameObjectComponent teamGameObjectComponent = mTeamGameObjectComponentMapper.get(entity);
 
         TransformComponent transformComponent=mTransformComponent.get(entity);
-        double closest=combatComponent.getAttackRadius()+1.0;
+        double closest=combatComponent.getAttackRadius();
         TeamGameObjectComponent closestEnemy=null;
-        TransformComponent closestEnemyPosition=null;
+
         Entity targetEnemy=null;
-        for (Entity enemy : getEngine().getEntitiesFor(Family.all(TeamGameObjectComponent.class).get())) {
+        ImmutableArray<Entity> unitsOnTheMap = getEngine().getEntitiesFor(Family.all(TeamGameObjectComponent.class).get());
+        for (Entity enemy : unitsOnTheMap) {
             TeamGameObjectComponent eTeamGameObjectComponent= mTeamGameObjectComponentMapper.get(enemy);
-            if(teamGameObjectComponent.getTeamId()!=eTeamGameObjectComponent.getTeamId()) {
+            if(teamGameObjectComponent.getTeamId()!=eTeamGameObjectComponent.getTeamId())
+            {
                 Vector2 mPos=transformComponent.getPosition();
                 TransformComponent eTransformComponent=mTransformComponent.get(enemy);
                 Vector2 ePos=eTransformComponent.getPosition();
-                double range=combatComponent.getAttackRadius();
-                if(Math.abs(mPos.x-ePos.x)<range){
-                    if(Math.abs(mPos.y-ePos.y)<range){
-                        double dist=VectorMath.distance(mPos,ePos);
-                        if(dist<range){
-                            if (dist<closest){
-                                closest=dist;
-                                closestEnemy=eTeamGameObjectComponent;
-                                closestEnemyPosition=eTransformComponent;
-                                targetEnemy=enemy;
-                            }
-                        }
-                    }
+                double distance = VectorMath.distance(mPos, ePos);
+                if(distance < closest){
+                    closest=distance;
+                    closestEnemy=eTeamGameObjectComponent;
+                    targetEnemy=enemy;
                 }
             }
         }
         if(closestEnemy!=null) {
             combatComponent.setEngagedInCombat(true);
-            attack(combatComponent, closestEnemy,transformComponent,closestEnemyPosition,targetEnemy);
+            attack(combatComponent, closestEnemy,transformComponent,targetEnemy);
         }
         else {
             combatComponent.setEngagedInCombat(false);
         }
     }
 
-    private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, TransformComponent t2, Entity targetEnemy){
+
+    private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, Entity targetEnemy){
         //TODO add here attack logic for different types
         if(c1.isRanged()){
             if(c1.attack()){
                 //ready to fire
-                AssetManager.getInstance().attack_bow.play(0.6f);
+                AssetManager.getInstance().attackBow.play(0.6f);
                 world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage());
 
             }
         }else {
         if(c1.attack()){
-            AssetManager.getInstance().attack_sword.play(1f);
+            AssetManager.getInstance().attackSword.play(1f);
             c2.setHitPoints(c2.getHitPoints()-c1.getAttackDamage());
         }
         }

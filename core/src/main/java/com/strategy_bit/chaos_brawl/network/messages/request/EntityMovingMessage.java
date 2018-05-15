@@ -20,10 +20,11 @@ public class EntityMovingMessage implements Message {
     }
 
     public EntityMovingMessage() {
+        // empty constructor is needed for kryo
     }
 
 
     public Array<Vector2> toLibGdxArray(){
-        return new Array<Vector2>(wayPoints);
+        return new Array<>(wayPoints);
     }
 }

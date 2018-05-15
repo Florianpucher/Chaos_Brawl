@@ -53,11 +53,11 @@ public class BaseTest {
         assetManager.mainTowerSkin = new TextureRegion(texture);
         pixmap.dispose();
         Sound sound = Mockito.mock(Sound.class);
-        assetManager.draw_katana = sound;
-        assetManager.attack_bow = sound;
-        assetManager.attack_sword = sound;
-        assetManager.hit_arrow = sound;
-        assetManager.draw_sword = sound;
+        assetManager.drawKatana = sound;
+        assetManager.attackBow = sound;
+        assetManager.attackSword = sound;
+        assetManager.hitArrow = sound;
+        assetManager.drawSword = sound;
     }
 
     // After we are done, clean up the application

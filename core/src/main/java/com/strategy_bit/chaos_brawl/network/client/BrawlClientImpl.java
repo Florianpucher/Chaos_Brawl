@@ -27,11 +27,12 @@ import java.util.concurrent.Executors;
 
 /**
  * sends data to Host
+ *
  * @author AIsopp
  * @version 1.0
  * @since 01.04.2018
  */
-public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
+public class BrawlClientImpl implements BrawlClient, BrawlMultiplayer {
     private Client client;
     private ArrayList<NetworkDiscoveryHandler> discoveryHandlers;
     protected Connection[] connections;
@@ -43,8 +44,8 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
         clientListener = new BrawlClientListener(this);
         client.addListener(clientListener);
         discoveryHandlers = new ArrayList<>();
-        connections=new Connection[0];
-        BrawlNetwork network = new BrawlNetwork(this);
+        connections = new Connection[0];
+        BrawlNetwork.initializeKryo(this);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     }
 
     @Override
-    public void disconnect() throws IOException{
+    public void disconnect() {
 
         client.stop();
         try {
@@ -70,12 +71,7 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
         Runnable runnable = () -> {
             final List<InetAddress> addresses = client.discoverHosts(Network.UDP_PORT, Network.TIME_OUT);
 
-            Gdx.app.postRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    updateDiscoveryHandler(addresses);
-                }
-            });
+            Gdx.app.postRunnable(() -> updateDiscoveryHandler(addresses));
         };
         executor.execute(runnable);
     }
@@ -94,11 +90,6 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     @Override
     public Connection[] getNetworkMembers() {
         sendData(new NetworkMembersRequestMessage());
-            try {
-                connections.wait();
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
         return connections;
     }
 
@@ -139,7 +130,7 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
 
     @Override
     public void sendEntitySpawnMsg(Vector2 worldPosition, UnitType unitType, int teamID, long unitID) {
-        EntitySpawnMessage spawnMessage = new EntitySpawnMessage(worldPosition,teamID,unitType, unitID);
+        EntitySpawnMessage spawnMessage = new EntitySpawnMessage(worldPosition, teamID, unitType, unitID);
         sendData(spawnMessage);
     }
 
@@ -149,7 +140,7 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
     }
 
     @Override
-    public void sendEntityMovingMessage(long unitID,Array<Vector2> wayPoints) {
+    public void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints) {
         throw new UnsupportedOperationException("Only the host sends moving messages");
     }
 
@@ -160,11 +151,9 @@ public class BrawlClientImpl implements BrawlClient,BrawlMultiplayer {
 
     @Override
     public void dispose() {
-        try {
-            disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        disconnect();
+
     }
 
     @Override

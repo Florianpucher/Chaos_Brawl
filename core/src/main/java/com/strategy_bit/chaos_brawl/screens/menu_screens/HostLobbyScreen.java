@@ -7,10 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.config.Network;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
-import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
  * @author AIsopp
@@ -19,7 +16,7 @@ import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
  */
 public class HostLobbyScreen extends LobbyScreen {
 
-    private final static String START_GAME = "Start Game";
+    private static final String START_GAME = "Start Game";
 
 
     private BrawlServer brawlServer;
@@ -99,16 +96,16 @@ public class HostLobbyScreen extends LobbyScreen {
 
     @Override
     public void connected() {
-
+        // Not needed host
     }
 
     @Override
     public void disconnected() {
-
+        // Not needed host
     }
 
     @Override
-    public void anotherClientConnected(String clientName, int id) throws IllegalStateException {
+    public void anotherClientConnected(String clientName, int id){
         if (playerNames.size>3){
             throw new IllegalStateException("Client limit reached (only a maximum of 4 players are allowed)");
         }
@@ -116,7 +113,7 @@ public class HostLobbyScreen extends LobbyScreen {
     }
 
     @Override
-    public void anotherClientDisconnected(int id) throws IllegalStateException {
+    public void anotherClientDisconnected(int id){
         //if id >=4 the client has never entered the lobby
         if (id>3){
             throw new IllegalStateException("Client wasn't in the lobby (only a maximum of 4 players are allowed)");

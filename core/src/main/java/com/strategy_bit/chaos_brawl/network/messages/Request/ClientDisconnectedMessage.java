@@ -6,6 +6,7 @@ public class ClientDisconnectedMessage implements Message {
     public int id;
     public String name;
     public ClientDisconnectedMessage() {
+        // empty constructor is needed for kryo
     }
 
     public ClientDisconnectedMessage(String name,int id) {
