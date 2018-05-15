@@ -10,9 +10,7 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.TileType;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
-import java.lang.String;
 import java.util.Scanner;
-import java.util.logging.FileHandler;
 
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_HEIGHT;
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.BOARD_WIDTH;
@@ -42,6 +40,8 @@ public class Board implements BoardInterface {
         System.out.println(size);
         tileSize = new Vector2(multiplicandX, multiplicandY);
         Array<FileHandle> maps = AssetManager.getInstance().maps;
+        //TODO fix this
+        map = map-1;
         if(map >= maps.size){
             throw new UnsupportedOperationException("Map not found");
         }

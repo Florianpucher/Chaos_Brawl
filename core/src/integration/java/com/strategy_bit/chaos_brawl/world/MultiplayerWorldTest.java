@@ -46,7 +46,7 @@ import static org.junit.Assert.assertEquals;
  * @since 10.05.2018
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({MultiplayerWorld.class, BoardA.class})
+@PrepareForTest({MultiplayerWorld.class})
 public class MultiplayerWorldTest extends BaseTest {
     //TODO make this test parameterized but for that you cannot use PowerMockRunner
     //TODO Change amount of players if more players are getting a base
@@ -88,7 +88,7 @@ public class MultiplayerWorldTest extends BaseTest {
 
 
         PowerMockito.whenNew(RenderSystem.class).withNoArguments().thenReturn(renderSystem);
-        BoardA board = Mockito.mock(BoardA.class);
+        Board board = Mockito.mock(Board.class);
         Mockito.when(board.boardToMatrix()).thenReturn(new int[][]{
                 {0, 0, 0},
                 {1, 1, 1},
@@ -98,7 +98,7 @@ public class MultiplayerWorldTest extends BaseTest {
         ChaosBrawlGame game = Mockito.mock(ChaosBrawlGame.class);
         SpriteBatch spriteBatch = Mockito.mock(SpriteBatch.class);
         PowerMockito.whenNew(SpriteBatch.class).withNoArguments().thenReturn(spriteBatch);
-        PowerMockito.whenNew(BoardA.class).withAnyArguments().thenReturn(board);
+        PowerMockito.whenNew(Board.class).withAnyArguments().thenReturn(board);
         PowerMockito.whenNew(OtherPathfinder.class).withAnyArguments().thenReturn(pathfinder);
         ScreenManager manager = ScreenManager.getInstance();
         manager.initialize(game);

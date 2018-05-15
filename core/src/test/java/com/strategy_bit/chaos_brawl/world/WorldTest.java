@@ -69,7 +69,7 @@ public class WorldTest extends BaseTest {
         camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
         camera.update();
         Mockito.when(renderSystem.getCamera()).thenReturn(camera);
-        BoardA boardA = Mockito.mock(BoardA.class);
+        Board boardA = Mockito.mock(Board.class);
         Mockito.when(boardA.getWorldCoordinateOfTile(5,0)).thenReturn(new Vector2(5, 0));
         Mockito.when(boardA.getWorldCoordinateOfTile(WorldSettings.BOARD_WIDTH - 5, 0)).thenReturn(new Vector2(15f, 0));
         Mockito.when(boardA.boardToMatrix()).thenReturn(new int[][]{
@@ -82,7 +82,7 @@ public class WorldTest extends BaseTest {
         Mockito.when(pathfinder.calculatePath(Mockito.any(Vector2.class), Mockito.any(Vector2.class))).thenReturn(defaultPath);
 
         PowerMockito.whenNew(RenderSystem.class).withNoArguments().thenReturn(renderSystem);
-        PowerMockito.whenNew(BoardA.class).withAnyArguments().thenReturn(boardA);
+        PowerMockito.whenNew(Board.class).withAnyArguments().thenReturn(boardA);
         PowerMockito.whenNew(OtherPathfinder.class).withArguments(boardA).thenReturn(pathfinder);
         world = new World(1,4);
         Boundary boundary = new Boundary(new Vector2(), new Vector2(), new Vector2(), new Vector2());

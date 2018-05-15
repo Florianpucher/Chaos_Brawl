@@ -100,7 +100,7 @@ public class AssetManager {
         progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3"));
-        music.setVolume(0.5f);
+        music.setVolume(0f);
         music.setLooping(true);
         maps = new Array<>();
         maps.add(Gdx.files.internal("maps/map1.txt"));
@@ -158,10 +158,6 @@ public class AssetManager {
         for (Sound s:
              draw_katanas) {
             s.dispose();
-        }
-        for (FileHandle map :
-                maps) {
-            map.delete();
         }
 
     }
