@@ -377,6 +377,19 @@ public class World implements InputHandler {
         throw new UnsupportedOperationException("Game only supports two player mode at the moment :)");
     }
 
+    public void cheatFunctionDisposer(){
+        if (playerControllers[0].isCheatFunctionActive()){
+            if (playerControllers[1].isCheatFunctionActive()){
+                playerControllers[0].setCheatFunctionActive(false);
+            }
+        }
+        if (playerControllers[1].isCheatFunctionActive()){
+            if (playerControllers[0].isCheatFunctionActive()){
+                playerControllers[1].setCheatFunctionActive(false);
+            }
+        }
+    }
+
     public Vector2 getUnitPosition(long unitID){
         Entity entity=getUnit(unitID);
         if (entity!=null)
