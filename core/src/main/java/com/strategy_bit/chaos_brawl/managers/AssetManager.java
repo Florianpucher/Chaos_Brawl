@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.files.*;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * manager for holding references to assets
@@ -42,6 +43,7 @@ public class AssetManager {
     public TextureRegion waterTile;
     public Music music;
     public TextureRegion dirtTile;
+    public Array<FileHandle> maps;
     public FileHandle map1;
     public FileHandle map2;
     public FileHandle map3;
@@ -99,9 +101,10 @@ public class AssetManager {
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3"));
         music.setVolume(0f);
         music.setLooping(true);
-        map1 = Gdx.files.internal("maps/map1.txt");
-        map2 = Gdx.files.internal("maps/map2.txt");
-        map3 = Gdx.files.internal("maps/map3.txt");
+        maps = new Array<>();
+        maps.add(Gdx.files.internal("maps/map1.txt"));
+        maps.add(Gdx.files.internal("maps/map2.txt"));
+        maps.add(Gdx.files.internal("maps/map3.txt"));
 
     }
 
