@@ -61,6 +61,7 @@ public class Board implements BoardInterface {
                     mapArray[i][j] = scanner.nextInt();
                 }
             }
+            scanner.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

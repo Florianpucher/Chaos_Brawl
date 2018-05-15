@@ -130,15 +130,7 @@ public class World implements InputHandler {
      * creates Game board ({@link Board})
      */
     private void createWorld(int map){
-        if(map == 1){
-            board = new Board(engine, 1);
-        }
-        if(map == 2){
-            board = new Board(engine, 2);
-        }
-        if(map == 3){
-            board = new Board(engine, 3);
-        }
+        board = new Board(engine, map);
         gdxPathFinder = new OtherPathfinder(board);
     }
 
