@@ -37,17 +37,22 @@ public class SensorReader {
                 average += acc;
             }
             average = average / accelerations.size;
-            if (accelerations.size > 50 && average < 0.5f && time < 5000) {
+            if (accelerations.size > 50 && average < 0.5f && time < 5000 && playerController.isCheatFunctionActive()) {
                 Gdx.app.log("CHEAT", "Cheat Function active!");
                 playerController.setNewRate(5);
+                playerController.setCheatFunctionActive(true);
                 duration = 10000;
                 accelerations.clear();
                 time = 0;
             }
-            else if (time > 5000){
+            else if (time > 5000 || !playerController.isCheatFunctionActive()){
                 accelerations.clear();
                 time = 0;
+                playerController.setCheatFunctionActive(false);
             }
+        }
+        if (!playerController.isCheatFunctionActive()){
+            playerController.setNewRate(1);
         }
     }
 }
