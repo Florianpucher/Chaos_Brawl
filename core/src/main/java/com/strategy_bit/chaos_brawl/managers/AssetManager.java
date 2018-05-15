@@ -3,16 +3,14 @@ package com.strategy_bit.chaos_brawl.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
-
-import javax.xml.soap.Text;
 
 /**
  * manager for holding references to assets
@@ -44,9 +42,7 @@ public class AssetManager {
     public TextureRegion waterTile;
     public Music music;
     public TextureRegion dirtTile;
-    //public TextureRegion TowerSkin;
-    //public TextureRegion TowerSkinP;
-    //public TextureRegion BaseSkin;
+    public Array<FileHandle> maps;
     public TextureRegion ballistaTowerSkin;
     public TextureRegion mainTowerSkin;
     public TextureRegion wallSkin;
@@ -106,6 +102,11 @@ public class AssetManager {
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3"));
         music.setVolume(0.5f);
         music.setLooping(true);
+        maps = new Array<>();
+        maps.add(Gdx.files.internal("maps/map1.txt"));
+        maps.add(Gdx.files.internal("maps/map2.txt"));
+        maps.add(Gdx.files.internal("maps/map3.txt"));
+
         attack_sword=Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
         attack_bow=Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.mp3"));
         hit_arrow=Gdx.audio.newSound(Gdx.files.internal("sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3"));
@@ -157,6 +158,10 @@ public class AssetManager {
         for (Sound s:
              draw_katanas) {
             s.dispose();
+        }
+        for (FileHandle map :
+                maps) {
+            map.delete();
         }
 
     }

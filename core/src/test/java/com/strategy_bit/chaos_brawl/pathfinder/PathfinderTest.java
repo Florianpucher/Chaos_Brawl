@@ -1,10 +1,8 @@
 package com.strategy_bit.chaos_brawl.pathfinder;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.world.Board;
+import com.strategy_bit.chaos_brawl.world.BoardInterface;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -19,27 +17,27 @@ import org.mockito.Mockito;
 public class PathfinderTest {
 
 
-    private Board board;
+    private BoardInterface boardInterface;
     private OtherPathfinder otherPathfinder;
     private Vector2 start, end;
     @Before
     public void initialize(){
 
-        board = Mockito.mock(Board.class);
-        Mockito.when(board.boardToMatrix()).thenReturn(new int[][]{
+        boardInterface = Mockito.mock(BoardInterface.class);
+        Mockito.when(boardInterface.boardToMatrix()).thenReturn(new int[][]{
                 {0,0,0},
                 {1,1,1},
                 {0,1,1}});
-        otherPathfinder = new OtherPathfinder(board);
+        otherPathfinder = new OtherPathfinder(boardInterface);
 
         start = new Vector2(1,0);
         end = new Vector2(1,2);
-        Mockito.when(board.getTileBoardPositionDependingOnWorldCoordinates(start)).thenReturn(new Vector2(1,0));
-        Mockito.when(board.getTileBoardPositionDependingOnWorldCoordinates(end)).thenReturn(new Vector2(1,2));
-        Mockito.when(board.getWorldCoordinateOfTile((int)1, (int)0)).thenReturn(start);
-        Mockito.when(board.getWorldCoordinateOfTile(1,1)).thenReturn(new Vector2(1,1));
-        Mockito.when(board.getWorldCoordinateOfTile((int)1, (int)2)).thenReturn(end);
-        otherPathfinder = new OtherPathfinder(board);
+        Mockito.when(boardInterface.getTileBoardPositionDependingOnWorldCoordinates(start)).thenReturn(new Vector2(1,0));
+        Mockito.when(boardInterface.getTileBoardPositionDependingOnWorldCoordinates(end)).thenReturn(new Vector2(1,2));
+        Mockito.when(boardInterface.getWorldCoordinateOfTile((int)1, (int)0)).thenReturn(start);
+        Mockito.when(boardInterface.getWorldCoordinateOfTile(1,1)).thenReturn(new Vector2(1,1));
+        Mockito.when(boardInterface.getWorldCoordinateOfTile((int)1, (int)2)).thenReturn(end);
+        otherPathfinder = new OtherPathfinder(boardInterface);
     }
 
 

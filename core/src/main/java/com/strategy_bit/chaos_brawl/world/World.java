@@ -20,6 +20,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
+
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
@@ -54,7 +55,7 @@ public class World implements InputHandler {
     protected SpawnerImpl spawner;
     protected MyEngine engine;
     protected Camera camera;
-    public Board board;
+    public BoardInterface board;
     protected PawnController[] playerControllers;
     protected Entity[] bases;
     protected Entity[] tower;
@@ -129,26 +130,23 @@ public class World implements InputHandler {
 
 
     /**
-     * creates Game board ({@link BoardA},{@link BoardB},{@link BoardC})
+     * creates Game board ({@link Board})
      */
     private void createWorld(int map){
         if(map == 1){
-            board = new BoardA(engine);
+            board = new Board(engine, 1);
         }
         if(map == 2){
-            board = new BoardB(engine);
+            board = new Board(engine, 2);
         }
         if(map == 3){
-            board = new BoardC(engine);
+            board = new Board(engine, 3);
         }
         gdxPathFinder = new OtherPathfinder(board);
     }
 
 
     public void render(){
-        /*if(endGame){
-            return;
-        }*/
         updateResources();
         engine.update(Gdx.graphics.getDeltaTime());
         endGame = checkWinningLosing();
