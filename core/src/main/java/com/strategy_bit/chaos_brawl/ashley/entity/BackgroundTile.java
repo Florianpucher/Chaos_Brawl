@@ -4,14 +4,13 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.types.TileType;
-import com.strategy_bit.chaos_brawl.world.BoardA;
 import com.strategy_bit.chaos_brawl.world.Tile;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.config.ZIndex;
 
 /**
- * Representing the tiles used by {@link BoardA}
+ * Representing the tiles used by {@link com.strategy_bit.chaos_brawl.world.Board)
  *
  * @author AIsopp
  * @version 1.0

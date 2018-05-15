@@ -1,6 +1,5 @@
 package com.strategy_bit.chaos_brawl.pathfinder;
 
-import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.ai.pfa.PathFinderRequest;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
@@ -8,7 +7,7 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.WalkAbleAreas;
-import com.strategy_bit.chaos_brawl.world.Board;
+import com.strategy_bit.chaos_brawl.world.BoardInterface;
 
 import java.util.Iterator;
 
@@ -19,14 +18,14 @@ import java.util.Iterator;
  */
 public class OtherPathfinder {
 
-    private Board board;
+    private BoardInterface boardInterface;
     IndexedGraph<OtherNode> nodeIndexedGraph;
     private IndexedAStarPathFinder<OtherNode> indexedAStarPathFinder;
     private OtherHeuristic heuristic;
     private Array<OtherNode> graphNodes;
 
-    public OtherPathfinder(Board board){
-        this.board = board;
+    public OtherPathfinder(BoardInterface boardInterface){
+        this.boardInterface = boardInterface;
         initializeGraph();
     }
 
@@ -37,7 +36,7 @@ public class OtherPathfinder {
     private void initializeGraph(){
         graphNodes = new Array<>();
 
-        int[][] walkablePort = board.boardToMatrix();
+        int[][] walkablePort = boardInterface.boardToMatrix();
         int index = 0;
         //Add nodes to graphNodes
         for (int i = 0; i < walkablePort.length; i++) {
@@ -127,7 +126,7 @@ public class OtherPathfinder {
      * @throws IllegalStateException if no node could be found
      */
     private OtherNode getNode(Vector2 worldCoordinate) throws IllegalStateException{
-        Vector2 indexVector = board.getTileBoardPositionDependingOnWorldCoordinates(worldCoordinate);
+        Vector2 indexVector = boardInterface.getTileBoardPositionDependingOnWorldCoordinates(worldCoordinate);
         for (OtherNode node :
                 graphNodes) {
             if (indexVector.equals(node.getPosition())){
@@ -138,6 +137,6 @@ public class OtherPathfinder {
     }
 
     private Vector2 getWorldCoordinateOfNode(OtherNode node){
-        return board.getWorldCoordinateOfTile((int)node.getPosition().y,(int) node.getPosition().x);
+        return boardInterface.getWorldCoordinateOfTile((int)node.getPosition().y,(int) node.getPosition().x);
     }
 }

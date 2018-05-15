@@ -1,6 +1,8 @@
 package com.strategy_bit.chaos_brawl.managers;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.GdxFileSystem;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
@@ -9,8 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-
-import javax.xml.soap.Text;
+import com.badlogic.gdx.files.*;
 
 /**
  * manager for holding references to assets
@@ -41,6 +42,9 @@ public class AssetManager {
     public TextureRegion waterTile;
     public Music music;
     public TextureRegion dirtTile;
+    public FileHandle map1;
+    public FileHandle map2;
+    public FileHandle map3;
     //public TextureRegion TowerSkin;
     //public TextureRegion TowerSkinP;
     //public TextureRegion BaseSkin;
@@ -95,6 +99,10 @@ public class AssetManager {
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3"));
         music.setVolume(0f);
         music.setLooping(true);
+        map1 = Gdx.files.internal("maps/map1.txt");
+        map2 = Gdx.files.internal("maps/map2.txt");
+        map3 = Gdx.files.internal("maps/map3.txt");
+
     }
 
 
@@ -119,6 +127,8 @@ public class AssetManager {
         victoryScreen.dispose();
         defeatScreen.dispose();
         music.dispose();
-
+        map1.delete();
+        map2.delete();
+        map3.delete();
     }
 }

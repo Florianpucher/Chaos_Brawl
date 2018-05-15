@@ -4,13 +4,10 @@ package com.strategy_bit.chaos_brawl.world;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
-import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
@@ -20,7 +17,6 @@ import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.ashley.entity.HpBar;
 
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
@@ -53,7 +49,7 @@ public class World implements InputHandler {
     protected SpawnerImpl spawner;
     protected MyEngine engine;
     protected Camera camera;
-    public Board board;
+    public BoardInterface board;
     protected PawnController[] playerControllers;
     protected Entity[] bases;
     protected long resourceTimeStamp;
@@ -128,17 +124,17 @@ public class World implements InputHandler {
 
 
     /**
-     * creates Game board ({@link BoardA},{@link BoardB},{@link BoardC})
+     * creates Game board ({@link Board})
      */
     private void createWorld(int map){
         if(map == 1){
-            board = new BoardA(engine);
+            board = new Board(engine, 1);
         }
         if(map == 2){
-            board = new BoardB(engine);
+            board = new Board(engine, 2);
         }
         if(map == 3){
-            board = new BoardC(engine);
+            board = new Board(engine, 3);
         }
         gdxPathFinder = new OtherPathfinder(board);
         //Pathfinder.setMoveable(board.boardToMatrix(),board);
