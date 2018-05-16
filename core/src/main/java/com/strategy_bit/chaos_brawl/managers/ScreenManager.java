@@ -80,7 +80,7 @@ public class ScreenManager {
             Gdx.app.exit();
             return;
         }
-        ScreenEnum screenEnum = lastScreens.pop();
+        ScreenEnum screenEnum = lastScreens.removeLast();
         switchScreen(screenEnum);
     }
 

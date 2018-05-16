@@ -54,16 +54,21 @@ public class Board implements BoardInterface {
     }
 
     private int[][] fileReader(String file, int[][] mapArray) {
+        Scanner scanner = null;
         try {
-            Scanner scanner = new Scanner((file));
+            scanner = new Scanner((file));
             for (int i = 0; i < BOARD_HEIGHT; i++) {
                 for (int j = 0; j < BOARD_WIDTH; j++) {
                     mapArray[i][j] = scanner.nextInt();
                 }
             }
-            scanner.close();
+
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if(scanner != null){
+                scanner.close();
+            }
         }
         return mapArray;
     }
