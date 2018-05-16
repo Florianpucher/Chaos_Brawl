@@ -12,7 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
-import com.strategy_bit.chaos_brawl.ashley.entity.Explosion;
+//import com.strategy_bit.chaos_brawl.ashley.entity.Explosion;
 import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
@@ -27,6 +27,7 @@ import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
+import java.util.Scanner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public class World implements InputHandler {
     protected HashMap<Long, Entity> units;
     protected HashMap<Long, Entity> projectiles;
 
-    ArrayList<Explosion> explosions;
+    //ArrayList<Explosion> explosions;
 
     protected SpawnerImpl spawner;
     protected MyEngine engine;
@@ -59,6 +60,9 @@ public class World implements InputHandler {
     protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
+    protected Array<Float> spawnAreas;
+    protected Boundary spawnField0;
+    protected Boundary spawnField01;
 
     boolean endGame = false;
     boolean buildingDestroyed = false;
@@ -70,7 +74,7 @@ public class World implements InputHandler {
         playerControllers = new PawnController[players];
         bases = new Entity[players];
         tower = new Entity[players];
-        explosions = new ArrayList<>();
+        //explosions = new ArrayList<>();
         createEngine();
         createWorld(map);
     }
@@ -88,16 +92,35 @@ public class World implements InputHandler {
         playerControllers[index] = pawnController;
     }
 
-    public void initializeGameForPlayers(){
-        //TODO support variable player length
-        createEntityWorldCoordinates(new Vector2(3,12), UnitType.TOWER,  playerControllers[0].getTeamID());
-        createEntityWorldCoordinates(new Vector2(3,3), UnitType.TOWER,  playerControllers[0].getTeamID());
-        createEntityWorldCoordinates(new Vector2(2,7.5f), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
+    public void initializeGameForPlayers(int map, int players){
+        int config;
+        if (map < 4) {
+            config = 0;
 
-        createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
-        createEntityWorldCoordinates(new Vector2(17,3), UnitType.TOWER,  playerControllers[1].getTeamID());
-        createEntityWorldCoordinates(new Vector2(19,7.5f), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
+        } else {
+            config = 1;
+        }
+        try {
+            Scanner scanner = new Scanner(AssetManager.getInstance().mapConfig.get(config).readString());
+            Array<Float> spawnAreas = new Array<Float>();
+            while (scanner.hasNextFloat()){
+                spawnAreas.add(scanner.nextFloat());
+            }
+            setEntityWorldCoordinates(spawnAreas, players);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         resourceTimeStamp = System.currentTimeMillis();
+    }
+
+    private void setEntityWorldCoordinates(Array<Float> spawn, int players){
+        int offset = 0;
+        for (int j = 0; j < players; j++){
+            createEntityWorldCoordinates(new Vector2(spawn.get(offset), spawn.get(offset+1)), UnitType.TOWER,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(new Vector2(spawn.get(offset+2),spawn.get(offset+3)), UnitType.TOWER,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(new Vector2(spawn.get(offset+4),spawn.get(offset+5)), UnitType.MAINBUILDING,  playerControllers[j].getTeamID());
+            offset += 6;
+        }
     }
 
 
@@ -183,7 +206,7 @@ public class World implements InputHandler {
                 return false;
             }
         }
-        for (int i = 0; i < bases.length; i++) {
+        /*for (int i = 0; i < bases.length; i++) {
             if (bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
                 explosions.add(new Explosion(bases[i].getComponent(TransformComponent.class).getPosition().x, bases[i].getComponent(TransformComponent.class).getPosition().y));
                 return true;
@@ -194,7 +217,7 @@ public class World implements InputHandler {
                 explosions.add(new Explosion(tower[i].getComponent(TransformComponent.class).getPosition().x, tower[i].getComponent(TransformComponent.class).getPosition().y));
                 return true;
             }
-        }
+        }*/
         return false;
     }
 
@@ -325,39 +348,29 @@ public class World implements InputHandler {
     public Boundary createSpawnAreaForPlayer(int playerID){
         //TODO: modulo 2 for experimental 3-4players
         playerID=playerID%2;
-        //TODO move spawn Area boundaries and player base positions to board
-        //Simple implementation for creating spawn area
-        int spawnAreaWidth = 5;
         Boundary spawnArea;
-        // current left player
-        if(playerID == 0){
-            Vector2 lowerLeftCorner = new Vector2(0.0f - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
-            Vector2 upperLeftCorner = new Vector2(0.0f - WorldSettings.FRUSTUM_WIDTH/2f , 0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
-            Vector2 lowerRightCorner = new Vector2( board.getWorldCoordinateOfTile(spawnAreaWidth,0).x - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
-            Vector2 upperRightCorner = new Vector2(board.getWorldCoordinateOfTile(spawnAreaWidth,0).x - WorldSettings.FRUSTUM_WIDTH/2f,0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
+        int spawnAreaWidth = 5;
+        Boundary spawnArea0, spawnArea1;
+        Array<Float> spawnAreas = new Array<Float>();
+        Array<Vector2> vectorList = new Array<>();
+        try {
+            Scanner scanner = new Scanner(AssetManager.getInstance().spawnAreas.get(0).readString());
+            while (scanner.hasNextFloat()){
+                spawnAreas.add(scanner.nextFloat());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < spawnAreas.size - 1; i = i + 2){
+            vectorList.add(new Vector2(spawnAreas.get(i), spawnAreas.get(i+1)));
+        }
+        spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
+        spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
 
-            lowerLeftCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(lowerLeftCorner,0)));
-            upperLeftCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(upperLeftCorner,0)));
-            lowerRightCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(lowerRightCorner,0)));
-            upperRightCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(upperRightCorner,0)));
-
-            spawnArea = new Boundary(lowerLeftCorner, lowerRightCorner, upperLeftCorner, upperRightCorner);
-            return spawnArea;
-            //current right player
-        }else if(playerID == 1){
-            Vector2 lowerRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
-            Vector2 upperRightCorner = new Vector2(WorldSettings.FRUSTUM_WIDTH/2f, 0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
-            Vector2 lowerLeftCorner = new Vector2( board.getWorldCoordinateOfTile(WorldSettings.BOARD_WIDTH - 5,0).x  - WorldSettings.FRUSTUM_WIDTH/2f, WorldSettings.FRUSTUM_HEIGHT/2f);
-            Vector2 upperLeftCorner = new Vector2(board.getWorldCoordinateOfTile(WorldSettings.BOARD_WIDTH - 5,0).x  - WorldSettings.FRUSTUM_WIDTH/2f,0.0f - WorldSettings.FRUSTUM_HEIGHT/2f);
-
-
-            lowerLeftCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(lowerLeftCorner,0)));
-            upperLeftCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(upperLeftCorner,0)));
-            lowerRightCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(lowerRightCorner,0)));
-            upperRightCorner = VectorMath.vector3ToVector2(camera.project(new Vector3(upperRightCorner,0)));
-
-            spawnArea = new Boundary(lowerLeftCorner, lowerRightCorner, upperLeftCorner, upperRightCorner);
-            return spawnArea;
+        if (playerID == 0){
+            return spawnArea0;
+        } else if (playerID == 1){
+            return spawnArea1;
         }
         throw new UnsupportedOperationException("Game only supports two player mode at the moment :)");
     }

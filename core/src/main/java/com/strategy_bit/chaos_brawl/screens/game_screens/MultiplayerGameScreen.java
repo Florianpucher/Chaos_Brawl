@@ -57,7 +57,8 @@ public class MultiplayerGameScreen extends GameScreen {
 
         setInitialTargets();
         if(brawlMultiplayer instanceof BrawlServer){
-            manager.initializeGameForPlayers();
+            //TODO make this dynamic for multiple maps
+            manager.initializeGameForPlayers(1, 2);
         }
     }
 

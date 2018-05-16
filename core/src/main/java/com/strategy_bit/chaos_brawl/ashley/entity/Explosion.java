@@ -1,3 +1,4 @@
+/*
 package com.strategy_bit.chaos_brawl.ashley.entity;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -43,3 +44,4 @@ public class Explosion {
         batch.draw((Texture) anim.getKeyFrame(statetime),x, y);
     }
 }
+*/
