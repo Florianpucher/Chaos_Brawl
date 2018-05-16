@@ -120,7 +120,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     @Override
     protected int checkIfClickHappensOnBase(Vector2 targetLocation, PawnController controller) {
         int baseIndex = super.checkIfClickHappensOnBase(targetLocation, controller);
-        if(!isServer){
+        if(!isServer && baseIndex >= 0){
             multiplayer.sendNewTargetMsg(controller.getTeamID(), baseIndex);
         }
         return baseIndex;
