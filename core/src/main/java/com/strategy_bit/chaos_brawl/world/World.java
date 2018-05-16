@@ -106,6 +106,7 @@ public class World implements InputHandler {
             while (scanner.hasNextFloat()){
                 spawnAreas.add(scanner.nextFloat());
             }
+            scanner.close();
             setEntityWorldCoordinates(spawnAreas, players);
         } catch (Exception e) {
             e.printStackTrace();
@@ -358,6 +359,7 @@ public class World implements InputHandler {
             while (scanner.hasNextFloat()){
                 spawnAreas.add(scanner.nextFloat());
             }
+            scanner.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
