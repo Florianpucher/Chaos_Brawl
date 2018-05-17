@@ -296,7 +296,7 @@ public class World implements InputHandler {
     }
 
     Entity createEntityInternal(UnitType entityType, long unitID, Vector2 worldCoordinates, int teamID){
-        Entity entity = spawner.createNewUnit(engine,entityType,teamID,worldCoordinates);
+        Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
         engine.addEntity(entity);
         units.put(unitID, entity);
         if(entityType.equals(UnitType.MAINBUILDING)){
@@ -312,7 +312,8 @@ public class World implements InputHandler {
 
 
     public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
-        Projectile projectile=new Projectile(worldCoordinates,targetId,damage);
+        Projectile projectile=MyEngine.getInstance().createProjectile();
+        projectile.setEverything(worldCoordinates,targetId,damage);
 
         createProjectile(projectile);
 
