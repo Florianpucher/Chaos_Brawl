@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
 import com.strategy_bit.chaos_brawl.config.ZIndex;
 
 /**
@@ -12,7 +13,7 @@ import com.strategy_bit.chaos_brawl.config.ZIndex;
  * @since 15.03.2018
  */
 
-public class TransformComponent implements Component {
+public class TransformComponent implements Component,Pool.Poolable {
     private Vector2 position;
     private Vector2 scale;
     /**
@@ -68,5 +69,13 @@ public class TransformComponent implements Component {
 
     public void setScale(Vector2 scale) {
         this.scale = scale;
+    }
+
+    @Override
+    public void reset() {
+        scale.set(1,1);
+        z = ZIndex.DEFAULT;
+        rotation = 0f;
+        position.set(0,0);
     }
 }

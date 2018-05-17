@@ -2,6 +2,7 @@ package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Pool;
 
 /**
  * component that holds the sprite that needs to tbe rendered
@@ -10,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @since 15.03.2018
  */
 
-public class TextureComponent implements Component {
+public class TextureComponent implements Component,Pool.Poolable {
     private TextureRegion texture;
 
     public TextureRegion getTexture() {
@@ -19,5 +20,14 @@ public class TextureComponent implements Component {
 
     public void setTexture(TextureRegion texture) {
         this.texture = texture;
+    }
+
+    public TextureComponent() {
+        texture=new TextureRegion();
+    }
+
+    @Override
+    public void reset() {
+
     }
 }

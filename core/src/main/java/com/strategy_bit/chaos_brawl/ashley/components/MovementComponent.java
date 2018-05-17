@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.ashley.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Queue;
 
 /**
@@ -13,7 +14,7 @@ import com.badlogic.gdx.utils.Queue;
  * @since 17.03.2018
  */
 
-public class MovementComponent implements Component {
+public class MovementComponent implements Component,Pool.Poolable {
     //TODO maybe remove targetLocation and replace it completely with path
     /**
      * Will be changed over time
@@ -46,6 +47,13 @@ public class MovementComponent implements Component {
         this.targetLocation = transformComponent.getPosition();
         this.velocity = new Vector2(0,0);
         path=new Queue<Vector2>();
+    }
+
+    public void setEverything(float speed, TransformComponent transformComponent) {
+        this.speed = speed;
+        this.targetLocation = transformComponent.getPosition();
+        this.velocity = new Vector2(0,0);
+        path=new Queue<>();
     }
 
     public Vector2 getTargetLocation() {
@@ -106,4 +114,19 @@ public class MovementComponent implements Component {
         this.path.addFirst(point);
     }
 
+    public MovementComponent() {
+        targetLocation=new Vector2(0,0);
+        velocity=new Vector2(0,0);
+        speed=0;
+        path=new Queue<>();
+    }
+
+    @Override
+    public void reset() {
+        targetLocation.set(0,0);
+        velocity.set(0,0);
+        speed=0;
+        path.clear();
+
+    }
 }

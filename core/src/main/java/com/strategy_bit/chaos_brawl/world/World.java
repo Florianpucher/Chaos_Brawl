@@ -111,7 +111,7 @@ public class World implements InputHandler {
     }
 
     protected void createEngine(){
-        engine = new MyEngine(units);
+        engine = MyEngine.createEngine(units);
         //Add some logic
         deleteSystem = new DeleteSystem();
         engine.addSystem(deleteSystem);
@@ -296,7 +296,7 @@ public class World implements InputHandler {
     }
 
     Entity createEntityInternal(UnitType entityType, long unitID, Vector2 worldCoordinates, int teamID){
-        Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
+        Entity entity = spawner.createNewUnit(engine,entityType,teamID,worldCoordinates);
         engine.addEntity(entity);
         units.put(unitID, entity);
         if(entityType.equals(UnitType.MAINBUILDING)){

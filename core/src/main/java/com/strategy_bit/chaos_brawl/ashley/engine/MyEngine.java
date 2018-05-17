@@ -1,9 +1,9 @@
 package com.strategy_bit.chaos_brawl.ashley.engine;
 
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
@@ -20,14 +20,38 @@ import java.util.Map;
  * @since 15.03.2018
  */
 
-public class MyEngine extends Engine {
+public class MyEngine extends PooledEngine {
+
+    private static MyEngine instance;
+
+    public static MyEngine getInstance() {
+        if (instance == null) {
+            throw new UnsupportedOperationException("Engine doesn't exist");
+        }
+        return instance;
+    }
 
     protected HashMap<Long, Entity> units;
+
+    public MyEngine() {
+        super();
+    }
+
     //Only for multipPlayerGames
     protected MultiplayerInputHandler inputHandler;
 
-    public MyEngine(HashMap<Long, Entity> units) {
-        this.units = units;
+    public MyEngine(int entityPoolInitialSize, int entityPoolMaxSize, int componentPoolInitialSize, int componentPoolMaxSize) {
+        super(entityPoolInitialSize,entityPoolMaxSize,componentPoolInitialSize,componentPoolMaxSize);
+
+    }
+
+    public static MyEngine createEngine(HashMap<Long, Entity> units) {
+        if (instance != null) {
+            throw new UnsupportedOperationException("Engine already exists");
+        }
+        instance=new MyEngine(25,100,25,100);
+        instance.units = units;
+        return instance;
     }
 
     public void dispose(){

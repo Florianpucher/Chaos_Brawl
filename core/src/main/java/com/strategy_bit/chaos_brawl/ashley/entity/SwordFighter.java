@@ -8,6 +8,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 /**
@@ -19,13 +20,16 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  */
 public class SwordFighter extends Entity {
     public SwordFighter(Vector2 position, int teamId) {
-        TransformComponent transformComponent = new TransformComponent();
+        TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
-        TextureComponent textureComponent = new TextureComponent();
+        TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
         textureComponent.setTexture(AssetManager.getInstance().swordFighterSkin);
-        MovementComponent movementComponent = new MovementComponent(5,transformComponent);
-        CombatComponent combatComponent = new CombatComponent(10000.0,1,2.5,7,false);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(75.0,teamId);
+        MovementComponent movementComponent =MyEngine.getInstance().createComponent(MovementComponent.class);
+        movementComponent.setEverything(5,transformComponent);
+        CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
+        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,2.5,7,false);
+        TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
+        teamGameObjectComponent.setEverything(75.0,teamId);
         add(transformComponent);
         add(textureComponent);
         add(movementComponent);

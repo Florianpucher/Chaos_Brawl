@@ -1,6 +1,8 @@
 package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.util.Boundary;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,7 +39,8 @@ public class BoundaryComponentTest {
         this.clickPosition = clickPosition;
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
-        boundaryComponent = new BoundaryComponent(size,transformComponent);
+        boundaryComponent = MyEngine.getInstance().createComponent(BoundaryComponent.class);
+        boundaryComponent.setSizeAndTransformComponent(size,transformComponent);
     }
 
 

@@ -2,7 +2,9 @@ package com.strategy_bit.chaos_brawl.world;
 
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entity.Archer;
 import com.strategy_bit.chaos_brawl.ashley.entity.Base;
 import com.strategy_bit.chaos_brawl.ashley.entity.Knight;
@@ -17,8 +19,8 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
  */
 public class SpawnerImpl {
 
-    public Entity createNewUnit(UnitType unitType, int teamID, Vector2 position) {
-        Entity entity;
+    public Entity createNewUnit(MyEngine engine,UnitType unitType, int teamID, Vector2 position) {
+        Entity entity=engine.createEntity();
 
         switch (unitType) {
             case RANGED:
