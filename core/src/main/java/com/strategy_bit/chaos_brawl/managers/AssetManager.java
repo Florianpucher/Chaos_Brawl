@@ -11,7 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
+import java.io.File;
 import java.util.Random;
 
 /**
@@ -45,8 +48,9 @@ public class AssetManager {
     public Music music;
     public TextureRegion dirtTile;
     public Array<FileHandle> maps;
-    public Array<FileHandle> mapConfig;
-    public Array<FileHandle> spawnAreas;
+    public Array<Float> config;
+    public Array<Float> config2;
+    public Array<Float> spawn;
     public TextureRegion ballistaTowerSkin;
     public TextureRegion mainTowerSkin;
     public Texture victoryScreen;
@@ -107,10 +111,17 @@ public class AssetManager {
         maps.add(Gdx.files.internal("maps/map2.txt"));
         maps.add(Gdx.files.internal("maps/map3.txt"));
         maps.add(Gdx.files.internal("maps/4playermap.txt"));
-        mapConfig = new Array<>();
-        mapConfig.add(Gdx.files.internal("maps/Config2Players.txt"));
-        spawnAreas = new Array<>();
-        spawnAreas.add(Gdx.files.internal("maps/SpawnAreas2.txt"));
+
+        FileHandle handle = Gdx.files.internal("maps/Config2Players.json");
+        FileHandle handle1 = Gdx.files.internal("maps/SpawnAreas2.json");
+        FileHandle handle2 = Gdx.files.internal("maps/Config4Players.json");
+        config = new Array<>();
+        config2 = new Array<>();
+        spawn = new Array<>();
+        setArray(config, handle);
+        setArray(config2, handle2);
+        setArray(spawn, handle1);
+
 
         attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
         attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.mp3"));
@@ -132,6 +143,16 @@ public class AssetManager {
 
     }
 
+    private void setArray(Array<Float> arr, FileHandle handle) {
+        JsonReader jsonReader = new JsonReader();
+        JsonValue value = jsonReader.parse(handle);
+        JsonValue child = value.child();
+        while (child != null) {
+            arr.add(child.getFloat("x"));
+            arr.add(child.getFloat("y"));
+            child = child.next();
+        }
+    }
 
     public void dispose() {
         defaultSkin.dispose();

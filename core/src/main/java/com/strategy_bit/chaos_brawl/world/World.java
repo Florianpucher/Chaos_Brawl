@@ -93,23 +93,25 @@ public class World implements InputHandler {
     }
 
     public void initializeGameForPlayers(int map, int players){
-        int config;
-        if (map < 4) {
-            config = 0;
+        int configMap;
+        if (players < 3) {
+            configMap = 0;
 
-        } else {
-            config = 1;
+        } else if (players == 4){
+            configMap = 1;
         }
-        try {
-            Scanner scanner = new Scanner(AssetManager.getInstance().mapConfig.get(config).readString());
-            Array<Float> spawnAreas = new Array<Float>();
-            while (scanner.hasNextFloat()){
-                spawnAreas.add(scanner.nextFloat());
-            }
-            scanner.close();
-            setEntityWorldCoordinates(spawnAreas, players);
-        } catch (Exception e) {
-            e.printStackTrace();
+        else {
+            configMap = -1;
+        }
+        switch (configMap){
+            case 0: setEntityWorldCoordinates(AssetManager.getInstance().config, players);
+            break;
+
+            case 1: setEntityWorldCoordinates(AssetManager.getInstance().config2, players);
+            break;
+
+            default: throw new UnsupportedOperationException("Can't play with this amount of players");
+
         }
         resourceTimeStamp = System.currentTimeMillis();
     }
@@ -349,22 +351,11 @@ public class World implements InputHandler {
     public Boundary createSpawnAreaForPlayer(int playerID){
         //TODO: modulo 2 for experimental 3-4players
         playerID=playerID%2;
-        Boundary spawnArea;
-        int spawnAreaWidth = 5;
         Boundary spawnArea0, spawnArea1;
-        Array<Float> spawnAreas = new Array<Float>();
         Array<Vector2> vectorList = new Array<>();
-        try {
-            Scanner scanner = new Scanner(AssetManager.getInstance().spawnAreas.get(0).readString());
-            while (scanner.hasNextFloat()){
-                spawnAreas.add(scanner.nextFloat());
-            }
-            scanner.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        for (int i = 0; i < spawnAreas.size - 1; i = i + 2){
-            vectorList.add(new Vector2(spawnAreas.get(i), spawnAreas.get(i+1)));
+
+        for (int i = 0; i < AssetManager.getInstance().spawn.size - 1; i = i + 2){
+            vectorList.add(new Vector2(AssetManager.getInstance().spawn.get(i), AssetManager.getInstance().spawn.get(i+1)));
         }
         spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
         spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
