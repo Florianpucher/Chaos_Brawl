@@ -103,16 +103,8 @@ public class World implements InputHandler {
         else {
             configMap = -1;
         }
-        switch (configMap){
-            case 0: setEntityWorldCoordinates(AssetManager.getInstance().config, players);
-            break;
 
-            case 1: setEntityWorldCoordinates(AssetManager.getInstance().config2, players);
-            break;
-
-            default: throw new UnsupportedOperationException("Can't play with this amount of players");
-
-        }
+        setEntityWorldCoordinates(board.getAsset(configMap), players);
         resourceTimeStamp = System.currentTimeMillis();
     }
 
@@ -349,23 +341,7 @@ public class World implements InputHandler {
      * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
      */
     public Boundary createSpawnAreaForPlayer(int playerID){
-        //TODO: modulo 2 for experimental 3-4players
-        playerID=playerID%2;
-        Boundary spawnArea0, spawnArea1;
-        Array<Vector2> vectorList = new Array<>();
-
-        for (int i = 0; i < AssetManager.getInstance().spawn.size - 1; i = i + 2){
-            vectorList.add(new Vector2(AssetManager.getInstance().spawn.get(i), AssetManager.getInstance().spawn.get(i+1)));
-        }
-        spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
-        spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
-
-        if (playerID == 0){
-            return spawnArea0;
-        } else if (playerID == 1){
-            return spawnArea1;
-        }
-        throw new UnsupportedOperationException("Game only supports two player mode at the moment :)");
+        return board.createSpawnAreaForPlayer(playerID);
     }
 
     public void cheatFunctionDisposer(){
