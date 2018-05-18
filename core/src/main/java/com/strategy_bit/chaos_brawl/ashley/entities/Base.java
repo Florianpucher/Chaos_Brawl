@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.ashley.entity;
+package com.strategy_bit.chaos_brawl.ashley.entities;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
@@ -9,13 +9,12 @@ import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
-import com.strategy_bit.chaos_brawl.util.Boundary;
 
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
 
 
-public class Base extends Entity {
-    public Base (Vector2 position, int teamID){
+public class Base {
+    public static void setComponents(Entity entity,Vector2 position, int teamID){
         TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
         TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
@@ -29,11 +28,11 @@ public class Base extends Entity {
 
         BoundaryComponent boundaryComponent = MyEngine.getInstance().createComponent(BoundaryComponent.class);
         boundaryComponent.setSizeAndTransformComponent(size,transformComponent);
-        add(boundaryComponent);
-        add(textureComponent);
-        add(transformComponent);
-        add(combatComponent);
-        add(teamGameObjectComponent);
+        entity.add(boundaryComponent);
+        entity.add(textureComponent);
+        entity.add(transformComponent);
+        entity.add(combatComponent);
+        entity.add(teamGameObjectComponent);
         // add(new BuildingComponent(true));
     }
 }

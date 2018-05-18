@@ -11,6 +11,16 @@ import com.badlogic.gdx.utils.Pool;
 
 public class BulletComponent implements Component,Pool.Poolable{
     private boolean deleteWhenTargetIsReached;
+    private  boolean delete;
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
     private long targetId;
     private float damage;
 
@@ -18,6 +28,7 @@ public class BulletComponent implements Component,Pool.Poolable{
         setDeleteWhenTargetIsReached(deleteWhenTargetIsReached);
         setTargetId(targetId);
         setDamage(damage);
+        setDelete(false);
     }
 
     public void setDeleteWhenTargetIsReachedAndTargetIdAndDamage(boolean deleteWhenTargetIsReached, long targetId,float damage) {
@@ -54,6 +65,7 @@ public class BulletComponent implements Component,Pool.Poolable{
         deleteWhenTargetIsReached=false;
         targetId=0;
         damage=0;
+        setDelete(false);
     }
 
     @Override
@@ -61,6 +73,7 @@ public class BulletComponent implements Component,Pool.Poolable{
         deleteWhenTargetIsReached=false;
         targetId=0;
         damage=0;
+        setDelete(false);
     }
 }
 

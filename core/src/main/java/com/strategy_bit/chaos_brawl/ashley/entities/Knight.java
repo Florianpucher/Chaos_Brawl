@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.ashley.entity;
+package com.strategy_bit.chaos_brawl.ashley.entities;
 
 
 import com.badlogic.ashley.core.Entity;
@@ -18,22 +18,22 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  * @version 1.0
  * @since 29.05.18
  */
-public class SwordFighter extends Entity {
-    public SwordFighter(Vector2 position, int teamId) {
+public class Knight {
+    public static void setComponents(Entity entity,Vector2 position, int teamId) {
         TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
         TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
-        textureComponent.setTexture(AssetManager.getInstance().swordFighterSkin);
+        textureComponent.setTexture(AssetManager.getInstance().knightSkin);
         MovementComponent movementComponent =MyEngine.getInstance().createComponent(MovementComponent.class);
-        movementComponent.setEverything(5,transformComponent);
+        movementComponent.setEverything(3,transformComponent);
         CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,2.5,7,false);
+        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,1,5,false);
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
-        teamGameObjectComponent.setEverything(75.0,teamId);
-        add(transformComponent);
-        add(textureComponent);
-        add(movementComponent);
-        add(combatComponent);
-        add(teamGameObjectComponent);
+        teamGameObjectComponent.setEverything(120.0,teamId);
+        entity.add(transformComponent);
+        entity.add(textureComponent);
+        entity.add(movementComponent);
+        entity.add(combatComponent);
+        entity.add(teamGameObjectComponent);
     }
 }

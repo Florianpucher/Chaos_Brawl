@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.ashley.entity;
+package com.strategy_bit.chaos_brawl.ashley.entities;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

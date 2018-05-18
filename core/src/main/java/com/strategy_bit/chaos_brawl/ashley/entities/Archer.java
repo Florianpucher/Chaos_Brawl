@@ -1,4 +1,4 @@
-package com.strategy_bit.chaos_brawl.ashley.entity;
+package com.strategy_bit.chaos_brawl.ashley.entities;
 
 
 import com.badlogic.ashley.core.Entity;
@@ -18,8 +18,8 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  * @version 1.0
  * @since 15.03.2018
  */
-public class Archer extends Entity {
-    public Archer(Vector2 position, int teamId) {
+public class Archer {
+    public static void setComponents(Entity e,Vector2 position, int teamId) {
         TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
         TextureComponent textureComponent =MyEngine.getInstance().createComponent(TextureComponent.class);
@@ -30,10 +30,10 @@ public class Archer extends Entity {
         combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,3,2,5,true);
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(50.0,teamId);
-        add(transformComponent);
-        add(textureComponent);
-        add(movementComponent);
-        add(combatComponent);
-        add(teamGameObjectComponent);
+        e.add(transformComponent);
+        e.add(textureComponent);
+        e.add(movementComponent);
+        e.add(combatComponent);
+        e.add(teamGameObjectComponent);
     }
 }

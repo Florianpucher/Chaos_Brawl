@@ -5,7 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.strategy_bit.chaos_brawl.ashley.entity.BackgroundTile;
+import com.strategy_bit.chaos_brawl.ashley.entities.BackgroundTile;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.TileType;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
