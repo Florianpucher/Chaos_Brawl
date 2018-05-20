@@ -4,23 +4,16 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
-
-
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
 
 public class ExplosionSystem extends IteratingSystem implements DisposeAble {
 
@@ -28,14 +21,14 @@ public class ExplosionSystem extends IteratingSystem implements DisposeAble {
     private SpriteBatch batch;
     private Array<Entity> renderQueue;
     private RenderSystem.ZComparator comparator;
-    private OrthographicCamera camera;
+    private Camera camera;
 
     ParticleEffect effect;
 
 
-    public ExplosionSystem() {
+    public ExplosionSystem(Camera camera) {
         super(Family.all(ExplosionComponent.class).get());
-
+        this.camera = camera;
         //initialize transformMapper
         transformMapper = ComponentMapper.getFor(TransformComponent.class);
 
@@ -44,9 +37,6 @@ public class ExplosionSystem extends IteratingSystem implements DisposeAble {
         renderQueue = new Array<>();
         comparator = new RenderSystem.ZComparator();
 
-        //initialize camera with size
-        camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-        camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
     }
 
     @Override
@@ -69,7 +59,7 @@ public class ExplosionSystem extends IteratingSystem implements DisposeAble {
         for (Entity entity :
                 renderQueue) {
             // draw all explosions, till all entities are done
-
+            //TODO edit lines
             TransformComponent transform = transformMapper.get(entity);
 
 

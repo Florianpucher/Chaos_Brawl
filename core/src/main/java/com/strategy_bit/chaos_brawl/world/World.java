@@ -17,6 +17,7 @@ import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
@@ -110,7 +111,9 @@ public class World implements InputHandler {
     protected void createEngine(){
         engine = new MyEngine(units);
         //Add some logic
-        deleteSystem = new DeleteSystem();
+        RenderSystem renderSystem = new RenderSystem();
+        camera = renderSystem.getCamera();
+        deleteSystem = new DeleteSystem(camera);
         engine.addSystem(deleteSystem);
         engine.addSystem(new MovementSystem());
         BulletSystem bulletSystem=new BulletSystem();
@@ -120,9 +123,11 @@ public class World implements InputHandler {
         combatSystem.addWorld(this);
         engine.addSystem(combatSystem);
         //Renderer should be the last system to add
-        RenderSystem renderSystem = new RenderSystem();
+
         engine.addSystem(renderSystem);
-        camera = renderSystem.getCamera();
+
+        engine.addSystem(new ExplosionSystem(camera));
+
     }
 
 

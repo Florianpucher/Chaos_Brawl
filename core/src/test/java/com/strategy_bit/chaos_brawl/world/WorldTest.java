@@ -6,16 +6,19 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.BaseTest;
+import com.strategy_bit.chaos_brawl.ashley.components.ParticleComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entity.Knight;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
@@ -46,7 +49,7 @@ import static org.junit.Assert.assertEquals;
  * @since 18.04.2018
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({World.class})
+@PrepareForTest({World.class, ParticleComponent.class})
 public class WorldTest extends BaseTest {
 
     private World world;
@@ -64,6 +67,7 @@ public class WorldTest extends BaseTest {
 
 
         renderSystem = Mockito.mock(RenderSystem.class);
+        ExplosionSystem explosionSystem = Mockito.mock(ExplosionSystem.class);
         OtherPathfinder pathfinder = Mockito.mock(OtherPathfinder.class);
         camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
@@ -80,10 +84,11 @@ public class WorldTest extends BaseTest {
         defaultPath.add(new Vector2());
         defaultPath.add(new Vector2(1,1));
         Mockito.when(pathfinder.calculatePath(Mockito.any(Vector2.class), Mockito.any(Vector2.class))).thenReturn(defaultPath);
-
+        PowerMockito.whenNew(ExplosionSystem.class).withAnyArguments().thenReturn(explosionSystem);
         PowerMockito.whenNew(RenderSystem.class).withNoArguments().thenReturn(renderSystem);
         PowerMockito.whenNew(Board.class).withAnyArguments().thenReturn(boardA);
         PowerMockito.whenNew(OtherPathfinder.class).withArguments(boardA).thenReturn(pathfinder);
+        PowerMockito.whenNew(ParticleEffect.class).withNoArguments().thenReturn(Mockito.mock(ParticleEffect.class));
         world = new World(1,4);
         Boundary boundary = new Boundary(new Vector2(), new Vector2(), new Vector2(), new Vector2());
         player1 = new PlayerController(0,world,boundary);

@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.world;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -11,8 +12,10 @@ import com.badlogic.gdx.utils.Queue;
 import com.strategy_bit.chaos_brawl.BaseTest;
 import com.strategy_bit.chaos_brawl.ChaosBrawlGame;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.ParticleComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
@@ -46,7 +49,7 @@ import static org.junit.Assert.assertEquals;
  * @since 10.05.2018
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({MultiplayerWorld.class})
+@PrepareForTest({MultiplayerWorld.class, ParticleComponent.class})
 public class MultiplayerWorldTest extends BaseTest {
     //TODO make this test parameterized but for that you cannot use PowerMockRunner
     //TODO Change amount of players if more players are getting a base
@@ -71,6 +74,7 @@ public class MultiplayerWorldTest extends BaseTest {
         brawlMultiplayer = new BrawlMultiplayer[PLAYERS];
         playersPerWorld = new PawnController[PLAYERS][PLAYERS];
         RenderSystem renderSystem = Mockito.mock(RenderSystem.class);
+        ExplosionSystem explosionSystem = Mockito.mock(ExplosionSystem.class);
         OtherPathfinder pathfinder = Mockito.mock(OtherPathfinder.class);
 
         camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
@@ -85,9 +89,11 @@ public class MultiplayerWorldTest extends BaseTest {
         targetPath.addFirst(defaultPath.get(0));
         targetPath.addFirst(defaultPath.get(1));
 
+        PowerMockito.whenNew(ParticleEffect.class).withNoArguments().thenReturn(Mockito.mock(ParticleEffect.class));
 
 
         PowerMockito.whenNew(RenderSystem.class).withNoArguments().thenReturn(renderSystem);
+        PowerMockito.whenNew(ExplosionSystem.class).withAnyArguments().thenReturn(explosionSystem);
         Board board = Mockito.mock(Board.class);
         Mockito.when(board.boardToMatrix()).thenReturn(new int[][]{
                 {0, 0, 0},

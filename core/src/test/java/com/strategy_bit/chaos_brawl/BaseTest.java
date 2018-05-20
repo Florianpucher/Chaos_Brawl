@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -58,6 +59,7 @@ public class BaseTest {
         assetManager.attackSword = sound;
         assetManager.hitArrow = sound;
         assetManager.drawSword = sound;
+        assetManager.particle = Mockito.mock(FileHandle.class);
     }
 
     // After we are done, clean up the application
