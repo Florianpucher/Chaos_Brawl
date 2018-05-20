@@ -25,8 +25,8 @@ public class ParticleComponent implements Component {
         return effect.isComplete();
     }
 
-    public void draw(SpriteBatch batch){
-        effect.draw(batch);
+    public void draw(SpriteBatch batch, float delta){
+        effect.draw(batch, delta);
     }
 
     public void start() {
