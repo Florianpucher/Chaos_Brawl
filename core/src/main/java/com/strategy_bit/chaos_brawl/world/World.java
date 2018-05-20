@@ -190,33 +190,18 @@ public class World implements InputHandler {
         }
         for (int i = 0; i < bases.length; i++) {
             if (bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-                //explosions.add(new Explosion(bases[i].getComponent(TransformComponent.class).getPosition().x, bases[i].getComponent(TransformComponent.class).getPosition().y));
                 return true;
             }
         }
         for (int i = 0; i < tower.length; i++) {
             if (tower[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-                //explosions.add(new Explosion(tower[i].getComponent(TransformComponent.class).getPosition().x, tower[i].getComponent(TransformComponent.class).getPosition().y));
                 return true;
             }
         }
         return false;
     }
 
-    // there is a Problem with the deltatime
 
-    // update explosions
-    /*
-    ArrayList<Explosion> ExplosionsToRemove = new ArrayList<Explosion>();
-
-    for(Explosion explosion: explosions){
-        explosion.update(deltaTime);
-        if (explosion.remove){
-            ExplosionsToRemove.add(explosion);
-        }
-    }
-    explosions.removeAll(ExplosionsToRemove);
-    */
 
     // update recources
     protected void updateResources(){

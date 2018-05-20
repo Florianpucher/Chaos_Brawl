@@ -88,7 +88,6 @@ public class AssetManager {
         ballistaTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"ballista_tower.png"));
         mainTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"wall.png"));
         explosionSkin = new TextureAtlas("explosions.atlas");
-        //explosionSkin = new TextureRegion(new Texture(BUILDING_PATH+ "explosion.png"));
 
         defaultSkin = new Skin(Gdx.files.internal(UI_PATH+"default/skin.json"));
         resourceSkinOuter = new NinePatch(new Texture(UI_PATH+"resourceBarOuterBorder.png"),12,12,12,12);

@@ -12,9 +12,7 @@ public class ExplosionComponent implements Component{
     }
 
     public void explode() {
-        // ExplosionSystem explosionSystem = new ExplosionSystem();
-
-        AssetManager.getInstance().explosionSound.play(1f);
+        
         System.out.println("explosion!");
 
     }

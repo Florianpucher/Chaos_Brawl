@@ -58,8 +58,6 @@ public class ExplosionSystem extends IteratingSystem implements DisposeAble {
         }
         batch.end();
 
-
-
         //clear render queue
         renderQueue.clear();
     }
