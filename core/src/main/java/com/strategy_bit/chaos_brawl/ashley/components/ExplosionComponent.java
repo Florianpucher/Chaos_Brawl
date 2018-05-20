@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
-public class ExplosionComponent implements Component {
+public class ExplosionComponent implements Component{
 
     public ExplosionComponent() {
 

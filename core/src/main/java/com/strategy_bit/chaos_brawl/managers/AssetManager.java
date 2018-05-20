@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 
+import java.io.File;
 import java.util.Random;
 
 /**
@@ -36,7 +37,7 @@ public class AssetManager {
     public TextureRegion knightSkin;
     public TextureRegion projectileSkin;
     public TextureAtlas explosionSkin;
-    // public TextureRegion explosionSkin;
+    public FileHandle particle;
     public NinePatch resourceSkinOuter;
     public NinePatch resourceSkinInner;
     public NinePatch resourceSkinMiddle;
@@ -61,6 +62,8 @@ public class AssetManager {
     private Array<Sound> drawKatanas;
 
 
+
+
     private static AssetManager instance;
 
 
@@ -76,7 +79,6 @@ public class AssetManager {
     }
 
     public  void loadAssets(){
-
 
         archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_archer.png"));
         swordFighterSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_sword_fighter.png"));
@@ -128,6 +130,7 @@ public class AssetManager {
         drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Steady.mp3")));
 
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Animations/explosion.mp3"));
+        particle = Gdx.files.internal("explosions.p");
 
     }
 

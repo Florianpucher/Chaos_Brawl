@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
+import com.strategy_bit.chaos_brawl.ashley.entity.Explosion;
 
 
 /**
@@ -39,7 +40,10 @@ public class DeleteSystem extends IteratingSystem {
             // Play explosion
 
             if(explosionComponent != null){
-                explosionComponent.explode();
+                // Get Position of object here
+                // and give it to the Explosion entity
+                getEngine().addEntity(new Explosion());
+                // explosionComponent.explode();
             }
             getEngine().removeEntity(entity);
         }

@@ -72,10 +72,6 @@ public class ExplosionSystem extends IteratingSystem implements DisposeAble {
 
             TransformComponent transform = transformMapper.get(entity);
 
-            TextureAtlas particleAtlas = AssetManager.getInstance().explosionSkin; //<-load some atlas with your particle assets in
-            effect = new ParticleEffect();
-            effect.load(Gdx.files.internal("explosions.p"), particleAtlas);
-            effect.start();
 
             Vector3 position = new Vector3(transform.getPosition().x, transform.getPosition().y, 0.0f);
 
