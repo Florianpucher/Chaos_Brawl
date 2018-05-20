@@ -61,11 +61,7 @@ public class AssetManager {
     public Sound explosionSound;
     private Array<Sound> drawKatanas;
 
-
-
-
     private static AssetManager instance;
-
 
     public static AssetManager getInstance() {
         if (instance == null) {
