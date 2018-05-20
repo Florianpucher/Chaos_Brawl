@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -34,7 +35,8 @@ public class AssetManager {
     public TextureRegion swordFighterSkin;
     public TextureRegion knightSkin;
     public TextureRegion projectileSkin;
-    public TextureRegion explosionSkin;
+    public TextureAtlas explosionSkin;
+    // public TextureRegion explosionSkin;
     public NinePatch resourceSkinOuter;
     public NinePatch resourceSkinInner;
     public NinePatch resourceSkinMiddle;
@@ -55,6 +57,7 @@ public class AssetManager {
     public Sound hitArrow;
     public Sound drawSword;
     public Sound drawKatana;
+    public Sound explosionSound;
     private Array<Sound> drawKatanas;
 
 
@@ -74,6 +77,7 @@ public class AssetManager {
 
     public  void loadAssets(){
 
+
         archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_archer.png"));
         swordFighterSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_sword_fighter.png"));
         knightSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_knight.png"));     // need a new Knightskin
@@ -85,7 +89,8 @@ public class AssetManager {
         dirtTile = new TextureRegion(new Texture ( ENVIRONMENT_PATH+"dirt_tile.png"));
         ballistaTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"ballista_tower.png"));
         mainTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"wall.png"));
-        explosionSkin = new TextureRegion(new Texture(BUILDING_PATH+ "explosion.png"));
+        explosionSkin = new TextureAtlas("explosions.atlas");
+        //explosionSkin = new TextureRegion(new Texture(BUILDING_PATH+ "explosion.png"));
 
         defaultSkin = new Skin(Gdx.files.internal(UI_PATH+"default/skin.json"));
         resourceSkinOuter = new NinePatch(new Texture(UI_PATH+"resourceBarOuterBorder.png"),12,12,12,12);
@@ -122,6 +127,7 @@ public class AssetManager {
         drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Methodical.mp3")));
         drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Steady.mp3")));
 
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Animations/explosion.mp3"));
 
     }
 
@@ -132,7 +138,7 @@ public class AssetManager {
         swordFighterSkin.getTexture().dispose();
         knightSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
-        explosionSkin.getTexture().dispose();
+        // explosionSkin.getParticle().dispose();
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();
         dirtTile.getTexture().dispose();
@@ -151,6 +157,7 @@ public class AssetManager {
         hitArrow.dispose();
         drawSword.dispose();
         drawKatana.dispose();
+        explosionSound.dispose();
         for (Sound s:
                 drawKatanas) {
             s.dispose();

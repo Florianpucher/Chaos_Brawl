@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Explosion {
+    /*
 
     //TODO Engin rewrite implementation
     public static final float FRAME_LENGTH = 0.8f; // time between each frame of the animation
@@ -42,4 +43,5 @@ public class Explosion {
     public void render (SpriteBatch batch){
         batch.draw((Texture) anim.getKeyFrame(statetime),x, y);
     }
+    */
 }

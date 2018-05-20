@@ -7,6 +7,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
@@ -21,6 +22,8 @@ public class Base extends Entity {
         CombatComponent combatComponent =new CombatComponent(100000.0,4,1,20,true);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(1000.0,teamID);
 
+        ExplosionComponent explosionComponent = new ExplosionComponent();
+
         Vector2 size = new Vector2((textureComponent.getTexture().getRegionWidth() * PIXELS_TO_METRES),(textureComponent.getTexture().getRegionHeight() * PIXELS_TO_METRES));
 
         BoundaryComponent boundaryComponent = new BoundaryComponent(size, transformComponent);
@@ -29,5 +32,6 @@ public class Base extends Entity {
         add(transformComponent);
         add(combatComponent);
         add(teamGameObjectComponent);
+        add(explosionComponent);
     }
 }

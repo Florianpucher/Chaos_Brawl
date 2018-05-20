@@ -90,12 +90,12 @@ public class World implements InputHandler {
 
     public void initializeGameForPlayers(){
         //TODO support variable player length
-        createEntityWorldCoordinates(new Vector2(3,12), UnitType.TOWER,  playerControllers[0].getTeamID());
-        createEntityWorldCoordinates(new Vector2(3,3), UnitType.TOWER,  playerControllers[0].getTeamID());
+        createEntityWorldCoordinates(new Vector2(7,12), UnitType.TOWER,  playerControllers[0].getTeamID());
+        createEntityWorldCoordinates(new Vector2(7,3), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(2,7.5f), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
 
-        createEntityWorldCoordinates(new Vector2(17,12), UnitType.TOWER,  playerControllers[1].getTeamID());
-        createEntityWorldCoordinates(new Vector2(17,3), UnitType.TOWER,  playerControllers[1].getTeamID());
+        createEntityWorldCoordinates(new Vector2(13,12), UnitType.TOWER,  playerControllers[1].getTeamID());
+        createEntityWorldCoordinates(new Vector2(13,3), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(19,7.5f), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
         resourceTimeStamp = System.currentTimeMillis();
     }
@@ -185,13 +185,13 @@ public class World implements InputHandler {
         }
         for (int i = 0; i < bases.length; i++) {
             if (bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-                explosions.add(new Explosion(bases[i].getComponent(TransformComponent.class).getPosition().x, bases[i].getComponent(TransformComponent.class).getPosition().y));
+                //explosions.add(new Explosion(bases[i].getComponent(TransformComponent.class).getPosition().x, bases[i].getComponent(TransformComponent.class).getPosition().y));
                 return true;
             }
         }
         for (int i = 0; i < tower.length; i++) {
             if (tower[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-                explosions.add(new Explosion(tower[i].getComponent(TransformComponent.class).getPosition().x, tower[i].getComponent(TransformComponent.class).getPosition().y));
+                //explosions.add(new Explosion(tower[i].getComponent(TransformComponent.class).getPosition().x, tower[i].getComponent(TransformComponent.class).getPosition().y));
                 return true;
             }
         }

@@ -158,7 +158,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     /**
      * comparator for sorting entities by z-index
      */
-    private static class ZComparator implements Comparator<Entity> {
+    static class ZComparator implements Comparator<Entity> {
         private ComponentMapper<TransformComponent> pm = ComponentMapper.getFor(TransformComponent.class);
 
         @Override
