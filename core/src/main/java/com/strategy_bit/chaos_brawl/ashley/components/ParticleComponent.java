@@ -11,14 +11,22 @@ public class ParticleComponent implements Component {
 
     ParticleEffect effect;
 
-    public ParticleComponent() {
+    public ParticleComponent(String animation) {
 
-        TextureAtlas particleAtlas = AssetManager.getInstance().explosionSkin;
-        effect = new ParticleEffect();
+        TextureAtlas particleAtlas = null;
 
-        effect.load(AssetManager.getInstance().particle, particleAtlas);
-        effect.start();
+        if (animation == "explosion") {
+            particleAtlas = AssetManager.getInstance().explosionSkin;
+            effect = new ParticleEffect();
+            effect.load(AssetManager.getInstance().explosionParticle, particleAtlas);
+            effect.start();
 
+        } else if (animation == "smoke") {
+            particleAtlas = AssetManager.getInstance().smokeSkin;
+            effect = new ParticleEffect();
+            effect.load(AssetManager.getInstance().smokeParticle, particleAtlas);
+            effect.start();
+        }
     }
 
     public boolean isComplete() {

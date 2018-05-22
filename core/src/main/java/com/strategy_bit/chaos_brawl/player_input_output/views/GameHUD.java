@@ -34,6 +34,9 @@ public class GameHUD extends Table {
     private static final String NEW_UNIT_2 = "Fighter";
     private static final String NEW_UNIT_3 = "Knight";
 
+    boolean playedVictoryOnce = false;
+    boolean playedDefeatOnce = false;
+
     private UnitType nextUnitType;
     private Texture nonSpawnAreaTexture;
     public ProgressBar manaBar;
@@ -185,8 +188,17 @@ public class GameHUD extends Table {
         Texture gameOverView;
         if (win) {
             gameOverView = assetManager.victoryScreen;
+            if (playedVictoryOnce =! true){
+                AssetManager.getInstance().victory.play(1f);
+                playedVictoryOnce = true;
+            }
+
         }else{
             gameOverView = assetManager.defeatScreen;
+            if(playedDefeatOnce =! true) {
+                AssetManager.getInstance().defeat.play(1f);
+                playedDefeatOnce = true;
+            }
         }
 
         tw = (float)gameOverView.getWidth();
@@ -195,6 +207,8 @@ public class GameHUD extends Table {
         batch.begin();
         batch.draw(gameOverView, camera.position.x - (tw / 2), camera.position.y - (th / 2));
         batch.end();
+
+
     }
 
     public void updateManaBar(Resource r){

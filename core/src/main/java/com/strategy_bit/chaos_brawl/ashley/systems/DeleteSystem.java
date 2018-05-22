@@ -7,9 +7,11 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Camera;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entity.Explosion;
+import com.strategy_bit.chaos_brawl.ashley.entity.Smoke;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 
@@ -22,7 +24,8 @@ public class DeleteSystem extends IteratingSystem {
 
     protected ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponent;
     protected ComponentMapper<ExplosionComponent> explosionComponentComponentMapper;
-    private ComponentMapper<TransformComponent> transformMapper;
+    protected ComponentMapper<TransformComponent> transformComponentMapper;
+    protected ComponentMapper<MovementComponent> movementComponentMapper;
 
     private Engine engine;
     private Camera camera;
@@ -31,7 +34,8 @@ public class DeleteSystem extends IteratingSystem {
         super(Family.all(TeamGameObjectComponent.class).get());
         mTeamGameObjectComponent = ComponentMapper.getFor(TeamGameObjectComponent.class);
         explosionComponentComponentMapper = ComponentMapper.getFor(ExplosionComponent.class);
-        transformMapper = ComponentMapper.getFor(TransformComponent.class);
+        transformComponentMapper = ComponentMapper.getFor(TransformComponent.class);
+        movementComponentMapper = ComponentMapper.getFor(MovementComponent.class);
         this.camera = camera;
     }
 
@@ -50,20 +54,34 @@ public class DeleteSystem extends IteratingSystem {
         TeamGameObjectComponent component = mTeamGameObjectComponent.get(entity);
         if (component.getHitPoints() <= 0.0) {
             ExplosionComponent explosionComponent = explosionComponentComponentMapper.get(entity);
+            MovementComponent movementComponent = movementComponentMapper.get(entity);
 
             // Has explosion component
             // Play explosion
 
-            if (explosionComponent != null) {
+            if (explosionComponent != null && movementComponent == null) {  // true =  building
                 // Get Position of object here
-                TransformComponent transform = transformMapper.get(entity);
+                TransformComponent transform = transformComponentMapper.get(entity);
 
                 // and give it to the Explosion entity
                 engine.addEntity(new Explosion(transform.getPosition()));
                 AssetManager.getInstance().explosionSound.play(1f);
-                // explosionComponent.explode();
+                explosionComponent.explode();
+
+            } else if (explosionComponent != null && movementComponent != null) {  // true =  unit
+                // Get Position of object here
+                TransformComponent transform = transformComponentMapper.get(entity);
+
+                // and give it to the Smoke entity
+                engine.addEntity(new Smoke(transform.getPosition()));
+                //AssetManager.getInstance().smokeSound.play(1f);    // there is no smokeSound atm, do we need any?
+                explosionComponent.death();
+
             }
+
             engine.removeEntity(entity);
+
         }
     }
+
 }
