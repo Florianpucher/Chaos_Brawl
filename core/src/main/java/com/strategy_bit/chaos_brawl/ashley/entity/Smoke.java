@@ -8,13 +8,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.ParticleComponent;
 
-public class Explosion extends Entity{
+public class Smoke extends Entity{
 
-    public Explosion(Vector2 position){
+    public Smoke (Vector2 position){
 
-        String explosion = "explosion";
+        String smoke = "smoke";
 
-        ParticleComponent particleComponent = new ParticleComponent(explosion);
+        ParticleComponent particleComponent = new ParticleComponent(smoke);
         add(particleComponent);
 
         particleComponent.setPosition(position);

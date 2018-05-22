@@ -169,6 +169,7 @@ public class World implements InputHandler {
         }
         if (aliveCounter == 1) {
             playerControllers[lastAlive].gameOver(true);
+            engine.removeAllEntities();
             return true;
         } else if (aliveCounter == 0) {
             System.err.println("A draw happens suddenly");
@@ -200,8 +201,6 @@ public class World implements InputHandler {
         }
         return false;
     }
-
-
 
     // update recources
     protected void updateResources(){

@@ -29,6 +29,7 @@ public class AssetManager {
     private static final String BUILDING_PATH = "buildings/";
     private static final String UI_PATH = "user_interface/";
     private static final String ENVIRONMENT_PATH = "environment/";
+    private static final String ANIM_PATH = "animations/";
 
 
     public  Skin defaultSkin;
@@ -37,7 +38,9 @@ public class AssetManager {
     public TextureRegion knightSkin;
     public TextureRegion projectileSkin;
     public TextureAtlas explosionSkin;
-    public FileHandle particle;
+    public TextureAtlas smokeSkin;
+    public FileHandle explosionParticle;
+    public FileHandle smokeParticle;
     public NinePatch resourceSkinOuter;
     public NinePatch resourceSkinInner;
     public NinePatch resourceSkinMiddle;
@@ -53,6 +56,8 @@ public class AssetManager {
     public Texture victoryScreen;
     public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
+    public Sound victory;
+    public Sound defeat;
     public Sound attackBow;
     public Sound attackSword;
     public Sound hitArrow;
@@ -76,19 +81,26 @@ public class AssetManager {
 
     public  void loadAssets(){
 
+        // units
         archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_archer.png"));
         swordFighterSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_sword_fighter.png"));
         knightSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_knight.png"));     // need a new Knightskin
         projectileSkin=new TextureRegion(new Texture(UNIT_PATH+ "arrow.png"));
 
-
+        // Environment
         defaultTile = new TextureRegion(new Texture(ENVIRONMENT_PATH+"default_tile.png"));
         waterTile = new TextureRegion(new Texture ( ENVIRONMENT_PATH+"water_tile.png"));
         dirtTile = new TextureRegion(new Texture ( ENVIRONMENT_PATH+"dirt_tile.png"));
         ballistaTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"ballista_tower.png"));
         mainTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"wall.png"));
-        explosionSkin = new TextureAtlas("explosions.atlas");
 
+        // animations
+        explosionSkin = new TextureAtlas(ANIM_PATH+"explosions.atlas");
+        smokeSkin = new TextureAtlas(ANIM_PATH+"smoke.atlas");
+        explosionParticle = Gdx.files.internal(ANIM_PATH+"explosions.p");
+        smokeParticle = Gdx.files.internal(ANIM_PATH+"smoke.p");
+
+        // user interface & other
         defaultSkin = new Skin(Gdx.files.internal(UI_PATH+"default/skin.json"));
         resourceSkinOuter = new NinePatch(new Texture(UI_PATH+"resourceBarOuterBorder.png"),12,12,12,12);
         resourceSkinInner = new NinePatch(new Texture(UI_PATH+"resourceBarInner.png"),0,16,7,7);
@@ -107,6 +119,9 @@ public class AssetManager {
         maps.add(Gdx.files.internal("maps/map2.txt"));
         maps.add(Gdx.files.internal("maps/map3.txt"));
 
+        // sounds
+        victory =Gdx.audio.newSound(Gdx.files.internal("sounds/victory.mp3"));
+        defeat =Gdx.audio.newSound(Gdx.files.internal("sounds/defeat.mp3"));
         attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
         attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.mp3"));
         hitArrow =Gdx.audio.newSound(Gdx.files.internal("sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3"));
@@ -125,7 +140,6 @@ public class AssetManager {
         drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Steady.mp3")));
 
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Animations/explosion.mp3"));
-        particle = Gdx.files.internal("explosions.p");
 
     }
 
@@ -136,7 +150,6 @@ public class AssetManager {
         swordFighterSkin.getTexture().dispose();
         knightSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
-        // explosionSkin.getParticle().dispose();
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();
         dirtTile.getTexture().dispose();
@@ -156,6 +169,8 @@ public class AssetManager {
         drawSword.dispose();
         drawKatana.dispose();
         explosionSound.dispose();
+        victory.dispose();
+        defeat.dispose();
         for (Sound s:
                 drawKatanas) {
             s.dispose();
