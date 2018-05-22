@@ -19,7 +19,7 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
 public class SpawnerImpl {
 
     public Entity createNewUnit(UnitType unitType, int teamID, Vector2 position) {
-        Entity entity= MyEngine.getInstance().createEntity();
+        Entity entity= new Entity();
 
         switch (unitType) {
             case RANGED:

@@ -46,7 +46,7 @@ public class MyEngine extends PooledEngine {
     }
 
     public static MyEngine createEngine(HashMap<Long, Entity> units) {
-        instance=new MyEngine(25,10000,25,10000);
+        instance=new MyEngine(0,0,25,1000);
         instance.units = units;
         return instance;
     }

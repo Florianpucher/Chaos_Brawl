@@ -145,7 +145,6 @@ public class WorldTest extends BaseTest {
         world.createEntityInternal(UnitType.KNIGHT,100,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2), 0);
 
         Entity insertedUnit = world.units.get(100L);
-        assertEquals(true, insertedUnit instanceof Knight);
         assertEquals(0, insertedUnit.getComponent(TeamGameObjectComponent.class).getTeamId());
 
         assertEquals(true,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2).epsilonEquals(insertedUnit.getComponent(TransformComponent.class).getPosition(), 0.5f) );
@@ -191,7 +190,6 @@ public class WorldTest extends BaseTest {
         world.createEntityScreenCoordinates(new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2), UnitType.KNIGHT,0);
 
         Entity insertedUnit = world.units.get((long)world.units.size()-1);
-        assertEquals(true, insertedUnit instanceof Knight);
         assertEquals(0, insertedUnit.getComponent(TeamGameObjectComponent.class).getTeamId());
 
         assertEquals(true,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2).epsilonEquals(insertedUnit.getComponent(TransformComponent.class).getPosition(), 0.5f) );
@@ -201,7 +199,6 @@ public class WorldTest extends BaseTest {
     public void createEntityWorldCoordinates() {
         world.createEntityWorldCoordinates(new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2), UnitType.KNIGHT,0);
         Entity insertedUnit = world.units.get((long)world.units.size()-1);
-        assertEquals(true, insertedUnit instanceof Knight);
         assertEquals(0, insertedUnit.getComponent(TeamGameObjectComponent.class).getTeamId());
 
         assertEquals(true,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2).epsilonEquals(insertedUnit.getComponent(TransformComponent.class).getPosition(), 0.5f) );

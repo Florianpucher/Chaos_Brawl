@@ -39,8 +39,7 @@ public class BoundaryComponentTest {
         this.clickPosition = clickPosition;
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
-        boundaryComponent = MyEngine.getInstance().createComponent(BoundaryComponent.class);
-        boundaryComponent.setSizeAndTransformComponent(size,transformComponent);
+        boundaryComponent = new BoundaryComponent(size,transformComponent);
     }
 
 
