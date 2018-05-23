@@ -3,11 +3,12 @@ package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.ashley.entity.Archer;
-import com.strategy_bit.chaos_brawl.ashley.entity.Base;
-import com.strategy_bit.chaos_brawl.ashley.entity.Knight;
-import com.strategy_bit.chaos_brawl.ashley.entity.SwordFighter;
-import com.strategy_bit.chaos_brawl.ashley.entity.Tower;
+import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entities.Archer;
+import com.strategy_bit.chaos_brawl.ashley.entities.Base;
+import com.strategy_bit.chaos_brawl.ashley.entities.Knight;
+import com.strategy_bit.chaos_brawl.ashley.entities.SwordFighter;
+import com.strategy_bit.chaos_brawl.ashley.entities.Tower;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 
 /**
@@ -18,23 +19,23 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
 public class SpawnerImpl {
 
     public Entity createNewUnit(UnitType unitType, int teamID, Vector2 position) {
-        Entity entity;
+        Entity entity= new Entity();
 
         switch (unitType) {
             case RANGED:
-                entity = new Archer(position, teamID);
+                Archer.setComponents(entity,position, teamID);
                 break;
             case SWORDFIGHTER:
-                entity = new SwordFighter(position, teamID);
+                SwordFighter.setComponents(entity,position, teamID);
                 break;
             case KNIGHT:
-                entity = new Knight(position, teamID);
+                Knight.setComponents(entity,position, teamID);
                 break;
             case MAINBUILDING:
-                entity = new Base(position, teamID);
+                Base.setComponents(entity,position, teamID);
                 break;
             case TOWER:
-                entity = new Tower(position, teamID);
+                Tower.setComponents(entity,position, teamID);
                 break;
             default:
                 throw new UnsupportedOperationException("This unitType is not registered by SpawnerImpl");

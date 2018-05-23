@@ -8,10 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.BulletComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.World;
+
+import java.util.HashMap;
 
 /**
  * @author AIsopp
@@ -45,11 +49,11 @@ public class BulletSystem extends IteratingSystem {
         Vector2 position = transformComponent.getPosition();
         if (newTargetLocation == null && VectorMath.distance(targetLocation, position) < TARGET_RADIUS) {
             //target died already
-            getEngine().removeEntity(entity);
+            bulletComponent.setDelete(true);
         } else if (bulletComponent.isDeleteWhenTargetIsReached() && VectorMath.distance(targetLocation, position) < TARGET_RADIUS) {
             TeamGameObjectComponent enemyTeamGameObjectComponent = world.getUnit(bulletComponent.getTargetId()).getComponent(TeamGameObjectComponent.class);
             enemyTeamGameObjectComponent.setHitPoints(enemyTeamGameObjectComponent.getHitPoints() - bulletComponent.getDamage());
-            getEngine().removeEntity(entity);
+            bulletComponent.setDelete(true);
             AssetManager.getInstance().hitArrow.play(1f);
         }
     }
