@@ -12,11 +12,6 @@ public enum UnitType {
         public double getCosts() {
             return 10.0;
         }
-    }, MELEE {
-        @Override
-        public double getCosts() {
-            return 10.0;
-        }
     }, SWORDFIGHTER {
         @Override
         public double getCosts() {
@@ -26,6 +21,27 @@ public enum UnitType {
         @Override
         public double getCosts() {
             return 20.0;
+        }
+    }, MAGE {
+        @Override
+        public double getCosts() {
+            return 10.0;
+        }
+    }, BERSERKER {
+        @Override
+        public double getCosts() {
+            return 8.0;
+        }
+    }, TEMPLAR {
+        @Override
+        public double getCosts() {
+            return 20.0;
+        }
+
+    }, UPGRADE_UNITS {
+        @Override
+        public double getCosts() {
+            return 100.0;
         }
     }, MAINBUILDING {
         @Override
