@@ -92,12 +92,12 @@ public class World implements InputHandler {
 
     public void initializeGameForPlayers(){
         //TODO support variable player length
-        createEntityWorldCoordinates(new Vector2(7,12), UnitType.TOWER,  playerControllers[0].getTeamID());
-        createEntityWorldCoordinates(new Vector2(7,3), UnitType.TOWER,  playerControllers[0].getTeamID());
+        createEntityWorldCoordinates(new Vector2(6,12), UnitType.TOWER,  playerControllers[0].getTeamID());
+        createEntityWorldCoordinates(new Vector2(6,3), UnitType.TOWER,  playerControllers[0].getTeamID());
         createEntityWorldCoordinates(new Vector2(2,7.5f), UnitType.MAINBUILDING,  playerControllers[0].getTeamID());
 
-        createEntityWorldCoordinates(new Vector2(13,12), UnitType.TOWER,  playerControllers[1].getTeamID());
-        createEntityWorldCoordinates(new Vector2(13,3), UnitType.TOWER,  playerControllers[1].getTeamID());
+        createEntityWorldCoordinates(new Vector2(14,12), UnitType.TOWER,  playerControllers[1].getTeamID());
+        createEntityWorldCoordinates(new Vector2(14,3), UnitType.TOWER,  playerControllers[1].getTeamID());
         createEntityWorldCoordinates(new Vector2(19,7.5f), UnitType.MAINBUILDING,  playerControllers[1].getTeamID());
         resourceTimeStamp = System.currentTimeMillis();
     }
@@ -171,6 +171,7 @@ public class World implements InputHandler {
         }
         if (aliveCounter == 1) {
             playerControllers[lastAlive].gameOver(true);
+            engine.removeAllEntities();
             return true;
         } else if (aliveCounter == 0) {
             System.err.println("A draw happens suddenly");
@@ -202,8 +203,6 @@ public class World implements InputHandler {
         }
         return false;
     }
-
-
 
     // update recources
     protected void updateResources(){
