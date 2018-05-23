@@ -9,6 +9,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.UpgradeComponent;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 /**
@@ -20,14 +21,20 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  */
 public class Knight extends Entity {
     public Knight(Vector2 position, int teamId) {
+
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
+
         TextureComponent textureComponent = new TextureComponent();
         textureComponent.setTexture(AssetManager.getInstance().knightSkin);
+
         MovementComponent movementComponent = new MovementComponent(3,transformComponent);
         CombatComponent combatComponent = new CombatComponent(10000.0,1,1,5,false);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(120.0,teamId);
         ExplosionComponent explosionComponent = new ExplosionComponent();
+        UpgradeComponent upgradeComponent = new UpgradeComponent();
+
+        add(upgradeComponent);
         add(explosionComponent);
         add(transformComponent);
         add(textureComponent);

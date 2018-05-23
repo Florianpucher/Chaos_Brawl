@@ -12,29 +12,21 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.UpgradeComponent;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
-/**
- * test entity
- *
- * @author AIsopp
- * @version 1.0
- * @since 15.03.2018
- */
-public class Archer extends Entity {
-    public Archer(Vector2 position, int teamId) {
+// upgraded Swordfighter
+public class Berserker extends Entity {
+    public Berserker(Vector2 position, int teamId) {
 
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().archerSkin);
+        textureComponent.setTexture(AssetManager.getInstance().swordFighterSkin);
 
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
-        CombatComponent combatComponent = new CombatComponent(10000.0,3,2,5,true);
-        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(50.0,teamId);
+        CombatComponent combatComponent = new CombatComponent(10000.0,1,2.5,9,false);
+        TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(95.0,teamId);
         ExplosionComponent explosionComponent = new ExplosionComponent();
-        UpgradeComponent upgradeComponent = new UpgradeComponent();
 
-        add(upgradeComponent);
         add(explosionComponent);
         add(transformComponent);
         add(textureComponent);
