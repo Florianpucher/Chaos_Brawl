@@ -36,6 +36,9 @@ public class AssetManager {
     public TextureRegion archerSkin;
     public TextureRegion swordFighterSkin;
     public TextureRegion knightSkin;
+    public TextureRegion mageSkin;
+    public TextureRegion berserkerSkin;
+    public TextureRegion templarSkin;
     public TextureRegion projectileSkin;
     public TextureAtlas explosionSkin;
     public TextureAtlas smokeSkin;
@@ -84,8 +87,12 @@ public class AssetManager {
         // units
         archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_archer.png"));
         swordFighterSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_sword_fighter.png"));
-        knightSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_knight.png"));     // need a new Knightskin
+        knightSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_knight.png"));
+        mageSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_mage.png"));
+        berserkerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_berserker.png"));
+        templarSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_templar.png"));
         projectileSkin=new TextureRegion(new Texture(UNIT_PATH+ "arrow.png"));
+
 
         // Environment
         defaultTile = new TextureRegion(new Texture(ENVIRONMENT_PATH+"default_tile.png"));
@@ -149,6 +156,9 @@ public class AssetManager {
         archerSkin.getTexture().dispose();
         swordFighterSkin.getTexture().dispose();
         knightSkin.getTexture().dispose();
+        mageSkin.getTexture().dispose();
+        berserkerSkin.getTexture().dispose();
+        templarSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();

@@ -20,7 +20,7 @@ public class Berserker extends Entity {
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().swordFighterSkin);
+        textureComponent.setTexture(AssetManager.getInstance().berserkerSkin);
 
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
         CombatComponent combatComponent = new CombatComponent(10000.0,1,2.5,9,false);

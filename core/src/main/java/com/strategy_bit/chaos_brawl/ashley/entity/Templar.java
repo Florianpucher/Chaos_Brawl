@@ -20,7 +20,7 @@ public class Templar extends Entity {
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().knightSkin);
+        textureComponent.setTexture(AssetManager.getInstance().templarSkin);
 
         MovementComponent movementComponent = new MovementComponent(3,transformComponent);
         CombatComponent combatComponent = new CombatComponent(10000.0,1,1,6,false);

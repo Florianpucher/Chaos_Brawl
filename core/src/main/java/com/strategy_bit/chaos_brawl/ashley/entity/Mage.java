@@ -20,7 +20,7 @@ public class Mage extends Entity {
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent = new TextureComponent();
-        textureComponent.setTexture(AssetManager.getInstance().archerSkin);
+        textureComponent.setTexture(AssetManager.getInstance().mageSkin);
 
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
         CombatComponent combatComponent = new CombatComponent(10000.0,3,2,6,true);
