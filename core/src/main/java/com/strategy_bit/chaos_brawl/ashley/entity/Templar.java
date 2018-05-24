@@ -23,7 +23,7 @@ public class Templar extends Entity {
         textureComponent.setTexture(AssetManager.getInstance().templarSkin);
 
         MovementComponent movementComponent = new MovementComponent(3,transformComponent);
-        CombatComponent combatComponent = new CombatComponent(10000.0,1,1,6,false);
+        CombatComponent combatComponent = new CombatComponent(10000.0,1,1,6,false, false);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(150.0,teamId);
         ExplosionComponent explosionComponent = new ExplosionComponent();
 

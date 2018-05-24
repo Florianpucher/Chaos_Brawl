@@ -29,7 +29,7 @@ public class Knight extends Entity {
         textureComponent.setTexture(AssetManager.getInstance().knightSkin);
 
         MovementComponent movementComponent = new MovementComponent(3,transformComponent);
-        CombatComponent combatComponent = new CombatComponent(10000.0,1,1,5,false);
+        CombatComponent combatComponent = new CombatComponent(10000.0,1,1,5,false, false);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(120.0,teamId);
         ExplosionComponent explosionComponent = new ExplosionComponent();
         UpgradeComponent upgradeComponent = new UpgradeComponent();

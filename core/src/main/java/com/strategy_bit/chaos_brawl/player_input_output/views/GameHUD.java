@@ -120,6 +120,8 @@ public class GameHUD extends Table {
 
         if (upgradeExecuted == true){
 
+            AssetManager.getInstance().upgradeExecuted.play(1f);
+
             btnNewUnit1.setName(UPGRADED_UNIT_1);
             btnNewUnit1.setText(UPGRADED_UNIT_1);
 

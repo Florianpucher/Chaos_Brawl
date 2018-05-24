@@ -40,6 +40,7 @@ public class AssetManager {
     public TextureRegion berserkerSkin;
     public TextureRegion templarSkin;
     public TextureRegion projectileSkin;
+    public TextureRegion fireballSkin;
     public TextureAtlas explosionSkin;
     public TextureAtlas smokeSkin;
     public FileHandle explosionParticle;
@@ -63,10 +64,12 @@ public class AssetManager {
     public Sound defeat;
     public Sound attackBow;
     public Sound attackSword;
+    public Sound attackFireball;
     public Sound hitArrow;
     public Sound drawSword;
     public Sound drawKatana;
     public Sound explosionSound;
+    public Sound upgradeExecuted;
     private Array<Sound> drawKatanas;
 
     private static AssetManager instance;
@@ -92,6 +95,7 @@ public class AssetManager {
         berserkerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_berserker.png"));
         templarSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_templar.png"));
         projectileSkin=new TextureRegion(new Texture(UNIT_PATH+ "arrow.png"));
+        fireballSkin=new TextureRegion(new Texture(UNIT_PATH+ "fireball.png"));
 
 
         // Environment
@@ -129,8 +133,10 @@ public class AssetManager {
         // sounds
         victory =Gdx.audio.newSound(Gdx.files.internal("sounds/victory.mp3"));
         defeat =Gdx.audio.newSound(Gdx.files.internal("sounds/defeat.mp3"));
+        upgradeExecuted =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecuted.wav"));
         attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
         attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav"));
+        attackFireball =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/fireball.wav"));
         hitArrow =Gdx.audio.newSound(Gdx.files.internal("sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3"));
         drawSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Sabre,Draw,Scabbard,Fast,Loose,Rough.mp3"));
         drawKatana =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Replace,Scabbard,Fast,Ripple.mp3"));
@@ -160,6 +166,7 @@ public class AssetManager {
         berserkerSkin.getTexture().dispose();
         templarSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
+        fireballSkin.getTexture().dispose();
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();
         dirtTile.getTexture().dispose();
@@ -175,12 +182,14 @@ public class AssetManager {
         music.dispose();
         attackBow.dispose();
         attackSword.dispose();
+        attackFireball.dispose();
         hitArrow.dispose();
         drawSword.dispose();
         drawKatana.dispose();
         explosionSound.dispose();
         victory.dispose();
         defeat.dispose();
+        upgradeExecuted.dispose();
         for (Sound s:
                 drawKatanas) {
             s.dispose();

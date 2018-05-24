@@ -29,7 +29,7 @@ public class Archer extends Entity {
         textureComponent.setTexture(AssetManager.getInstance().archerSkin);
 
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
-        CombatComponent combatComponent = new CombatComponent(10000.0,3,2,5,true);
+        CombatComponent combatComponent = new CombatComponent(10000.0,3,2,5,true, false);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(50.0,teamId);
         ExplosionComponent explosionComponent = new ExplosionComponent();
         UpgradeComponent upgradeComponent = new UpgradeComponent();

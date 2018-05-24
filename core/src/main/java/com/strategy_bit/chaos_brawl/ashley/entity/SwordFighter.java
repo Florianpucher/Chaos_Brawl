@@ -29,7 +29,7 @@ public class SwordFighter extends Entity {
         textureComponent.setTexture(AssetManager.getInstance().swordFighterSkin);
 
         MovementComponent movementComponent = new MovementComponent(5,transformComponent);
-        CombatComponent combatComponent = new CombatComponent(10000.0,1,2.5,7,false);
+        CombatComponent combatComponent = new CombatComponent(10000.0,1,2.5,7,false, false);
         TeamGameObjectComponent teamGameObjectComponent = new TeamGameObjectComponent(75.0,teamId);
         ExplosionComponent explosionComponent = new ExplosionComponent();
         UpgradeComponent upgradeComponent = new UpgradeComponent();
