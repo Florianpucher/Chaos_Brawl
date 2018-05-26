@@ -9,11 +9,9 @@ import com.badlogic.gdx.graphics.Camera;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entities.Explosion;
-import com.strategy_bit.chaos_brawl.ashley.entity.Smoke;
+import com.strategy_bit.chaos_brawl.ashley.entities.Smoke;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 
