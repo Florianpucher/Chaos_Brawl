@@ -36,7 +36,11 @@ public class AssetManager {
     public TextureRegion archerSkin;
     public TextureRegion swordFighterSkin;
     public TextureRegion knightSkin;
+    public TextureRegion mageSkin;
+    public TextureRegion berserkerSkin;
+    public TextureRegion templarSkin;
     public TextureRegion projectileSkin;
+    public TextureRegion fireballSkin;
     public TextureAtlas explosionSkin;
     public TextureAtlas smokeSkin;
     public FileHandle explosionParticle;
@@ -60,10 +64,12 @@ public class AssetManager {
     public Sound defeat;
     public Sound attackBow;
     public Sound attackSword;
+    public Sound attackFireball;
     public Sound hitArrow;
     public Sound drawSword;
     public Sound drawKatana;
     public Sound explosionSound;
+    public Sound upgradeExecuted;
     private Array<Sound> drawKatanas;
 
     private static AssetManager instance;
@@ -84,8 +90,13 @@ public class AssetManager {
         // units
         archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_archer.png"));
         swordFighterSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_sword_fighter.png"));
-        knightSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_knight.png"));     // need a new Knightskin
+        knightSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_knight.png"));
+        mageSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_mage.png"));
+        berserkerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_berserker.png"));
+        templarSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_templar.png"));
         projectileSkin=new TextureRegion(new Texture(UNIT_PATH+ "arrow.png"));
+        fireballSkin=new TextureRegion(new Texture(UNIT_PATH+ "fireball.png"));
+
 
         // Environment
         defaultTile = new TextureRegion(new Texture(ENVIRONMENT_PATH+"default_tile.png"));
@@ -120,10 +131,13 @@ public class AssetManager {
         maps.add(Gdx.files.internal("maps/map3.txt"));
 
         // sounds
+
+        upgradeExecuted =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecuted.wav"));
         victory =Gdx.audio.newSound(Gdx.files.internal("sounds/Victory.mp3"));
         defeat =Gdx.audio.newSound(Gdx.files.internal("sounds/Defeat.mp3"));
         attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
-        attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.mp3"));
+        attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav"));
+        attackFireball =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/fireball.wav"));
         hitArrow =Gdx.audio.newSound(Gdx.files.internal("sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3"));
         drawSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Sabre,Draw,Scabbard,Fast,Loose,Rough.mp3"));
         drawKatana =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Replace,Scabbard,Fast,Ripple.mp3"));
@@ -149,7 +163,11 @@ public class AssetManager {
         archerSkin.getTexture().dispose();
         swordFighterSkin.getTexture().dispose();
         knightSkin.getTexture().dispose();
+        mageSkin.getTexture().dispose();
+        berserkerSkin.getTexture().dispose();
+        templarSkin.getTexture().dispose();
         projectileSkin.getTexture().dispose();
+        fireballSkin.getTexture().dispose();
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();
         dirtTile.getTexture().dispose();
@@ -165,12 +183,14 @@ public class AssetManager {
         music.dispose();
         attackBow.dispose();
         attackSword.dispose();
+        attackFireball.dispose();
         hitArrow.dispose();
         drawSword.dispose();
         drawKatana.dispose();
         explosionSound.dispose();
         victory.dispose();
         defeat.dispose();
+        upgradeExecuted.dispose();
         for (Sound s:
                 drawKatanas) {
             s.dispose();

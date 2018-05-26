@@ -3,12 +3,16 @@ package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+
 import com.strategy_bit.chaos_brawl.ashley.entities.Archer;
 import com.strategy_bit.chaos_brawl.ashley.entities.Base;
+import com.strategy_bit.chaos_brawl.ashley.entities.Berserker;
 import com.strategy_bit.chaos_brawl.ashley.entities.Knight;
+import com.strategy_bit.chaos_brawl.ashley.entities.Mage;
 import com.strategy_bit.chaos_brawl.ashley.entities.SwordFighter;
+import com.strategy_bit.chaos_brawl.ashley.entities.Templar;
 import com.strategy_bit.chaos_brawl.ashley.entities.Tower;
+import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.types.UnitType;
 
 /**
@@ -30,6 +34,17 @@ public class SpawnerImpl {
                 break;
             case KNIGHT:
                 Knight.setComponents(entity,position, teamID);
+                break;
+            case MAGE:
+                entity = new Mage(position, teamID);
+                break;
+            case BERSERKER:
+                entity = new Berserker(position, teamID);
+                break;
+            case UPGRADE_UNITS:
+                // Todo
+            case TEMPLAR:
+                entity = new Templar(position, teamID);
                 break;
             case MAINBUILDING:
                 Base.setComponents(entity,position, teamID);
