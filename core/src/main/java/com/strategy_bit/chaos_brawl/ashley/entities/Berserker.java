@@ -16,7 +16,9 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 public class Berserker extends Entity {
 
     public static void setComponents(Entity entity,Vector2 position, int teamId) {
+
         MyEngine engine=MyEngine.getInstance();
+
         TransformComponent transformComponent =engine.createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
 
@@ -25,10 +27,13 @@ public class Berserker extends Entity {
 
         MovementComponent movementComponent = engine.createComponent(MovementComponent.class);
         movementComponent.setEverything(5,transformComponent);
+
         CombatComponent combatComponent = engine.createComponent(CombatComponent.class);
         combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,2.5,9,false, false);
+
         TeamGameObjectComponent teamGameObjectComponent =engine.createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(95.0,teamId);
+
         ExplosionComponent explosionComponent = engine.createComponent(ExplosionComponent.class);
 
         entity.add(explosionComponent);

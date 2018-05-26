@@ -16,7 +16,9 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 // upgraded Knight
 public class Templar {
     public static void setComponents(Entity entity,Vector2 position, int teamId) {
+
         MyEngine engine=MyEngine.getInstance();
+
         TransformComponent transformComponent = engine.createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
 
@@ -25,11 +27,14 @@ public class Templar {
 
         MovementComponent movementComponent = engine.createComponent(MovementComponent.class);
         movementComponent.setEverything(3,transformComponent);
+
         CombatComponent combatComponent = engine.createComponent(CombatComponent.class);
         combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,1,6,false, false);
+
         TeamGameObjectComponent teamGameObjectComponent = engine.createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(150.0,teamId);
-        ExplosionComponent explosionComponent =                engine.createComponent(ExplosionComponent.class);
+
+        ExplosionComponent explosionComponent = engine.createComponent(ExplosionComponent.class);
 
         entity.add(explosionComponent);
         entity.add(transformComponent);

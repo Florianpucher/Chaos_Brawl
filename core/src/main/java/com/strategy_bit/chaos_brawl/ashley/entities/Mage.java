@@ -16,6 +16,7 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 // Upgraded Archer
 public class Mage {
     public static void setComponents(Entity entity,Vector2 position, int teamId) {
+
         MyEngine engine=MyEngine.getInstance();
         TransformComponent transformComponent = engine.createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
@@ -25,10 +26,13 @@ public class Mage {
 
         MovementComponent movementComponent =engine.createComponent(MovementComponent.class);
         movementComponent.setEverything(5,transformComponent);
+
         CombatComponent combatComponent = engine.createComponent(CombatComponent.class);
         combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,3,1,12,true, true);
+
         TeamGameObjectComponent teamGameObjectComponent =engine.createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(60.0,teamId);
+
         ExplosionComponent explosionComponent =engine.createComponent(ExplosionComponent.class);
 
         entity.add(explosionComponent);
