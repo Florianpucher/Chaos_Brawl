@@ -37,6 +37,17 @@ public class SpawnerImpl {
             case TOWER:
                 Tower.setComponents(entity,position, teamID);
                 break;
+            case MAGE:
+                entity = new Mage(position, teamID);
+                break;
+            case BERSERKER:
+                entity = new Berserker(position, teamID);
+                break;
+            case UPGRADE_UNITS:
+                // Todo
+            case TEMPLAR:
+                entity = new Templar(position, teamID);
+                break;
             default:
                 throw new UnsupportedOperationException("This unitType is not registered by SpawnerImpl");
         }

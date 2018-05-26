@@ -34,6 +34,19 @@ public class GameHUD extends Table {
     private static final String NEW_UNIT_2 = "Fighter";
     private static final String NEW_UNIT_3 = "Knight";
 
+    private static final String UPGRADED_UNIT_1 = "Mage";
+    private static final String UPGRADED_UNIT_2 = "Berserker";
+    private static final String UPGRADED_UNIT_3 = "Templar";
+
+    private static final String UPGRADE_UNITS = "Unit UP!";
+
+    BrawlButton btnNewUnit1;
+    BrawlButton btnNewUnit2;
+    BrawlButton btnNewUnit3;
+
+    BrawlButton btnUpgradeUnits;
+
+
     boolean playedVictoryOnce = false;
     boolean playedDefeatOnce = false;
 
@@ -50,18 +63,22 @@ public class GameHUD extends Table {
         AssetManager assetManager = AssetManager.getInstance();
         initializeNonSpawnAreaShadow(spawnArea);
 
-        final BrawlButton btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, UnitType.RANGED);
+        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, UnitType.RANGED);
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
-        final BrawlButton btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, UnitType.SWORDFIGHTER);
+        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, UnitType.SWORDFIGHTER);
         btnNewUnit2.setName(NEW_UNIT_2);
         setFillParent(true);
-        final BrawlButton btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, UnitType.KNIGHT);
+        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, UnitType.KNIGHT);
         btnNewUnit3.setName(NEW_UNIT_3);
+        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, UnitType.UPGRADE_UNITS);
+        btnUpgradeUnits.setName(UPGRADE_UNITS);
+
         brawlButtons = new Array<>();
         brawlButtons.add(btnNewUnit1);
         brawlButtons.add(btnNewUnit2);
         brawlButtons.add(btnNewUnit3);
+        brawlButtons.add(btnUpgradeUnits);
         setFillParent(true);
 
         NinePatchDrawable resourceBarOuter = new NinePatchDrawable(assetManager.resourceSkinOuter);
@@ -87,14 +104,38 @@ public class GameHUD extends Table {
         lowerUI.add(btnNewUnit2).right().height(lowerUI.getPrefHeight());
         lowerUI.add(btnNewUnit3).right().height(lowerUI.getPrefHeight());
 
+        lowerUI.left();
+        lowerUI.add(btnUpgradeUnits).left().height(lowerUI.getPrefHeight());
+
 
 
         btnNewUnit1.addListener(listener);
         btnNewUnit2.addListener(listener);
         btnNewUnit3.addListener(listener);
+        btnUpgradeUnits.addListener(listener);
         initializeGameOverView();
     }
 
+    public void SwitchButtons (boolean upgradeExecuted){
+
+        if (upgradeExecuted == true){
+
+            AssetManager.getInstance().upgradeExecuted.play(1f);
+
+            btnNewUnit1.setName(UPGRADED_UNIT_1);
+            btnNewUnit1.setText(UPGRADED_UNIT_1);
+
+            btnNewUnit2.setName(UPGRADED_UNIT_2);
+            btnNewUnit2.setText(UPGRADED_UNIT_2);
+
+            btnNewUnit3.setName(UPGRADED_UNIT_3);
+            btnNewUnit3.setText(UPGRADED_UNIT_3);
+
+            btnUpgradeUnits.remove();
+        }
+
+
+    }
 
     private ClickListener listener = new ClickListener(){
         @Override
@@ -121,6 +162,30 @@ public class GameHUD extends Table {
                 } else {
                     nextUnitType = UnitType.KNIGHT;
                 }
+            }
+            if (name.equals(UPGRADED_UNIT_1) && brawlButtons.get(0).isActivated()) {
+                if (nextUnitType == UnitType.MAGE) {
+                    nextUnitType = null;
+                } else {
+                    nextUnitType = UnitType.MAGE;
+                }
+            }
+            if (name.equals(UPGRADED_UNIT_2) && brawlButtons.get(1).isActivated()) {
+                if (nextUnitType == UnitType.BERSERKER) {
+                    nextUnitType = null;
+                } else {
+                    nextUnitType = UnitType.BERSERKER;
+                }
+            }
+            if (name.equals(UPGRADED_UNIT_3) && brawlButtons.get(2).isActivated()) {
+                if (nextUnitType == UnitType.TEMPLAR) {
+                    nextUnitType = null;
+                } else {
+                    nextUnitType = UnitType.TEMPLAR;
+                }
+            }
+            if (name.equals(UPGRADE_UNITS) && brawlButtons.get(3).isActivated()) {
+                    SwitchButtons(true);
             }
 
 

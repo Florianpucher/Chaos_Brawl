@@ -45,9 +45,11 @@ public class World implements InputHandler {
 
     protected long lastID = 0;
     protected long lastProjectileID = 0;
+    protected long lastFireballID = 0;
 
     protected HashMap<Long, Entity> units;
     protected HashMap<Long, Entity> projectiles;
+    protected HashMap<Long, Entity> fireballs;
 
     ArrayList<Explosion> explosions;
 
@@ -68,6 +70,7 @@ public class World implements InputHandler {
     public World(int map, int players) {
         units = new HashMap<>();
         projectiles = new HashMap<>();
+        fireballs = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
         bases = new Entity[players];
@@ -80,6 +83,7 @@ public class World implements InputHandler {
     public World() {
         units = new HashMap<>();
         projectiles = new HashMap<>();
+        fireballs = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[2];
         createEngine();
@@ -107,6 +111,12 @@ public class World implements InputHandler {
         engine.addEntity(entity);
         //projectiles.put(lastProjectileID, entity);
         //lastProjectileID++;
+    }
+
+    public void createFireball(Entity entity){
+        engine.addEntity(entity);
+        fireballs.put(lastFireballID, entity);
+        lastFireballID++;
     }
 
     protected void createEngine(){
@@ -279,9 +289,9 @@ public class World implements InputHandler {
         units.put(unitID, entity);
         if(entityType.equals(UnitType.MAINBUILDING)){
             bases[teamID] = entity;
-        }else if (entityType.equals(UnitType.KNIGHT)) {
+        }else if (entityType.equals(UnitType.KNIGHT) || entityType.equals(UnitType.TEMPLAR)) {
             AssetManager.getInstance().drawSword.play(1f);
-        } else if (entityType.equals(UnitType.SWORDFIGHTER)) {
+        } else if (entityType.equals(UnitType.SWORDFIGHTER) || entityType.equals(UnitType.BERSERKER)) {
             AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
         }
 
@@ -295,6 +305,13 @@ public class World implements InputHandler {
         Projectile.setComponents(projectile,worldCoordinates,targetId,damage);
 
         createProjectile(projectile);
+
+    }
+
+    public void createFireballWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
+        Fireball fireball=new Fireball(worldCoordinates,targetId,damage);
+
+        createFireball(fireball);
 
     }
     public long getIdOfUnit(Entity unit){
