@@ -91,6 +91,14 @@ public class CombatComponent implements Component,Pool.Poolable {
         isRanged = ranged;
     }
 
+
+    public boolean isMage() {
+        return isMage;
+    }
+
+    public void setMage(boolean mage) {
+        isMage = mage;
+
     public CombatComponent() {
         attackRadius=0;
         attackSpeed=0;
@@ -108,12 +116,5 @@ public class CombatComponent implements Component,Pool.Poolable {
         lastAttackTimeStamp=0;
         isRanged=false;
         isEngagedInCombat=false;
-    }
-    public boolean isMage() {
-        return isMage;
-    }
-
-    public void setMage(boolean mage) {
-        isMage = mage;
     }
 }
