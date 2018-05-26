@@ -20,7 +20,7 @@ public class Base {
         TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
         textureComponent.setTexture(AssetManager.getInstance().mainTowerSkin);
         CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(100000.0,4,1,20,true);
+        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(100000.0,4,1,20,true,false);
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(1000.0,teamID);
 

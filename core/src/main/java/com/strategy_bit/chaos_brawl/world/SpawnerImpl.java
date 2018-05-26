@@ -36,15 +36,15 @@ public class SpawnerImpl {
                 Knight.setComponents(entity,position, teamID);
                 break;
             case MAGE:
-                entity = new Mage(position, teamID);
+                Mage.setComponents(entity,position, teamID);
                 break;
             case BERSERKER:
-                entity = new Berserker(position, teamID);
+                Berserker.setComponents(entity,position, teamID);
                 break;
             case UPGRADE_UNITS:
                 // Todo
             case TEMPLAR:
-                entity = new Templar(position, teamID);
+                Templar.setComponents(entity,position, teamID);
                 break;
             case MAINBUILDING:
                 Base.setComponents(entity,position, teamID);

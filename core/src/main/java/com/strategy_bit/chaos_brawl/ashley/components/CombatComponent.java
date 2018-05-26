@@ -25,12 +25,13 @@ public class CombatComponent implements Component,Pool.Poolable {
         setEngagedInCombat(false);
         lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
     }
-    public void setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(double radius, double attackRadius, double attackSpeed, double attackDamage, boolean ranged) {
+    public void setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(double radius, double attackRadius, double attackSpeed, double attackDamage, boolean ranged,boolean mage) {
         setAttackDamage(attackDamage);
         setAttackRadius(attackRadius);
         setAttackSpeed(attackSpeed);
         setRanged(ranged);
         setEngagedInCombat(false);
+        setMage(mage);
         lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
     }
 
@@ -98,7 +99,7 @@ public class CombatComponent implements Component,Pool.Poolable {
 
     public void setMage(boolean mage) {
         isMage = mage;
-
+    }
     public CombatComponent() {
         attackRadius=0;
         attackSpeed=0;

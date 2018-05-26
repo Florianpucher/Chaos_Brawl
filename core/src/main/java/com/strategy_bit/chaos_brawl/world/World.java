@@ -12,6 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entities.Fireball;
 import com.strategy_bit.chaos_brawl.ashley.entities.Projectile;
 import com.strategy_bit.chaos_brawl.ashley.entities.Explosion;
 import com.strategy_bit.chaos_brawl.ashley.entities.Fireball;
@@ -311,7 +312,9 @@ public class World implements InputHandler {
     }
 
     public void createFireballWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
-        Fireball fireball=new Fireball(worldCoordinates,targetId,damage);
+        Entity fireball=new Entity();
+
+        Fireball.setComponents(fireball,worldCoordinates,targetId,damage);
 
         createFireball(fireball);
 

@@ -27,7 +27,7 @@ public class Archer {
         MovementComponent movementComponent =MyEngine.getInstance().createComponent(MovementComponent.class);
         movementComponent.setEverything(5,transformComponent);
         CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,3,2,5,true);
+        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,3,2,5,true,false);
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(50.0,teamId);
         e.add(transformComponent);

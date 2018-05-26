@@ -27,7 +27,7 @@ public class Knight {
         MovementComponent movementComponent =MyEngine.getInstance().createComponent(MovementComponent.class);
         movementComponent.setEverything(3,transformComponent);
         CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,1,5,false);
+        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,1,5,false,false);
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(120.0,teamId);
         entity.add(transformComponent);

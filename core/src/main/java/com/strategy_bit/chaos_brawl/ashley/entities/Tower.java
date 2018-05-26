@@ -18,7 +18,7 @@ public class Tower {
         TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
         textureComponent.setTexture(AssetManager.getInstance().ballistaTowerSkin);
         CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(100000.0,4,1,20,true);
+        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(100000.0,4,1,20,true,false);
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(50.0,teamID);
 
