@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.utils.Pool;
 
 /**
  * @author AIsopp
@@ -8,12 +9,29 @@ import com.badlogic.ashley.core.Component;
  * @since 24.03.2018
  */
 
-public class BulletComponent implements Component{
+public class BulletComponent implements Component,Pool.Poolable{
     private boolean deleteWhenTargetIsReached;
+    private  boolean delete;
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
     private long targetId;
     private float damage;
 
     public BulletComponent(boolean deleteWhenTargetIsReached, long targetId,float damage) {
+        setDeleteWhenTargetIsReached(deleteWhenTargetIsReached);
+        setTargetId(targetId);
+        setDamage(damage);
+        setDelete(false);
+    }
+
+    public void setDeleteWhenTargetIsReachedAndTargetIdAndDamage(boolean deleteWhenTargetIsReached, long targetId,float damage) {
         setDeleteWhenTargetIsReached(deleteWhenTargetIsReached);
         setTargetId(targetId);
         setDamage(damage);
@@ -41,6 +59,21 @@ public class BulletComponent implements Component{
 
     public void setDamage(float damage) {
         this.damage = damage;
+    }
+
+    public BulletComponent() {
+        deleteWhenTargetIsReached=false;
+        targetId=0;
+        damage=0;
+        setDelete(false);
+    }
+
+    @Override
+    public void reset() {
+        deleteWhenTargetIsReached=false;
+        targetId=0;
+        damage=0;
+        setDelete(false);
     }
 }
 

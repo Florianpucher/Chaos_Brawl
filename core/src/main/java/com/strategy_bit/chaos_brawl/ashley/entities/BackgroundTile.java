@@ -1,8 +1,9 @@
-package com.strategy_bit.chaos_brawl.ashley.entity;
+package com.strategy_bit.chaos_brawl.ashley.entities;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.types.TileType;
 import com.strategy_bit.chaos_brawl.world.Tile;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
@@ -23,9 +24,9 @@ public class BackgroundTile extends Entity implements Tile{
 
     public BackgroundTile(TileType tileType){
         type = tileType;
-        TextureComponent textureComponent = new TextureComponent();
+        TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
         textureComponent.setTexture(new TextureRegion(tileType.getTexture()));
-        TransformComponent transformComponent = new TransformComponent();
+        TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
         transformComponent.setZ(ZIndex.BACKGROUND);
         add(textureComponent);
         add(transformComponent);

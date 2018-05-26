@@ -12,9 +12,10 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
-import com.strategy_bit.chaos_brawl.ashley.entity.Explosion;
-import com.strategy_bit.chaos_brawl.ashley.entity.Fireball;
-import com.strategy_bit.chaos_brawl.ashley.entity.Projectile;
+import com.strategy_bit.chaos_brawl.ashley.entities.Explosion;
+import com.strategy_bit.chaos_brawl.ashley.entities.Fireball;
+import com.strategy_bit.chaos_brawl.ashley.entities.Projectile;
+import com.strategy_bit.chaos_brawl.ashley.systems.BulletDeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
@@ -109,8 +110,8 @@ public class World implements InputHandler {
 
     public void createProjectile(Entity entity){
         engine.addEntity(entity);
-        projectiles.put(lastProjectileID, entity);
-        lastProjectileID++;
+        //projectiles.put(lastProjectileID, entity);
+        //lastProjectileID++;
     }
 
     public void createFireball(Entity entity){
@@ -120,7 +121,7 @@ public class World implements InputHandler {
     }
 
     protected void createEngine(){
-        engine = new MyEngine(units);
+        engine = MyEngine.createEngine(units);
         //Add some logic
         RenderSystem renderSystem = new RenderSystem();
         camera = renderSystem.getCamera();
@@ -133,6 +134,7 @@ public class World implements InputHandler {
         CombatSystem combatSystem=new CombatSystem();
         combatSystem.addWorld(this);
         engine.addSystem(combatSystem);
+        engine.addSystem(new BulletDeleteSystem());
         //Renderer should be the last system to add
 
         engine.addSystem(renderSystem);
@@ -299,7 +301,9 @@ public class World implements InputHandler {
 
 
     public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
-        Projectile projectile=new Projectile(worldCoordinates,targetId,damage);
+        Entity projectile=new Entity();
+
+        Projectile.setComponents(projectile,worldCoordinates,targetId,damage);
 
         createProjectile(projectile);
 

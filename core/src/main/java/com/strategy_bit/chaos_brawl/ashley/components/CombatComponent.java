@@ -1,8 +1,9 @@
 package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.utils.Pool;
 
-public class CombatComponent implements Component {
+public class CombatComponent implements Component,Pool.Poolable {
     private static final double MAX_ATTACK_SPEED=2.5;
     private double attackRadius;
     /**
@@ -21,6 +22,14 @@ public class CombatComponent implements Component {
         setAttackSpeed(attackSpeed);
         setRanged(ranged);
         setMage(mage);
+        setEngagedInCombat(false);
+        lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
+    }
+    public void setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(double radius, double attackRadius, double attackSpeed, double attackDamage, boolean ranged) {
+        setAttackDamage(attackDamage);
+        setAttackRadius(attackRadius);
+        setAttackSpeed(attackSpeed);
+        setRanged(ranged);
         setEngagedInCombat(false);
         lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
     }
@@ -82,11 +91,30 @@ public class CombatComponent implements Component {
         isRanged = ranged;
     }
 
+
     public boolean isMage() {
         return isMage;
     }
 
     public void setMage(boolean mage) {
         isMage = mage;
+
+    public CombatComponent() {
+        attackRadius=0;
+        attackSpeed=0;
+        attackDamage=0;
+        lastAttackTimeStamp=0;
+        isRanged=false;
+        isEngagedInCombat=false;
+    }
+
+    @Override
+    public void reset() {
+        attackRadius=0;
+        attackSpeed=0;
+        attackDamage=0;
+        lastAttackTimeStamp=0;
+        isRanged=false;
+        isEngagedInCombat=false;
     }
 }

@@ -14,7 +14,7 @@ import com.strategy_bit.chaos_brawl.BaseTest;
 import com.strategy_bit.chaos_brawl.ashley.components.ParticleComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.ashley.entity.Knight;
+import com.strategy_bit.chaos_brawl.ashley.entities.Knight;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
@@ -150,7 +150,6 @@ public class WorldTest extends BaseTest {
         world.createEntityInternal(UnitType.KNIGHT,100,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2), 0);
 
         Entity insertedUnit = world.units.get(100L);
-        assertEquals(true, insertedUnit instanceof Knight);
         assertEquals(0, insertedUnit.getComponent(TeamGameObjectComponent.class).getTeamId());
 
         assertEquals(true,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2).epsilonEquals(insertedUnit.getComponent(TransformComponent.class).getPosition(), 0.5f) );
@@ -196,7 +195,6 @@ public class WorldTest extends BaseTest {
         world.createEntityScreenCoordinates(new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2), UnitType.KNIGHT,0);
 
         Entity insertedUnit = world.units.get((long)world.units.size()-1);
-        assertEquals(true, insertedUnit instanceof Knight);
         assertEquals(0, insertedUnit.getComponent(TeamGameObjectComponent.class).getTeamId());
 
         assertEquals(true,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2).epsilonEquals(insertedUnit.getComponent(TransformComponent.class).getPosition(), 0.5f) );
@@ -206,7 +204,6 @@ public class WorldTest extends BaseTest {
     public void createEntityWorldCoordinates() {
         world.createEntityWorldCoordinates(new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2), UnitType.KNIGHT,0);
         Entity insertedUnit = world.units.get((long)world.units.size()-1);
-        assertEquals(true, insertedUnit instanceof Knight);
         assertEquals(0, insertedUnit.getComponent(TeamGameObjectComponent.class).getTeamId());
 
         assertEquals(true,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2).epsilonEquals(insertedUnit.getComponent(TransformComponent.class).getPosition(), 0.5f) );

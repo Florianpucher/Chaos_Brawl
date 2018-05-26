@@ -131,9 +131,10 @@ public class AssetManager {
         maps.add(Gdx.files.internal("maps/map3.txt"));
 
         // sounds
-        victory =Gdx.audio.newSound(Gdx.files.internal("sounds/victory.mp3"));
-        defeat =Gdx.audio.newSound(Gdx.files.internal("sounds/defeat.mp3"));
+
         upgradeExecuted =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecuted.wav"));
+        victory =Gdx.audio.newSound(Gdx.files.internal("sounds/Victory.mp3"));
+        defeat =Gdx.audio.newSound(Gdx.files.internal("sounds/Defeat.mp3"));
         attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
         attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav"));
         attackFireball =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/fireball.wav"));
