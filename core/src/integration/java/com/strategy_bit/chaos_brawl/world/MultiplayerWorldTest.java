@@ -130,7 +130,7 @@ public class MultiplayerWorldTest extends BaseTest {
             initializePlayersForWorld(i);
             brawlClient.connectToServer("127.0.0.1");
         }
-        serverWorld.initializeGameForPlayers();
+        serverWorld.initializeGameForPlayers(1, PLAYERS);
         boolean gameIsNotInitialized = true;
         long currentTime = System.currentTimeMillis();
         while (gameIsNotInitialized) {

@@ -59,7 +59,7 @@ public class BaseTest {
         assetManager.attackSword = sound;
         assetManager.hitArrow = sound;
         assetManager.drawSword = sound;
-        assetManager.particle = Mockito.mock(FileHandle.class);
+        assetManager.explosionParticle = Mockito.mock(FileHandle.class);
     }
 
     // After we are done, clean up the application

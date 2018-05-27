@@ -14,7 +14,6 @@ import com.strategy_bit.chaos_brawl.BaseTest;
 import com.strategy_bit.chaos_brawl.ashley.components.ParticleComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.ashley.entities.Knight;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
@@ -100,7 +99,7 @@ public class WorldTest extends BaseTest {
         world.setPlayerController(1,player2);
         world.setPlayerController(2, player3);
         world.setPlayerController(3,player4);
-        world.initializeGameForPlayers();
+        world.initializeGameForPlayers(1, 4);
     }
 
     @After
