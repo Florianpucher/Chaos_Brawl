@@ -55,6 +55,8 @@ public class AssetManager {
     public Music music;
     public TextureRegion dirtTile;
     public Array<FileHandle> maps;
+    public Array<FileHandle> mapConfig;
+    public Array<FileHandle> spawnAreas;
     public TextureRegion ballistaTowerSkin;
     public TextureRegion mainTowerSkin;
     public Texture victoryScreen;
@@ -123,12 +125,17 @@ public class AssetManager {
         progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3"));
-        music.setVolume(0f);
+        music.setVolume(1.0f);
         music.setLooping(true);
         maps = new Array<>();
         maps.add(Gdx.files.internal("maps/map1.txt"));
         maps.add(Gdx.files.internal("maps/map2.txt"));
         maps.add(Gdx.files.internal("maps/map3.txt"));
+        maps.add(Gdx.files.internal("maps/4playermap.txt"));
+        mapConfig = new Array<>();
+        mapConfig.add(Gdx.files.internal("maps/Config2Players.txt"));
+        spawnAreas = new Array<>();
+        spawnAreas.add(Gdx.files.internal("maps/SpawnAreas2.txt"));
 
         // sounds
         victory =Gdx.audio.newSound(Gdx.files.internal("sounds/Victory.mp3"));
