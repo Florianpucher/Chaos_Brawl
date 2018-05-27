@@ -44,14 +44,8 @@ import java.util.Map;
 public class World implements InputHandler {
 
     protected long lastID = 0;
-    protected long lastProjectileID = 0;
-    protected long lastFireballID = 0;
 
     protected HashMap<Long, Entity> units;
-    protected HashMap<Long, Entity> projectiles;
-    protected HashMap<Long, Entity> fireballs;
-
-    //ArrayList<Explosion> explosions;
 
     protected SpawnerImpl spawner;
     protected MyEngine engine;
@@ -63,30 +57,22 @@ public class World implements InputHandler {
     protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
-    protected Array<Float> spawnAreas;
-    protected Boundary spawnField0;
-    protected Boundary spawnField01;
 
     boolean endGame = false;
-    boolean buildingDestroyed = false;
 
     public World(int map, int players) {
         units = new HashMap<>();
-        projectiles = new HashMap<>();
-        fireballs = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
         bases = new Entity[players];
         tower = new Entity[players];
-        //explosions = new ArrayList<>();
+
         createEngine();
         createWorld(map);
     }
 
     public World() {
         units = new HashMap<>();
-        projectiles = new HashMap<>();
-        fireballs = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[2];
         createEngine();
@@ -126,14 +112,10 @@ public class World implements InputHandler {
 
     public void createProjectile(Entity entity){
         engine.addEntity(entity);
-        //projectiles.put(lastProjectileID, entity);
-        //lastProjectileID++;
     }
 
     public void createFireball(Entity entity){
         engine.addEntity(entity);
-        fireballs.put(lastFireballID, entity);
-        lastFireballID++;
     }
 
     protected void createEngine(){
@@ -173,7 +155,6 @@ public class World implements InputHandler {
         updateResources();
         engine.update(Gdx.graphics.getDeltaTime());
         endGame = checkWinningLosing();
-        buildingDestroyed = checkBuildingDestroyed();
     }
 
 
@@ -204,30 +185,6 @@ public class World implements InputHandler {
             System.err.println("A draw happens suddenly");
             return true;
         }
-        return false;
-    }
-
-    public boolean checkBuildingDestroyed() {
-        for (Entity base : bases) {
-            if (base == null) {
-                return false;
-            }
-        }
-        for (Entity tower : tower) {
-            if (tower == null) {
-                return false;
-            }
-        }
-        /*for (int i = 0; i < bases.length; i++) {
-            if (bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-                return true;
-            }
-        }
-        for (int i = 0; i < tower.length; i++) {
-            if (tower[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
-                return true;
-            }
-        }*/
         return false;
     }
 
