@@ -358,7 +358,13 @@ public class World implements InputHandler {
      * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
      */
     public Boundary createSpawnAreaForPlayer(int playerID){
-        return board.createSpawnAreaForPlayer(playerID);
+        Boundary result = board.createSpawnAreaForPlayer(playerID);
+
+        Vector2 left = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerLeft(), 0)));
+        Vector2 right = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerRight(), 0)));
+        Vector2 left2 = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getUpperLeft(), 0)));
+        Vector2 right2 = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getUpperRight(), 0)));
+        return new Boundary(left, right, left2, right2);
     }
 
     public void cheatFunctionDisposer(){
