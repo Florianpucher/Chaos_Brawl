@@ -1,6 +1,9 @@
 package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.util.Boundary;
+
 
 /**
  * Created by Florian on 16.04.2018.
@@ -33,4 +36,6 @@ public interface BoardInterface {
      */
     public Vector2 getWorldCoordinateOfTile(int x, int y);
     public Vector2 getTileBoardPositionDependingOnWorldCoordinates(Vector2 worldCoordinates);
+    public Boundary createSpawnAreaForPlayer(int playerID);
+    public Array<Float> getAsset(int asset);
 }

@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.entities.BackgroundTile;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.TileType;
+import com.strategy_bit.chaos_brawl.types.UnitType;
+import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import java.util.Scanner;
@@ -134,5 +136,35 @@ public class Board implements BoardInterface {
         }
 
         return tilePosition;
+    }
+
+    public Boundary createSpawnAreaForPlayer(int playerID){
+        //TODO: modulo 2 for experimental 3-4players
+        playerID=playerID%2;
+        Boundary spawnArea0, spawnArea1;
+        Array<Vector2> vectorList = new Array<>();
+
+        for (int i = 0; i < AssetManager.getInstance().spawn.size - 1; i = i + 2){
+            vectorList.add(new Vector2(AssetManager.getInstance().spawn.get(i), AssetManager.getInstance().spawn.get(i+1)));
+        }
+        spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
+        spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
+
+        if (playerID == 0){
+            return spawnArea0;
+        } else if (playerID == 1){
+            return spawnArea1;
+        }
+        throw new UnsupportedOperationException("Game only supports two player mode at the moment :)");
+    }
+
+    public Array<Float> getAsset(int asset){
+        switch (asset){
+            case 0: return AssetManager.getInstance().config;
+
+            case 1: return AssetManager.getInstance().config2;
+
+        default: throw new UnsupportedOperationException("Can't play with this amount of players");
+        }
     }
 }
