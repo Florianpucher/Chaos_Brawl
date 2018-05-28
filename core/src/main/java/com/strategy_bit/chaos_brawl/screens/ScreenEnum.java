@@ -12,6 +12,8 @@ import com.strategy_bit.chaos_brawl.screens.menu_screens.HostLoungeScreen;
 import com.strategy_bit.chaos_brawl.screens.menu_screens.MainMenuScreen;
 import com.strategy_bit.chaos_brawl.screens.menu_screens.MapMenuScreen;
 import com.strategy_bit.chaos_brawl.screens.menu_screens.NetworkScreen;
+import com.strategy_bit.chaos_brawl.screens.menu_screens.OptionsMenuScreen;
+import com.strategy_bit.chaos_brawl.screens.menu_screens.UnitInfoScreen;
 
 /**
  * @author AIsopp
@@ -29,6 +31,12 @@ public enum ScreenEnum {
         public AbstractScreen getScreen(Object... params) {
             return new MapMenuScreen();
         }
+    },
+    OPTIONS_MENU {
+        public AbstractScreen getScreen(Object... params) {return new OptionsMenuScreen();}
+    },
+    UNIT_INFO {
+        public AbstractScreen getScreen(Object... params) {return new UnitInfoScreen();}
     },
     SPLASH_SCREEN {
         public AbstractScreen getScreen(Object... params) {

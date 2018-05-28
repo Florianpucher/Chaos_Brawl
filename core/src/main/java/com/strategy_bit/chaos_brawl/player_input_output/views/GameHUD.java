@@ -104,10 +104,8 @@ public class GameHUD extends Table {
         lowerUI.add(btnNewUnit2).right().height(lowerUI.getPrefHeight());
         lowerUI.add(btnNewUnit3).right().height(lowerUI.getPrefHeight());
 
-        lowerUI.left();
+        //lowerUI.left();
         lowerUI.add(btnUpgradeUnits).left().height(lowerUI.getPrefHeight());
-
-
 
         btnNewUnit1.addListener(listener);
         btnNewUnit2.addListener(listener);
