@@ -52,7 +52,7 @@ public class Unit {
             UpgradeComponent upgradeComponent = new UpgradeComponent();
             entity.add(upgradeComponent);
         }
-        
+
         entity.add(transformComponent);
         entity.add(textureComponent);
         entity.add(combatComponent);

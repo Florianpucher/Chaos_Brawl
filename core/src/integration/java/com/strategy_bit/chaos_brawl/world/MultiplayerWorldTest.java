@@ -205,7 +205,7 @@ public class MultiplayerWorldTest extends BaseTest {
     @Test
     public void testSpawnUnitOnClient() throws InterruptedException {
         for (int i = 1; i < worlds.length; i++) {
-            worlds[i].createEntityWorldCoordinates(new Vector2(0, 0), UnitType.RANGED, i);
+            worlds[i].createEntityWorldCoordinates(new Vector2(0, 0), 0, i);
         }
         // Message should arrive in the next 2 seconds
         Thread.sleep(2000);
@@ -220,7 +220,7 @@ public class MultiplayerWorldTest extends BaseTest {
     public void testSpawnUnitOnServer() throws InterruptedException {
         int unitsToSpawn = 3;
         for (int i = 0; i < unitsToSpawn; i++) {
-            worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), UnitType.RANGED, i % PLAYERS);
+            worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), 0, i % PLAYERS);
         }
         // Message should arrive in the next 2 seconds
         Thread.sleep(2000);
@@ -231,7 +231,7 @@ public class MultiplayerWorldTest extends BaseTest {
 
     @Test
     public void testUnitDied() throws InterruptedException {
-        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), UnitType.RANGED, 0);
+        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), 0, 0);
         Thread.sleep(2000);
         //Check if unit got spawned remotely
         for (int i = 0; i < PLAYERS; i++) {
@@ -249,7 +249,7 @@ public class MultiplayerWorldTest extends BaseTest {
 
     @Test
     public void testUnitGotWayPoints() throws InterruptedException {
-        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), UnitType.RANGED, 0);
+        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), 0, 0);
         Thread.sleep(2000);
         for (int i = 0; i < PLAYERS; i++) {
             Entity unitThatMoves = worlds[i].units.get(worlds[0].lastID - 1);

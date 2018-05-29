@@ -106,7 +106,7 @@ public class NetworkingTest extends BaseTest{
     @Test(timeout = 10000)
     public void testSendSimpleMessage() throws IOException {
         client.connectToServer("127.0.0.1");
-        EntitySpawnMessage spawnMessage = new EntitySpawnMessage(new Vector2(0, 0), 0, UnitType.SWORDFIGHTER, 0);
+        EntitySpawnMessage spawnMessage = new EntitySpawnMessage(new Vector2(0, 0), 0, 1, 0);
         client.sendData(spawnMessage);
         try {
             Thread.sleep(1000);
@@ -114,8 +114,8 @@ public class NetworkingTest extends BaseTest{
             e.printStackTrace();
         }
 
-        Mockito.verify(inputHandler).createEntityWorldCoordinates(Mockito.any(Vector2.class), Mockito.eq(UnitType.SWORDFIGHTER), Mockito.eq(0));
-        spawnMessage.entityTypeId = UnitType.MAINBUILDING;
+        Mockito.verify(inputHandler).createEntityWorldCoordinates(Mockito.any(Vector2.class), Mockito.eq(1), Mockito.eq(0));
+        spawnMessage.entityTypeId = 6;
         server.sendData(spawnMessage);
         try {
             Thread.sleep(1000);
@@ -123,7 +123,7 @@ public class NetworkingTest extends BaseTest{
             e.printStackTrace();
         }
 
-        Mockito.verify(inputHandler).createEntityLocal(Mockito.any(Vector2.class), Mockito.eq(UnitType.MAINBUILDING), Mockito.eq(0), Mockito.eq(0L));
+        Mockito.verify(inputHandler).createEntityLocal(Mockito.any(Vector2.class), Mockito.eq(6), Mockito.eq(0), Mockito.eq(0L));
 
         client.disconnect();
     }
@@ -144,15 +144,15 @@ public class NetworkingTest extends BaseTest{
     public void testSendMultipleMessages() throws IOException {
         connectMultipleClients("MultMsg");
 
-        EntitySpawnMessage spawnMessage = new EntitySpawnMessage(new Vector2(0, 0), 0, UnitType.SWORDFIGHTER, 0);
+        EntitySpawnMessage spawnMessage = new EntitySpawnMessage(new Vector2(0, 0), 0, 2, 0);
         server.sendData(spawnMessage);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Mockito.verify(inputHandler, Mockito.atLeast(3)).createEntityLocal(Mockito.any(Vector2.class), Mockito.eq(UnitType.SWORDFIGHTER), Mockito.eq(0), Mockito.eq(0L));
-        spawnMessage.entityTypeId = UnitType.MAINBUILDING;
+        Mockito.verify(inputHandler, Mockito.atLeast(3)).createEntityLocal(Mockito.any(Vector2.class), Mockito.eq(2), Mockito.eq(0), Mockito.eq(0L));
+        spawnMessage.entityTypeId = 6;
         client.sendData(spawnMessage);
 
         try {
@@ -160,7 +160,7 @@ public class NetworkingTest extends BaseTest{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Mockito.verify(inputHandler, Mockito.atLeast(1)).createEntityWorldCoordinates(Mockito.any(Vector2.class), Mockito.eq(UnitType.MAINBUILDING), Mockito.eq(0));
+        Mockito.verify(inputHandler, Mockito.atLeast(1)).createEntityWorldCoordinates(Mockito.any(Vector2.class), Mockito.eq(6), Mockito.eq(0));
 
         disconnectMultipleClients("MultMsg");
     }

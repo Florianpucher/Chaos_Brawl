@@ -51,7 +51,7 @@ public class BaseTest {
         AssetManager assetManager = AssetManager.getInstance();
         Pixmap pixmap = new Pixmap(100,100, Pixmap.Format.RGB888);
         Texture texture = new Texture(pixmap);
-        assetManager.mainTowerSkin = new TextureRegion(texture);
+        assetManager.skins.put("mainTowerSkin", new TextureRegion(texture));
         pixmap.dispose();
         Sound sound = Mockito.mock(Sound.class);
         assetManager.drawKatana = sound;
@@ -68,6 +68,6 @@ public class BaseTest {
         // Exit the application first
         application.exit();
         application = null;
-        AssetManager.getInstance().mainTowerSkin.getTexture().dispose();
+        AssetManager.getInstance().skins.get("mainTowerSkin").getTexture().dispose();
     }
 }
