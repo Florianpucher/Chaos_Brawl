@@ -157,6 +157,10 @@ public class World implements InputHandler {
     }
 
 
+    /**
+     * returns true if one players one, false otherwise and does inform players if they lose or win
+     * @return true if one players one, false otherwise
+     */
     public boolean checkWinningLosing(){
 
         for (Entity base: bases){

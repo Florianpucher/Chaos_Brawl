@@ -15,13 +15,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
-
-import javax.swing.text.html.HTMLDocument;
 
 /**
  * manager for holding references to assets
@@ -83,7 +80,8 @@ public class AssetManager {
     }
 
     private AssetManager() {
-
+        skins = new HashMap<>();
+        unitManager=new UnitManager();
     }
 
     public  void loadAssets(){
@@ -94,7 +92,7 @@ public class AssetManager {
         skins.put("fireballSkin",new TextureRegion(new Texture(UNIT_PATH+ "fireball.png")));
 
         //unit stats
-        unitManager=new UnitManager();
+
         unitManager.readFile(UNIT_PATH+"units.json");
 
         // Environment
