@@ -9,7 +9,6 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 
 public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
@@ -68,14 +67,14 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     }
 
     @Override
-    public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
+    public void createEntityWorldCoordinates(Vector2 worldCoordinates, int unitId, int teamID) {
         if(isServer){
 
             PawnController spawnerController = playerControllers[teamID];
             long id = lastID;
-            Entity entity = createEntityInternal(entityType, id,worldCoordinates, teamID);
+            Entity entity = createEntityInternal(unitId, id,worldCoordinates, teamID);
             lastID++;
-            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID, id);
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, unitId,teamID, id);
             if(entity.getComponent(MovementComponent.class) != null){
                 Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(),
                         bases[spawnerController.getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
@@ -84,13 +83,13 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
                 multiplayer.sendEntityMovingMessage(id, path);
             }
         }else {
-            multiplayer.sendEntitySpawnMsg(worldCoordinates, entityType,teamID, -1);
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, unitId,teamID, -1);
         }
     }
 
     @Override
-    public void createEntityLocal(Vector2 worldCoordinates, UnitType entityType, int teamID, long unitID) {
-        createEntityInternal(entityType, unitID, worldCoordinates, teamID);
+    public void createEntityLocal(Vector2 worldCoordinates, int unitId, int teamID, long unitID) {
+        createEntityInternal(unitId, unitID, worldCoordinates, teamID);
 
     }
 

@@ -2,7 +2,6 @@ package com.strategy_bit.chaos_brawl.ashley.entities;
 
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.g2d.CpuSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
@@ -23,13 +22,13 @@ public class Templar {
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
-        textureComponent.setTexture(AssetManager.getInstance().templarSkin);
+        textureComponent.setTexture(AssetManager.getInstance().skins.get("templarSkin"));
 
         MovementComponent movementComponent = engine.createComponent(MovementComponent.class);
         movementComponent.setEverything(3,transformComponent);
 
         CombatComponent combatComponent = engine.createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,1,6,false, false);
+        combatComponent.setEverything(1,1,6,false, false);
 
         TeamGameObjectComponent teamGameObjectComponent = engine.createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(150.0,teamId);

@@ -1,42 +1,47 @@
 package com.strategy_bit.chaos_brawl.ashley.entities;
 
-
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.strategy_bit.chaos_brawl.ashley.components.BoundaryComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
-import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.UpgradeComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
 
-/**
- * test entity
- *
- * @author AIsopp
- * @version 1.0
- * @since 15.03.2018
- */
-public class Archer {
-    public static void setComponents(Entity entity,Vector2 position, int teamId) {
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
+
+public class Unit {
+    public static void setComponents(Entity entity, UnitConfig unitConfig, int teamId, Vector2 position) {
 
         TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent =MyEngine.getInstance().createComponent(TextureComponent.class);
-        textureComponent.setTexture(AssetManager.getInstance().skins.get("archerSkin"));
+        textureComponent.setTexture(unitConfig.getSkin());
 
-        MovementComponent movementComponent =MyEngine.getInstance().createComponent(MovementComponent.class);
-        movementComponent.setEverything(5,transformComponent);
+        if (unitConfig.hasMovementComponent()) {
+            MovementComponent movementComponent = MyEngine.getInstance().createComponent(MovementComponent.class);
+            movementComponent.setEverything(unitConfig.getSpeed(), transformComponent);
+            entity.add(movementComponent);
+        }
 
         CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
-        combatComponent.setEverything(3,2,5,true,false);
+        combatComponent.setEverything(unitConfig.getAttackRadius(),unitConfig.getAttackSpeed(),unitConfig.getAttackDamage(),unitConfig.isRanged(),unitConfig.isMage());
 
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
-        teamGameObjectComponent.setEverything(50.0,teamId);
+        teamGameObjectComponent.setEverything(unitConfig.getHitPoints(),teamId);
+
+        if (unitConfig.hasBoundaryComponent()){
+            Vector2 size = new Vector2((textureComponent.getTexture().getRegionWidth() * PIXELS_TO_METRES),(textureComponent.getTexture().getRegionHeight() * PIXELS_TO_METRES));
+            BoundaryComponent boundaryComponent = MyEngine.getInstance().createComponent(BoundaryComponent.class);
+            boundaryComponent.setSizeAndTransformComponent(size,transformComponent);
+            entity.add(boundaryComponent);
+        }
 
         ExplosionComponent explosionComponent = new ExplosionComponent();
         UpgradeComponent upgradeComponent = new UpgradeComponent();
@@ -45,7 +50,6 @@ public class Archer {
         entity.add(explosionComponent);
         entity.add(transformComponent);
         entity.add(textureComponent);
-        entity.add(movementComponent);
         entity.add(combatComponent);
         entity.add(teamGameObjectComponent);
     }

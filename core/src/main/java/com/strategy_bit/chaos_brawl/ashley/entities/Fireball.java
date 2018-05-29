@@ -15,7 +15,7 @@ public class Fireball{
             TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
             transformComponent.setPosition(start);
             TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
-            textureComponent.setTexture(AssetManager.getInstance().fireballSkin);
+            textureComponent.setTexture(AssetManager.getInstance().skins.get("fireballSkin"));
             MovementComponent movementComponent =MyEngine.getInstance().createComponent(MovementComponent.class);
             movementComponent.setEverything(5,transformComponent);
             e.add(transformComponent);

@@ -3,17 +3,9 @@ package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
-
-import com.strategy_bit.chaos_brawl.ashley.entities.Archer;
-import com.strategy_bit.chaos_brawl.ashley.entities.Base;
-import com.strategy_bit.chaos_brawl.ashley.entities.Berserker;
-import com.strategy_bit.chaos_brawl.ashley.entities.Knight;
-import com.strategy_bit.chaos_brawl.ashley.entities.Mage;
-import com.strategy_bit.chaos_brawl.ashley.entities.SwordFighter;
-import com.strategy_bit.chaos_brawl.ashley.entities.Templar;
-import com.strategy_bit.chaos_brawl.ashley.entities.Tower;
-import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
-import com.strategy_bit.chaos_brawl.types.UnitType;
+import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 /**
  * @author AIsopp
@@ -22,39 +14,11 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
  */
 public class SpawnerImpl {
 
-    public Entity createNewUnit(UnitType unitType, int teamID, Vector2 position) {
+    public Entity createNewUnit(int unitId, int teamID, Vector2 position) {
         Entity entity= new Entity();
+        UnitConfig unitConfig=AssetManager.getInstance().unitManager.unitConfigHashMap.get(unitId);
 
-        switch (unitType) {
-            case RANGED:
-                Archer.setComponents(entity,position, teamID);
-                break;
-            case SWORDFIGHTER:
-                SwordFighter.setComponents(entity,position, teamID);
-                break;
-            case KNIGHT:
-                Knight.setComponents(entity,position, teamID);
-                break;
-            case MAGE:
-                Mage.setComponents(entity,position, teamID);
-                break;
-            case BERSERKER:
-                Berserker.setComponents(entity,position, teamID);
-                break;
-            case UPGRADE_UNITS:
-                // Todo
-            case TEMPLAR:
-                Templar.setComponents(entity,position, teamID);
-                break;
-            case MAINBUILDING:
-                Base.setComponents(entity,position, teamID);
-                break;
-            case TOWER:
-                Tower.setComponents(entity,position, teamID);
-                break;
-            default:
-                throw new UnsupportedOperationException("This unitType is not registered by SpawnerImpl");
-        }
+        Unit.setComponents(entity,unitConfig,teamID, position);
 
         return entity;
     }

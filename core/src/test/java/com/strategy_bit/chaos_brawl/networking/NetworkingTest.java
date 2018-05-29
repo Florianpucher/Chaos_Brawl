@@ -3,13 +3,11 @@ package com.strategy_bit.chaos_brawl.networking;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.BaseTest;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
 import org.junit.After;

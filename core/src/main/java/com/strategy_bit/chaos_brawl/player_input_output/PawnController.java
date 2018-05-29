@@ -1,14 +1,15 @@
 package com.strategy_bit.chaos_brawl.player_input_output;
 
 
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.resource_system.ResourceGold;
 import com.strategy_bit.chaos_brawl.types.EventType;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
-import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
+
 import java.util.ArrayList;
 
 
@@ -80,7 +81,7 @@ public abstract class PawnController {
         return resources.get(0);
     }
 
-    public boolean checkAndSubtract(double cost,String resource){
+    public boolean checkAndSubtract(float cost,String resource){
         for (Resource r :
                 resources) {
             if (r.getName().equals(resource)){
@@ -89,8 +90,9 @@ public abstract class PawnController {
         }
         return false;
     }
-    public boolean spawnUnit(UnitType unitType){
-        double cost= unitType.getCosts();
+    public boolean spawnUnit(int unitId){
+        UnitConfig unitConfig=AssetManager.getInstance().unitManager.unitConfigHashMap.get(unitId);
+        float cost= unitConfig.getCost();
         return checkAndSubtract(cost,"Gold");
     }
 

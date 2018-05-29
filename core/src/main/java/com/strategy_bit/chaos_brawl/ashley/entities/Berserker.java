@@ -23,13 +23,13 @@ public class Berserker extends Entity {
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
-        textureComponent.setTexture(AssetManager.getInstance().berserkerSkin);
+        textureComponent.setTexture(AssetManager.getInstance().skins.get("berserkerSkin"));
 
         MovementComponent movementComponent = engine.createComponent(MovementComponent.class);
         movementComponent.setEverything(5,transformComponent);
 
         CombatComponent combatComponent = engine.createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,2.5,9,false, false);
+        combatComponent.setEverything(1,2.5,9,false, false);
 
         TeamGameObjectComponent teamGameObjectComponent =engine.createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(95.0,teamId);

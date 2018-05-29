@@ -3,7 +3,6 @@ package com.strategy_bit.chaos_brawl.player_input_output;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
@@ -78,8 +77,8 @@ public class AiController extends PawnController implements Runnable{
                 int y = (int) MathUtils.random(spawnArea.getLowerLeft().y, spawnArea.getUpperLeft().y);
                 final Vector2 spawnPosition = new Vector2(x, y);
                 Gdx.app.postRunnable(() -> {
-                    if (spawnUnit(UnitType.RANGED)) {
-                        inputHandler.createEntityScreenCoordinates(spawnPosition, UnitType.RANGED, teamID);
+                    if (spawnUnit(0)) {
+                        inputHandler.createEntityScreenCoordinates(spawnPosition, 0, teamID);
                     }
                 });
 

@@ -27,13 +27,13 @@ public class SwordFighter extends Entity {
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
-        textureComponent.setTexture(AssetManager.getInstance().swordFighterSkin);
+        textureComponent.setTexture(AssetManager.getInstance().skins.get("swordFighterSkin"));
 
         MovementComponent movementComponent =MyEngine.getInstance().createComponent(MovementComponent.class);
         movementComponent.setEverything(5,transformComponent);
 
         CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,2.5,7,false,false);
+        combatComponent.setEverything(1,2.5,7,false,false);
 
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(75.0,teamId);

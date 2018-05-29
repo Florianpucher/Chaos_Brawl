@@ -8,10 +8,8 @@ import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.ashley.entities.BackgroundTile;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.TileType;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
-import com.badlogic.gdx.graphics.Camera;
 
 import java.util.Scanner;
 

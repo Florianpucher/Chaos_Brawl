@@ -27,13 +27,13 @@ public class Knight {
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
-        textureComponent.setTexture(AssetManager.getInstance().knightSkin);
+        textureComponent.setTexture(AssetManager.getInstance().skins.get("knightSkin"));
 
         MovementComponent movementComponent =MyEngine.getInstance().createComponent(MovementComponent.class);
         movementComponent.setEverything(3,transformComponent);
 
         CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,1,1,5,false,false);
+        combatComponent.setEverything(1,1,5,false,false);
 
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(120.0,teamId);

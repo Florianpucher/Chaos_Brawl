@@ -25,7 +25,7 @@ public class CombatComponent implements Component,Pool.Poolable {
         setEngagedInCombat(false);
         lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
     }
-    public void setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(double radius, double attackRadius, double attackSpeed, double attackDamage, boolean ranged,boolean mage) {
+    public void setEverything(double attackRadius, double attackSpeed, double attackDamage, boolean ranged, boolean mage) {
         setAttackDamage(attackDamage);
         setAttackRadius(attackRadius);
         setAttackSpeed(attackSpeed);

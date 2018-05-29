@@ -19,7 +19,7 @@ public class Projectile {
         TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
         transformComponent.setPosition(start);
         TextureComponent textureComponent = MyEngine.getInstance().createComponent(TextureComponent.class);
-        textureComponent.setTexture(AssetManager.getInstance().projectileSkin);
+        textureComponent.setTexture(AssetManager.getInstance().skins.get("projectileSkin"));
         MovementComponent movementComponent =MyEngine.getInstance().createComponent(MovementComponent.class);
         movementComponent.setEverything(10,transformComponent);
         e.add(transformComponent);

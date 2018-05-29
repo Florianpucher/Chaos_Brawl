@@ -2,7 +2,6 @@ package com.strategy_bit.chaos_brawl.ashley.entities;
 
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.g2d.CpuSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
@@ -22,13 +21,13 @@ public class Mage {
         transformComponent.setPosition(position);
 
         TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
-        textureComponent.setTexture(AssetManager.getInstance().mageSkin);
+        textureComponent.setTexture(AssetManager.getInstance().skins.get("mageSkin"));
 
         MovementComponent movementComponent =engine.createComponent(MovementComponent.class);
         movementComponent.setEverything(5,transformComponent);
 
         CombatComponent combatComponent = engine.createComponent(CombatComponent.class);
-        combatComponent.setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(10000.0,3,1,12,true, true);
+        combatComponent.setEverything(3,1,12,true, true);
 
         TeamGameObjectComponent teamGameObjectComponent =engine.createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(60.0,teamId);

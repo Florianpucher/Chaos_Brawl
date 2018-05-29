@@ -16,7 +16,12 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
+
+import javax.swing.text.html.HTMLDocument;
 
 /**
  * manager for holding references to assets
@@ -33,16 +38,9 @@ public class AssetManager {
     private static final String ENVIRONMENT_PATH = "environment/";
     private static final String ANIM_PATH = "animations/";
 
-
+    public UnitManager unitManager;
+    public HashMap<String, TextureRegion> skins;
     public  Skin defaultSkin;
-    public TextureRegion archerSkin;
-    public TextureRegion swordFighterSkin;
-    public TextureRegion knightSkin;
-    public TextureRegion mageSkin;
-    public TextureRegion berserkerSkin;
-    public TextureRegion templarSkin;
-    public TextureRegion projectileSkin;
-    public TextureRegion fireballSkin;
     public TextureAtlas explosionSkin;
     public TextureAtlas smokeSkin;
     public FileHandle explosionParticle;
@@ -60,8 +58,6 @@ public class AssetManager {
     public Array<Float> config;
     public Array<Float> config2;
     public Array<Float> spawn;
-    public TextureRegion ballistaTowerSkin;
-    public TextureRegion mainTowerSkin;
     public Texture victoryScreen;
     public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
@@ -92,23 +88,19 @@ public class AssetManager {
 
     public  void loadAssets(){
 
-        // units
-        archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_archer.png"));
-        swordFighterSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_sword_fighter.png"));
-        knightSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_knight.png"));
-        mageSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_mage.png"));
-        berserkerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_berserker.png"));
-        templarSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_templar.png"));
-        projectileSkin=new TextureRegion(new Texture(UNIT_PATH+ "arrow.png"));
-        fireballSkin=new TextureRegion(new Texture(UNIT_PATH+ "fireball.png"));
+        // units skins
+        skins=new HashMap<>();
+        skins.put("projectileSkin",new TextureRegion(new Texture(UNIT_PATH+ "arrow.png")));
+        skins.put("fireballSkin",new TextureRegion(new Texture(UNIT_PATH+ "fireball.png")));
 
+        //unit stats
+        unitManager=new UnitManager();
+        unitManager.readFile(UNIT_PATH+"units.json");
 
         // Environment
         defaultTile = new TextureRegion(new Texture(ENVIRONMENT_PATH+"default_tile.png"));
         waterTile = new TextureRegion(new Texture ( ENVIRONMENT_PATH+"water_tile.png"));
         dirtTile = new TextureRegion(new Texture ( ENVIRONMENT_PATH+"dirt_tile.png"));
-        ballistaTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"ballista_tower.png"));
-        mainTowerSkin = new TextureRegion(new Texture(BUILDING_PATH+"wall.png"));
 
         // animations
         explosionSkin = new TextureAtlas(ANIM_PATH+"explosions.atlas");
@@ -171,6 +163,8 @@ public class AssetManager {
 
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Animations/explosion.mp3"));
 
+
+
     }
 
     private void setArray(Array<Float> arr, FileHandle handle) {
@@ -186,19 +180,15 @@ public class AssetManager {
 
     public void dispose() {
         defaultSkin.dispose();
-        archerSkin.getTexture().dispose();
-        swordFighterSkin.getTexture().dispose();
-        knightSkin.getTexture().dispose();
-        mageSkin.getTexture().dispose();
-        berserkerSkin.getTexture().dispose();
-        templarSkin.getTexture().dispose();
-        projectileSkin.getTexture().dispose();
-        fireballSkin.getTexture().dispose();
+        Iterator it = skins.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry pair = (Map.Entry)it.next();
+            ((TextureRegion)(pair.getValue())).getTexture().dispose();
+            it.remove();
+        }
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();
         dirtTile.getTexture().dispose();
-        ballistaTowerSkin.getTexture().dispose();
-        mainTowerSkin.getTexture().dispose();
         resourceSkinOuter.getTexture().dispose();
         resourceSkinInner.getTexture().dispose();
         resourceSkinMiddle.getTexture().dispose();
@@ -227,5 +217,9 @@ public class AssetManager {
     public Sound getRandomDrawKatanaSound(){
         Random random = new Random();
         return drawKatanas.get(random.nextInt(drawKatanas.size));
+    }
+
+    public void addSkin(String name,String path){
+        skins.put(name,new TextureRegion(new Texture(path)));
     }
 }

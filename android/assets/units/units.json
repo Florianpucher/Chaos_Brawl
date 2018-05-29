@@ -1,0 +1,302 @@
+[
+  {
+    "id" : 0,
+    "name": "Archer",
+    "cost" : 10,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"archerSkin",
+      "skinPath" :"units/unit_archer.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    },
+    "CombatComponent" : {
+      "attackRadius" : 3,
+      "attackSpeed" : 2,
+      "attackDamage" : 5,
+      "ranged" : true,
+      "mage" : false
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 50
+
+    },
+    "ExplosionComponent" : {
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 1,
+    "name": "SwordFighter",
+    "cost" : 8,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"swordFighterSkin",
+      "skinPath" :"units/unit_sword_fighter.png"
+    },
+    "MovementComponent" : {
+      "speed" : 6
+    },
+    "CombatComponent" : {
+      "attackRadius" : 1,
+      "attackSpeed" : 2.5,
+      "attackDamage" : 7,
+      "ranged" : false,
+      "mage" : false
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 75
+
+    },
+    "ExplosionComponent" : {
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 2,
+    "name": "Knight",
+    "cost" : 20,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"knightSkin",
+      "skinPath" :"units/unit_knight.png"
+    },
+    "MovementComponent" : {
+      "speed" : 3
+    },
+    "CombatComponent" : {
+      "attackRadius" : 1,
+      "attackSpeed" : 1,
+      "attackDamage" : 5,
+      "ranged" : false,
+      "mage" : false
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 120
+
+    },
+    "ExplosionComponent" : {
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 3,
+    "name": "Mage",
+    "cost" : 10,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"mageSkin",
+      "skinPath" :"units/unit_mage.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    },
+    "CombatComponent" : {
+      "attackRadius" : 3,
+      "attackSpeed" : 1,
+      "attackDamage" : 10,
+      "ranged" : true,
+      "mage" : true
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 60
+
+    },
+    "ExplosionComponent" : {
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 4,
+    "name": "Berserker",
+    "cost" : 8,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"berserkerSkin",
+      "skinPath" :"units/unit_berserker.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    },
+    "CombatComponent" : {
+      "attackRadius" : 1,
+      "attackSpeed" : 2.5,
+      "attackDamage" : 9,
+      "ranged" : false,
+      "mage" : false
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 95
+
+    },
+    "ExplosionComponent" : {
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 5,
+    "name": "Templar",
+    "cost" : 20,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"templarSkin",
+      "skinPath" :"units/unit_templar.png"
+    },
+    "MovementComponent" : {
+      "speed" : 3
+    },
+    "CombatComponent" : {
+      "attackRadius" : 1,
+      "attackSpeed" : 1,
+      "attackDamage" : 6,
+      "ranged" : false,
+      "mage" : false
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 150
+
+    },
+    "ExplosionComponent" : {
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  }
+,
+
+  {
+    "id" : 6,
+    "name": "Base",
+    "cost" : 0,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"mainTowerSkin",
+      "skinPath" :"buildings/wall.png"
+    },
+    "CombatComponent" : {
+      "attackRadius" : 4,
+      "attackSpeed" : 1,
+      "attackDamage" : 20,
+      "ranged" : true,
+      "mage" : false
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 1000
+
+    },
+    "ExplosionComponent" : {
+
+    },
+    "UpgradeComponent" : {
+
+    },
+    "BoundaryComponent" :{
+
+    }
+  },
+
+  {
+  "id" : 7,
+  "name": "Tower",
+  "cost" : 0,
+  "TransformComponent" : {
+    "position" : {
+      "x" : 0,
+      "y" : 0
+    }
+  },
+  "TextureComponent" : {
+    "skinName":"ballistaTowerSkin",
+    "skinPath" :"buildings/ballista_tower.png"
+  },
+  "CombatComponent" : {
+    "attackRadius" : 4,
+    "attackSpeed" : 1,
+    "attackDamage" : 20,
+    "ranged" : true,
+    "mage" : false
+  },
+  "TeamGameObjectComponent" : {
+    "hitPoints" : 100
+
+  },
+  "ExplosionComponent" : {
+
+  },
+  "UpgradeComponent" : {
+
+  },
+  "BoundaryComponent" :{
+
+  }
+},
+
+  {
+    "id" : 8,
+    "name": "UpgradeUnits",
+    "cost" : 100
+    }
+]

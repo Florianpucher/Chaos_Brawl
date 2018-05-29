@@ -25,7 +25,6 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.EventType;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
@@ -102,9 +101,9 @@ public class World implements InputHandler {
     private void setEntityWorldCoordinates(Array<Float> spawn, int players){
         int offset = 0;
         for (int j = 0; j < players; j++){
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset), spawn.get(offset+1)), UnitType.TOWER,  playerControllers[j].getTeamID());
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset+2),spawn.get(offset+3)), UnitType.TOWER,  playerControllers[j].getTeamID());
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset+4),spawn.get(offset+5)), UnitType.MAINBUILDING,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(new Vector2(spawn.get(offset), spawn.get(offset+1)), 7,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(new Vector2(spawn.get(offset+2),spawn.get(offset+3)), 7,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(new Vector2(spawn.get(offset+4),spawn.get(offset+5)), 6,  playerControllers[j].getTeamID());
             offset += 6;
         }
     }
@@ -233,16 +232,16 @@ public class World implements InputHandler {
     }
 
     @Override
-    public void createEntityScreenCoordinates(Vector2 screenCoordinates, UnitType entityType, int teamID) {
+    public void createEntityScreenCoordinates(Vector2 screenCoordinates, int unitId, int teamID) {
         Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        createEntityWorldCoordinates(targetLocation, entityType, teamID);
+        createEntityWorldCoordinates(targetLocation, unitId, teamID);
     }
 
     @Override
-    public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
-        Entity entity = createEntityInternal(entityType, lastID, worldCoordinates, teamID);
+    public void createEntityWorldCoordinates(Vector2 worldCoordinates, int unitId, int teamID) {
+        Entity entity = createEntityInternal(unitId, lastID, worldCoordinates, teamID);
         lastID++;
 
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
@@ -257,15 +256,17 @@ public class World implements InputHandler {
 
     }
 
-    Entity createEntityInternal(UnitType entityType, long unitID, Vector2 worldCoordinates, int teamID){
-        Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
+    Entity createEntityInternal(int unitId, long unitID, Vector2 worldCoordinates, int teamID){
+        Entity entity = spawner.createNewUnit(unitId,teamID,worldCoordinates);
         engine.addEntity(entity);
         units.put(unitID, entity);
-        if(entityType.equals(UnitType.MAINBUILDING)){
+        if(unitId==6){
             bases[teamID] = entity;
-        }else if (entityType.equals(UnitType.KNIGHT) || entityType.equals(UnitType.TEMPLAR)) {
+        }
+        else if (unitId==5||unitId==2){
             AssetManager.getInstance().drawSword.play(1f);
-        } else if (entityType.equals(UnitType.SWORDFIGHTER) || entityType.equals(UnitType.BERSERKER)) {
+        }
+        else if (unitId==1||unitId==4){
             AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
         }
 

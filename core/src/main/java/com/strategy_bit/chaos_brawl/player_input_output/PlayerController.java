@@ -8,7 +8,6 @@ import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
 import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.types.EventType;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
@@ -57,17 +56,17 @@ public class PlayerController extends PawnController implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 screenCoordinates = new Vector2(screenX, screenY);
-        UnitType current = null;
+        int current = -1;
         if (gameHUD != null) {
             current = gameHUD.getUnitToSpawn();
-            if (current != null && spawnArea.checkIfVectorIsInside(screenCoordinates)) {
+            if (current != -1 && spawnArea.checkIfVectorIsInside(screenCoordinates)) {
                 if (spawnUnit(current)) {
                     inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
                 }
                 return true;
             }
         }
-        if(current == null){
+        if(current == -1){
             inputHandler.sendTouchInput(screenCoordinates, this);
             return true;
         }
