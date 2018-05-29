@@ -85,6 +85,16 @@ public class UnitManager {
                 }else {
                     config.setBoundaryComponent(false);
                 }
+                if (unitConfig.has("ExplosionComponent")){
+                    config.setExplosionComponent(true);
+                }else {
+                    config.setExplosionComponent(false);
+                }
+                if (unitConfig.has("UpgradeComponent")){
+                    config.setUpgradeComponent(true);
+                }else {
+                    config.setUpgradeComponent(false);
+                }
                 unitConfigHashMap.put(unitConfig.getInt("id"),config);
             }
         }

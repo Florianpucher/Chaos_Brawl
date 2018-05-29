@@ -18,6 +18,8 @@ public class UnitConfig {
     private int teamId;
     private boolean hasMovementComponent;
     private boolean hasBoundaryComponent;
+    private boolean hasExplosionComponent;
+    private boolean hasUpgradeComponent;
 
     public Vector2 getPosition() {
         return position;
@@ -129,5 +131,21 @@ public class UnitConfig {
 
     public void setBoundaryComponent(boolean hasBoundaryComponent) {
         this.hasBoundaryComponent = hasBoundaryComponent;
+    }
+
+    public boolean hasExplosionComponent() {
+        return hasExplosionComponent;
+    }
+
+    public void setExplosionComponent(boolean hasExplosionComponent) {
+        this.hasExplosionComponent = hasExplosionComponent;
+    }
+
+    public boolean hasUpgradeComponent() {
+        return hasUpgradeComponent;
+    }
+
+    public void setUpgradeComponent(boolean hasUpgradeComponent) {
+        this.hasUpgradeComponent = hasUpgradeComponent;
     }
 }

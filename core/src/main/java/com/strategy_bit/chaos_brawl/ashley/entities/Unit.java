@@ -43,11 +43,16 @@ public class Unit {
             entity.add(boundaryComponent);
         }
 
-        ExplosionComponent explosionComponent = new ExplosionComponent();
-        UpgradeComponent upgradeComponent = new UpgradeComponent();
+        if (unitConfig.hasExplosionComponent()){
+            ExplosionComponent explosionComponent = new ExplosionComponent();
+            entity.add(explosionComponent);
+        }
 
-        entity.add(upgradeComponent);
-        entity.add(explosionComponent);
+        if (unitConfig.hasUpgradeComponent()){
+            UpgradeComponent upgradeComponent = new UpgradeComponent();
+            entity.add(upgradeComponent);
+        }
+        
         entity.add(transformComponent);
         entity.add(textureComponent);
         entity.add(combatComponent);
