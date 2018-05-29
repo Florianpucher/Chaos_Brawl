@@ -30,13 +30,12 @@ import java.util.Random;
 
 public class AssetManager {
     private static final String UNIT_PATH = "units/";
-    private static final String BUILDING_PATH = "buildings/";
     private static final String UI_PATH = "user_interface/";
     private static final String ENVIRONMENT_PATH = "environment/";
     private static final String ANIM_PATH = "animations/";
 
     public UnitManager unitManager;
-    public HashMap<String, TextureRegion> skins;
+    public Map<String, TextureRegion> skins;
     public  Skin defaultSkin;
     public TextureAtlas explosionSkin;
     public TextureAtlas smokeSkin;

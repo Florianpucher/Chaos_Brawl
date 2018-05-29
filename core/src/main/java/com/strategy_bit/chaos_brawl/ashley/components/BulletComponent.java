@@ -24,13 +24,6 @@ public class BulletComponent implements Component,Pool.Poolable{
     private long targetId;
     private float damage;
 
-    public BulletComponent(boolean deleteWhenTargetIsReached, long targetId,float damage) {
-        setDeleteWhenTargetIsReached(deleteWhenTargetIsReached);
-        setTargetId(targetId);
-        setDamage(damage);
-        setDelete(false);
-    }
-
     public void setDeleteWhenTargetIsReachedAndTargetIdAndDamage(boolean deleteWhenTargetIsReached, long targetId,float damage) {
         setDeleteWhenTargetIsReached(deleteWhenTargetIsReached);
         setTargetId(targetId);

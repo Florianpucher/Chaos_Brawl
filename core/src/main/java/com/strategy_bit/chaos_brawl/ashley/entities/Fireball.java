@@ -26,4 +26,8 @@ public class Fireball{
             e.add(bulletComponent);
 
     }
+
+    private Fireball(){
+
+    }
 }

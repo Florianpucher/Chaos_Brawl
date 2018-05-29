@@ -105,7 +105,7 @@ public class WorldTest extends BaseTest {
         world.setPlayerController(1,player2);
         world.setPlayerController(2, player3);
         world.setPlayerController(3,player4);
-        world.initializeGameForPlayers(1, 4);
+        world.initializeGameForPlayers();
     }
 
     @After

@@ -2,7 +2,6 @@ package com.strategy_bit.chaos_brawl.ashley.entities;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Pool;
 import com.strategy_bit.chaos_brawl.ashley.components.BulletComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TextureComponent;
@@ -28,5 +27,9 @@ public class Projectile {
         BulletComponent bulletComponent= MyEngine.getInstance().createComponent(BulletComponent.class);
         bulletComponent.setDeleteWhenTargetIsReachedAndTargetIdAndDamage(true,target,damage);
         e.add(bulletComponent);
+    }
+
+    private Projectile(){
+
     }
 }

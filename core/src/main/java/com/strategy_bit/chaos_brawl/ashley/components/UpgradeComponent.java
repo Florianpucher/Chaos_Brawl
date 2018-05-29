@@ -5,15 +5,7 @@ import com.badlogic.ashley.core.Component;
 public class UpgradeComponent implements Component{
 
     public UpgradeComponent(){
-
+        // I do not know why this component is here
+        // comment by Alexander Isopp
     }
-
-    public void Units(){
-        System.out.println("All Units got upgraded!");
-    }
-
-    public void Buildings(){
-        System.out.println("All Buildings got upgraded!");
-    }
-
 }

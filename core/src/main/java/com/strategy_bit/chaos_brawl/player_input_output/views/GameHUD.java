@@ -39,19 +39,19 @@ public class GameHUD extends Table {
 
     private static final String UPGRADE_UNITS = "Unit UP!";
 
-    BrawlButton btnNewUnit1;
-    BrawlButton btnNewUnit2;
-    BrawlButton btnNewUnit3;
+    private BrawlButton btnNewUnit1;
+    private BrawlButton btnNewUnit2;
+    private BrawlButton btnNewUnit3;
 
-    BrawlButton btnUpgradeUnits;
+    private BrawlButton btnUpgradeUnits;
 
 
-    boolean playedVictoryOnce = false;
-    boolean playedDefeatOnce = false;
+    private boolean playedVictoryOnce = false;
+    private boolean playedDefeatOnce = false;
 
     private int nextUnitType;
     private Texture nonSpawnAreaTexture;
-    public ProgressBar manaBar;
+    private ProgressBar manaBar;
     private Array<BrawlButton> brawlButtons;
 
     private OrthographicCamera camera;
@@ -115,9 +115,9 @@ public class GameHUD extends Table {
         initializeGameOverView();
     }
 
-    public void SwitchButtons (boolean upgradeExecuted){
+    private void switchButtons(boolean upgradeExecuted){
 
-        if (upgradeExecuted == true){
+        if (upgradeExecuted){
 
             AssetManager.getInstance().upgradeExecuted.play(1f);
 
@@ -184,7 +184,7 @@ public class GameHUD extends Table {
                 }
             }
             if (name.equals(UPGRADE_UNITS) && brawlButtons.get(3).isActivated()) {
-                    SwitchButtons(true);
+                    switchButtons(true);
             }
 
 
@@ -252,14 +252,14 @@ public class GameHUD extends Table {
         Texture gameOverView;
         if (win) {
             gameOverView = assetManager.victoryScreen;
-            if (playedVictoryOnce =! true){
+            if (!playedVictoryOnce){
                 AssetManager.getInstance().victory.play(1f);
                 playedVictoryOnce = true;
             }
 
         }else{
             gameOverView = assetManager.defeatScreen;
-            if(playedDefeatOnce =! true) {
+            if(!playedDefeatOnce) {
                 AssetManager.getInstance().defeat.play(1f);
                 playedDefeatOnce = true;
             }

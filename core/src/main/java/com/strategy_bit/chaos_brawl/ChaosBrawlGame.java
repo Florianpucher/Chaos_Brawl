@@ -35,12 +35,10 @@ public class ChaosBrawlGame extends Game {
 		loadGame = true;
 		// Load assets here
 		Executor executor = Executors.newSingleThreadExecutor();
-		executor.execute(() -> {
-			Gdx.app.postRunnable(() -> {
-				assetManager.loadAssets();
-				loadGame = false;
-			});
-        });
+		executor.execute(() -> Gdx.app.postRunnable(() -> {
+            assetManager.loadAssets();
+            loadGame = false;
+        }));
 	}
 
 	public void setScreen(AbstractScreen screen){

@@ -58,4 +58,8 @@ public class Unit {
         entity.add(combatComponent);
         entity.add(teamGameObjectComponent);
     }
+
+    private Unit(){
+
+    }
 }

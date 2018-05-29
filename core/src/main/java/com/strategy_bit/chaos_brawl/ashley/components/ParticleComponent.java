@@ -9,19 +9,19 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 public class ParticleComponent implements Component {
 
-    ParticleEffect effect;
+    private ParticleEffect effect;
 
     public ParticleComponent(String animation) {
 
         TextureAtlas particleAtlas = null;
 
-        if (animation == "explosion") {
+        if (animation.equals("explosion")) {
             particleAtlas = AssetManager.getInstance().explosionSkin;
             effect = new ParticleEffect();
             effect.load(AssetManager.getInstance().explosionParticle, particleAtlas);
             effect.start();
 
-        } else if (animation == "smoke") {
+        } else if (animation.equals("smoke")) {
             particleAtlas = AssetManager.getInstance().smokeSkin;
             effect = new ParticleEffect();
             effect.load(AssetManager.getInstance().smokeParticle, particleAtlas);

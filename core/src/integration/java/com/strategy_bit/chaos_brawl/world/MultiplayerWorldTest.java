@@ -133,7 +133,7 @@ public class MultiplayerWorldTest extends BaseTest {
             initializePlayersForWorld(i);
             brawlClient.connectToServer("127.0.0.1");
         }
-        serverWorld.initializeGameForPlayers(1, PLAYERS);
+        serverWorld.initializeGameForPlayers();
 
         long currentTime = System.currentTimeMillis();
 

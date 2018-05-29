@@ -8,11 +8,14 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class UnitManager {
-    public HashMap<Integer, UnitConfig> unitConfigHashMap;
+    public Map<Integer, UnitConfig> unitConfigHashMap;
 
     public void readFile(String file) {
+        //TODO Hellmuth reduce cognitive complexity of method
+        // and see sonar cloud for additional code smells
         unitConfigHashMap = new HashMap<>();
         FileHandle fileHandle = Gdx.files.internal(file);
         JsonReader jsonReader = new JsonReader();

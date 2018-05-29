@@ -9,7 +9,7 @@ import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHa
  * @version 1.0
  * @since 02.04.2018
  */
-abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandler{
+abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandler {
 
     protected static final String PLAYER_1 = "1";
     protected static final String PLAYER_2 = "2";
@@ -19,14 +19,14 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
     protected Array<TextButton> textButtons;
     protected Array<String> playerNames;
     protected Array<Integer> playerIds;
-    protected int c=0;
+    protected int c = 0;
 
-    public LobbyScreen(){
-        playerNames=new Array<>();
-        playerIds=new Array<>();
+    public LobbyScreen() {
+        playerNames = new Array<>();
+        playerIds = new Array<>();
     }
 
-    public void addClient(String ip,int id){
+    public void addClient(String ip, int id) {
         playerIds.add(id);
 
         playerNames.add(ip);
@@ -38,14 +38,12 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
             textButtons.get(i).setText(playerNames.get(i));
         }
     }
-    public void removeClient(int id){
-        String ip=(playerNames.get(id-c++));
-        if (playerNames==null){
-            return;
-        }else{
 
-            playerNames.removeValue(ip,true);
-        }
+    public void removeClient(int id) {
+        String ip = (playerNames.get(id - c++));
+
+        playerNames.removeValue(ip, true);
+
         textButtons.get(0).setText(PLAYER_1);
         textButtons.get(1).setText(PLAYER_2);
         textButtons.get(2).setText(PLAYER_3);

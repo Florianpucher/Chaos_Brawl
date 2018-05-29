@@ -31,8 +31,6 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
 import java.util.HashMap;
 import java.util.Map;
 
-//import com.strategy_bit.chaos_brawl.ashley.entity.Explosion;
-
 /**
  * Central manager for game
  *
@@ -82,19 +80,19 @@ public class World implements InputHandler {
         playerControllers[index] = pawnController;
     }
 
-    public void initializeGameForPlayers(int map, int players){
+    public void initializeGameForPlayers(){
         int configMap;
-        if (players < 3) {
+        if (playerControllers.length < 3) {
             configMap = 0;
 
-        } else if (players == 4){
+        } else if (playerControllers.length == 4){
             configMap = 1;
         }
         else {
             configMap = -1;
         }
 
-        setEntityWorldCoordinates(board.getAsset(configMap), players);
+        setEntityWorldCoordinates(board.getAsset(configMap), playerControllers.length);
         resourceTimeStamp = System.currentTimeMillis();
     }
 
@@ -122,7 +120,7 @@ public class World implements InputHandler {
         //Add some logic
         RenderSystem renderSystem = new RenderSystem();
         camera = renderSystem.getCamera();
-        deleteSystem = new DeleteSystem(camera);
+        deleteSystem = new DeleteSystem();
         engine.addSystem(deleteSystem);
         engine.addSystem(new MovementSystem());
         BulletSystem bulletSystem=new BulletSystem();
@@ -185,7 +183,7 @@ public class World implements InputHandler {
             engine.removeAllEntities();
             return true;
         } else if (aliveCounter == 0) {
-            System.err.println("A draw happens suddenly");
+            Gdx.app.error("DRAW","A draw happens suddenly");
             return true;
         }
         return false;

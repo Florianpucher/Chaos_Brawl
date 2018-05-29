@@ -106,7 +106,7 @@ public class OtherPathfinder {
             Vector2 worldPosition = getWorldCoordinateOfNode(node);
             pathToReturn.add(worldPosition);
         }
-        System.out.println(pathToReturn);
+
         return pathToReturn;
     }
 
