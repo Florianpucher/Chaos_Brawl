@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.strategy_bit.chaos_brawl.network.BrawlConnector;
+import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
+import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
@@ -15,6 +18,13 @@ import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 public class FourPlayerMapMenuScreen extends MenuScreen{
 
     private static final String MAP_4 = "MAP 4";
+    private BrawlMultiplayer brawlMultiplayer;
+    private int player;
+
+    public FourPlayerMapMenuScreen(BrawlMultiplayer brawlMultiplayer, int[] players){
+        this.brawlMultiplayer = brawlMultiplayer;
+        this.player=players[0];
+    }
 
     @Override
     public void buildStage() {
@@ -37,7 +47,7 @@ public class FourPlayerMapMenuScreen extends MenuScreen{
             public void clicked(InputEvent event, float x, float y) {
                 String name = event.getListenerActor().getName();
                 if(name.equals(MAP_4)){
-                    screenManager.showScreen(ScreenEnum.GAME, 4);
+                    screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player);
                 }
                 super.clicked(event, x, y);
             }

@@ -15,10 +15,12 @@ public class MultiplayerGameScreen extends GameScreen {
     private BrawlMultiplayer brawlMultiplayer;
     private BrawlConnector listener;
     private int player;
+    private int map;
 
 
-    public MultiplayerGameScreen(BrawlMultiplayer brawlMultiplayer,  int[] players) {
-        super(1);
+    public MultiplayerGameScreen(BrawlMultiplayer brawlMultiplayer,  int[] players, int map) {
+        super(map);
+        this.map = map;
         this.brawlMultiplayer = brawlMultiplayer;
         this.player=players[0];
         controllers = new PawnController[players.length];
@@ -58,7 +60,7 @@ public class MultiplayerGameScreen extends GameScreen {
         setInitialTargets();
         if(brawlMultiplayer instanceof BrawlServer){
             //TODO make this dynamic for multiple maps
-            manager.initializeGameForPlayers(1, 2);
+            manager.initializeGameForPlayers(map, player);
         }
     }
 

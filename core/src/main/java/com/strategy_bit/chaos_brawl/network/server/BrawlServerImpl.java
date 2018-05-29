@@ -67,7 +67,14 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
             playersToSend[j]=(playersToSend[j]+1)%playersToSend.length;
         }
         ScreenManager screenManager = ScreenManager.getInstance();
-        screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, this, playersToSend);
+
+        if (playersToSend.length == 2){
+            screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAP_MENU1, this, playersToSend);
+        }
+        else {
+            screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAP_MENU_FOUR, this, playersToSend);
+        }
+        //screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, this, playersToSend);
     }
 
     public void sendDataToAllExcept(Connection connection, Message msg) {
