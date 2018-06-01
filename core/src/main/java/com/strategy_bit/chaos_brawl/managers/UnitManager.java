@@ -34,7 +34,7 @@ public class UnitManager {
     private final String ATTACKSPEED = "attackSpeed";
     private final String ATTACKDAMAGE = "attackDamage";
     private final String RANGED = "ranged";
-    private final String MAGE = "mage";
+    private final String RANGEDATTACKTYPE = "rangedAttackType";
     private final String HITPOINTS = "hitPoints";
     private final String TEAMID = "teamId";
 
@@ -44,7 +44,6 @@ public class UnitManager {
 
     public void readFile(String file) {
         //TODO Hellmuth reduce cognitive complexity of method
-        // and see sonar cloud for additional code smells
         unitConfigHashMap = new HashMap<>();
         FileHandle fileHandle = Gdx.files.internal(file);
         JsonReader jsonReader = new JsonReader();
@@ -96,10 +95,10 @@ public class UnitManager {
                     }else {
                         config.setRanged(false);
                     }
-                    if (unitConfig.get(COMBATCOMPONENT).has(MAGE)){
-                        config.setMage(unitConfig.get(COMBATCOMPONENT).getBoolean(MAGE));
+                    if (unitConfig.get(COMBATCOMPONENT).has(RANGEDATTACKTYPE)){
+                        config.setRangedAttackType(unitConfig.get(COMBATCOMPONENT).getInt(RANGEDATTACKTYPE));
                     }else {
-                        config.setMage(false);
+                        config.setRangedAttackType(0);
                     }
                 }
                 if (unitConfig.has(TEAMGAMEOBJECTCOMPONENT)){

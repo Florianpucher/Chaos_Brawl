@@ -38,6 +38,7 @@ public class GameHUD extends Table {
     private static final String UPGRADED_UNIT_3 = "Templar";
 
     private static final String UPGRADE_UNITS = "Unit UP!";
+    
 
     private BrawlButton btnNewUnit1;
     private BrawlButton btnNewUnit2;
@@ -136,11 +137,12 @@ public class GameHUD extends Table {
 
     }
 
-    private ClickListener listener = new ClickListener(){
+    private ClickListener listener = new ClickListener() {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             super.clicked(event, x, y);
             String name = event.getListenerActor().getName();
+
             if (name.equals(NEW_UNIT_1) && brawlButtons.get(0).isActivated()) {
                 if (nextUnitType == 0) {
                     nextUnitType = -1;
@@ -184,7 +186,7 @@ public class GameHUD extends Table {
                 }
             }
             if (name.equals(UPGRADE_UNITS) && brawlButtons.get(3).isActivated()) {
-                    switchButtons(true);
+                switchButtons(true);
             }
 
 
@@ -193,7 +195,6 @@ public class GameHUD extends Table {
             } else {
                 setBackground((Drawable) null);
             }
-
         }
     };
 

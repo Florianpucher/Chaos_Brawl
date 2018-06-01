@@ -13,7 +13,7 @@ public class UnitConfig {
     private float attackSpeed;
     private float attackDamage;
     private boolean ranged;
-    private boolean mage;
+    private int rangedAttackType;
     private float hitPoints;
     private int teamId;
     private boolean hasMovementComponent;
@@ -77,12 +77,12 @@ public class UnitConfig {
         this.ranged = ranged;
     }
 
-    public boolean isMage() {
-        return mage;
+    public int isRangedAttackType() {
+        return rangedAttackType;
     }
 
-    public void setMage(boolean mage) {
-        this.mage = mage;
+    public void setRangedAttackType(int rangedAttackType) {
+        this.rangedAttackType = rangedAttackType;
     }
 
     public float getHitPoints() {

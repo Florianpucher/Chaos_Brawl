@@ -276,23 +276,19 @@ public class World implements InputHandler {
     }
 
 
-    public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
-        Entity projectile=new Entity();
+    public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId, float damage, int type) {
+        Entity projectile = new Entity();
 
-        Projectile.setComponents(projectile,worldCoordinates,targetId,damage);
+        if (type == 0) {
+            Projectile.setComponents(projectile, worldCoordinates, targetId, damage);
+        } else if (type == 1) {
+            Fireball.setComponents(projectile, worldCoordinates, targetId, damage);
+        }
 
         createProjectile(projectile);
-
     }
 
-    public void createFireballWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
-        Entity fireball=new Entity();
 
-        Fireball.setComponents(fireball,worldCoordinates,targetId,damage);
-
-        createFireball(fireball);
-
-    }
     public long getIdOfUnit(Entity unit){
         for (Map.Entry<Long, Entity> entry : units.entrySet()) {
             if (entry.getValue().equals(unit)) {

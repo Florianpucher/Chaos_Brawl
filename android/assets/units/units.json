@@ -21,7 +21,7 @@
       "attackSpeed" : 2,
       "attackDamage" : 5,
       "ranged" : true,
-      "mage" : false
+      "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 50
@@ -58,7 +58,7 @@
       "attackSpeed" : 2.5,
       "attackDamage" : 7,
       "ranged" : false,
-      "mage" : false
+      "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 75
@@ -95,7 +95,7 @@
       "attackSpeed" : 1,
       "attackDamage" : 5,
       "ranged" : false,
-      "mage" : false
+      "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 120
@@ -132,7 +132,7 @@
       "attackSpeed" : 1,
       "attackDamage" : 10,
       "ranged" : true,
-      "mage" : true
+      "rangedAttackType" : 1
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 60
@@ -169,7 +169,7 @@
       "attackSpeed" : 2.5,
       "attackDamage" : 9,
       "ranged" : false,
-      "mage" : false
+      "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 95
@@ -206,7 +206,7 @@
       "attackSpeed" : 1,
       "attackDamage" : 6,
       "ranged" : false,
-      "mage" : false
+      "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 150
@@ -241,7 +241,7 @@
       "attackSpeed" : 1,
       "attackDamage" : 20,
       "ranged" : true,
-      "mage" : false
+      "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 1000
@@ -277,7 +277,7 @@
     "attackSpeed" : 1,
     "attackDamage" : 20,
     "ranged" : true,
-    "mage" : false
+    "rangedAttackType" : 0
   },
   "TeamGameObjectComponent" : {
     "hitPoints" : 100

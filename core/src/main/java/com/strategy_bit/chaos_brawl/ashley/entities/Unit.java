@@ -31,7 +31,7 @@ public class Unit {
         }
 
         CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
-        combatComponent.setEverything(unitConfig.getAttackRadius(),unitConfig.getAttackSpeed(),unitConfig.getAttackDamage(),unitConfig.isRanged(),unitConfig.isMage());
+        combatComponent.setEverything(unitConfig.getAttackRadius(),unitConfig.getAttackSpeed(),unitConfig.getAttackDamage(),unitConfig.isRanged(),unitConfig.isRangedAttackType());
 
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(unitConfig.getHitPoints(),teamId);
