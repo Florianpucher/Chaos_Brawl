@@ -38,7 +38,7 @@ public class GameHUD extends Table {
     private static final String UPGRADED_UNIT_3 = "Templar";
 
     private static final String UPGRADE_UNITS = "Unit UP!";
-    
+
 
     private BrawlButton btnNewUnit1;
     private BrawlButton btnNewUnit2;

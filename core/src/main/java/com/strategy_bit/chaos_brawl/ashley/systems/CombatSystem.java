@@ -69,18 +69,18 @@ public class CombatSystem extends IteratingSystem {
 
 
     private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, Entity targetEnemy){
-        if(c1.isRanged() && c1.isRangedAttackType() == 1){
+        if(c1.isRanged() && c1.isRangedAttackType() == 11){
             if(c1.attack()){
                 //ready to fire
                 AssetManager.getInstance().attackFireball.play(0.6f);
-                world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 1);
+                world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 11);
 
             }
         }else if(c1.isRanged()){
             if(c1.attack()){
                 //ready to fire
                 AssetManager.getInstance().attackBow.play(0.6f);
-                world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 0);
+                world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 10);
 
             }
         }else if(c1.attack()){

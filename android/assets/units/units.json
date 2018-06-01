@@ -21,7 +21,7 @@
       "attackSpeed" : 2,
       "attackDamage" : 5,
       "ranged" : true,
-      "rangedAttackType" : 0
+      "rangedAttackType" : 10
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 50
@@ -132,7 +132,7 @@
       "attackSpeed" : 1,
       "attackDamage" : 10,
       "ranged" : true,
-      "rangedAttackType" : 1
+      "rangedAttackType" : 11
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 60
@@ -299,4 +299,82 @@
     "name": "UpgradeUnits",
     "cost" : 100
     }
+
+  ,
+  {
+
+    "id" : 10,
+    "name": "arrow",
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"projectileSkin",
+      "skinPath" :"units/arrow.png"
+    },
+    "MovementComponent" : {
+      "speed" : 10
+    }
+
+  },
+
+  {
+    "id" : 11,
+    "name": "fireBall",
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"fireballSkin",
+      "skinPath" :"units/fireball.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    }
+
+  },
+
+  {
+    "id" : 12,
+    "name": "darkSphere",
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"projectileSkin",
+      "skinPath" :"units/arrow.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    }
+
+  },
+
+  {
+    "id" : 13,
+    "name": "cannonBall",
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"projectileSkin",
+      "skinPath" :"units/arrow.png"
+    },
+    "MovementComponent" : {
+      "speed" : 10
+    }
+
+  }
 ]

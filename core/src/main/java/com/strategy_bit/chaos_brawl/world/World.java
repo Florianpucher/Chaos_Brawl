@@ -12,8 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
-import com.strategy_bit.chaos_brawl.ashley.entities.Fireball;
-import com.strategy_bit.chaos_brawl.ashley.entities.Projectile;
+import com.strategy_bit.chaos_brawl.ashley.entities.Projectiles;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletDeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
@@ -21,6 +20,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
@@ -111,9 +111,6 @@ public class World implements InputHandler {
         engine.addEntity(entity);
     }
 
-    public void createFireball(Entity entity){
-        engine.addEntity(entity);
-    }
 
     protected void createEngine(){
         engine = MyEngine.createEngine(units);
@@ -278,12 +275,10 @@ public class World implements InputHandler {
 
     public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId, float damage, int type) {
         Entity projectile = new Entity();
+        UnitConfig unitConfig=AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
 
-        if (type == 0) {
-            Projectile.setComponents(projectile, worldCoordinates, targetId, damage);
-        } else if (type == 1) {
-            Fireball.setComponents(projectile, worldCoordinates, targetId, damage);
-        }
+            Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
+
 
         createProjectile(projectile);
     }
