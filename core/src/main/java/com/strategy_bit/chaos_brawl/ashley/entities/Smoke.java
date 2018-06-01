@@ -7,13 +7,13 @@ import com.strategy_bit.chaos_brawl.ashley.components.ParticleComponent;
 public class Smoke extends Entity{
 
     public Smoke (Vector2 position){
-
+/*
         String smoke = "smoke";
 
-        ParticleComponent particleComponent = new ParticleComponent(smoke);
+        // ParticleComponent particleComponent = new ParticleComponent(smoke);
         add(particleComponent);
 
         particleComponent.setPosition(position);
-
+*/
     }
 }

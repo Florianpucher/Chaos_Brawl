@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Component;
 public class UpgradeComponent implements Component{
 
     public UpgradeComponent(){
-        // I do not know why this component is here
-        // comment by Alexander Isopp
+            // TODO: implement button to Upgrade Units/Towers and swap Method for Towers into stronger ones
     }
 }
