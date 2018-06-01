@@ -62,6 +62,7 @@ public class AssetManager {
     public Sound attackBow;
     public Sound attackSword;
     public Sound attackFireball;
+    public Sound attackCannonBall;
     public Sound hitArrow;
     public Sound drawSword;
     public Sound drawKatana;
@@ -85,10 +86,6 @@ public class AssetManager {
 
     public  void loadAssets(){
 
-        // units skins
-        skins=new HashMap<>();
-        skins.put("projectileSkin",new TextureRegion(new Texture(UNIT_PATH+ "arrow.png")));
-        skins.put("fireballSkin",new TextureRegion(new Texture(UNIT_PATH+ "fireball.png")));
 
         //unit stats
 
@@ -141,8 +138,9 @@ public class AssetManager {
         defeat =Gdx.audio.newSound(Gdx.files.internal("sounds/Defeat.mp3"));
         upgradeExecuted =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecuted.wav"));
         attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
-        attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav"));
-        attackFireball =Gdx.audio.newSound(Gdx.files.internal("sounds/Bow, Crossbow/fireball.wav"));
+        attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav"));
+        attackFireball =Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/fireball.wav"));
+        attackCannonBall = Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/cannonball.wav"));
         hitArrow =Gdx.audio.newSound(Gdx.files.internal("sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3"));
         drawSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Sabre,Draw,Scabbard,Fast,Loose,Rough.mp3"));
         drawKatana =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Replace,Scabbard,Fast,Ripple.mp3"));
@@ -197,6 +195,7 @@ public class AssetManager {
         attackBow.dispose();
         attackSword.dispose();
         attackFireball.dispose();
+        attackCannonBall.dispose();
         hitArrow.dispose();
         drawSword.dispose();
         drawKatana.dispose();
