@@ -13,6 +13,35 @@ import java.util.Map;
 public class UnitManager {
     public Map<Integer, UnitConfig> unitConfigHashMap;
 
+    private final String ID = "id";
+    private final String NAME = "name";
+    private final String COST = "cost";
+    private final String TRANSFORMCOMPONENT = "TransformComponent";
+    private final String MOVEMENTCOMPONENT = "MovementComponent";
+    private final String COMBATCOMPONENT = "CombatComponent";
+    private final String TEXTURECOMPONENT = "TextureComponent";
+    private final String TEAMGAMEOBJECTCOMPONENT = "TeamGameObjectComponent";
+    private final String BOUNDARYCOMPONENT = "BoundaryComponent";
+    private final String EXPLOSIONCOMPONENT = "ExplosionComponent";
+    private final String UPGRADECOMPONENT = "UpgradeComponent";
+    private final String POSITION = "position";
+    private final String X = "x";
+    private final String Y = "y";
+    private final String SKINNAME = "skinName";
+    private final String SKINPATH = "skinPath";
+    private final String SPEED = "speed";
+    private final String ATTACKRADIUS = "attackRadius";
+    private final String ATTACKSPEED = "attackSpeed";
+    private final String ATTACKDAMAGE = "attackDamage";
+    private final String RANGED = "ranged";
+    private final String MAGE = "mage";
+    private final String HITPOINTS = "hitPoints";
+    private final String TEAMID = "teamId";
+
+
+
+
+
     public void readFile(String file) {
         //TODO Hellmuth reduce cognitive complexity of method
         // and see sonar cloud for additional code smells
@@ -23,82 +52,82 @@ public class UnitManager {
         JsonValue.JsonIterator iterator = jsonValue.iterator();
         while (iterator.hasNext()) {
             JsonValue unitConfig = iterator.next();
-            if (unitConfig.has("id")) {
+            if (unitConfig.has(ID)) {
                 UnitConfig config = new UnitConfig();
-                if (unitConfig.has("name")){
-                    config.setName(unitConfig.getString("name"));
+                if (unitConfig.has(NAME)){
+                    config.setName(unitConfig.getString(NAME));
                 }
-                if (unitConfig.has("cost")){
-                    config.setCost(unitConfig.getFloat("cost"));
+                if (unitConfig.has(COST)){
+                    config.setCost(unitConfig.getFloat(COST));
                 }
-                if (unitConfig.has("TransformComponent")){
-                    if (unitConfig.get("TransformComponent").has("position")){
-                        config.setPosition(new Vector2(unitConfig.get("TransformComponent").get("position").getFloat("x"),unitConfig.get("TransformComponent").get("position").getFloat("y")));
+                if (unitConfig.has(TRANSFORMCOMPONENT)){
+                    if (unitConfig.get(TRANSFORMCOMPONENT).has(POSITION)){
+                        config.setPosition(new Vector2(unitConfig.get(TRANSFORMCOMPONENT).get(POSITION).getFloat(X),unitConfig.get(TRANSFORMCOMPONENT).get(POSITION).getFloat(Y)));
                     }else {
                         config.setPosition(new Vector2(0,0));
                     }
                 }
-                if (unitConfig.has("TextureComponent")){
-                    if (unitConfig.get("TextureComponent").has("skinPath")&&unitConfig.get("TextureComponent").has("skinName")){
-                        AssetManager.getInstance().addSkin(unitConfig.get("TextureComponent").getString("skinName"),unitConfig.get("TextureComponent").getString("skinPath"));
-                        config.setSkin(AssetManager.getInstance().skins.get(unitConfig.get("TextureComponent").getString("skinName")));
+                if (unitConfig.has(TEXTURECOMPONENT)){
+                    if (unitConfig.get(TEXTURECOMPONENT).has(SKINPATH)&&unitConfig.get(TEXTURECOMPONENT).has(SKINNAME)){
+                        AssetManager.getInstance().addSkin(unitConfig.get(TEXTURECOMPONENT).getString(SKINNAME),unitConfig.get(TEXTURECOMPONENT).getString(SKINPATH));
+                        config.setSkin(AssetManager.getInstance().skins.get(unitConfig.get(TEXTURECOMPONENT).getString(SKINNAME)));
                     }
                 }
-                if (unitConfig.has("MovementComponent")){
+                if (unitConfig.has(MOVEMENTCOMPONENT)){
                     config.setMovementComponent(true);
-                    if (unitConfig.get("MovementComponent").has("speed")){
-                        config.setSpeed(unitConfig.get("MovementComponent").getFloat("speed"));
+                    if (unitConfig.get(MOVEMENTCOMPONENT).has(SPEED)){
+                        config.setSpeed(unitConfig.get(MOVEMENTCOMPONENT).getFloat(SPEED));
                     }
                 }else {
                     config.setMovementComponent(false);
                 }
-                if (unitConfig.has("CombatComponent")){
-                    if (unitConfig.get("CombatComponent").has("attackRadius")){
-                        config.setAttackRadius(unitConfig.get("CombatComponent").getFloat("attackRadius"));
+                if (unitConfig.has(COMBATCOMPONENT)){
+                    if (unitConfig.get(COMBATCOMPONENT).has(ATTACKRADIUS)){
+                        config.setAttackRadius(unitConfig.get(COMBATCOMPONENT).getFloat(ATTACKRADIUS));
                     }
-                    if (unitConfig.get("CombatComponent").has("attackSpeed")){
-                        config.setAttackSpeed(unitConfig.get("CombatComponent").getFloat("attackSpeed"));
+                    if (unitConfig.get(COMBATCOMPONENT).has(ATTACKSPEED)){
+                        config.setAttackSpeed(unitConfig.get(COMBATCOMPONENT).getFloat(ATTACKSPEED));
                     }
-                    if (unitConfig.get("CombatComponent").has("attackDamage")){
-                        config.setAttackDamage(unitConfig.get("CombatComponent").getFloat("attackDamage"));
+                    if (unitConfig.get(COMBATCOMPONENT).has(ATTACKDAMAGE)){
+                        config.setAttackDamage(unitConfig.get(COMBATCOMPONENT).getFloat(ATTACKDAMAGE));
                     }
-                    if (unitConfig.get("CombatComponent").has("ranged")){
-                        config.setRanged(unitConfig.get("CombatComponent").getBoolean("ranged"));
+                    if (unitConfig.get(COMBATCOMPONENT).has(RANGED)){
+                        config.setRanged(unitConfig.get(COMBATCOMPONENT).getBoolean(RANGED));
                     }else {
                         config.setRanged(false);
                     }
-                    if (unitConfig.get("CombatComponent").has("mage")){
-                        config.setMage(unitConfig.get("CombatComponent").getBoolean("mage"));
+                    if (unitConfig.get(COMBATCOMPONENT).has(MAGE)){
+                        config.setMage(unitConfig.get(COMBATCOMPONENT).getBoolean(MAGE));
                     }else {
                         config.setMage(false);
                     }
                 }
-                if (unitConfig.has("TeamGameObjectComponent")){
-                    if (unitConfig.get("TeamGameObjectComponent").has("hitPoints")){
-                        config.setHitPoints(unitConfig.get("TeamGameObjectComponent").getFloat("hitPoints"));
+                if (unitConfig.has(TEAMGAMEOBJECTCOMPONENT)){
+                    if (unitConfig.get(TEAMGAMEOBJECTCOMPONENT).has(HITPOINTS)){
+                        config.setHitPoints(unitConfig.get(TEAMGAMEOBJECTCOMPONENT).getFloat(HITPOINTS));
                     }
-                    if (unitConfig.get("TeamGameObjectComponent").has("teamId")){
-                        config.setTeamId(unitConfig.get("TeamGameObjectComponent").getInt("teamId"));
+                    if (unitConfig.get(TEAMGAMEOBJECTCOMPONENT).has(TEAMID)){
+                        config.setTeamId(unitConfig.get(TEAMGAMEOBJECTCOMPONENT).getInt(TEAMID));
                     }else {
                         config.setTeamId(-1);
                     }
                 }
-                if (unitConfig.has("BoundaryComponent")){
+                if (unitConfig.has(BOUNDARYCOMPONENT)){
                     config.setBoundaryComponent(true);
                 }else {
                     config.setBoundaryComponent(false);
                 }
-                if (unitConfig.has("ExplosionComponent")){
+                if (unitConfig.has(EXPLOSIONCOMPONENT)){
                     config.setExplosionComponent(true);
                 }else {
                     config.setExplosionComponent(false);
                 }
-                if (unitConfig.has("UpgradeComponent")){
+                if (unitConfig.has(UPGRADECOMPONENT)){
                     config.setUpgradeComponent(true);
                 }else {
                     config.setUpgradeComponent(false);
                 }
-                unitConfigHashMap.put(unitConfig.getInt("id"),config);
+                unitConfigHashMap.put(unitConfig.getInt(ID),config);
             }
         }
     }
