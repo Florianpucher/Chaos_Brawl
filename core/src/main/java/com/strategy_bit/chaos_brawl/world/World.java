@@ -277,7 +277,8 @@ public class World implements InputHandler {
     public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId, float damage, int type) {
 
         Entity projectile = new Entity();
-        UnitConfig unitConfig=AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
+        UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
+        unitConfig.getSound().play(0.6f);
 
             Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
 
