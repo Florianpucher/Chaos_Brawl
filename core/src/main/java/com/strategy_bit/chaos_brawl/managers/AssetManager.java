@@ -83,6 +83,7 @@ public class AssetManager {
     private AssetManager() {
         skins = new HashMap<>();
         unitManager=new UnitManager();
+        sounds = new HashMap<>();
     }
 
     public  void loadAssets(){

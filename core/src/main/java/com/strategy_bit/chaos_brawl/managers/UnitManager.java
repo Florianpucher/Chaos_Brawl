@@ -64,7 +64,7 @@ public class UnitManager {
                 if (unitConfig.has(SOUNDPATH)&&unitConfig.has(SOUNDNAME)){
                     AssetManager.getInstance().addSound(unitConfig.getString(SOUNDNAME),unitConfig.getString(SOUNDPATH));
                     config.setSound(AssetManager.getInstance().sounds.get(unitConfig.getString(SOUNDNAME)));
-                    // .play sound?
+                    config.getSound().play(0.6f);
                 }
                 if (unitConfig.has(TRANSFORMCOMPONENT)){
                     if (unitConfig.get(TRANSFORMCOMPONENT).has(POSITION)){

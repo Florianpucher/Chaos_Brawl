@@ -68,33 +68,23 @@ public class CombatSystem extends IteratingSystem {
     }
 
 
-    private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, Entity targetEnemy){
-        if(c1.isRanged() && c1.isRangedAttackType() == 11){
-            if(c1.attack()){
-                //ready to fire
-                //AssetManager.getInstance().attackFireball.play(0.6f);
-                world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 11);
+    private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, Entity targetEnemy) {
 
+        for (int i = 15; i > 9; i--) {
+            if (c1.isRanged() && (c1.isRangedAttackType() == i)) {
+                if (c1.attack()) {
+                    //ready to fire
+                    world.createBulletWorldCoordinates(t1.getPosition(), world.getIdOfUnit(targetEnemy), (float) c1.getAttackDamage(), i);
+                }
             }
-        } else if(c1.isRanged() && c1.isRangedAttackType() == 13){
-            if(c1.attack()){
-                //ready to fire
-                //AssetManager.getInstance().attackCannonBall.play(0.6f);
-                world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 13);
+        }
 
-            }
-        }else if(c1.isRanged()){
-            if(c1.attack()){
-                //ready to fire
-                //AssetManager.getInstance().attackBow.play(0.6f);
-                world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 10);
-
-            }
-        }else if(c1.attack()){
+        if (c1.attack() && (c1.isRanged() == false)) {
             AssetManager.getInstance().attackSword.play(1f);
-            c2.setHitPoints(c2.getHitPoints()-c1.getAttackDamage());
+            c2.setHitPoints(c2.getHitPoints() - c1.getAttackDamage());
 
         }
+
     }
 
     public void addWorld(World world){
