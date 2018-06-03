@@ -13,7 +13,7 @@ public class ParticleComponent implements Component {
 
     public ParticleComponent(String animation) {
 
-        TextureAtlas particleAtlas = null;
+        TextureAtlas particleAtlas;
 
         if (animation.equals("explosion")) {
             particleAtlas = AssetManager.getInstance().explosionSkin;

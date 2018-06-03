@@ -37,6 +37,8 @@ public class UnitManager {
     private final String RANGEDATTACKTYPE = "rangedAttackType";
     private final String HITPOINTS = "hitPoints";
     private final String TEAMID = "teamId";
+    private final String SOUNDPATH = "soundPath";
+    private final String SOUNDNAME = "soundName";
 
 
 
@@ -58,6 +60,11 @@ public class UnitManager {
                 }
                 if (unitConfig.has(COST)){
                     config.setCost(unitConfig.getFloat(COST));
+                }
+                if (unitConfig.has(SOUNDPATH)&&unitConfig.has(SOUNDNAME)){
+                    AssetManager.getInstance().addSound(unitConfig.getString(SOUNDNAME),unitConfig.getString(SOUNDPATH));
+                    config.setSound(AssetManager.getInstance().sounds.get(unitConfig.getString(SOUNDNAME)));
+                    // .play sound?
                 }
                 if (unitConfig.has(TRANSFORMCOMPONENT)){
                     if (unitConfig.get(TRANSFORMCOMPONENT).has(POSITION)){

@@ -313,6 +313,8 @@
 
     "id" : 10,
     "name": "arrow",
+    "soundName" : "attackBow",
+    "soundPath" : "sounds/Projectiles/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav",
     "TransformComponent" : {
       "position" : {
         "x" : 0,
@@ -332,6 +334,8 @@
   {
     "id" : 11,
     "name": "fireBall",
+    "soundName" : "attackFireball",
+    "soundPath" : "sounds/Projectiles/fireball",
     "TransformComponent" : {
       "position" : {
         "x" : 0,
@@ -370,6 +374,8 @@
   {
     "id" : 13,
     "name": "cannonBall",
+    "soundName" : "attackCannonball",
+    "soundPath" : "sounds/Projectiles/cannonball",
     "TransformComponent" : {
       "position" : {
         "x" : 0,

@@ -1,5 +1,6 @@
 package com.strategy_bit.chaos_brawl.config;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
@@ -16,6 +17,7 @@ public class UnitConfig {
     private int rangedAttackType;
     private float hitPoints;
     private int teamId;
+    private Sound sound;
     private boolean hasMovementComponent;
     private boolean hasBoundaryComponent;
     private boolean hasExplosionComponent;
@@ -99,6 +101,14 @@ public class UnitConfig {
 
     public void setTeamId(int teamId) {
         this.teamId = teamId;
+    }
+
+    public Sound getSound() {
+        return sound;
+    }
+
+    public void setSound(Sound sound) {
+        this.sound = sound;
     }
 
     public String getName() {

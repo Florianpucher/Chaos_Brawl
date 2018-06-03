@@ -72,21 +72,21 @@ public class CombatSystem extends IteratingSystem {
         if(c1.isRanged() && c1.isRangedAttackType() == 11){
             if(c1.attack()){
                 //ready to fire
-                AssetManager.getInstance().attackFireball.play(0.6f);
+                //AssetManager.getInstance().attackFireball.play(0.6f);
                 world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 11);
 
             }
         } else if(c1.isRanged() && c1.isRangedAttackType() == 13){
             if(c1.attack()){
                 //ready to fire
-                AssetManager.getInstance().attackCannonBall.play(0.6f);
+                //AssetManager.getInstance().attackCannonBall.play(0.6f);
                 world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 13);
 
             }
         }else if(c1.isRanged()){
             if(c1.attack()){
                 //ready to fire
-                AssetManager.getInstance().attackBow.play(0.6f);
+                //AssetManager.getInstance().attackBow.play(0.6f);
                 world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage(), 10);
 
             }

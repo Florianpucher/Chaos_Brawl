@@ -36,6 +36,7 @@ public class AssetManager {
 
     public UnitManager unitManager;
     public Map<String, TextureRegion> skins;
+    public Map<String, Sound> sounds;
     public  Skin defaultSkin;
     public TextureAtlas explosionSkin;
     public TextureAtlas smokeSkin;
@@ -88,7 +89,6 @@ public class AssetManager {
 
 
         //unit stats
-
         unitManager.readFile(UNIT_PATH+"units.json");
 
         // Environment
@@ -218,4 +218,9 @@ public class AssetManager {
     public void addSkin(String name,String path){
         skins.put(name,new TextureRegion(new Texture(path)));
     }
+
+    public void addSound(String name,String path){
+        sounds.put(name, Gdx.audio.newSound(Gdx.files.internal(path)));
+    }
+
 }

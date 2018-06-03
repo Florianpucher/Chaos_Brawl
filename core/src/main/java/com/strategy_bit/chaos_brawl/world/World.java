@@ -44,6 +44,7 @@ public class World implements InputHandler {
 
     protected HashMap<Long, Entity> units;
 
+
     protected SpawnerImpl spawner;
     protected MyEngine engine;
     protected Camera camera;
@@ -274,11 +275,11 @@ public class World implements InputHandler {
 
 
     public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId, float damage, int type) {
+
         Entity projectile = new Entity();
         UnitConfig unitConfig=AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
 
             Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
-
 
         createProjectile(projectile);
     }
