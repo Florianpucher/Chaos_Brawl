@@ -12,8 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
-import com.strategy_bit.chaos_brawl.ashley.entities.Fireball;
-import com.strategy_bit.chaos_brawl.ashley.entities.Projectile;
+import com.strategy_bit.chaos_brawl.ashley.entities.Projectiles;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletDeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
@@ -21,18 +20,16 @@ import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.EventType;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import java.util.HashMap;
 import java.util.Map;
-
-//import com.strategy_bit.chaos_brawl.ashley.entity.Explosion;
 
 /**
  * Central manager for game
@@ -46,6 +43,7 @@ public class World implements InputHandler {
     protected long lastID = 0;
 
     protected HashMap<Long, Entity> units;
+
 
     protected SpawnerImpl spawner;
     protected MyEngine engine;
@@ -83,28 +81,28 @@ public class World implements InputHandler {
         playerControllers[index] = pawnController;
     }
 
-    public void initializeGameForPlayers(int map, int players){
+    public void initializeGameForPlayers(){
         int configMap;
-        if (players < 3) {
+        if (playerControllers.length < 3) {
             configMap = 0;
 
-        } else if (players == 4){
+        } else if (playerControllers.length == 4){
             configMap = 1;
         }
         else {
             configMap = -1;
         }
 
-        setEntityWorldCoordinates(board.getAsset(configMap), players);
+        setEntityWorldCoordinates(board.getAsset(configMap), playerControllers.length);
         resourceTimeStamp = System.currentTimeMillis();
     }
 
     private void setEntityWorldCoordinates(Array<Float> spawn, int players){
         int offset = 0;
         for (int j = 0; j < players; j++){
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset), spawn.get(offset+1)), UnitType.TOWER,  playerControllers[j].getTeamID());
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset+2),spawn.get(offset+3)), UnitType.TOWER,  playerControllers[j].getTeamID());
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset+4),spawn.get(offset+5)), UnitType.MAINBUILDING,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(new Vector2(spawn.get(offset), spawn.get(offset+1)), 7,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(new Vector2(spawn.get(offset+2),spawn.get(offset+3)), 7,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(new Vector2(spawn.get(offset+4),spawn.get(offset+5)), 6,  playerControllers[j].getTeamID());
             offset += 6;
         }
     }
@@ -114,16 +112,13 @@ public class World implements InputHandler {
         engine.addEntity(entity);
     }
 
-    public void createFireball(Entity entity){
-        engine.addEntity(entity);
-    }
 
     protected void createEngine(){
         engine = MyEngine.createEngine(units);
         //Add some logic
         RenderSystem renderSystem = new RenderSystem();
         camera = renderSystem.getCamera();
-        deleteSystem = new DeleteSystem(camera);
+        deleteSystem = new DeleteSystem();
         engine.addSystem(deleteSystem);
         engine.addSystem(new MovementSystem());
         BulletSystem bulletSystem=new BulletSystem();
@@ -158,6 +153,10 @@ public class World implements InputHandler {
     }
 
 
+    /**
+     * returns true if one players one, false otherwise and does inform players if they lose or win
+     * @return true if one players one, false otherwise
+     */
     public boolean checkWinningLosing(){
 
         for (Entity base: bases){
@@ -182,7 +181,7 @@ public class World implements InputHandler {
             engine.removeAllEntities();
             return true;
         } else if (aliveCounter == 0) {
-            System.err.println("A draw happens suddenly");
+            Gdx.app.error("DRAW","A draw happens suddenly");
             return true;
         }
         return false;
@@ -233,16 +232,16 @@ public class World implements InputHandler {
     }
 
     @Override
-    public void createEntityScreenCoordinates(Vector2 screenCoordinates, UnitType entityType, int teamID) {
+    public void createEntityScreenCoordinates(Vector2 screenCoordinates, int unitId, int teamID) {
         Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
         Vector3 translated = camera.unproject(withZCoordinate);
         Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        createEntityWorldCoordinates(targetLocation, entityType, teamID);
+        createEntityWorldCoordinates(targetLocation, unitId, teamID);
     }
 
     @Override
-    public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
-        Entity entity = createEntityInternal(entityType, lastID, worldCoordinates, teamID);
+    public void createEntityWorldCoordinates(Vector2 worldCoordinates, int unitId, int teamID) {
+        Entity entity = createEntityInternal(unitId, lastID, worldCoordinates, teamID);
         lastID++;
 
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
@@ -257,15 +256,17 @@ public class World implements InputHandler {
 
     }
 
-    Entity createEntityInternal(UnitType entityType, long unitID, Vector2 worldCoordinates, int teamID){
-        Entity entity = spawner.createNewUnit(entityType,teamID,worldCoordinates);
+    Entity createEntityInternal(int unitId, long unitID, Vector2 worldCoordinates, int teamID){
+        Entity entity = spawner.createNewUnit(unitId,teamID,worldCoordinates);
         engine.addEntity(entity);
         units.put(unitID, entity);
-        if(entityType.equals(UnitType.MAINBUILDING)){
+        if(unitId==6){
             bases[teamID] = entity;
-        }else if (entityType.equals(UnitType.KNIGHT) || entityType.equals(UnitType.TEMPLAR)) {
+        }
+        else if (unitId==5||unitId==2){
             AssetManager.getInstance().drawSword.play(1f);
-        } else if (entityType.equals(UnitType.SWORDFIGHTER) || entityType.equals(UnitType.BERSERKER)) {
+        }
+        else if (unitId==1||unitId==4){
             AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
         }
 
@@ -273,23 +274,18 @@ public class World implements InputHandler {
     }
 
 
-    public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
-        Entity projectile=new Entity();
+    public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId, float damage, int type) {
 
-        Projectile.setComponents(projectile,worldCoordinates,targetId,damage);
+        Entity projectile = new Entity();
+        UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
+        unitConfig.getSound().play(0.6f);
+
+            Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
 
         createProjectile(projectile);
-
     }
 
-    public void createFireballWorldCoordinates(Vector2 worldCoordinates, long targetId,float damage) {
-        Entity fireball=new Entity();
 
-        Fireball.setComponents(fireball,worldCoordinates,targetId,damage);
-
-        createFireball(fireball);
-
-    }
     public long getIdOfUnit(Entity unit){
         for (Map.Entry<Long, Entity> entry : units.entrySet()) {
             if (entry.getValue().equals(unit)) {

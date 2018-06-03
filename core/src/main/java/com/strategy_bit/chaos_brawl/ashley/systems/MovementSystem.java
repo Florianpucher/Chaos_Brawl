@@ -29,9 +29,9 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 public class MovementSystem extends IteratingSystem {
 
-    protected ComponentMapper<TransformComponent> mTransformComponent;
-    protected ComponentMapper<MovementComponent> mMovementComponent;
-    protected ComponentMapper<CombatComponent> mCombatComponent;
+    private ComponentMapper<TransformComponent> mTransformComponent;
+    private ComponentMapper<MovementComponent> mMovementComponent;
+    private ComponentMapper<CombatComponent> mCombatComponent;
 
     public MovementSystem() {
         super(Family.all(TransformComponent.class, MovementComponent.class).get());

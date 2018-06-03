@@ -3,15 +3,15 @@ package com.strategy_bit.chaos_brawl.player_input_output.views;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.strategy_bit.chaos_brawl.types.UnitType;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 public class BrawlButton extends TextButton {
-    private UnitType unitType;
+    private int unitId;
     private boolean activated;
-    public BrawlButton(String text, Skin skin,UnitType unitType) {
+    public BrawlButton(String text, Skin skin,int unitId) {
         super(text, skin);
         activated=true;
-        this.unitType=unitType;
+        this.unitId=unitId;
     }
 
     public boolean isActivated() {
@@ -22,7 +22,7 @@ public class BrawlButton extends TextButton {
         this.activated = activated;
     }
     public void update(float res){
-        if (unitType.getCosts()>res){
+        if (AssetManager.getInstance().unitManager.unitConfigHashMap.get(unitId).getCost()>res){
             setDisabled(true);
             setTouchable(Touchable.disabled);
             setActivated(false);

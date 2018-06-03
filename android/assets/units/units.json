@@ -1,0 +1,395 @@
+[
+  {
+    "id" : 0,
+    "name": "Archer",
+    "cost" : 10,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"archerSkin",
+      "skinPath" :"units/unit_archer.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    },
+    "CombatComponent" : {
+      "attackRadius" : 3,
+      "attackSpeed" : 2,
+      "attackDamage" : 5,
+      "ranged" : true,
+      "rangedAttackType" : 10
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 50
+
+    },
+    "ExplosionComponent" : {
+      "type" : "smoke"
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 1,
+    "name": "SwordFighter",
+    "cost" : 8,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"swordFighterSkin",
+      "skinPath" :"units/unit_sword_fighter.png"
+    },
+    "MovementComponent" : {
+      "speed" : 6
+    },
+    "CombatComponent" : {
+      "attackRadius" : 1,
+      "attackSpeed" : 2.5,
+      "attackDamage" : 7,
+      "ranged" : false,
+      "rangedAttackType" : 0
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 75
+
+    },
+    "ExplosionComponent" : {
+      "type" : "smoke"
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 2,
+    "name": "Knight",
+    "cost" : 20,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"knightSkin",
+      "skinPath" :"units/unit_knight.png"
+    },
+    "MovementComponent" : {
+      "speed" : 3
+    },
+    "CombatComponent" : {
+      "attackRadius" : 1,
+      "attackSpeed" : 1,
+      "attackDamage" : 5,
+      "ranged" : false,
+      "rangedAttackType" : 0
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 120
+
+    },
+    "ExplosionComponent" : {
+      "type" : "smoke"
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 3,
+    "name": "Mage",
+    "cost" : 10,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"mageSkin",
+      "skinPath" :"units/unit_mage.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    },
+    "CombatComponent" : {
+      "attackRadius" : 3,
+      "attackSpeed" : 1,
+      "attackDamage" : 10,
+      "ranged" : true,
+      "rangedAttackType" : 11
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 60
+
+    },
+    "ExplosionComponent" : {
+      "type" : "smoke"
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 4,
+    "name": "Berserker",
+    "cost" : 8,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"berserkerSkin",
+      "skinPath" :"units/unit_berserker.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    },
+    "CombatComponent" : {
+      "attackRadius" : 1,
+      "attackSpeed" : 2.5,
+      "attackDamage" : 9,
+      "ranged" : false,
+      "rangedAttackType" : 0
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 95
+
+    },
+    "ExplosionComponent" : {
+      "type" : "smoke"
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  },
+
+  {
+    "id" : 5,
+    "name": "Templar",
+    "cost" : 20,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"templarSkin",
+      "skinPath" :"units/unit_templar.png"
+    },
+    "MovementComponent" : {
+      "speed" : 3
+    },
+    "CombatComponent" : {
+      "attackRadius" : 1,
+      "attackSpeed" : 1,
+      "attackDamage" : 6,
+      "ranged" : false,
+      "rangedAttackType" : 0
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 150
+
+    },
+    "ExplosionComponent" : {
+      "type" : "smoke"
+
+    },
+    "UpgradeComponent" : {
+
+    }
+
+  }
+,
+
+  {
+    "id" : 6,
+    "name": "Base",
+    "cost" : 0,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"mainTowerSkin",
+      "skinPath" :"buildings/wall.png"
+    },
+    "CombatComponent" : {
+      "attackRadius" : 4,
+      "attackSpeed" : 0.7,
+      "attackDamage" : 30,
+      "ranged" : true,
+      "rangedAttackType" : 13
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 1000
+
+    },
+    "ExplosionComponent" : {
+      "type" : "explosion"
+
+    },
+    "UpgradeComponent" : {
+
+    },
+    "BoundaryComponent" :{
+
+    }
+  },
+
+  {
+  "id" : 7,
+  "name": "Tower",
+  "cost" : 0,
+  "TransformComponent" : {
+    "position" : {
+      "x" : 0,
+      "y" : 0
+    }
+  },
+  "TextureComponent" : {
+    "skinName":"ballistaTowerSkin",
+    "skinPath" :"buildings/ballista_tower.png"
+  },
+  "CombatComponent" : {
+    "attackRadius" : 4,
+    "attackSpeed" : 1,
+    "attackDamage" : 20,
+    "ranged" : true,
+    "rangedAttackType" : 10
+  },
+  "TeamGameObjectComponent" : {
+    "hitPoints" : 100
+
+  },
+  "ExplosionComponent" : {
+    "type" : "explosion"
+
+  },
+  "UpgradeComponent" : {
+
+  },
+  "BoundaryComponent" :{
+
+  }
+},
+
+  {
+    "id" : 8,
+    "name": "UpgradeUnits",
+    "cost" : 100
+    }
+
+  ,
+  {
+
+    "id" : 10,
+    "name": "arrow",
+    "soundName" : "attackBow",
+    "soundPath" : "sounds/Projectiles/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav",
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"projectileSkin",
+      "skinPath" :"units/arrow.png"
+    },
+    "MovementComponent" : {
+      "speed" : 10
+    }
+
+  },
+
+  {
+    "id" : 11,
+    "name": "fireBall",
+    "soundName" : "attackFireball",
+    "soundPath" : "sounds/Projectiles/fireball.wav",
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"fireballSkin",
+      "skinPath" :"units/fireball.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    }
+
+  },
+
+  {
+    "id" : 12,
+    "name": "darkSphere",
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"fireballSkin",
+      "skinPath" :"units/fireball.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
+    }
+
+  },
+
+  {
+    "id" : 13,
+    "name": "cannonBall",
+    "soundName" : "attackCannonball",
+    "soundPath" : "sounds/Projectiles/cannonball.wav",
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"cannonSkin",
+      "skinPath" :"units/cannonBall.png"
+    },
+    "MovementComponent" : {
+      "speed" : 10
+    }
+
+  }
+
+]

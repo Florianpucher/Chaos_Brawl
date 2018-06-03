@@ -16,7 +16,6 @@ import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersReque
 import com.strategy_bit.chaos_brawl.network.messages.request.PlayerSelectedNewTargetMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -129,8 +128,8 @@ public class BrawlClientImpl implements BrawlClient, BrawlMultiplayer {
     }
 
     @Override
-    public void sendEntitySpawnMsg(Vector2 worldPosition, UnitType unitType, int teamID, long unitID) {
-        EntitySpawnMessage spawnMessage = new EntitySpawnMessage(worldPosition, teamID, unitType, unitID);
+    public void sendEntitySpawnMsg(Vector2 worldPosition, int unitId, int teamID, long unitID) {
+        EntitySpawnMessage spawnMessage = new EntitySpawnMessage(worldPosition, teamID, unitId, unitID);
         sendData(spawnMessage);
     }
 

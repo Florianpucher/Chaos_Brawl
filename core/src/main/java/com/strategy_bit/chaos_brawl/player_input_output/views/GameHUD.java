@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 
 /**
@@ -40,19 +39,20 @@ public class GameHUD extends Table {
 
     private static final String UPGRADE_UNITS = "Unit UP!";
 
-    BrawlButton btnNewUnit1;
-    BrawlButton btnNewUnit2;
-    BrawlButton btnNewUnit3;
 
-    BrawlButton btnUpgradeUnits;
+    private BrawlButton btnNewUnit1;
+    private BrawlButton btnNewUnit2;
+    private BrawlButton btnNewUnit3;
+
+    private BrawlButton btnUpgradeUnits;
 
 
-    boolean playedVictoryOnce = false;
-    boolean playedDefeatOnce = false;
+    private boolean playedVictoryOnce = false;
+    private boolean playedDefeatOnce = false;
 
-    private UnitType nextUnitType;
+    private int nextUnitType;
     private Texture nonSpawnAreaTexture;
-    public ProgressBar manaBar;
+    private ProgressBar manaBar;
     private Array<BrawlButton> brawlButtons;
 
     private OrthographicCamera camera;
@@ -63,15 +63,15 @@ public class GameHUD extends Table {
         AssetManager assetManager = AssetManager.getInstance();
         initializeNonSpawnAreaShadow(spawnArea);
 
-        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, UnitType.RANGED);
+        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0);
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
-        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, UnitType.SWORDFIGHTER);
+        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1);
         btnNewUnit2.setName(NEW_UNIT_2);
         setFillParent(true);
-        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, UnitType.KNIGHT);
+        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2);
         btnNewUnit3.setName(NEW_UNIT_3);
-        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, UnitType.UPGRADE_UNITS);
+        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 8);
         btnUpgradeUnits.setName(UPGRADE_UNITS);
 
         brawlButtons = new Array<>();
@@ -116,9 +116,9 @@ public class GameHUD extends Table {
         initializeGameOverView();
     }
 
-    public void SwitchButtons (boolean upgradeExecuted){
+    private void switchButtons(boolean upgradeExecuted){
 
-        if (upgradeExecuted == true){
+        if (upgradeExecuted){
 
             AssetManager.getInstance().upgradeExecuted.play(1f);
 
@@ -137,64 +137,64 @@ public class GameHUD extends Table {
 
     }
 
-    private ClickListener listener = new ClickListener(){
+    private ClickListener listener = new ClickListener() {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             super.clicked(event, x, y);
             String name = event.getListenerActor().getName();
+
             if (name.equals(NEW_UNIT_1) && brawlButtons.get(0).isActivated()) {
-                if (nextUnitType == UnitType.RANGED) {
-                    nextUnitType = null;
+                if (nextUnitType == 0) {
+                    nextUnitType = -1;
                 } else {
-                    nextUnitType = UnitType.RANGED;
+                    nextUnitType = 0;
                 }
             }
             if (name.equals(NEW_UNIT_2) && brawlButtons.get(1).isActivated()) {
-                if (nextUnitType == UnitType.SWORDFIGHTER) {
-                    nextUnitType = null;
+                if (nextUnitType == 1) {
+                    nextUnitType = -1;
                 } else {
-                    nextUnitType = UnitType.SWORDFIGHTER;
+                    nextUnitType = 1;
                 }
             }
             if (name.equals(NEW_UNIT_3) && brawlButtons.get(2).isActivated()) {
-                if (nextUnitType == UnitType.KNIGHT) {
-                    nextUnitType = null;
+                if (nextUnitType == 2) {
+                    nextUnitType = -1;
                 } else {
-                    nextUnitType = UnitType.KNIGHT;
+                    nextUnitType = 2;
                 }
             }
             if (name.equals(UPGRADED_UNIT_1) && brawlButtons.get(0).isActivated()) {
-                if (nextUnitType == UnitType.MAGE) {
-                    nextUnitType = null;
+                if (nextUnitType == 3) {
+                    nextUnitType = -1;
                 } else {
-                    nextUnitType = UnitType.MAGE;
+                    nextUnitType = 3;
                 }
             }
             if (name.equals(UPGRADED_UNIT_2) && brawlButtons.get(1).isActivated()) {
-                if (nextUnitType == UnitType.BERSERKER) {
-                    nextUnitType = null;
+                if (nextUnitType == 4) {
+                    nextUnitType = -1;
                 } else {
-                    nextUnitType = UnitType.BERSERKER;
+                    nextUnitType = 4;
                 }
             }
             if (name.equals(UPGRADED_UNIT_3) && brawlButtons.get(2).isActivated()) {
-                if (nextUnitType == UnitType.TEMPLAR) {
-                    nextUnitType = null;
+                if (nextUnitType == 5) {
+                    nextUnitType = -1;
                 } else {
-                    nextUnitType = UnitType.TEMPLAR;
+                    nextUnitType = 5;
                 }
             }
             if (name.equals(UPGRADE_UNITS) && brawlButtons.get(3).isActivated()) {
-                    SwitchButtons(true);
+                switchButtons(true);
             }
 
 
-            if (nextUnitType != null) {
+            if (nextUnitType != -1) {
                 setBackground(new TextureRegionDrawable(new TextureRegion(nonSpawnAreaTexture)));
             } else {
                 setBackground((Drawable) null);
             }
-
         }
     };
 
@@ -221,10 +221,10 @@ public class GameHUD extends Table {
         pixmap.dispose();
     }
 
-    public UnitType getUnitToSpawn() {
+    public int getUnitToSpawn() {
         setBackground((Drawable) null);
-        UnitType current = nextUnitType;
-        nextUnitType = null;
+        int current = nextUnitType;
+        nextUnitType = -1;
         return current;
     }
 
@@ -253,14 +253,14 @@ public class GameHUD extends Table {
         Texture gameOverView;
         if (win) {
             gameOverView = assetManager.victoryScreen;
-            if (playedVictoryOnce =! true){
+            if (!playedVictoryOnce){
                 AssetManager.getInstance().victory.play(1f);
                 playedVictoryOnce = true;
             }
 
         }else{
             gameOverView = assetManager.defeatScreen;
-            if(playedDefeatOnce =! true) {
+            if(!playedDefeatOnce) {
                 AssetManager.getInstance().defeat.play(1f);
                 playedDefeatOnce = true;
             }

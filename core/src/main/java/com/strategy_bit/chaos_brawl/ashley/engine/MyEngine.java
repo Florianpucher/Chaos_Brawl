@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.strategy_bit.chaos_brawl.ashley.entities.Projectile;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
 
@@ -33,10 +32,6 @@ public class MyEngine extends PooledEngine {
 
     private Map<Long, Entity> units;
 
-    public MyEngine() {
-        super();
-    }
-
     //Only for multipPlayerGames
     private MultiplayerInputHandler inputHandler;
 
@@ -48,12 +43,6 @@ public class MyEngine extends PooledEngine {
         instance=new MyEngine(0,0,25,1000);
         instance.units = units;
         return instance;
-    }
-
-
-    @Override
-    public Entity createEntity() {
-        return super.createEntity();
     }
 
     public void dispose(){

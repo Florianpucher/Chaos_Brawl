@@ -25,7 +25,6 @@ import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.OtherPlayerController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 
 import org.junit.After;
@@ -53,9 +52,9 @@ import static org.junit.Assert.assertEquals;
 public class MultiplayerWorldTest extends BaseTest {
     //TODO make this test parameterized but for that you cannot use PowerMockRunner
     //TODO Change amount of players if more players are getting a base
-    private static final int PLAYERS = 2;
+    private static final int PLAYERS = 4;
 
-    private static final int UNITS_AFTER_INITIALIZATION = 6;
+    private static final int UNITS_AFTER_INITIALIZATION = PLAYERS * 3;
 
     private MultiplayerWorld[] worlds;
 
@@ -99,7 +98,11 @@ public class MultiplayerWorldTest extends BaseTest {
                 {0, 0, 0},
                 {1, 1, 1},
                 {0, 1, 1}});
-
+        Array<Float> positions = new Array<>();
+        for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i++) {
+            positions.add((float) i);
+        }
+        Mockito.when(board.getAsset(Mockito.anyInt())).thenReturn(positions);
 
         ChaosBrawlGame game = Mockito.mock(ChaosBrawlGame.class);
         SpriteBatch spriteBatch = Mockito.mock(SpriteBatch.class);
@@ -130,16 +133,13 @@ public class MultiplayerWorldTest extends BaseTest {
             initializePlayersForWorld(i);
             brawlClient.connectToServer("127.0.0.1");
         }
-        serverWorld.initializeGameForPlayers(1, PLAYERS);
-        boolean gameIsNotInitialized = true;
+        serverWorld.initializeGameForPlayers();
+
         long currentTime = System.currentTimeMillis();
-        while (gameIsNotInitialized) {
-            gameIsNotInitialized = false;
-            for (MultiplayerWorld world :
-                    worlds) {
-                if (world.units.size() < 6) {
-                    gameIsNotInitialized = true;
-                }
+
+        for (MultiplayerWorld world :
+                worlds) {
+            while (world.units.size() < UNITS_AFTER_INITIALIZATION) {
                 if (System.currentTimeMillis() - currentTime > 3000) {
                     throw new InitializationError(new Throwable("Could not initialize world for every player"));
                 }
@@ -206,7 +206,7 @@ public class MultiplayerWorldTest extends BaseTest {
     @Test
     public void testSpawnUnitOnClient() throws InterruptedException {
         for (int i = 1; i < worlds.length; i++) {
-            worlds[i].createEntityWorldCoordinates(new Vector2(0, 0), UnitType.RANGED, i);
+            worlds[i].createEntityWorldCoordinates(new Vector2(0, 0), 0, i);
         }
         // Message should arrive in the next 2 seconds
         Thread.sleep(2000);
@@ -221,7 +221,7 @@ public class MultiplayerWorldTest extends BaseTest {
     public void testSpawnUnitOnServer() throws InterruptedException {
         int unitsToSpawn = 3;
         for (int i = 0; i < unitsToSpawn; i++) {
-            worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), UnitType.RANGED, i % PLAYERS);
+            worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), 0, i % PLAYERS);
         }
         // Message should arrive in the next 2 seconds
         Thread.sleep(2000);
@@ -232,7 +232,7 @@ public class MultiplayerWorldTest extends BaseTest {
 
     @Test
     public void testUnitDied() throws InterruptedException {
-        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), UnitType.RANGED, 0);
+        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), 0, 0);
         Thread.sleep(2000);
         //Check if unit got spawned remotely
         for (int i = 0; i < PLAYERS; i++) {
@@ -250,7 +250,7 @@ public class MultiplayerWorldTest extends BaseTest {
 
     @Test
     public void testUnitGotWayPoints() throws InterruptedException {
-        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), UnitType.RANGED, 0);
+        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), 0, 0);
         Thread.sleep(2000);
         for (int i = 0; i < PLAYERS; i++) {
             Entity unitThatMoves = worlds[i].units.get(worlds[0].lastID - 1);
@@ -264,14 +264,14 @@ public class MultiplayerWorldTest extends BaseTest {
     public void testWinningLosing() throws InterruptedException {
 
         for (int i = 0; i < PLAYERS - 1; i++) {
-            worlds[0].units.get((long) (i + 1) * 2L).getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
+            worlds[0].bases[i].getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
             worlds[0].render();
             Thread.sleep(500);
             for (int j = 0; j < PLAYERS; j++) {
-                if (j == PLAYERS - 2) {
+                if (i == PLAYERS - 2) {
                     assertEquals(true, worlds[j].checkWinningLosing());
                     break;
-                }else{
+                } else {
                     assertEquals(false, worlds[j].checkWinningLosing());
                 }
 
@@ -287,16 +287,16 @@ public class MultiplayerWorldTest extends BaseTest {
             }
         }
         Thread.sleep(1000);
+        camera.update();
 
         for (int i = 0; i < PLAYERS; i++) {
-            Entity base = worlds[i].bases[(i+1)%PLAYERS];
+            Entity base = worlds[i].bases[(i + 1) % PLAYERS];
             TransformComponent transformComponent = base.getComponent(TransformComponent.class);
-            Vector3 worldPosition = new Vector3(transformComponent.getPosition(),0);
+            Vector3 worldPosition = new Vector3(transformComponent.getPosition().x, FRUSTUM_HEIGHT - transformComponent.getPosition().y, 0);
             Vector3 screenPosition = camera.project(worldPosition);
-
-            ((PlayerController)playersPerWorld[i][i]).touchDown((int)screenPosition.x,(int)screenPosition.y,0,0);
+            ((PlayerController) playersPerWorld[i][i]).touchDown((int) screenPosition.x, (int) screenPosition.y, 0, 0);
             Thread.sleep(1000);
-            Assert.assertEquals((i+1)%PLAYERS ,playersPerWorld[0][i].getCurrentTargetTeam());
+            Assert.assertEquals((i + 1) % PLAYERS, playersPerWorld[0][i].getCurrentTargetTeam());
 
         }
     }

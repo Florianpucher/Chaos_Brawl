@@ -13,25 +13,16 @@ public class CombatComponent implements Component,Pool.Poolable {
     private double attackDamage;
     private long lastAttackTimeStamp;
     private boolean isRanged;
-    private boolean isMage;
+    private int isRangedAttackType;
     private boolean isEngagedInCombat;
 
-    public CombatComponent(double radius, double attackRadius, double attackSpeed, double attackDamage, boolean ranged, boolean mage) {
-        setAttackDamage(attackDamage);
-        setAttackRadius(attackRadius);
-        setAttackSpeed(attackSpeed);
-        setRanged(ranged);
-        setMage(mage);
-        setEngagedInCombat(false);
-        lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
-    }
-    public void setRadiusAndAttackRadiusAndAttackSpeedAndAttackDamageAndRanged(double radius, double attackRadius, double attackSpeed, double attackDamage, boolean ranged,boolean mage) {
+    public void setEverything(double attackRadius, double attackSpeed, double attackDamage, boolean ranged, int rangedAttackType) {
         setAttackDamage(attackDamage);
         setAttackRadius(attackRadius);
         setAttackSpeed(attackSpeed);
         setRanged(ranged);
         setEngagedInCombat(false);
-        setMage(mage);
+        setRangedAttackType(rangedAttackType);
         lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
     }
 
@@ -93,29 +84,32 @@ public class CombatComponent implements Component,Pool.Poolable {
     }
 
 
-    public boolean isMage() {
-        return isMage;
+    public int isRangedAttackType() {
+        return isRangedAttackType;
     }
 
-    public void setMage(boolean mage) {
-        isMage = mage;
+    public void setRangedAttackType(int rangedAttackType) {
+        isRangedAttackType = rangedAttackType;
     }
+
     public CombatComponent() {
-        attackRadius=0;
-        attackSpeed=0;
-        attackDamage=0;
-        lastAttackTimeStamp=0;
-        isRanged=false;
-        isEngagedInCombat=false;
+        attackRadius = 0;
+        attackSpeed = 0;
+        attackDamage = 0;
+        lastAttackTimeStamp = 0;
+        isRanged = false;
+        isRangedAttackType = 0;
+        isEngagedInCombat = false;
     }
 
     @Override
     public void reset() {
-        attackRadius=0;
-        attackSpeed=0;
-        attackDamage=0;
-        lastAttackTimeStamp=0;
-        isRanged=false;
-        isEngagedInCombat=false;
+        attackRadius = 0;
+        attackSpeed = 0;
+        attackDamage = 0;
+        lastAttackTimeStamp = 0;
+        isRanged = false;
+        isRangedAttackType = 0;
+        isEngagedInCombat = false;
     }
 }

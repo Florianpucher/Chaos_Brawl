@@ -24,7 +24,6 @@ import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
-import com.strategy_bit.chaos_brawl.types.UnitType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
@@ -61,6 +60,8 @@ public class WorldTest extends BaseTest {
 
     private RenderSystem renderSystem;
 
+    private static final int UNITS_AFTER_INITIALIZATION = 4 * 3;
+
     @Before
     public void initialize() throws Exception {
 
@@ -79,6 +80,11 @@ public class WorldTest extends BaseTest {
                 {0,0,0},
                 {1,1,1},
                 {0,1,1}});
+        Array<Float> positions = new Array<>();
+        for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i++) {
+            positions.add((float) i);
+        }
+        Mockito.when(boardA.getAsset(Mockito.anyInt())).thenReturn(positions);
         Array<Vector2> defaultPath = new Array<>();
         defaultPath.add(new Vector2());
         defaultPath.add(new Vector2(1,1));
@@ -99,7 +105,7 @@ public class WorldTest extends BaseTest {
         world.setPlayerController(1,player2);
         world.setPlayerController(2, player3);
         world.setPlayerController(3,player4);
-        world.initializeGameForPlayers(1, 4);
+        world.initializeGameForPlayers();
     }
 
     @After
@@ -146,7 +152,7 @@ public class WorldTest extends BaseTest {
 
     @Test
     public void createEntityInternal() {
-        world.createEntityInternal(UnitType.KNIGHT,100,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2), 0);
+        world.createEntityInternal(2,100,new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2), 0);
 
         Entity insertedUnit = world.units.get(100L);
         assertEquals(0, insertedUnit.getComponent(TeamGameObjectComponent.class).getTeamId());
@@ -191,7 +197,7 @@ public class WorldTest extends BaseTest {
     @Test
     public void createEntityScreenCoordinates() {
         camera.update();
-        world.createEntityScreenCoordinates(new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2), UnitType.KNIGHT,0);
+        world.createEntityScreenCoordinates(new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2), 2,0);
 
         Entity insertedUnit = world.units.get((long)world.units.size()-1);
         assertEquals(0, insertedUnit.getComponent(TeamGameObjectComponent.class).getTeamId());
@@ -201,7 +207,7 @@ public class WorldTest extends BaseTest {
 
     @Test
     public void createEntityWorldCoordinates() {
-        world.createEntityWorldCoordinates(new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2), UnitType.KNIGHT,0);
+        world.createEntityWorldCoordinates(new Vector2(WorldSettings.FRUSTUM_WIDTH/2, WorldSettings.FRUSTUM_HEIGHT/2), 2,0);
         Entity insertedUnit = world.units.get((long)world.units.size()-1);
         assertEquals(0, insertedUnit.getComponent(TeamGameObjectComponent.class).getTeamId());
 
@@ -228,11 +234,12 @@ public class WorldTest extends BaseTest {
 
     @Test
     public void testChangePlayerTarget(){
-        Vector3 worldPosition1 = new Vector3(world.bases[0].getComponent(TransformComponent.class).getPosition(),0);
+        TransformComponent transformComponent1 = world.bases[0].getComponent(TransformComponent.class);
+        Vector3 worldPosition1 = new Vector3(transformComponent1.getPosition().x, WorldSettings.FRUSTUM_HEIGHT - transformComponent1.getPosition().y,0);
 
         Vector3 screenPosition = camera.project(worldPosition1);
-
-        Vector3 worldPosition2 = new Vector3(world.bases[1].getComponent(TransformComponent.class).getPosition(),0);
+        TransformComponent transformComponent2 = world.bases[1].getComponent(TransformComponent.class);
+        Vector3 worldPosition2 = new Vector3(transformComponent2.getPosition().x, WorldSettings.FRUSTUM_HEIGHT - transformComponent2.getPosition().y,0);
 
         Vector3 screenPosition2 = camera.project(worldPosition2);
         world.sendTouchInput(VectorMath.vector3ToVector2(screenPosition), player3);

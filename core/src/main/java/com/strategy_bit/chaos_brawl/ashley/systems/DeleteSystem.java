@@ -5,13 +5,11 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.Camera;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.ashley.entities.Explosion;
-import com.strategy_bit.chaos_brawl.ashley.entities.Smoke;
+import com.strategy_bit.chaos_brawl.ashley.entities.Particle;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 
@@ -22,21 +20,19 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
  */
 public class DeleteSystem extends IteratingSystem {
 
-    protected ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponent;
-    protected ComponentMapper<ExplosionComponent> explosionComponentComponentMapper;
-    protected ComponentMapper<TransformComponent> transformComponentMapper;
-    protected ComponentMapper<MovementComponent> movementComponentMapper;
+    private ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponent;
+    private ComponentMapper<ExplosionComponent> explosionComponentComponentMapper;
+    private ComponentMapper<TransformComponent> transformComponentMapper;
+    private ComponentMapper<MovementComponent> movementComponentMapper;
 
     private Engine engine;
-    private Camera camera;
 
-    public DeleteSystem(Camera camera) {
+    public DeleteSystem() {
         super(Family.all(TeamGameObjectComponent.class).get());
         mTeamGameObjectComponent = ComponentMapper.getFor(TeamGameObjectComponent.class);
         explosionComponentComponentMapper = ComponentMapper.getFor(ExplosionComponent.class);
         transformComponentMapper = ComponentMapper.getFor(TransformComponent.class);
         movementComponentMapper = ComponentMapper.getFor(MovementComponent.class);
-        this.camera = camera;
     }
 
     @Override
@@ -64,18 +60,18 @@ public class DeleteSystem extends IteratingSystem {
                 TransformComponent transform = transformComponentMapper.get(entity);
 
                 // and give it to the Explosion entity
-                engine.addEntity(new Explosion(transform.getPosition()));
+                engine.addEntity(new Particle(transform.getPosition(), "explosion"));
                 AssetManager.getInstance().explosionSound.play(1f);
-                explosionComponent.explode();
 
-            } else if (explosionComponent != null && movementComponent != null) {  // true =  unit
+
+            } else if (explosionComponent != null) {  // true =  unit
                 // Get Position of object here
                 TransformComponent transform = transformComponentMapper.get(entity);
 
                 // and give it to the Smoke entity
-                engine.addEntity(new Smoke(transform.getPosition()));
+                engine.addEntity(new Particle(transform.getPosition(), "smoke"));
                 //AssetManager.getInstance().smokeSound.play(1f);    // there is no smokeSound atm, do we need any?
-                explosionComponent.death();
+
 
             }
 

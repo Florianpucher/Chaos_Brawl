@@ -11,11 +11,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.mockito.Mockito;
+
+import java.util.HashMap;
 
 /**
  *
@@ -51,7 +54,22 @@ public class BaseTest {
         AssetManager assetManager = AssetManager.getInstance();
         Pixmap pixmap = new Pixmap(100,100, Pixmap.Format.RGB888);
         Texture texture = new Texture(pixmap);
-        assetManager.mainTowerSkin = new TextureRegion(texture);
+        assetManager.skins.put("mainTowerSkin", new TextureRegion(texture));
+        UnitConfig config = new UnitConfig();
+        UnitConfig buildingConfig = new UnitConfig();
+        HashMap<Integer, UnitConfig> unitConfigHashMap = Mockito.mock(HashMap.class);
+        Mockito.when(unitConfigHashMap.get(6)).thenReturn(buildingConfig);
+        Mockito.when(unitConfigHashMap.get(7)).thenReturn(buildingConfig);
+        for (int i = 0; i < 6; i++) {
+            Mockito.when(unitConfigHashMap.get(i)).thenReturn(config);
+        }
+        buildingConfig.setSkin(assetManager.skins.get("mainTowerSkin"));
+        config.setHitPoints(10f);
+        config.setMovementComponent(true);
+        buildingConfig.setHitPoints(10f);
+        buildingConfig.setBoundaryComponent(true);
+
+        assetManager.unitManager.unitConfigHashMap = unitConfigHashMap;
         pixmap.dispose();
         Sound sound = Mockito.mock(Sound.class);
         assetManager.drawKatana = sound;
@@ -68,6 +86,6 @@ public class BaseTest {
         // Exit the application first
         application.exit();
         application = null;
-        AssetManager.getInstance().mainTowerSkin.getTexture().dispose();
+        AssetManager.getInstance().skins.get("mainTowerSkin").getTexture().dispose();
     }
 }

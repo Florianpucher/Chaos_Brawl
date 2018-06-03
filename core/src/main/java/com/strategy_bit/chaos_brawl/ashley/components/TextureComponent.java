@@ -28,6 +28,6 @@ public class TextureComponent implements Component,Pool.Poolable {
 
     @Override
     public void reset() {
-
+        // No need to reset
     }
 }

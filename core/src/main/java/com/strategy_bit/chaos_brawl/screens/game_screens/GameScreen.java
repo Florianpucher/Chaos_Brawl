@@ -44,7 +44,7 @@ public class GameScreen extends AbstractScreen {
 
         manager.setPlayerController(1,otherPlayerController);
 
-        manager.initializeGameForPlayers(map, 2);
+        manager.initializeGameForPlayers();
         setInitialTargets();
     }
 
