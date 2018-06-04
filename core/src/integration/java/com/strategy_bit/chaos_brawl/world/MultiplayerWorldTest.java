@@ -50,8 +50,6 @@ import static org.junit.Assert.assertEquals;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({MultiplayerWorld.class, ParticleComponent.class})
 public class MultiplayerWorldTest extends BaseTest {
-    //TODO make this test parameterized but for that you cannot use PowerMockRunner
-    //TODO Change amount of players if more players are getting a base
     private static final int PLAYERS = 4;
 
     private static final int UNITS_AFTER_INITIALIZATION = PLAYERS * 3;

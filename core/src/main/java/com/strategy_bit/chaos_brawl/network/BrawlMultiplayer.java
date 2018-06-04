@@ -14,7 +14,7 @@ public interface BrawlMultiplayer {
 
     /**
      *
-     * @return if this brawlMultiplayer is a host
+     * @return true if this brawlMultiplayer is a host otherwise false
      */
     boolean isHost();
 }

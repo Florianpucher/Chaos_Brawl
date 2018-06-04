@@ -55,7 +55,7 @@ public class MultiplayerGameScreen extends GameScreen {
 
         setInitialTargets();
         if(brawlMultiplayer.isHost()){
-            manager.initializeGameForPlayers(map, controllers.length);
+            manager.initializeGameForPlayers();
         }
     }
 

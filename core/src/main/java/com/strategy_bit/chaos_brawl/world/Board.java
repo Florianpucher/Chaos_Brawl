@@ -39,7 +39,6 @@ public class Board implements BoardInterface {
         Vector2 size = new Vector2(multiplicandX / (defaultTile.getRegionWidth() * PIXELS_TO_METRES), multiplicandY / (defaultTile.getRegionHeight() * PIXELS_TO_METRES));
 
         Array<FileHandle> maps = AssetManager.getInstance().maps;
-        //TODO fix this
         map = map-1;
         mapArray = fileReader(maps.get(map).readString(), mapArray);
         matrixToBoard(mapArray, size);
@@ -166,10 +165,10 @@ public class Board implements BoardInterface {
             return spawnArea1;
         }
         if (playerID == 2){
-            return spawnArea2;
+            return spawnArea3;
         }
         else if (playerID == 3){
-            return spawnArea3;
+            return spawnArea2;
         }
         throw new UnsupportedOperationException("Game only supports up to 4 players");
     }
