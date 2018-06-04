@@ -11,6 +11,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.screens.menu_screens.OptionsMenuScreen;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.World;
 /*
@@ -74,20 +75,26 @@ public class CombatSystem extends IteratingSystem {
         if(c1.isRanged() && c1.isMage()){
             if(c1.attack()){
                 //ready to fire
-                AssetManager.getInstance().attackFireball.play(0.6f);
+                if (AssetManager.getInstance().getPlayable()){
+                    AssetManager.getInstance().attackFireball.play(0.6f);
+                }
                 world.createFireballWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage());
 
             }
         }else if(c1.isRanged()){
             if(c1.attack()){
                 //ready to fire
-                AssetManager.getInstance().attackBow.play(0.6f);
+                if (AssetManager.getInstance().getPlayable()){
+                    AssetManager.getInstance().attackBow.play(0.6f);
+                }
                 world.createBulletWorldCoordinates(t1.getPosition(),world.getIdOfUnit(targetEnemy),(float) c1.getAttackDamage());
 
             }
         }else {
         if(c1.attack()){
-            AssetManager.getInstance().attackSword.play(1f);
+            if (AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().attackSword.play(1f);
+            }
             c2.setHitPoints(c2.getHitPoints()-c1.getAttackDamage());
         }
         }

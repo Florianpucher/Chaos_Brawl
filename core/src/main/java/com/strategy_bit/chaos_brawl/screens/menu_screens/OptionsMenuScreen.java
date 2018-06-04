@@ -17,9 +17,11 @@ import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 public class OptionsMenuScreen extends MenuScreen {
     private static final String music = "MUSIC";
     private static final String exit = "EXIT GAME";;
-    private static final String back = "RESUME GAME";
+    private static final String back = "BACK";
 
     private boolean isActive = true;
+
+    private boolean playable = true;
 
     @Override
     public void buildStage() {
@@ -51,33 +53,14 @@ public class OptionsMenuScreen extends MenuScreen {
                 String name = event.getListenerActor().getName();
                 if(name.equals(music)){
                     if (isActive){
+
                         AssetManager.getInstance().music.setVolume(0.0f);
-                        AssetManager.getInstance().victory.stop();
-                        AssetManager.getInstance().defeat.stop();
-                        AssetManager.getInstance().upgradeExecuted.stop();
-                        AssetManager.getInstance().attackBow.stop();
-                        AssetManager.getInstance().attackSword.stop();
-                        AssetManager.getInstance().attackFireball.stop();
-                        AssetManager.getInstance().hitArrow.stop();
-                        AssetManager.getInstance().drawSword.stop();
-                        AssetManager.getInstance().drawKatana.stop();
-                        //AssetManager.getInstance().getRandomDrawKatanaSound().stop();
-                        AssetManager.getInstance().explosionSound.stop();
+                        AssetManager.getInstance().setPlayable(false);
                         System.out.println("music off");
                     }
                     if (!isActive){
                         AssetManager.getInstance().music.setVolume(1.0f);
-                        AssetManager.getInstance().victory.resume();
-                        AssetManager.getInstance().defeat.resume();
-                        AssetManager.getInstance().upgradeExecuted.resume();
-                        AssetManager.getInstance().attackBow.resume();
-                        AssetManager.getInstance().attackSword.resume();
-                        AssetManager.getInstance().attackFireball.resume();
-                        AssetManager.getInstance().hitArrow.resume();
-                        AssetManager.getInstance().drawSword.resume();
-                        AssetManager.getInstance().drawKatana.resume();
-                        //AssetManager.getInstance().getRandomDrawKatanaSound().resume();
-                        AssetManager.getInstance().explosionSound.resume();
+                        AssetManager.getInstance().setPlayable(true);
                         System.out.println("music on");
                     }
                     if (isActive){
@@ -87,10 +70,10 @@ public class OptionsMenuScreen extends MenuScreen {
                     }
                 }
                 if(name.equals(exit)){
-                    screenManager.showScreen(ScreenEnum.MAIN_MENU);
+                    Gdx.app.exit();
                 }
                 if (name.equals(back)){
-                    screenManager.showScreen(ScreenEnum.GAME);
+                    screenManager.switchToLastScreen();
                 }
                 super.clicked(event, x, y);
             }
@@ -100,4 +83,5 @@ public class OptionsMenuScreen extends MenuScreen {
         btnExit.addListener(listener);
         btnBack.addListener(listener);
     }
+
 }

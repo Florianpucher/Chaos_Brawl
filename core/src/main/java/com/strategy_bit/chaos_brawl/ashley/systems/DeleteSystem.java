@@ -65,7 +65,9 @@ public class DeleteSystem extends IteratingSystem {
 
                 // and give it to the Explosion entity
                 engine.addEntity(new Explosion(transform.getPosition()));
-                AssetManager.getInstance().explosionSound.play(1f);
+                if (AssetManager.getInstance().getPlayable()){
+                    AssetManager.getInstance().explosionSound.play(1f);
+                }
                 explosionComponent.explode();
 
             } else if (explosionComponent != null && movementComponent != null) {  // true =  unit

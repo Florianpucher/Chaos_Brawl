@@ -19,6 +19,7 @@ public class MainMenuScreen extends MenuScreen {
 
     private static final String NEW_GAME = "New GAME";
     private static final String MULTIPLAYER = "Multiplayer";
+    private static final String OPTIONS = "Options";
     private static final String UNIT_INFO = "Units";
 
     @Override
@@ -28,8 +29,8 @@ public class MainMenuScreen extends MenuScreen {
         btnNewGame.setName(NEW_GAME);
         final TextButton btnMultiplayer = new TextButton(MULTIPLAYER, assetManager.defaultSkin);
         btnMultiplayer.setName(MULTIPLAYER);
-        final TextButton btnUnits = new TextButton(UNIT_INFO, assetManager.defaultSkin);
-        btnUnits.setName(UNIT_INFO);
+        final TextButton btnOptions = new TextButton(OPTIONS, assetManager.defaultSkin);
+        btnOptions.setName(OPTIONS);
 
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
@@ -40,7 +41,7 @@ public class MainMenuScreen extends MenuScreen {
         root.row().space(10);
         root.add(btnMultiplayer).width(Gdx.graphics.getWidth()/2f).height(height);
         root.row().space(10);
-        root.add(btnUnits).width(Gdx.graphics.getWidth()/2f).height(height);
+        root.add(btnOptions).width(Gdx.graphics.getWidth()/2f).height(height);
         addActor(root);
 
 
@@ -52,8 +53,8 @@ public class MainMenuScreen extends MenuScreen {
                 if(name.equals(NEW_GAME)){
                     screenManager.showScreen(ScreenEnum.MAP_MENU);
                 }
-                if (name.equals((UNIT_INFO))){
-                    screenManager.showScreen(ScreenEnum.UNIT_INFO);
+                if (name.equals((OPTIONS))){
+                    screenManager.showScreen(ScreenEnum.OPTIONS_MENU);
                 }
                 else if(name.equals(MULTIPLAYER)){
                     screenManager.showScreen(ScreenEnum.NETWORK_SCREEN);
@@ -63,7 +64,7 @@ public class MainMenuScreen extends MenuScreen {
         };
         btnNewGame.addListener(listener);
         btnMultiplayer.addListener(listener);
-        btnUnits.addListener(listener);
+        btnOptions.addListener(listener);
 
     }
 }

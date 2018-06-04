@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.player_input_output.AiController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
@@ -37,15 +38,15 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(int map) {
         this.map = map;
     }
-    private static final String OPTIONS = "OPTIONS";
+    private static final String EXIT = "Exit Game";
 
 
     @Override
     public void buildStage() {
         super.buildStage();
         initializeGame();
-        final TextButton btnOptions = new TextButton(OPTIONS, assetManager.defaultSkin);
-        btnOptions.setName(OPTIONS);
+        final TextButton btnOptions = new TextButton(EXIT, assetManager.defaultSkin);
+        btnOptions.setName(EXIT);
 
         final Table root = new Table(assetManager.defaultSkin);
         root.setFillParent(true);
@@ -59,8 +60,8 @@ public class GameScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String name = event.getListenerActor().getName();
-                if (name.equals(OPTIONS)){
-                    screenManager.showScreen(ScreenEnum.OPTIONS_MENU);
+                if (name.equals(EXIT)){
+                    ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU);
                 }
                 super.clicked(event, x, y);
             }

@@ -293,9 +293,13 @@ public class World implements InputHandler {
         if(entityType.equals(UnitType.MAINBUILDING)){
             bases[teamID] = entity;
         }else if (entityType.equals(UnitType.KNIGHT) || entityType.equals(UnitType.TEMPLAR)) {
-            AssetManager.getInstance().drawSword.play(1f);
+            if (AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().drawSword.play(1f);
+            }
         } else if (entityType.equals(UnitType.SWORDFIGHTER) || entityType.equals(UnitType.BERSERKER)) {
-            AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
+            if (AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
+            }
         }
 
         return entity;

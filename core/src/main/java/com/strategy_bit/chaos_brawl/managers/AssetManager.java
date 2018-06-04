@@ -31,6 +31,8 @@ public class AssetManager {
     private static final String ENVIRONMENT_PATH = "environment/";
     private static final String ANIM_PATH = "animations/";
 
+    private boolean playable;
+
 
     public  Skin defaultSkin;
     public TextureRegion archerSkin;
@@ -153,7 +155,6 @@ public class AssetManager {
         drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Steady.mp3")));
 
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Animations/explosion.mp3"));
-
     }
 
 
@@ -200,5 +201,12 @@ public class AssetManager {
     public Sound getRandomDrawKatanaSound(){
         Random random = new Random();
         return drawKatanas.get(random.nextInt(drawKatanas.size));
+    }
+
+    public void setPlayable(boolean play){
+        this.playable = play;
+    }
+    public boolean getPlayable(){
+        return playable;
     }
 }
