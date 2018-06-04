@@ -69,6 +69,7 @@ public class AssetManager {
     public Sound drawKatana;
     public Sound explosionSound;
     public Sound upgradeExecuted;
+    public Sound upgradeExecutedTower;
     private Array<Sound> drawKatanas;
 
     private static AssetManager instance;
@@ -138,6 +139,7 @@ public class AssetManager {
         victory =Gdx.audio.newSound(Gdx.files.internal("sounds/Victory.mp3"));
         defeat =Gdx.audio.newSound(Gdx.files.internal("sounds/Defeat.mp3"));
         upgradeExecuted =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecuted.wav"));
+        upgradeExecutedTower =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecutedTower.wav"));
         attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
         attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav"));
         attackFireball =Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/fireball.wav"));
@@ -204,6 +206,7 @@ public class AssetManager {
         victory.dispose();
         defeat.dispose();
         upgradeExecuted.dispose();
+        upgradeExecutedTower.dispose();
         for (Sound s:
                 drawKatanas) {
             s.dispose();

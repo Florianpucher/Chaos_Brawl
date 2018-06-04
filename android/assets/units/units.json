@@ -304,11 +304,42 @@
 
   {
     "id" : 8,
-    "name": "UpgradeUnits",
-    "cost" : 100
-    }
+    "name": "Lasertower",
+    "cost" : 0,
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"laserTowerSkin",
+      "skinPath" :"buildings/laser_tower.png"
+    },
+    "CombatComponent" : {
+      "attackRadius" : 4,
+      "attackSpeed" : 1,
+      "attackDamage" : 1,
+      "ranged" : true,
+      "rangedAttackType" : 10
+    },
+    "TeamGameObjectComponent" : {
+      "hitPoints" : 120
 
-  ,
+    },
+    "ExplosionComponent" : {
+      "type" : "explosion"
+
+    },
+    "UpgradeComponent" : {
+
+    },
+    "BoundaryComponent" :{
+
+    }
+  },
+
+
   {
 
     "id" : 10,
@@ -390,6 +421,18 @@
       "speed" : 10
     }
 
+  },
+
+  {
+    "id" : 20,
+    "name": "UpgradeUnits",
+    "cost" : 100
+  },
+
+  {
+    "id" : 21,
+    "name": "UpgradeTower",
+    "cost" : 75
   }
 
 ]

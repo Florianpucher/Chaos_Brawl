@@ -37,14 +37,15 @@ public class GameHUD extends Table {
     private static final String UPGRADED_UNIT_2 = "Berserker";
     private static final String UPGRADED_UNIT_3 = "Templar";
 
-    private static final String UPGRADE_UNITS = "Unit UP!";
-
+    private static final String UPGRADE_UNITS = "U UP!";
+    private static final String UPGRADE_TOWER = "T UP!";
 
     private BrawlButton btnNewUnit1;
     private BrawlButton btnNewUnit2;
     private BrawlButton btnNewUnit3;
 
     private BrawlButton btnUpgradeUnits;
+    private BrawlButton btnUpgradeTower;
 
 
     private boolean playedVictoryOnce = false;
@@ -71,14 +72,17 @@ public class GameHUD extends Table {
         setFillParent(true);
         btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2);
         btnNewUnit3.setName(NEW_UNIT_3);
-        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 8);
+        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20);
         btnUpgradeUnits.setName(UPGRADE_UNITS);
+        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21);
+        btnUpgradeTower.setName(UPGRADE_TOWER);
 
         brawlButtons = new Array<>();
         brawlButtons.add(btnNewUnit1);
         brawlButtons.add(btnNewUnit2);
         brawlButtons.add(btnNewUnit3);
         brawlButtons.add(btnUpgradeUnits);
+        brawlButtons.add(btnUpgradeTower);
         setFillParent(true);
 
         NinePatchDrawable resourceBarOuter = new NinePatchDrawable(assetManager.resourceSkinOuter);
@@ -104,8 +108,9 @@ public class GameHUD extends Table {
         lowerUI.add(btnNewUnit2).right().height(lowerUI.getPrefHeight());
         lowerUI.add(btnNewUnit3).right().height(lowerUI.getPrefHeight());
 
-        lowerUI.left();
+
         lowerUI.add(btnUpgradeUnits).left().height(lowerUI.getPrefHeight());
+        lowerUI.add(btnUpgradeTower).left().height(lowerUI.getPrefHeight());
 
 
 
@@ -113,12 +118,13 @@ public class GameHUD extends Table {
         btnNewUnit2.addListener(listener);
         btnNewUnit3.addListener(listener);
         btnUpgradeUnits.addListener(listener);
+        btnUpgradeTower.addListener(listener);
         initializeGameOverView();
     }
 
-    private void switchButtons(boolean upgradeExecuted){
+    private void switchButtons(boolean upgradeExecuted, String input){
 
-        if (upgradeExecuted){
+        if (upgradeExecuted && input == UPGRADE_UNITS){
 
             AssetManager.getInstance().upgradeExecuted.play(1f);
 
@@ -132,9 +138,16 @@ public class GameHUD extends Table {
             btnNewUnit3.setText(UPGRADED_UNIT_3);
 
             btnUpgradeUnits.remove();
+        } else if (upgradeExecuted && input == UPGRADE_TOWER){
+            upgradeTower();
+            AssetManager.getInstance().upgradeExecutedTower.play(1f);
+            btnUpgradeTower.remove();
         }
 
 
+    }
+
+    private void upgradeTower() {
     }
 
     private ClickListener listener = new ClickListener() {
@@ -186,7 +199,11 @@ public class GameHUD extends Table {
                 }
             }
             if (name.equals(UPGRADE_UNITS) && brawlButtons.get(3).isActivated()) {
-                switchButtons(true);
+                switchButtons(true, UPGRADE_UNITS);
+            }
+
+            if (name.equals(UPGRADE_TOWER) && brawlButtons.get(4).isActivated()) {
+                switchButtons(true, UPGRADE_TOWER);
             }
 
 
