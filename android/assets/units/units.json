@@ -247,7 +247,7 @@
       "attackSpeed" : 0.7,
       "attackDamage" : 30,
       "ranged" : true,
-      "rangedAttackType" : 13
+      "rangedAttackType" : 12
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 1000
@@ -257,16 +257,13 @@
       "type" : "explosion"
 
     },
-    "UpgradeComponent" : {
-
-    },
     "BoundaryComponent" :{
 
     }
   },
 
   {
-  "id" : 7,
+  "id" : 8,
   "name": "Tower",
   "cost" : 0,
   "TransformComponent" : {
@@ -303,7 +300,7 @@
 },
 
   {
-    "id" : 8,
+    "id" : 7,
     "name": "Lasertower",
     "cost" : 0,
     "TransformComponent" : {
@@ -321,7 +318,7 @@
       "attackSpeed" : 1,
       "attackDamage" : 1,
       "ranged" : true,
-      "rangedAttackType" : 10
+      "rangedAttackType" : 13
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 120
@@ -385,25 +382,6 @@
 
   {
     "id" : 12,
-    "name": "darkSphere",
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
-    "TextureComponent" : {
-      "skinName":"fireballSkin",
-      "skinPath" :"units/fireball.png"
-    },
-    "MovementComponent" : {
-      "speed" : 5
-    }
-
-  },
-
-  {
-    "id" : 13,
     "name": "cannonBall",
     "soundName" : "attackCannonball",
     "soundPath" : "sounds/Projectiles/cannonball.wav",
@@ -419,6 +397,28 @@
     },
     "MovementComponent" : {
       "speed" : 10
+    }
+
+  },
+
+
+  {
+    "id" : 13,
+    "name": "Laser",
+    "soundName" : "attackLaser",
+    "soundPath" : "sounds/Projectiles/laser2.wav",
+    "TransformComponent" : {
+      "position" : {
+        "x" : 0,
+        "y" : 0
+      }
+    },
+    "TextureComponent" : {
+      "skinName":"laserSkin",
+      "skinPath" :"units/laser.png"
+    },
+    "MovementComponent" : {
+      "speed" : 5
     }
 
   },
