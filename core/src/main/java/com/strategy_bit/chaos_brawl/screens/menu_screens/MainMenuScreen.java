@@ -31,6 +31,8 @@ public class MainMenuScreen extends MenuScreen {
         btnMultiplayer.setName(MULTIPLAYER);
         final TextButton btnOptions = new TextButton(OPTIONS, assetManager.defaultSkin);
         btnOptions.setName(OPTIONS);
+        final TextButton btnUnits = new TextButton(UNIT_INFO, assetManager.defaultSkin);
+        btnUnits.setName(UNIT_INFO);
 
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
@@ -40,6 +42,8 @@ public class MainMenuScreen extends MenuScreen {
         root.add(btnNewGame).width(Gdx.graphics.getWidth()/2f).height(height);
         root.row().space(10);
         root.add(btnMultiplayer).width(Gdx.graphics.getWidth()/2f).height(height);
+        root.row().space(10);
+        root.add(btnUnits).width(Gdx.graphics.getWidth()/2f).height(height);
         root.row().space(10);
         root.add(btnOptions).width(Gdx.graphics.getWidth()/2f).height(height);
         addActor(root);
@@ -56,6 +60,9 @@ public class MainMenuScreen extends MenuScreen {
                 if (name.equals((OPTIONS))){
                     screenManager.showScreen(ScreenEnum.OPTIONS_MENU);
                 }
+                if (name.equals(UNIT_INFO)){
+                    screenManager.showScreen(ScreenEnum.UNIT_INFO);
+                }
                 else if(name.equals(MULTIPLAYER)){
                     screenManager.showScreen(ScreenEnum.NETWORK_SCREEN);
                 }
@@ -65,6 +72,6 @@ public class MainMenuScreen extends MenuScreen {
         btnNewGame.addListener(listener);
         btnMultiplayer.addListener(listener);
         btnOptions.addListener(listener);
-
+        btnUnits.addListener(listener);
     }
 }

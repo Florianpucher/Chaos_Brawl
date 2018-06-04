@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 
+import java.awt.Font;
 import java.io.File;
 import java.util.Random;
 
@@ -33,7 +35,7 @@ public class AssetManager {
 
     private boolean playable;
 
-
+    public BitmapFont font;
     public  Skin defaultSkin;
     public TextureRegion archerSkin;
     public TextureRegion swordFighterSkin;
@@ -88,6 +90,8 @@ public class AssetManager {
     }
 
     public  void loadAssets(){
+
+        //font = new BitmapFont(Gdx.files.internal("fonts/default.otf"));
 
         // units
         archerSkin = new TextureRegion(new Texture(UNIT_PATH+ "unit_archer.png"));
