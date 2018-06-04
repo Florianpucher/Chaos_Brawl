@@ -139,16 +139,13 @@ public class GameHUD extends Table {
 
             btnUpgradeUnits.remove();
         } else if (upgradeExecuted && input == UPGRADE_TOWER){
-            upgradeTower();
             AssetManager.getInstance().upgradeExecutedTower.play(1f);
             btnUpgradeTower.remove();
         }
 
 
     }
-
-    private void upgradeTower() {
-    }
+    
 
     private ClickListener listener = new ClickListener() {
         @Override

@@ -173,7 +173,7 @@
       "attackSpeed" : 2.5,
       "attackDamage" : 9,
       "ranged" : false,
-      "rangedAttackType" : 0
+      "rangedAttackType" : 99
     },
     "TeamGameObjectComponent" : {
       "hitPoints" : 95

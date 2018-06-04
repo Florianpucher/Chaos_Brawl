@@ -37,6 +37,7 @@ public class CombatSystem extends IteratingSystem {
         CombatComponent combatComponent=mCombatComponent.get(entity);
         TeamGameObjectComponent teamGameObjectComponent = mTeamGameObjectComponentMapper.get(entity);
 
+
         TransformComponent transformComponent=mTransformComponent.get(entity);
         double closest=combatComponent.getAttackRadius();
         TeamGameObjectComponent closestEnemy=null;
@@ -60,7 +61,7 @@ public class CombatSystem extends IteratingSystem {
         }
         if(closestEnemy!=null) {
             combatComponent.setEngagedInCombat(true);
-            attack(combatComponent, closestEnemy,transformComponent,targetEnemy);
+            attack(combatComponent, closestEnemy,transformComponent,targetEnemy, teamGameObjectComponent);
         }
         else {
             combatComponent.setEngagedInCombat(false);
@@ -68,7 +69,7 @@ public class CombatSystem extends IteratingSystem {
     }
 
 
-    private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, Entity targetEnemy) {
+    private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, Entity targetEnemy, TeamGameObjectComponent h1) {
 
         for (int i = 12; i > 9; i--) {
 
@@ -81,16 +82,19 @@ public class CombatSystem extends IteratingSystem {
         }
 
         if (c1.isRanged() && (c1.isRangedAttackType() == 13)) {
-                //ready to fire
-                world.createBulletWorldCoordinates(t1.getPosition(), world.getIdOfUnit(targetEnemy), (float) c1.getAttackDamage(), 13);
+            //ready to fire
+            world.createBulletWorldCoordinates(t1.getPosition(), world.getIdOfUnit(targetEnemy), (float) c1.getAttackDamage(), 13);
         }
 
-        if (c1.attack() && (c1.isRanged() == false)) {
-            AssetManager.getInstance().attackSword.play(1f);
-            c2.setHitPoints(c2.getHitPoints() - c1.getAttackDamage());
-
+        if (c1.attack() && (c1.isRanged() == false )) {
+            if (c1.isRangedAttackType() == 99 && (h1.getHitPoints() < h1.getMaxHP()/2)) {
+                AssetManager.getInstance().critHit.play(1f);
+                c2.setHitPoints(c2.getHitPoints() - (c1.getAttackDamage() * 2));
+            } else {
+                AssetManager.getInstance().attackSword.play(1f);
+                c2.setHitPoints(c2.getHitPoints() - c1.getAttackDamage());
+            }
         }
-
     }
 
     public void addWorld(World world){
