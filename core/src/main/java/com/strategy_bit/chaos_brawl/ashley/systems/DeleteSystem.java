@@ -72,7 +72,6 @@ public class DeleteSystem extends IteratingSystem {
                 engine.addEntity(new Particle(transform.getPosition(), "smoke"));
                 //AssetManager.getInstance().smokeSound.play(1f);    // there is no smokeSound atm, do we need any?
 
-
             }
 
             engine.removeEntity(entity);
