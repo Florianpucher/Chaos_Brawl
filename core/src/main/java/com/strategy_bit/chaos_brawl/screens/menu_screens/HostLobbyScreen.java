@@ -95,6 +95,12 @@ public class HostLobbyScreen extends LobbyScreen {
     }
 
     @Override
+    public void dispose() {
+        super.dispose();
+        brawlServer.setNetworkConnectionHandler(null);
+    }
+
+    @Override
     public void connected() {
         // Not needed host
     }

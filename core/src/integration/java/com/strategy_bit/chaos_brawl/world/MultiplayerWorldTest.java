@@ -111,7 +111,7 @@ public class MultiplayerWorldTest extends BaseTest {
 
         // initialize server
         BrawlServerImpl brawlServer = new BrawlServerImpl();
-        MultiplayerWorld serverWorld = new MultiplayerWorld(true, brawlServer, PLAYERS);
+        MultiplayerWorld serverWorld = new MultiplayerWorld( brawlServer, PLAYERS,4);
 
         brawlServer.getBrawlConnector().setMultiplayerInputHandler(serverWorld);
         brawlMultiplayer[0] = brawlServer;
@@ -123,7 +123,7 @@ public class MultiplayerWorldTest extends BaseTest {
         for (int i = 1; i < PLAYERS; i++) {
             BrawlClientImpl brawlClient = new BrawlClientImpl();
 
-            MultiplayerWorld clientWorld = new MultiplayerWorld(false, brawlClient, PLAYERS);
+            MultiplayerWorld clientWorld = new MultiplayerWorld(brawlClient, PLAYERS,4);
             brawlClient.getBrawlConnector().setMultiplayerInputHandler(clientWorld);
             brawlMultiplayer[i] = brawlClient;
             worlds[i] = clientWorld;

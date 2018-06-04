@@ -173,6 +173,11 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
         throw new UnsupportedOperationException("Server does not send any messages of this type");
     }
 
+    @Override
+    public boolean isHost() {
+        return true;
+    }
+
     public void closeConnectionTo(int id){
         server.getConnections()[id].close();
     }

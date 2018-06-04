@@ -13,15 +13,14 @@ import com.strategy_bit.chaos_brawl.types.UnitType;
 
 public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
-    private boolean isServer;
     private BrawlMultiplayer multiplayer;
     private boolean isInitialized = false;
 
-    public MultiplayerWorld(boolean isServer, BrawlMultiplayer multiplayer, int players) {
-        super(1, players);
-        this.isServer = isServer;
+    public MultiplayerWorld(BrawlMultiplayer multiplayer, int players, int map) {
+        super(map, players);
+
         this.multiplayer = multiplayer;
-        if(!isServer){
+        if(!multiplayer.isHost()){
             engine.removeSystem(deleteSystem);
         }else{
             engine.setInputHandler(this);
@@ -30,7 +29,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     @Override
     public void render() {
-        if(isServer){
+        if(multiplayer.isHost()){
             updateResources();
 
         }
@@ -69,7 +68,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     @Override
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, UnitType entityType, int teamID) {
-        if(isServer){
+        if(multiplayer.isHost()){
 
             PawnController spawnerController = playerControllers[teamID];
             long id = lastID;
@@ -102,7 +101,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     @Override
     public void deleteUnitLocal(long unitID) {
-        if(isServer){
+        if(multiplayer.isHost()){
             multiplayer.sendEntityDeleteMsg(unitID);
         }else{
             Entity unit = units.get(unitID);
@@ -120,7 +119,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     @Override
     protected int checkIfClickHappensOnBase(Vector2 targetLocation, PawnController controller) {
         int baseIndex = super.checkIfClickHappensOnBase(targetLocation, controller);
-        if(!isServer && baseIndex >= 0){
+        if(!multiplayer.isHost() && baseIndex >= 0){
             multiplayer.sendNewTargetMsg(controller.getTeamID(), baseIndex);
         }
         return baseIndex;

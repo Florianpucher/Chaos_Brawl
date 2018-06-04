@@ -2,7 +2,6 @@ package com.strategy_bit.chaos_brawl.screens.game_screens;
 
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
-import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
 import com.strategy_bit.chaos_brawl.player_input_output.OtherPlayerController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
@@ -35,11 +34,7 @@ public class MultiplayerGameScreen extends GameScreen {
 
     @Override
     public void buildStage() {
-        boolean isServer = false;
-        if(brawlMultiplayer instanceof BrawlServer){
-            isServer = true;
-        }
-        manager = new MultiplayerWorld(isServer, brawlMultiplayer, controllers.length);
+        manager = new MultiplayerWorld(brawlMultiplayer, controllers.length, map);
         listener.setMultiplayerInputHandler((MultiplayerInputHandler) manager);
         initializeGame();
     }
@@ -59,7 +54,7 @@ public class MultiplayerGameScreen extends GameScreen {
         }
 
         setInitialTargets();
-        if(brawlMultiplayer instanceof BrawlServer){
+        if(brawlMultiplayer.isHost()){
             //TODO make this dynamic for multiple maps
             manager.initializeGameForPlayers(map, controllers.length);
         }

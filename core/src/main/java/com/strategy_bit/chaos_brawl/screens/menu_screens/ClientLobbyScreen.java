@@ -80,4 +80,10 @@ public class ClientLobbyScreen extends LobbyScreen{
     public void anotherClientDisconnected(int id) {
         removeClient(id);
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        brawlClient.setNetworkConnectionHandler(null);
+    }
 }
