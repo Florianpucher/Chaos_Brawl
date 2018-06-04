@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
@@ -16,6 +17,20 @@ public class MapMenuScreen extends MenuScreen{
     private static final String MAP_1 = "MAP 1";
     private static final String MAP_2 = "MAP 2";
     private static final String MAP_3 = "MAP 3";
+
+    private BrawlMultiplayer brawlMultiplayer;
+    private int player;
+    private boolean multiplayer = false;
+
+    public MapMenuScreen(BrawlMultiplayer brawlMultiplayer, int[] players){
+        this.brawlMultiplayer = brawlMultiplayer;
+        this.player=players[0];
+        multiplayer = true;
+    }
+
+    public MapMenuScreen(){
+
+    }
 
 
     @Override
@@ -47,13 +62,28 @@ public class MapMenuScreen extends MenuScreen{
             public void clicked(InputEvent event, float x, float y) {
                 String name = event.getListenerActor().getName();
                 if(name.equals(MAP_1)){
-                    screenManager.showScreen(ScreenEnum.GAME, 1);
+                    if (multiplayer){
+                        screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player, 1);
+                    }
+                    else{
+                        screenManager.showScreen(ScreenEnum.GAME, 1);
+                    }
                 }
                 if(name.equals(MAP_2)){
-                    screenManager.showScreen(ScreenEnum.GAME,2);
+                    if (multiplayer){
+                        screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player, 2);
+                    }
+                    else{
+                        screenManager.showScreen(ScreenEnum.GAME, 2);
+                    }
                 }
                 if(name.equals(MAP_3)){
-                    screenManager.showScreen(ScreenEnum.GAME,3);
+                    if (multiplayer){
+                        screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player, 3);
+                    }
+                    else{
+                        screenManager.showScreen(ScreenEnum.GAME, 3);
+                    }
                 }
                 super.clicked(event, x, y);
             }

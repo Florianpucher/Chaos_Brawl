@@ -159,4 +159,9 @@ public class BrawlClientImpl implements BrawlClient, BrawlMultiplayer {
     public void sendNewTargetMsg(int playerIndex, int targetIndex) {
         client.sendTCP(new PlayerSelectedNewTargetMessage(playerIndex, targetIndex));
     }
+
+    @Override
+    public boolean isHost() {
+        return false;
+    }
 }

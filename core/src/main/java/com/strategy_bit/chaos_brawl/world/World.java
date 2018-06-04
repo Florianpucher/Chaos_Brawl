@@ -57,6 +57,7 @@ public class World implements InputHandler {
     protected DeleteSystem deleteSystem;
 
     boolean endGame = false;
+    private int players;
 
     public World(int map, int players) {
         units = new HashMap<>();
@@ -64,6 +65,7 @@ public class World implements InputHandler {
         playerControllers = new PawnController[players];
         bases = new Entity[players];
         tower = new Entity[players];
+        this.players = players;
 
         createEngine();
         createWorld(map);
@@ -264,10 +266,16 @@ public class World implements InputHandler {
             bases[teamID] = entity;
         }
         else if (unitId==5||unitId==2){
-            AssetManager.getInstance().drawSword.play(1f);
+            if(AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().drawSword.play(1f);
+            }
+
         }
         else if (unitId==1||unitId==4){
-            AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
+            if(AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
+            }
+
         }
 
         return entity;
@@ -304,8 +312,8 @@ public class World implements InputHandler {
      * @param playerID for which player the spawn area will be created
      * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
      */
-    public Boundary createSpawnAreaForPlayer(int playerID){
-        Boundary result = board.createSpawnAreaForPlayer(playerID);
+    public Boundary createSpawnAreaForPlayer(int playerID, int players){
+        Boundary result = board.createSpawnAreaForPlayer(playerID, players);
 
         Vector2 left = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerLeft(), 0)));
         Vector2 right = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerRight(), 0)));
@@ -333,6 +341,11 @@ public class World implements InputHandler {
         return entity.getComponent(TransformComponent.class).getPosition();
         else return null;
     }
+
+    public int getPlayers(){
+        return players;
+    }
+
     public Entity getUnit(long unitID){
         return units.get(unitID);
     }

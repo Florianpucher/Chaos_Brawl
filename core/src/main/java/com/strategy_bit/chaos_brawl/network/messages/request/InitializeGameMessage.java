@@ -9,9 +9,10 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
  */
 public class InitializeGameMessage implements Message {
     public int[] controllers;
-
-    public InitializeGameMessage(int[] controllers) {
+    public int map;
+    public InitializeGameMessage(int[] controllers, int map) {
         this.controllers = controllers;
+        this.map = map;
     }
 
     public InitializeGameMessage() {

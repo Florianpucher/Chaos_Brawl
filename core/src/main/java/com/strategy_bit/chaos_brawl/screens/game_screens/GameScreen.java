@@ -25,6 +25,7 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(int map) {
         this.map = map;
     }
+    private static final String EXIT = "Exit Game";
 
 
     @Override
@@ -33,12 +34,13 @@ public class GameScreen extends AbstractScreen {
         initializeGame();
     }
 
+
     protected void initializeGame(){
         manager = new World(map,2);
         controllers = new PawnController[2];
-        playerController = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0));
+        playerController = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0, 2));
         controllers[0] = playerController;
-        AiController otherPlayerController = new AiController(1,manager, manager.createSpawnAreaForPlayer(1));
+        AiController otherPlayerController = new AiController(1,manager, manager.createSpawnAreaForPlayer(1, 2));
         controllers[1] = otherPlayerController;
         manager.setPlayerController(0, playerController);
 

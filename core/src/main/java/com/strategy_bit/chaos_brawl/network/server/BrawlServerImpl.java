@@ -50,23 +50,29 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     public void sendGameInitializingMessage(){
         Connection[] connections = server.getConnections();
 
+
         int[] playersToSend=new int[connections.length+1];
         for (int i = 0; i < playersToSend.length; i++) {
             playersToSend[i]=i;
+        }
+        int map = 1;
+        if(connections.length +1 == 4){
+            map = 4;
         }
         for (int i = 0; i < connections.length; i++) {
 
             for (int j = 0; j < playersToSend.length; j++) {
                 playersToSend[j]=(playersToSend[j]+1)%playersToSend.length;
             }
-            InitializeGameMessage gameMessage = new InitializeGameMessage(playersToSend);
+            InitializeGameMessage gameMessage = new InitializeGameMessage(playersToSend,map);
             server.sendToTCP(connections[i].getID(), gameMessage);
         }
         for (int j = 0; j < playersToSend.length; j++) {
             playersToSend[j]=(playersToSend[j]+1)%playersToSend.length;
         }
         ScreenManager screenManager = ScreenManager.getInstance();
-        screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, this, playersToSend);
+        screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, this, playersToSend, map);
+
     }
 
     public void sendDataToAllExcept(Connection connection, Message msg) {
@@ -156,6 +162,11 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     @Override
     public void sendNewTargetMsg(int playerIndex, int targetIndex) {
         throw new UnsupportedOperationException("Server does not send any messages of this type");
+    }
+
+    @Override
+    public boolean isHost() {
+        return true;
     }
 
     public void closeConnectionTo(int id){

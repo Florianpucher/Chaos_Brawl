@@ -77,6 +77,7 @@ public class GameHUD extends Table {
         btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21);
         btnUpgradeTower.setName(UPGRADE_TOWER);
 
+
         brawlButtons = new Array<>();
         brawlButtons.add(btnNewUnit1);
         brawlButtons.add(btnNewUnit2);
@@ -100,6 +101,7 @@ public class GameHUD extends Table {
         row().height(7 * Gdx.graphics.getHeight() / 9f);
         add();
         row().height(Gdx.graphics.getHeight() / 9f).width((float) Gdx.graphics.getWidth());
+
         // add own table for organizing buttons
         Table lowerUI = new Table(assetManager.defaultSkin);
         lowerUI.right();
@@ -111,8 +113,6 @@ public class GameHUD extends Table {
 
         lowerUI.add(btnUpgradeUnits).left().height(lowerUI.getPrefHeight());
         lowerUI.add(btnUpgradeTower).left().height(lowerUI.getPrefHeight());
-
-
 
         btnNewUnit1.addListener(listener);
         btnNewUnit2.addListener(listener);
@@ -126,7 +126,9 @@ public class GameHUD extends Table {
 
         if (upgradeExecuted && input == UPGRADE_UNITS){
 
-            AssetManager.getInstance().upgradeExecuted.play(1f);
+            if (AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().upgradeExecuted.play(1f);
+            }
 
             btnNewUnit1.setName(UPGRADED_UNIT_1);
             btnNewUnit1.setText(UPGRADED_UNIT_1);
@@ -268,14 +270,18 @@ public class GameHUD extends Table {
         if (win) {
             gameOverView = assetManager.victoryScreen;
             if (!playedVictoryOnce){
-                AssetManager.getInstance().victory.play(1f);
+                if (AssetManager.getInstance().getPlayable()) {
+                    AssetManager.getInstance().victory.play(1f);
+                }
                 playedVictoryOnce = true;
             }
 
         }else{
             gameOverView = assetManager.defeatScreen;
             if(!playedDefeatOnce) {
-                AssetManager.getInstance().defeat.play(1f);
+                if (AssetManager.getInstance().getPlayable()) {
+                    AssetManager.getInstance().defeat.play(1f);
+                }
                 playedDefeatOnce = true;
             }
         }

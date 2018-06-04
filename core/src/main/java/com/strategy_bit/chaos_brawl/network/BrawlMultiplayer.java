@@ -11,4 +11,10 @@ public interface BrawlMultiplayer {
     BrawlConnector getBrawlConnector();
     void dispose();
     void sendNewTargetMsg(int playerIndex, int targetIndex);
+
+    /**
+     *
+     * @return true if this brawlMultiplayer is a host otherwise false
+     */
+    boolean isHost();
 }

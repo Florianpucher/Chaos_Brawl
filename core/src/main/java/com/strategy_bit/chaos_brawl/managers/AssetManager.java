@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,6 +16,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
+import java.awt.Font;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,6 +37,9 @@ public class AssetManager {
     private static final String ENVIRONMENT_PATH = "environment/";
     private static final String ANIM_PATH = "animations/";
 
+    private boolean playable;
+
+    public BitmapFont font;
     public UnitManager unitManager;
     public Map<String, TextureRegion> skins;
     public Map<String, Sound> sounds;
@@ -55,6 +61,7 @@ public class AssetManager {
     public Array<Float> config;
     public Array<Float> config2;
     public Array<Float> spawn;
+    public Array<Float> spawn4;
     public Texture victoryScreen;
     public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
@@ -128,12 +135,15 @@ public class AssetManager {
         FileHandle handle = Gdx.files.internal("maps/Config2Players.json");
         FileHandle handle1 = Gdx.files.internal("maps/SpawnAreas2.json");
         FileHandle handle2 = Gdx.files.internal("maps/Config4Players.json");
+        FileHandle handle3 = Gdx.files.internal("maps/SpawnAreas4.json");
         config = new Array<>();
         config2 = new Array<>();
         spawn = new Array<>();
+        spawn4 = new Array<>();
         setArray(config, handle);
         setArray(config2, handle2);
         setArray(spawn, handle1);
+        setArray(spawn4, handle3);
 
 
         // sounds
@@ -219,6 +229,13 @@ public class AssetManager {
     public Sound getRandomDrawKatanaSound(){
         Random random = new Random();
         return drawKatanas.get(random.nextInt(drawKatanas.size));
+    }
+
+    public void setPlayable(boolean play){
+        this.playable = play;
+    }
+    public boolean getPlayable(){
+        return playable;
     }
 
     public void addSkin(String name,String path){

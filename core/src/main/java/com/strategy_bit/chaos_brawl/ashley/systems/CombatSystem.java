@@ -94,6 +94,7 @@ public class CombatSystem extends IteratingSystem {
                 AssetManager.getInstance().attackSword.play(1f);
                 c2.setHitPoints(c2.getHitPoints() - c1.getAttackDamage());
             }
+
         }
     }
 

@@ -61,16 +61,15 @@ public class DeleteSystem extends IteratingSystem {
 
                 // and give it to the Explosion entity
                 engine.addEntity(new Particle(transform.getPosition(), "explosion"));
-                AssetManager.getInstance().explosionSound.play(1f);
-
-
+                if(AssetManager.getInstance().getPlayable()){
+                    AssetManager.getInstance().explosionSound.play(1f);
+                }
             } else if (explosionComponent != null) {  // true =  unit
                 // Get Position of object here
                 TransformComponent transform = transformComponentMapper.get(entity);
 
                 // and give it to the Smoke entity
                 engine.addEntity(new Particle(transform.getPosition(), "smoke"));
-                //AssetManager.getInstance().smokeSound.play(1f);    // there is no smokeSound atm, do we need any?
 
             }
 

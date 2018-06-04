@@ -30,6 +30,7 @@ public class ScreenManager {
     private ChaosBrawlGame game;
     private Deque<ScreenEnum> lastScreens;
     private ScreenEnum currentScreenEnum;
+    private Screen gameScreen;
 
     // Singleton: private constructor
     private ScreenManager() {
@@ -68,6 +69,13 @@ public class ScreenManager {
             lastScreens.add(currentScreenEnum);
         }
         switchScreen(screenEnum, params);
+    }
+
+    public void showScreenWithoutDispose(ScreenEnum screenEnum, Object... params){
+        if (currentScreenEnum != null) {
+            lastScreens.add(currentScreenEnum);
+        }
+        switchScreenWithoutDisposing(screenEnum, params);
     }
 
     /**
@@ -124,5 +132,16 @@ public class ScreenManager {
         }
         game.setScreen(newScreen);
         currentScreenEnum = screenEnum;
+    }
+
+    private void switchScreenWithoutDisposing(ScreenEnum screenEnum, Object... params){
+        AbstractScreen newScreen = screenEnum.getScreen(params);
+        newScreen.buildStage();
+        game.setScreen(newScreen);
+        currentScreenEnum = screenEnum;
+    }
+
+    public void showPreviousScreen(){
+        game.setScreen(lastScreens.getLast().getScreen());
     }
 }

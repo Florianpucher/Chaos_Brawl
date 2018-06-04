@@ -2,7 +2,6 @@ package com.strategy_bit.chaos_brawl.screens.game_screens;
 
 import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
-import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
 import com.strategy_bit.chaos_brawl.player_input_output.OtherPlayerController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
@@ -14,13 +13,16 @@ public class MultiplayerGameScreen extends GameScreen {
 
     private BrawlMultiplayer brawlMultiplayer;
     private BrawlConnector listener;
-    private int player;
+    // local player index
+    private int localPlayerIndex;
+    private int map;
 
 
-    public MultiplayerGameScreen(BrawlMultiplayer brawlMultiplayer,  int[] players) {
-        super(1);
+    public MultiplayerGameScreen(BrawlMultiplayer brawlMultiplayer,  int[] players, int map) {
+        super(map);
+        this.map = map;
         this.brawlMultiplayer = brawlMultiplayer;
-        this.player=players[0];
+        this.localPlayerIndex=players[0];
         controllers = new PawnController[players.length];
         this.listener = brawlMultiplayer.getBrawlConnector();
     }
@@ -32,11 +34,7 @@ public class MultiplayerGameScreen extends GameScreen {
 
     @Override
     public void buildStage() {
-        boolean isServer = false;
-        if(brawlMultiplayer instanceof BrawlServer){
-            isServer = true;
-        }
-        manager = new MultiplayerWorld(isServer, brawlMultiplayer, controllers.length);
+        manager = new MultiplayerWorld(brawlMultiplayer, controllers.length, map);
         listener.setMultiplayerInputHandler((MultiplayerInputHandler) manager);
         initializeGame();
     }
@@ -44,20 +42,19 @@ public class MultiplayerGameScreen extends GameScreen {
     @Override
     protected void initializeGame(){
         for (int i = 0; i < controllers.length; i++) {
-            if(i == player){
-                playerController = new PlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
+            if(i == localPlayerIndex){
+                playerController = new PlayerController(i, manager, manager.createSpawnAreaForPlayer(i, 4));
                 manager.setPlayerController(i, playerController);
                 controllers[i] = playerController;
             }else{
-                PawnController otherPlayerController = new OtherPlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
+                PawnController otherPlayerController = new OtherPlayerController(i, manager, manager.createSpawnAreaForPlayer(i, 4));
                 controllers[i] = otherPlayerController;
                 manager.setPlayerController(i, otherPlayerController);
             }
         }
 
         setInitialTargets();
-        if(brawlMultiplayer instanceof BrawlServer){
-            //TODO make this dynamic for multiple maps
+        if(brawlMultiplayer.isHost()){
             manager.initializeGameForPlayers();
         }
     }
