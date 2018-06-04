@@ -3,7 +3,6 @@ package com.strategy_bit.chaos_brawl.networking;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.BaseTest;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
-import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkDiscoveryHandler;
@@ -195,19 +194,23 @@ public class NetworkingTest extends BaseTest{
         for (int i = 0; i < arr.length; i++) {
             arr[i]=i;
         }
-        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,server,arr);
+        //arr {0,1,2,3}
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,server,arr,4);
         for (int i = 0; i < arr.length; i++) {
             arr[i]=(arr[i]+1)%arr.length;
         }
-        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client3,arr);
+        //arr {1,2,3,0}
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client3,arr,4);
         for (int i = 0; i < arr.length; i++) {
             arr[i]=(arr[i]+1)%arr.length;
         }
-        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client2,arr);
+        //arr {2,3,0,1}
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client2,arr,4);
         for (int i = 0; i < arr.length; i++) {
             arr[i]=(arr[i]+1)%arr.length;
         }
-        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client,arr);
+        //arr {3,0,1,2}
+        Mockito.verify(screenmanager,Mockito.times(1)).showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME,client,arr,4);
 
 
 

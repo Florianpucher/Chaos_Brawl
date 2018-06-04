@@ -99,7 +99,7 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
             InitializeGameMessage initializeGameMessage = (InitializeGameMessage) object;
             connectionHandler = null;
             ScreenManager screenManager = ScreenManager.getInstance();
-            screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, brawlClient, initializeGameMessage.controllers);
+            screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, brawlClient, initializeGameMessage.controllers,initializeGameMessage.map);
             return true;
         }
         else if(object instanceof ClientConnectedMessage) {

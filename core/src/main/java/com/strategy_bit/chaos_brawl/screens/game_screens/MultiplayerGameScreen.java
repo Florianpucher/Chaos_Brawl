@@ -14,7 +14,8 @@ public class MultiplayerGameScreen extends GameScreen {
 
     private BrawlMultiplayer brawlMultiplayer;
     private BrawlConnector listener;
-    private int player;
+    // local player index
+    private int localPlayerIndex;
     private int map;
 
 
@@ -22,7 +23,7 @@ public class MultiplayerGameScreen extends GameScreen {
         super(map);
         this.map = map;
         this.brawlMultiplayer = brawlMultiplayer;
-        this.player=players[0];
+        this.localPlayerIndex=players[0];
         controllers = new PawnController[players.length];
         this.listener = brawlMultiplayer.getBrawlConnector();
     }
@@ -46,7 +47,7 @@ public class MultiplayerGameScreen extends GameScreen {
     @Override
     protected void initializeGame(){
         for (int i = 0; i < controllers.length; i++) {
-            if(i == player){
+            if(i == localPlayerIndex){
                 playerController = new PlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
                 manager.setPlayerController(i, playerController);
                 controllers[i] = playerController;
@@ -60,7 +61,7 @@ public class MultiplayerGameScreen extends GameScreen {
         setInitialTargets();
         if(brawlMultiplayer instanceof BrawlServer){
             //TODO make this dynamic for multiple maps
-            manager.initializeGameForPlayers(map, player);
+            manager.initializeGameForPlayers(map, controllers.length);
         }
     }
 

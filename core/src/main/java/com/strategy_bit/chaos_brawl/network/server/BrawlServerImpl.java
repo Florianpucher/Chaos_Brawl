@@ -51,30 +51,37 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     public void sendGameInitializingMessage(){
         Connection[] connections = server.getConnections();
 
+
         int[] playersToSend=new int[connections.length+1];
         for (int i = 0; i < playersToSend.length; i++) {
             playersToSend[i]=i;
+        }
+        int map = 1;
+        if(connections.length +1 == 4){
+            map = 4;
         }
         for (int i = 0; i < connections.length; i++) {
 
             for (int j = 0; j < playersToSend.length; j++) {
                 playersToSend[j]=(playersToSend[j]+1)%playersToSend.length;
             }
-            InitializeGameMessage gameMessage = new InitializeGameMessage(playersToSend);
+            InitializeGameMessage gameMessage = new InitializeGameMessage(playersToSend,map);
             server.sendToTCP(connections[i].getID(), gameMessage);
         }
         for (int j = 0; j < playersToSend.length; j++) {
             playersToSend[j]=(playersToSend[j]+1)%playersToSend.length;
         }
         ScreenManager screenManager = ScreenManager.getInstance();
+        screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, this, playersToSend, map);
+        /*if (playersToSend.length == 2){
 
-        if (playersToSend.length == 2){
-            screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAP_MENU1, this, playersToSend);
+            //screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAP_MENU1, this, playersToSend);
         }
         else {
-            screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAP_MENU_FOUR, this, playersToSend);
-        }
-        //screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, this, playersToSend);
+            screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MULTIPLAYERGAME, this, playersToSend, 4);
+            //screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAP_MENU_FOUR, this, playersToSend);
+        }*/
+
     }
 
     public void sendDataToAllExcept(Connection connection, Message msg) {
