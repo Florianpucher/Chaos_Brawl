@@ -139,22 +139,41 @@ public class Board implements BoardInterface {
         return tilePosition;
     }
 
-    public Boundary createSpawnAreaForPlayer(int playerID){
-        //TODO: modulo 2 for experimental 3-4players
-        playerID=playerID%2;
-        Boundary spawnArea0, spawnArea1;
+    public Boundary createSpawnAreaForPlayer(int playerID, int players){
+        Boundary spawnArea0, spawnArea1, spawnArea2, spawnArea3;
         Array<Vector2> vectorList = new Array<>();
 
-        for (int i = 0; i < AssetManager.getInstance().spawn.size - 1; i = i + 2){
-            vectorList.add(new Vector2(AssetManager.getInstance().spawn.get(i), AssetManager.getInstance().spawn.get(i+1)));
+        if (players == 2){
+            for (int i = 0; i < AssetManager.getInstance().spawn.size - 1; i = i + 2){
+                vectorList.add(new Vector2(AssetManager.getInstance().spawn.get(i), AssetManager.getInstance().spawn.get(i+1)));
+            }
+            spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
+            spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
         }
-        spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
-        spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
+        if (players == 4){
+            for (int i = 0; i < AssetManager.getInstance().spawn4.size - 1; i = i + 2){
+                vectorList.add(new Vector2(AssetManager.getInstance().spawn4.get(i), AssetManager.getInstance().spawn4.get(i+1)));
+            }
+            spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
+            spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
+            spawnArea2 = new Boundary(vectorList.get(8), vectorList.get(9), vectorList.get(10), vectorList.get(11));
+            spawnArea3 = new Boundary(vectorList.get(12), vectorList.get(13), vectorList.get(14), vectorList.get(15));
+        }
+        else{
+            throw new UnsupportedOperationException("Game only supports two player mode at the moment :)");
+        }
 
         if (playerID == 0){
             return spawnArea0;
-        } else if (playerID == 1){
+        }
+        if (playerID == 1){
             return spawnArea1;
+        }
+        if (playerID == 2){
+            return spawnArea2;
+        }
+        else if (playerID == 4){
+            return spawnArea3;
         }
         throw new UnsupportedOperationException("Game only supports two player mode at the moment :)");
     }

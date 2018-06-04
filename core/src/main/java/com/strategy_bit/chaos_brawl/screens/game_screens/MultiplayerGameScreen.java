@@ -43,11 +43,11 @@ public class MultiplayerGameScreen extends GameScreen {
     protected void initializeGame(){
         for (int i = 0; i < controllers.length; i++) {
             if(i == localPlayerIndex){
-                playerController = new PlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
+                playerController = new PlayerController(i, manager, manager.createSpawnAreaForPlayer(i, 4));
                 manager.setPlayerController(i, playerController);
                 controllers[i] = playerController;
             }else{
-                PawnController otherPlayerController = new OtherPlayerController(i, manager, manager.createSpawnAreaForPlayer(i));
+                PawnController otherPlayerController = new OtherPlayerController(i, manager, manager.createSpawnAreaForPlayer(i, 4));
                 controllers[i] = otherPlayerController;
                 manager.setPlayerController(i, otherPlayerController);
             }
