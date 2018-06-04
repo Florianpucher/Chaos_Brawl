@@ -55,6 +55,7 @@ public class AssetManager {
     public Array<Float> config;
     public Array<Float> config2;
     public Array<Float> spawn;
+    public Array<Float> spawn4;
     public Texture victoryScreen;
     public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
@@ -127,12 +128,15 @@ public class AssetManager {
         FileHandle handle = Gdx.files.internal("maps/Config2Players.json");
         FileHandle handle1 = Gdx.files.internal("maps/SpawnAreas2.json");
         FileHandle handle2 = Gdx.files.internal("maps/Config4Players.json");
+        FileHandle handle3 = Gdx.files.internal("maps/SpawnAreas4.json");
         config = new Array<>();
         config2 = new Array<>();
         spawn = new Array<>();
+        spawn4 = new Array<>();
         setArray(config, handle);
         setArray(config2, handle2);
         setArray(spawn, handle1);
+        setArray(spawn4, handle3);
 
 
         // sounds

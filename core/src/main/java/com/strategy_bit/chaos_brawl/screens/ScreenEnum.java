@@ -7,6 +7,7 @@ import com.strategy_bit.chaos_brawl.screens.game_screens.GameScreen;
 import com.strategy_bit.chaos_brawl.screens.game_screens.MultiplayerGameScreen;
 import com.strategy_bit.chaos_brawl.screens.menu_screens.ClientConnectToScreen;
 import com.strategy_bit.chaos_brawl.screens.menu_screens.ClientLobbyScreen;
+import com.strategy_bit.chaos_brawl.screens.menu_screens.FourPlayerMapMenuScreen;
 import com.strategy_bit.chaos_brawl.screens.menu_screens.HostLobbyScreen;
 import com.strategy_bit.chaos_brawl.screens.menu_screens.HostLoungeScreen;
 import com.strategy_bit.chaos_brawl.screens.menu_screens.MainMenuScreen;
@@ -26,8 +27,15 @@ public enum ScreenEnum {
         }
     },
     MAP_MENU {
-        public AbstractScreen getScreen(Object... params) {
-            return new MapMenuScreen();
+        public AbstractScreen getScreen(Object... params) {return new MapMenuScreen();
+        }
+    },
+    MAP_MENU1 {
+        public AbstractScreen getScreen(Object... params) {return new MapMenuScreen((BrawlMultiplayer) params[0], (int[]) params[1]);
+        }
+    },
+    MAP_MENU_FOUR {
+        public AbstractScreen getScreen(Object... params) {return new FourPlayerMapMenuScreen((BrawlMultiplayer) params[0], (int[]) params[1]);
         }
     },
     SPLASH_SCREEN {
@@ -62,7 +70,7 @@ public enum ScreenEnum {
     },
     MULTIPLAYERGAME {
         public AbstractScreen getScreen(Object... params) {
-            return new MultiplayerGameScreen((BrawlMultiplayer) params[0], (int[]) params[1]);
+            return new MultiplayerGameScreen((BrawlMultiplayer) params[0], (int[]) params[1], (int) params[2]);
         }
     },
     GAME {
