@@ -86,7 +86,9 @@ public class CombatSystem extends IteratingSystem {
         }
 
         if (c1.attack() && (c1.isRanged() == false)) {
-            AssetManager.getInstance().attackSword.play(1f);
+            if(AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().attackSword.play(1f);
+            }
             c2.setHitPoints(c2.getHitPoints() - c1.getAttackDamage());
 
         }

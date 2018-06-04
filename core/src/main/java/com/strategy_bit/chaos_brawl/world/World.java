@@ -266,10 +266,16 @@ public class World implements InputHandler {
             bases[teamID] = entity;
         }
         else if (unitId==5||unitId==2){
-            AssetManager.getInstance().drawSword.play(1f);
+            if(AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().drawSword.play(1f);
+            }
+
         }
         else if (unitId==1||unitId==4){
-            AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
+            if(AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
+            }
+
         }
 
         return entity;

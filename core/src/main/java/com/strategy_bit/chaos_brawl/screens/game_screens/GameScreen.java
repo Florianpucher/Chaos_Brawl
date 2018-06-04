@@ -25,6 +25,7 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(int map) {
         this.map = map;
     }
+    private static final String EXIT = "Exit Game";
 
 
     @Override
@@ -32,6 +33,7 @@ public class GameScreen extends AbstractScreen {
         super.buildStage();
         initializeGame();
     }
+
 
     protected void initializeGame(){
         manager = new World(map,2);

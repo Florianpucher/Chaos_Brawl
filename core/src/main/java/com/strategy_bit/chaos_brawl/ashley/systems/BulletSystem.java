@@ -50,7 +50,9 @@ public class BulletSystem extends IteratingSystem {
             TeamGameObjectComponent enemyTeamGameObjectComponent = world.getUnit(bulletComponent.getTargetId()).getComponent(TeamGameObjectComponent.class);
             enemyTeamGameObjectComponent.setHitPoints(enemyTeamGameObjectComponent.getHitPoints() - bulletComponent.getDamage());
             bulletComponent.setDelete(true);
-            AssetManager.getInstance().hitArrow.play(1f);
+            if (AssetManager.getInstance().getPlayable()){
+                AssetManager.getInstance().hitArrow.play(1f);
+            }
         }
     }
 
