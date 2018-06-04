@@ -263,7 +263,7 @@
   },
 
   {
-  "id" : 7,
+  "id" : 8,
   "name": "Tower",
   "cost" : 0,
   "TransformComponent" : {
@@ -300,7 +300,7 @@
 },
 
   {
-    "id" : 8,
+    "id" : 7,
     "name": "Lasertower",
     "cost" : 0,
     "TransformComponent" : {
