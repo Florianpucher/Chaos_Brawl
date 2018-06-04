@@ -67,6 +67,7 @@ public class AssetManager {
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
     public Sound victory;
     public Sound defeat;
+    public Sound critHit;
     public Sound attackBow;
     public Sound attackSword;
     public Sound attackFireball;
@@ -150,6 +151,7 @@ public class AssetManager {
         defeat =Gdx.audio.newSound(Gdx.files.internal("sounds/Defeat.mp3"));
         upgradeExecuted =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecuted.wav"));
         upgradeExecutedTower =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecutedTower.wav"));
+        critHit =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/critHit.wav"));
         attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
         attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav"));
         attackFireball =Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/fireball.wav"));
