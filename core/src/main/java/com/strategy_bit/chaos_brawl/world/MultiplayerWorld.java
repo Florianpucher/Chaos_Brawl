@@ -105,6 +105,9 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
             multiplayer.sendEntityDeleteMsg(unitID);
         }else{
             Entity unit = units.get(unitID);
+            if(unit==null){
+                return;
+            }
             unit.getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
             deleteSystem.removeEntity(unit);
         }
