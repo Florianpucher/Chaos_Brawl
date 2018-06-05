@@ -30,11 +30,13 @@ import java.util.Random;
 
 public class AssetManager {
     private static final String UNIT_PATH = "units/";
+    private static final String ABILITY_JSON_PATH = "configs/abilities.json";
     private static final String UI_PATH = "user_interface/";
     private static final String ENVIRONMENT_PATH = "environment/";
     private static final String ANIM_PATH = "animations/";
 
     public UnitManager unitManager;
+    public AbilityManager abilityManager;
     public Map<String, TextureRegion> skins;
     public Map<String, Sound> sounds;
     public  Skin defaultSkin;
@@ -82,10 +84,14 @@ public class AssetManager {
 
     private AssetManager() {
         skins = new HashMap<>();
+        sounds=new HashMap<>();
         unitManager=new UnitManager();
+        abilityManager=new AbilityManager();
     }
 
     public  void loadAssets(){
+
+        abilityManager.readFile(ABILITY_JSON_PATH);
 
 
         //unit stats

@@ -12,6 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entities.Ability;
 import com.strategy_bit.chaos_brawl.ashley.entities.Projectiles;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletDeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
@@ -20,6 +21,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
+import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
@@ -105,6 +107,19 @@ public class World implements InputHandler {
             createEntityWorldCoordinates(new Vector2(spawn.get(offset+4),spawn.get(offset+5)), 6,  playerControllers[j].getTeamID());
             offset += 6;
         }
+    }
+
+    public void createAbility(int abilityId, int teamId, Vector2 v) throws UnsupportedOperationException{
+        if (!AssetManager.getInstance().abilityManager.abilityConfigHashMap.containsKey(abilityId)){
+            throw new UnsupportedOperationException("Ability not found");
+        }
+        Entity entity=new Entity();
+        Ability.setComponents(entity,AssetManager.getInstance().abilityManager.abilityConfigHashMap.get(abilityId),teamId,v);
+        engine.addEntity(entity);
+    }
+
+    public Vector2 randomPositionOnWorld(){
+        return new Vector2((float) (Math.random()* WorldSettings.FRUSTUM_WIDTH),(float) (Math.random()*WorldSettings.FRUSTUM_HEIGHT));
     }
 
 
@@ -254,6 +269,12 @@ public class World implements InputHandler {
         }
 
 
+    }
+
+    @Override
+    public boolean checkAbility(Vector2 screenCoordinates, int teamId) {
+
+        return false;
     }
 
     Entity createEntityInternal(int unitId, long unitID, Vector2 worldCoordinates, int teamID){

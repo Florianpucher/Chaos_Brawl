@@ -1,0 +1,11 @@
+[
+  {
+    "id" : 0,
+    "name": "Ability1",
+    "cost" : 1,
+    "TextureComponent" : {
+      "skinName":"abilitySkin",
+      "skinPath" :"abilities/unit_archer.png"
+    }
+  }
+]
