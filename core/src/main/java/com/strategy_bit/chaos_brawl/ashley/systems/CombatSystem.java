@@ -82,16 +82,20 @@ public class CombatSystem extends IteratingSystem {
         }
 
         if (c1.isRanged() && (c1.isRangedAttackType() == 13)) {
-            //ready to fire
+            //Lasertower nonstop attack
             world.createBulletWorldCoordinates(t1.getPosition(), world.getIdOfUnit(targetEnemy), (float) c1.getAttackDamage(), 13);
         }
 
         if (c1.attack() && (c1.isRanged() == false )) {
             if (c1.isRangedAttackType() == 99 && (h1.getHitPoints() < h1.getMaxHP()/2)) {
-                AssetManager.getInstance().critHit.play(1f);
+                if (AssetManager.getInstance().getPlayable()) {
+                    AssetManager.getInstance().critHit.play(1f);
+                }
                 c2.setHitPoints(c2.getHitPoints() - (c1.getAttackDamage() * 2));
             } else {
-                AssetManager.getInstance().attackSword.play(1f);
+                if (AssetManager.getInstance().getPlayable()) {
+                    AssetManager.getInstance().attackSword.play(1f);
+                }
                 c2.setHitPoints(c2.getHitPoints() - c1.getAttackDamage());
             }
 

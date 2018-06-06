@@ -1,5 +1,12 @@
 [
   {
+    "_comment": "UNIT TYPES: <1>  =  Units Tier 1  <2> =  Units Tier 2  ",
+    "_comment": "UNIT TYPES: <11> =  Tower Tier 1  <22> =  Tower Tier 2  ",
+    "_comment": "UNIT TYPES: <3>  =  Base  ",
+    "_comment": "UNIT TYPES: <4>  =  Projectile  "
+  },
+
+  {
     "id" : 0,
     "name": "Archer",
     "cost" : 10,
@@ -24,7 +31,8 @@
       "rangedAttackType" : 10
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 50
+      "hitPoints" : 50,
+      "unitType" : 1
 
     },
     "ExplosionComponent" : {
@@ -62,7 +70,8 @@
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 75
+      "hitPoints" : 75,
+      "unitType" : 1
 
     },
     "ExplosionComponent" : {
@@ -100,7 +109,8 @@
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 120
+      "hitPoints" : 120,
+      "unitType" : 1
 
     },
     "ExplosionComponent" : {
@@ -138,7 +148,8 @@
       "rangedAttackType" : 11
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 60
+      "hitPoints" : 60,
+      "unitType" : 2
 
     },
     "ExplosionComponent" : {
@@ -176,7 +187,8 @@
       "rangedAttackType" : 99
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 95
+      "hitPoints" : 95,
+      "unitType" : 2
 
     },
     "ExplosionComponent" : {
@@ -214,7 +226,8 @@
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 150
+      "hitPoints" : 150,
+      "unitType" : 2
 
     },
     "ExplosionComponent" : {
@@ -250,7 +263,8 @@
       "rangedAttackType" : 12
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 1000
+      "hitPoints" : 1000,
+      "unitType" : 3
 
     },
     "ExplosionComponent" : {
@@ -284,7 +298,8 @@
     "rangedAttackType" : 10
   },
   "TeamGameObjectComponent" : {
-    "hitPoints" : 100
+    "hitPoints" : 100,
+    "unitType" : 11
 
   },
   "ExplosionComponent" : {
@@ -321,7 +336,8 @@
       "rangedAttackType" : 13
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 120
+      "hitPoints" : 120,
+      "unitType" : 22
 
     },
     "ExplosionComponent" : {
@@ -355,6 +371,10 @@
     },
     "MovementComponent" : {
       "speed" : 10
+    },
+    "TeamGameObjectComponent" : {
+      "unitType" : 4
+
     }
 
   },
@@ -376,6 +396,10 @@
     },
     "MovementComponent" : {
       "speed" : 5
+    },
+    "TeamGameObjectComponent" : {
+      "unitType" : 4
+
     }
 
   },
@@ -397,6 +421,10 @@
     },
     "MovementComponent" : {
       "speed" : 10
+    },
+    "TeamGameObjectComponent" : {
+      "unitType" : 4
+
     }
 
   },
@@ -419,6 +447,10 @@
     },
     "MovementComponent" : {
       "speed" : 5
+    },
+    "TeamGameObjectComponent" : {
+      "unitType" : 4
+
     }
 
   },

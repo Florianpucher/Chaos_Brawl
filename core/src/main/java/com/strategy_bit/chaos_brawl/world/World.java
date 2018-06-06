@@ -258,6 +258,19 @@ public class World implements InputHandler {
 
     }
 
+    @Override
+    public void updateTowers(int playerID) {
+        UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(7);
+        if (unitConfig.getTeamId() == playerID){
+            unitConfig.setId(8);
+
+
+
+
+        }
+
+    }
+
     Entity createEntityInternal(int unitId, long unitID, Vector2 worldCoordinates, int teamID){
         Entity entity = spawner.createNewUnit(unitId,teamID,worldCoordinates);
         engine.addEntity(entity);

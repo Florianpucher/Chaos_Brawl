@@ -17,8 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 /**
  * holds information of the gameHUD
@@ -59,8 +61,12 @@ public class GameHUD extends Table {
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
-    public GameHUD(Boundary spawnArea) {
+    private PlayerController playerController;
+
+    public GameHUD(Boundary spawnArea ) {
         super(AssetManager.getInstance().defaultSkin);
+        this.playerController = playerController;
+
         AssetManager assetManager = AssetManager.getInstance();
         initializeNonSpawnAreaShadow(spawnArea);
 
@@ -143,11 +149,12 @@ public class GameHUD extends Table {
         } else if (upgradeExecuted && input == UPGRADE_TOWER){
             AssetManager.getInstance().upgradeExecutedTower.play(1f);
             btnUpgradeTower.remove();
+            playerController.updateTowers();
         }
 
 
     }
-    
+
 
     private ClickListener listener = new ClickListener() {
         @Override

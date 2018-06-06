@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class UnitConfig {
+    private int id;
     private String name;
     private float cost;
     private Vector2 position;
@@ -22,6 +23,10 @@ public class UnitConfig {
     private boolean hasBoundaryComponent;
     private boolean hasExplosionComponent;
     private boolean hasUpgradeComponent;
+
+    public void setId(int id) { this.id = id;}
+
+    public int getId () { return id; }
 
     public Vector2 getPosition() {
         return position;

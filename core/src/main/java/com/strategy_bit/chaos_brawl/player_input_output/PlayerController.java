@@ -144,4 +144,8 @@ public class PlayerController extends PawnController implements InputProcessor {
             Gdx.app.log("PLAYER_CONTROLLER", String.valueOf(targetIndex));
         }
     }
+
+    public void updateTowers(){
+        inputHandler.updateTowers(teamID);
+    }
 }
