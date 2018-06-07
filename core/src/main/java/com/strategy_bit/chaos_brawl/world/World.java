@@ -361,6 +361,11 @@ public class World implements InputHandler {
 
     @Override
     public void updateMarker(int t){
-        marker.getComponent(TransformComponent.class).setPosition(bases[t].getComponent(TransformComponent.class).getPosition());
+        for (Entity base :
+                bases) {
+            if(base!=null&&base.getComponent(TeamGameObjectComponent.class).getTeamId()==t){
+                marker.getComponent(TransformComponent.class).setPosition(base.getComponent(TransformComponent.class).getPosition());
+            }
+        }
     }
 }
