@@ -12,6 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entities.CurrentTargetMarker;
 import com.strategy_bit.chaos_brawl.ashley.entities.Projectiles;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletDeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
@@ -55,6 +56,7 @@ public class World implements InputHandler {
     protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
+    protected Entity marker;
 
     boolean endGame = false;
     private int players;
@@ -68,6 +70,8 @@ public class World implements InputHandler {
         this.players = players;
 
         createEngine();
+        marker=new CurrentTargetMarker(new Vector2(0,0));
+        engine.addEntity(marker);
         createWorld(map);
     }
 
@@ -76,6 +80,8 @@ public class World implements InputHandler {
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[2];
         createEngine();
+        marker=new CurrentTargetMarker(new Vector2(0,0));
+        engine.addEntity(marker);
         createWorld(1);
     }
 
@@ -351,5 +357,15 @@ public class World implements InputHandler {
     }
     public Camera getCamera() {
         return camera;
+    }
+
+    @Override
+    public void updateMarker(int t){
+        for (Entity base :
+                bases) {
+            if(base!=null&&base.getComponent(TeamGameObjectComponent.class).getTeamId()==t){
+                marker.getComponent(TransformComponent.class).setPosition(base.getComponent(TransformComponent.class).getPosition());
+            }
+        }
     }
 }

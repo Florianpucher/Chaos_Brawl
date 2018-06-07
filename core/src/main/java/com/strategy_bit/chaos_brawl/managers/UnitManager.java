@@ -60,11 +60,9 @@ public class UnitManager {
             AssetManager.getInstance().addSound(unitConfig.getString(SOUND_NAME), unitConfig.getString(SOUND_PATH));
             config.setSound(AssetManager.getInstance().sounds.get(unitConfig.getString(SOUND_NAME)));
         }
-        if (unitConfig.has(TEXTURE_COMPONENT)) {
-            if (unitConfig.get(TEXTURE_COMPONENT).has(SKIN_PATH) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_NAME)) {
-                AssetManager.getInstance().addSkin(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME), unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_PATH));
-                config.setSkin(AssetManager.getInstance().skins.get(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME)));
-            }
+        if (unitConfig.has(TEXTURE_COMPONENT) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_PATH) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_NAME)) {
+            AssetManager.getInstance().addSkin(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME), unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_PATH));
+            config.setSkin(AssetManager.getInstance().skins.get(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME)));
         }
         if (unitConfig.has(MOVEMENT_COMPONENT)) {
             config.setMovementComponent(true);
@@ -89,10 +87,8 @@ public class UnitManager {
                 config.setRangedAttackType(unitConfig.get(COMBAT_COMPONENT).getInt(RANGED_ATTACK_TYPE));
             }
         }
-        if (unitConfig.has(TEAM_GAME_OBJECT_COMPONENT)) {
-            if (unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(HIT_POINTS)) {
-                config.setHitPoints(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getFloat(HIT_POINTS));
-            }
+        if (unitConfig.has(TEAM_GAME_OBJECT_COMPONENT) && unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(HIT_POINTS)) {
+            config.setHitPoints(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getFloat(HIT_POINTS));
         }
         if (unitConfig.has(BOUNDARY_COMPONENT)) {
             config.setBoundaryComponent(true);

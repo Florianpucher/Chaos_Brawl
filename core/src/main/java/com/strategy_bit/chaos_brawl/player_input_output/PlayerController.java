@@ -144,4 +144,10 @@ public class PlayerController extends PawnController implements InputProcessor {
             Gdx.app.log("PLAYER_CONTROLLER", String.valueOf(targetIndex));
         }
     }
+
+    @Override
+    public void setCurrentTargetTeam(int currentTargetTeam) {
+        super.setCurrentTargetTeam(currentTargetTeam);
+        inputHandler.updateMarker(currentTargetTeam);
+    }
 }

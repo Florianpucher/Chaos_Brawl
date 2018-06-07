@@ -5,19 +5,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class UnitConfig {
     //default values
-    public final static String DEFAULT_NAME="NA";
-    public final static float DEFAULT_COST=1f;
-    public final static float DEFAULT_SPEED=1f;
-    public final static float DEFAULT_ATTACK_RADIUS=1f;
-    public final static float DEFAULT_ATTACK_SPEED=1f;
-    public final static float DEFAULT_ATTACK_DAMAGE=1f;
-    public final static float DEFAULT_HIT_POINTS=1f;
-    public final static boolean DEFAULT_RANGED=false;
-    public final static boolean DEFAULT_MOVEMENT_COMPONENT =false;
-    public final static boolean DEFAULT_BOUNDARY_COMPONENT =false;
-    public final static boolean DEFAULT_EXPLOSION_COMPONENT =false;
-    public final static boolean DEFAULT_UPGRADE_COMPONENT =false;
-    public final static int DEFAULT_RANGED_ATTACK_TYPE =0;
+    public static final String DEFAULT_NAME="NA";
+    public static final float DEFAULT_COST=1f;
+    public static final float DEFAULT_SPEED=1f;
+    public static final float DEFAULT_ATTACK_RADIUS=1f;
+    public static final float DEFAULT_ATTACK_SPEED=1f;
+    public static final float DEFAULT_ATTACK_DAMAGE=1f;
+    public static final float DEFAULT_HIT_POINTS=1f;
+    public static final boolean DEFAULT_RANGED=false;
+    public static final boolean DEFAULT_MOVEMENT_COMPONENT =false;
+    public static final boolean DEFAULT_BOUNDARY_COMPONENT =false;
+    public static final boolean DEFAULT_EXPLOSION_COMPONENT =false;
+    public static final boolean DEFAULT_UPGRADE_COMPONENT =false;
+    public static final int DEFAULT_RANGED_ATTACK_TYPE =0;
 
     //private fields
     private String name;

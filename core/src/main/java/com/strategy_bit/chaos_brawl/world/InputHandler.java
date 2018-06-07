@@ -32,4 +32,6 @@ public interface InputHandler {
      * @param teamID to which team/player this unit belongs to
      */
     void createEntityWorldCoordinates(Vector2 worldCoordinates, int unitId, int teamID);
+
+    void updateMarker(int t);
 }
