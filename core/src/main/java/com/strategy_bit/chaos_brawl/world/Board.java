@@ -173,11 +173,21 @@ public class Board implements BoardInterface {
         throw new UnsupportedOperationException("Game only supports up to 4 players");
     }
 
-    public Array<Float> getAsset(int asset){
+    public Array<Vector2> getAsset(int asset){
+        Array<Vector2> array = new Array<>();
         switch (asset){
-            case 0: return AssetManager.getInstance().config;
 
-            case 1: return AssetManager.getInstance().config2;
+            case 0:
+                for (int i = 0; i < AssetManager.getInstance().config.size; i = i + 2) {
+                    array.add( new Vector2(AssetManager.getInstance().config.get(i), AssetManager.getInstance().config.get(i + 1)));
+                }
+                return array;
+
+            case 1:
+                for (int i = 0; i < AssetManager.getInstance().config2.size; i = i + 2) {
+                    array.add( new Vector2(AssetManager.getInstance().config2.get(i), AssetManager.getInstance().config.get(i + 1)));
+                }
+                return array;
 
         default: throw new UnsupportedOperationException("Can't play with this amount of players");
         }
