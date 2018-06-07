@@ -3,12 +3,6 @@
     "id" : 0,
     "name": "Archer",
     "cost" : 10,
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"archerSkin",
       "skinPath" :"units/unit_archer.png"
@@ -41,12 +35,6 @@
     "id" : 1,
     "name": "SwordFighter",
     "cost" : 8,
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"swordFighterSkin",
       "skinPath" :"units/unit_sword_fighter.png"
@@ -79,12 +67,6 @@
     "id" : 2,
     "name": "Knight",
     "cost" : 20,
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"knightSkin",
       "skinPath" :"units/unit_knight.png"
@@ -117,12 +99,6 @@
     "id" : 3,
     "name": "Mage",
     "cost" : 10,
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"mageSkin",
       "skinPath" :"units/unit_mage.png"
@@ -155,12 +131,6 @@
     "id" : 4,
     "name": "Berserker",
     "cost" : 8,
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"berserkerSkin",
       "skinPath" :"units/unit_berserker.png"
@@ -193,12 +163,6 @@
     "id" : 5,
     "name": "Templar",
     "cost" : 20,
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"templarSkin",
       "skinPath" :"units/unit_templar.png"
@@ -232,12 +196,6 @@
     "id" : 6,
     "name": "Base",
     "cost" : 0,
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"mainTowerSkin",
       "skinPath" :"buildings/wall.png"
@@ -266,12 +224,6 @@
   "id" : 8,
   "name": "Tower",
   "cost" : 0,
-  "TransformComponent" : {
-    "position" : {
-      "x" : 0,
-      "y" : 0
-    }
-  },
   "TextureComponent" : {
     "skinName":"ballistaTowerSkin",
     "skinPath" :"buildings/ballista_tower.png"
@@ -303,12 +255,6 @@
     "id" : 7,
     "name": "Lasertower",
     "cost" : 0,
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"laserTowerSkin",
       "skinPath" :"buildings/laser_tower.png"
@@ -343,12 +289,6 @@
     "name": "arrow",
     "soundName" : "attackBow",
     "soundPath" : "sounds/Projectiles/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav",
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"projectileSkin",
       "skinPath" :"units/arrow.png"
@@ -364,12 +304,6 @@
     "name": "fireBall",
     "soundName" : "attackFireball",
     "soundPath" : "sounds/Projectiles/fireball.wav",
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"fireballSkin",
       "skinPath" :"units/fireball.png"
@@ -385,12 +319,6 @@
     "name": "cannonBall",
     "soundName" : "attackCannonball",
     "soundPath" : "sounds/Projectiles/cannonball.wav",
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"cannonSkin",
       "skinPath" :"units/cannonBall.png"
@@ -407,12 +335,6 @@
     "name": "Laser",
     "soundName" : "attackLaser",
     "soundPath" : "sounds/Projectiles/laser2.wav",
-    "TransformComponent" : {
-      "position" : {
-        "x" : 0,
-        "y" : 0
-      }
-    },
     "TextureComponent" : {
       "skinName":"laserSkin",
       "skinPath" :"units/laser.png"

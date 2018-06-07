@@ -15,9 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-
-import java.awt.Font;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

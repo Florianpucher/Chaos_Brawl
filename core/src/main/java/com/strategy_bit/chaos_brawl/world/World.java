@@ -288,7 +288,7 @@ public class World implements InputHandler {
         UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
         unitConfig.getSound().play(0.6f);
 
-            Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
+        Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
 
         createProjectile(projectile);
     }

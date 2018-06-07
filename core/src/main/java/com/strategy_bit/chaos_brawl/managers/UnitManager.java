@@ -2,7 +2,6 @@ package com.strategy_bit.chaos_brawl.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
@@ -13,36 +12,27 @@ import java.util.Map;
 public class UnitManager {
     public Map<Integer, UnitConfig> unitConfigHashMap;
 
-    private final String ID = "id";
-    private final String NAME = "name";
-    private final String COST = "cost";
-    private final String TRANSFORMCOMPONENT = "TransformComponent";
-    private final String MOVEMENTCOMPONENT = "MovementComponent";
-    private final String COMBATCOMPONENT = "CombatComponent";
-    private final String TEXTURECOMPONENT = "TextureComponent";
-    private final String TEAMGAMEOBJECTCOMPONENT = "TeamGameObjectComponent";
-    private final String BOUNDARYCOMPONENT = "BoundaryComponent";
-    private final String EXPLOSIONCOMPONENT = "ExplosionComponent";
-    private final String UPGRADECOMPONENT = "UpgradeComponent";
-    private final String POSITION = "position";
-    private final String X = "x";
-    private final String Y = "y";
-    private final String SKINNAME = "skinName";
-    private final String SKINPATH = "skinPath";
-    private final String SPEED = "speed";
-    private final String ATTACKRADIUS = "attackRadius";
-    private final String ATTACKSPEED = "attackSpeed";
-    private final String ATTACKDAMAGE = "attackDamage";
-    private final String RANGED = "ranged";
-    private final String RANGEDATTACKTYPE = "rangedAttackType";
-    private final String HITPOINTS = "hitPoints";
-    private final String TEAMID = "teamId";
-    private final String SOUNDPATH = "soundPath";
-    private final String SOUNDNAME = "soundName";
-
-
-
-
+    private static final String ID = "id";
+    private static final String NAME = "name";
+    private static final String COST = "cost";
+    private static final String MOVEMENT_COMPONENT = "MovementComponent";
+    private static final String COMBAT_COMPONENT = "CombatComponent";
+    private static final String TEXTURE_COMPONENT = "TextureComponent";
+    private static final String TEAM_GAME_OBJECT_COMPONENT = "TeamGameObjectComponent";
+    private static final String BOUNDARY_COMPONENT = "BoundaryComponent";
+    private static final String EXPLOSION_COMPONENT = "ExplosionComponent";
+    private static final String UPGRADE_COMPONENT = "UpgradeComponent";
+    private static final String SKIN_NAME = "skinName";
+    private static final String SKIN_PATH = "skinPath";
+    private static final String SPEED = "speed";
+    private static final String ATTACK_RADIUS = "attackRadius";
+    private static final String ATTACK_SPEED = "attackSpeed";
+    private static final String ATTACK_DAMAGE = "attackDamage";
+    private static final String RANGED = "ranged";
+    private static final String RANGED_ATTACK_TYPE = "rangedAttackType";
+    private static final String HIT_POINTS = "hitPoints";
+    private static final String SOUND_PATH = "soundPath";
+    private static final String SOUND_NAME = "soundName";
 
     public void readFile(String file) {
         //TODO Hellmuth reduce cognitive complexity of method
@@ -53,88 +43,67 @@ public class UnitManager {
         JsonValue.JsonIterator iterator = jsonValue.iterator();
         while (iterator.hasNext()) {
             JsonValue unitConfig = iterator.next();
-            if (unitConfig.has(ID)) {
-                UnitConfig config = new UnitConfig();
-                if (unitConfig.has(NAME)){
-                    config.setName(unitConfig.getString(NAME));
-                }
-                if (unitConfig.has(COST)){
-                    config.setCost(unitConfig.getFloat(COST));
-                }
-                if (unitConfig.has(SOUNDPATH)&&unitConfig.has(SOUNDNAME)){
-                    AssetManager.getInstance().addSound(unitConfig.getString(SOUNDNAME),unitConfig.getString(SOUNDPATH));
-                    config.setSound(AssetManager.getInstance().sounds.get(unitConfig.getString(SOUNDNAME)));
-
-                }
-                if (unitConfig.has(TRANSFORMCOMPONENT)){
-                    if (unitConfig.get(TRANSFORMCOMPONENT).has(POSITION)){
-                        config.setPosition(new Vector2(unitConfig.get(TRANSFORMCOMPONENT).get(POSITION).getFloat(X),unitConfig.get(TRANSFORMCOMPONENT).get(POSITION).getFloat(Y)));
-                    }else {
-                        config.setPosition(new Vector2(0,0));
-                    }
-                }
-                if (unitConfig.has(TEXTURECOMPONENT)){
-                    if (unitConfig.get(TEXTURECOMPONENT).has(SKINPATH)&&unitConfig.get(TEXTURECOMPONENT).has(SKINNAME)){
-                        AssetManager.getInstance().addSkin(unitConfig.get(TEXTURECOMPONENT).getString(SKINNAME),unitConfig.get(TEXTURECOMPONENT).getString(SKINPATH));
-                        config.setSkin(AssetManager.getInstance().skins.get(unitConfig.get(TEXTURECOMPONENT).getString(SKINNAME)));
-                    }
-                }
-                if (unitConfig.has(MOVEMENTCOMPONENT)){
-                    config.setMovementComponent(true);
-                    if (unitConfig.get(MOVEMENTCOMPONENT).has(SPEED)){
-                        config.setSpeed(unitConfig.get(MOVEMENTCOMPONENT).getFloat(SPEED));
-                    }
-                }else {
-                    config.setMovementComponent(false);
-                }
-                if (unitConfig.has(COMBATCOMPONENT)){
-                    if (unitConfig.get(COMBATCOMPONENT).has(ATTACKRADIUS)){
-                        config.setAttackRadius(unitConfig.get(COMBATCOMPONENT).getFloat(ATTACKRADIUS));
-                    }
-                    if (unitConfig.get(COMBATCOMPONENT).has(ATTACKSPEED)){
-                        config.setAttackSpeed(unitConfig.get(COMBATCOMPONENT).getFloat(ATTACKSPEED));
-                    }
-                    if (unitConfig.get(COMBATCOMPONENT).has(ATTACKDAMAGE)){
-                        config.setAttackDamage(unitConfig.get(COMBATCOMPONENT).getFloat(ATTACKDAMAGE));
-                    }
-                    if (unitConfig.get(COMBATCOMPONENT).has(RANGED)){
-                        config.setRanged(unitConfig.get(COMBATCOMPONENT).getBoolean(RANGED));
-                    }else {
-                        config.setRanged(false);
-                    }
-                    if (unitConfig.get(COMBATCOMPONENT).has(RANGEDATTACKTYPE)){
-                        config.setRangedAttackType(unitConfig.get(COMBATCOMPONENT).getInt(RANGEDATTACKTYPE));
-                    }else {
-                        config.setRangedAttackType(0);
-                    }
-                }
-                if (unitConfig.has(TEAMGAMEOBJECTCOMPONENT)){
-                    if (unitConfig.get(TEAMGAMEOBJECTCOMPONENT).has(HITPOINTS)){
-                        config.setHitPoints(unitConfig.get(TEAMGAMEOBJECTCOMPONENT).getFloat(HITPOINTS));
-                    }
-                    if (unitConfig.get(TEAMGAMEOBJECTCOMPONENT).has(TEAMID)){
-                        config.setTeamId(unitConfig.get(TEAMGAMEOBJECTCOMPONENT).getInt(TEAMID));
-                    }else {
-                        config.setTeamId(-1);
-                    }
-                }
-                if (unitConfig.has(BOUNDARYCOMPONENT)){
-                    config.setBoundaryComponent(true);
-                }else {
-                    config.setBoundaryComponent(false);
-                }
-                if (unitConfig.has(EXPLOSIONCOMPONENT)){
-                    config.setExplosionComponent(true);
-                }else {
-                    config.setExplosionComponent(false);
-                }
-                if (unitConfig.has(UPGRADECOMPONENT)){
-                    config.setUpgradeComponent(true);
-                }else {
-                    config.setUpgradeComponent(false);
-                }
-                unitConfigHashMap.put(unitConfig.getInt(ID),config);
-            }
+            addToConfigs(unitConfig);
         }
     }
+
+    private void addToConfigs(JsonValue unitConfig) {
+        if (!unitConfig.has(ID)) return;
+        UnitConfig config = new UnitConfig();
+        if (unitConfig.has(NAME)) {
+            config.setName(unitConfig.getString(NAME));
+        }
+        if (unitConfig.has(COST)) {
+            config.setCost(unitConfig.getFloat(COST));
+        }
+        if (unitConfig.has(SOUND_PATH) && unitConfig.has(SOUND_NAME)) {
+            AssetManager.getInstance().addSound(unitConfig.getString(SOUND_NAME), unitConfig.getString(SOUND_PATH));
+            config.setSound(AssetManager.getInstance().sounds.get(unitConfig.getString(SOUND_NAME)));
+        }
+        if (unitConfig.has(TEXTURE_COMPONENT)) {
+            if (unitConfig.get(TEXTURE_COMPONENT).has(SKIN_PATH) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_NAME)) {
+                AssetManager.getInstance().addSkin(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME), unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_PATH));
+                config.setSkin(AssetManager.getInstance().skins.get(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME)));
+            }
+        }
+        if (unitConfig.has(MOVEMENT_COMPONENT)) {
+            config.setMovementComponent(true);
+            if (unitConfig.get(MOVEMENT_COMPONENT).has(SPEED)) {
+                config.setSpeed(unitConfig.get(MOVEMENT_COMPONENT).getFloat(SPEED));
+            }
+        }
+        if (unitConfig.has(COMBAT_COMPONENT)) {
+            if (unitConfig.get(COMBAT_COMPONENT).has(ATTACK_RADIUS)) {
+                config.setAttackRadius(unitConfig.get(COMBAT_COMPONENT).getFloat(ATTACK_RADIUS));
+            }
+            if (unitConfig.get(COMBAT_COMPONENT).has(ATTACK_SPEED)) {
+                config.setAttackSpeed(unitConfig.get(COMBAT_COMPONENT).getFloat(ATTACK_SPEED));
+            }
+            if (unitConfig.get(COMBAT_COMPONENT).has(ATTACK_DAMAGE)) {
+                config.setAttackDamage(unitConfig.get(COMBAT_COMPONENT).getFloat(ATTACK_DAMAGE));
+            }
+            if (unitConfig.get(COMBAT_COMPONENT).has(RANGED)) {
+                config.setRanged(unitConfig.get(COMBAT_COMPONENT).getBoolean(RANGED));
+            }
+            if (unitConfig.get(COMBAT_COMPONENT).has(RANGED_ATTACK_TYPE)) {
+                config.setRangedAttackType(unitConfig.get(COMBAT_COMPONENT).getInt(RANGED_ATTACK_TYPE));
+            }
+        }
+        if (unitConfig.has(TEAM_GAME_OBJECT_COMPONENT)) {
+            if (unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(HIT_POINTS)) {
+                config.setHitPoints(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getFloat(HIT_POINTS));
+            }
+        }
+        if (unitConfig.has(BOUNDARY_COMPONENT)) {
+            config.setBoundaryComponent(true);
+        }
+        if (unitConfig.has(EXPLOSION_COMPONENT)) {
+            config.setExplosionComponent(true);
+        }
+        if (unitConfig.has(UPGRADE_COMPONENT)) {
+            config.setUpgradeComponent(true);
+        }
+        unitConfigHashMap.put(unitConfig.getInt(ID), config);
+    }
 }
+
