@@ -15,6 +15,10 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     private BrawlMultiplayer multiplayer;
     private boolean isInitialized = false;
 
+    public MultiplayerWorld() {
+        super();
+    }
+
     public MultiplayerWorld(BrawlMultiplayer multiplayer, int players, int map) {
         super(map, players);
 

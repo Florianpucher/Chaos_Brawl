@@ -33,11 +33,13 @@ public class AssetManager {
     private static final String UI_PATH = "user_interface/";
     private static final String ENVIRONMENT_PATH = "environment/";
     private static final String ANIM_PATH = "animations/";
+    private static final String MARKER_PATH = "markers/";
 
     private boolean playable;
 
     public BitmapFont font;
     public UnitManager unitManager;
+    public Map<String, TextureRegion> markers;
     public Map<String, TextureRegion> skins;
     public Map<String, Sound> sounds;
     public  Skin defaultSkin;
@@ -90,9 +92,11 @@ public class AssetManager {
         skins = new HashMap<>();
         unitManager=new UnitManager();
         sounds = new HashMap<>();
+        markers=new HashMap<>();
     }
 
     public  void loadAssets(){
+        markers.put("default",new TextureRegion(new Texture(MARKER_PATH+"default.png")));
 
 
         //unit stats
@@ -188,6 +192,12 @@ public class AssetManager {
     public void dispose() {
         defaultSkin.dispose();
         Iterator it = skins.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry pair = (Map.Entry)it.next();
+            ((TextureRegion)(pair.getValue())).getTexture().dispose();
+            it.remove();
+        }
+        it=markers.entrySet().iterator();
         while (it.hasNext()){
             Map.Entry pair = (Map.Entry)it.next();
             ((TextureRegion)(pair.getValue())).getTexture().dispose();

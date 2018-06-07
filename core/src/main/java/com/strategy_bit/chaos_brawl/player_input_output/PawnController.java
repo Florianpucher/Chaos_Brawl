@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.player_input_output;
 
 
+import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
@@ -61,6 +62,7 @@ public abstract class PawnController {
 
     public void setCurrentTargetTeam(int currentTargetTeam) {
         this.currentTargetTeam = currentTargetTeam;
+        inputHandler.updateMarker(currentTargetTeam);
     }
 
 
