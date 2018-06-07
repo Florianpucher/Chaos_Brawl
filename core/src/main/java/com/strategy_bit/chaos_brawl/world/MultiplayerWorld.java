@@ -9,6 +9,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
+import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
 public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
@@ -48,6 +49,12 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
                 }
             }
             if(basesAreUp){
+                for (PawnController cont :
+                        playerControllers) {
+                    if (cont instanceof PlayerController){
+                        updateMarker(cont.getCurrentTargetTeam());
+                    }
+                }
                 isInitialized = true;
             }
         }else{

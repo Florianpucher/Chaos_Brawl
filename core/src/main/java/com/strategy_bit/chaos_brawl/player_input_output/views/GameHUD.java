@@ -61,6 +61,7 @@ public class GameHUD extends Table {
 
     public GameHUD(Boundary spawnArea) {
         super(AssetManager.getInstance().defaultSkin);
+        nextUnitType=-1;
         AssetManager assetManager = AssetManager.getInstance();
         initializeNonSpawnAreaShadow(spawnArea);
 

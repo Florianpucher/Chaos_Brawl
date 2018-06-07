@@ -62,7 +62,6 @@ public abstract class PawnController {
 
     public void setCurrentTargetTeam(int currentTargetTeam) {
         this.currentTargetTeam = currentTargetTeam;
-        inputHandler.updateMarker(currentTargetTeam);
     }
 
 
