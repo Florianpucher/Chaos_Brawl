@@ -2,33 +2,62 @@ package com.strategy_bit.chaos_brawl.config;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
 public class UnitConfig {
+    //default values
+    public final static String DEFAULT_NAME="NA";
+    public final static float DEFAULT_COST=1f;
+    public final static float DEFAULT_SPEED=1f;
+    public final static float DEFAULT_ATTACK_RADIUS=1f;
+    public final static float DEFAULT_ATTACK_SPEED=1f;
+    public final static float DEFAULT_ATTACK_DAMAGE=1f;
+    public final static float DEFAULT_HIT_POINTS=1f;
+    public final static boolean DEFAULT_RANGED=false;
+    public final static boolean DEFAULT_MOVEMENT_COMPONENT =false;
+    public final static boolean DEFAULT_BOUNDARY_COMPONENT =false;
+    public final static boolean DEFAULT_EXPLOSION_COMPONENT =false;
+    public final static boolean DEFAULT_UPGRADE_COMPONENT =false;
+    public final static int DEFAULT_RANGED_ATTACK_TYPE =0;
+
+    //private fields
     private String name;
+
     private float cost;
-    private Vector2 position;
-    private TextureRegion skin;
     private float speed;
     private float attackRadius;
     private float attackSpeed;
     private float attackDamage;
-    private boolean ranged;
-    private int rangedAttackType;
     private float hitPoints;
-    private int teamId;
-    private Sound sound;
+
+    private boolean ranged;
     private boolean hasMovementComponent;
     private boolean hasBoundaryComponent;
     private boolean hasExplosionComponent;
     private boolean hasUpgradeComponent;
 
-    public Vector2 getPosition() {
-        return position;
-    }
+    private int rangedAttackType;
 
-    public void setPosition(Vector2 position) {
-        this.position = position;
+    private TextureRegion skin;
+    private Sound sound;
+
+
+
+    public UnitConfig() {
+        setName(DEFAULT_NAME);
+        setCost(DEFAULT_COST);
+        setSpeed(DEFAULT_SPEED);
+        setAttackRadius(DEFAULT_ATTACK_RADIUS);
+        setAttackSpeed(DEFAULT_ATTACK_SPEED);
+        setAttackDamage(DEFAULT_ATTACK_DAMAGE);
+        setHitPoints(DEFAULT_HIT_POINTS);
+        setRanged(DEFAULT_RANGED);
+        setMovementComponent(DEFAULT_MOVEMENT_COMPONENT);
+        setBoundaryComponent(DEFAULT_BOUNDARY_COMPONENT);
+        setExplosionComponent(DEFAULT_EXPLOSION_COMPONENT);
+        setUpgradeComponent(DEFAULT_UPGRADE_COMPONENT);
+        setRangedAttackType(DEFAULT_RANGED_ATTACK_TYPE);
+        setSkin(null);
+        setSound(null);
     }
 
     public TextureRegion getSkin() {
@@ -93,14 +122,6 @@ public class UnitConfig {
 
     public void setHitPoints(float hitPoints) {
         this.hitPoints = hitPoints;
-    }
-
-    public int getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
     }
 
     public Sound getSound() {
