@@ -1,6 +1,9 @@
 package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
 
@@ -21,9 +24,49 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
     protected Array<Integer> playerIds;
     protected int c = 0;
 
+    protected TextButton btnPlayer1;
+    protected TextButton btnPlayer2;
+    protected TextButton btnPlayer3;
+    protected TextButton btnPlayer4;
+    protected Table root;
+    protected float height;
+
+
     public LobbyScreen() {
         playerNames = new Array<>();
         playerIds = new Array<>();
+    }
+
+    @Override
+    public void buildStage() {
+        super.buildStage();
+        btnPlayer1 = new TextButton(PLAYER_1, assetManager.defaultSkin);
+        btnPlayer1.setName(PLAYER_1);
+        btnPlayer2 = new TextButton(PLAYER_2, assetManager.defaultSkin);
+        btnPlayer2.setName(PLAYER_2);
+        btnPlayer3 = new TextButton(PLAYER_3, assetManager.defaultSkin);
+        btnPlayer3.setName(PLAYER_3);
+        btnPlayer4 = new TextButton(PLAYER_4, assetManager.defaultSkin);
+        btnPlayer4.setName(PLAYER_4);
+        textButtons = new Array<>();
+        textButtons.add(btnPlayer1);
+        textButtons.add(btnPlayer2);
+        textButtons.add(btnPlayer3);
+        textButtons.add(btnPlayer4);
+
+        root = new Table(assetManager.defaultSkin);
+        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
+        root.setFillParent(true);
+        height = Gdx.graphics.getHeight() / 8f;
+        root.top();
+        root.add(btnPlayer1).width(Gdx.graphics.getWidth() / 4f).height(height);
+        root.row();
+        root.add(btnPlayer2).width(Gdx.graphics.getWidth() / 4f).height(height);
+        root.row();
+        root.add(btnPlayer3).width(Gdx.graphics.getWidth() / 4f).height(height);
+        root.row();
+        root.add(btnPlayer4).width(Gdx.graphics.getWidth() / 4f).height(height);
+        root.row();
     }
 
     public void addClient(String ip, int id) {
