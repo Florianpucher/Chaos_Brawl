@@ -13,36 +13,32 @@ import java.util.Map;
 public class UnitManager {
     public Map<Integer, UnitConfig> unitConfigHashMap;
 
-    private final String ID = "id";
-    private final String NAME = "name";
-    private final String COST = "cost";
-    private final String TRANSFORMCOMPONENT = "TransformComponent";
-    private final String MOVEMENTCOMPONENT = "MovementComponent";
-    private final String COMBATCOMPONENT = "CombatComponent";
-    private final String TEXTURECOMPONENT = "TextureComponent";
-    private final String TEAMGAMEOBJECTCOMPONENT = "TeamGameObjectComponent";
-    private final String BOUNDARYCOMPONENT = "BoundaryComponent";
-    private final String EXPLOSIONCOMPONENT = "ExplosionComponent";
-    private final String UPGRADECOMPONENT = "UpgradeComponent";
-    private final String POSITION = "position";
-    private final String X = "x";
-    private final String Y = "y";
-    private final String SKINNAME = "skinName";
-    private final String SKINPATH = "skinPath";
-    private final String SPEED = "speed";
-    private final String ATTACKRADIUS = "attackRadius";
-    private final String ATTACKSPEED = "attackSpeed";
-    private final String ATTACKDAMAGE = "attackDamage";
-    private final String RANGED = "ranged";
-    private final String RANGEDATTACKTYPE = "rangedAttackType";
-    private final String HITPOINTS = "hitPoints";
-    private final String TEAMID = "teamId";
-    private final String SOUNDPATH = "soundPath";
-    private final String SOUNDNAME = "soundName";
-
-
-
-
+    private final static String ID = "id";
+    private final static String NAME = "name";
+    private final static String COST = "cost";
+    private final static String TRANSFORMCOMPONENT = "TransformComponent";
+    private final static String MOVEMENTCOMPONENT = "MovementComponent";
+    private final static String COMBATCOMPONENT = "CombatComponent";
+    private final static String TEXTURECOMPONENT = "TextureComponent";
+    private final static String TEAMGAMEOBJECTCOMPONENT = "TeamGameObjectComponent";
+    private final static String BOUNDARYCOMPONENT = "BoundaryComponent";
+    private final static String EXPLOSIONCOMPONENT = "ExplosionComponent";
+    private final static String UPGRADECOMPONENT = "UpgradeComponent";
+    private final static String POSITION = "position";
+    private final static String X = "x";
+    private final static String Y = "y";
+    private final static String SKINNAME = "skinName";
+    private final static String SKINPATH = "skinPath";
+    private final static String SPEED = "speed";
+    private final static String ATTACKRADIUS = "attackRadius";
+    private final static String ATTACKSPEED = "attackSpeed";
+    private final static String ATTACKDAMAGE = "attackDamage";
+    private final static String RANGED = "ranged";
+    private final static String RANGEDATTACKTYPE = "rangedAttackType";
+    private final static String HITPOINTS = "hitPoints";
+    private final static String TEAMID = "teamId";
+    private final static String SOUNDPATH = "soundPath";
+    private final static String SOUNDNAME = "soundName";
 
     public void readFile(String file) {
         //TODO Hellmuth reduce cognitive complexity of method
