@@ -63,7 +63,7 @@ public class GameHUD extends Table {
 
     private PlayerController playerController;
 
-    public GameHUD(Boundary spawnArea ) {
+    public GameHUD(Boundary spawnArea, PlayerController playerController) {
         super(AssetManager.getInstance().defaultSkin);
         this.playerController = playerController;
 
@@ -128,13 +128,11 @@ public class GameHUD extends Table {
         initializeGameOverView();
     }
 
-    private void switchButtons(boolean upgradeExecuted, String input){
+    private void switchButtons(boolean upgradeExecuted, String input) {
 
-        if (upgradeExecuted && input == UPGRADE_UNITS){
+        if (upgradeExecuted && input == UPGRADE_UNITS) {
+            AssetManager.getInstance().upgradeExecuted.play(1f);
 
-            if (AssetManager.getInstance().getPlayable()){
-                AssetManager.getInstance().upgradeExecuted.play(1f);
-            }
 
             btnNewUnit1.setName(UPGRADED_UNIT_1);
             btnNewUnit1.setText(UPGRADED_UNIT_1);
@@ -146,13 +144,13 @@ public class GameHUD extends Table {
             btnNewUnit3.setText(UPGRADED_UNIT_3);
 
             btnUpgradeUnits.remove();
-        } else if (upgradeExecuted && input == UPGRADE_TOWER){
+            playerController.updateTowersOrUnits(20);
+
+        } else if (upgradeExecuted && input == UPGRADE_TOWER) {
             AssetManager.getInstance().upgradeExecutedTower.play(1f);
             btnUpgradeTower.remove();
-            playerController.updateTowers();
+            playerController.updateTowersOrUnits(21);
         }
-
-
     }
 
 

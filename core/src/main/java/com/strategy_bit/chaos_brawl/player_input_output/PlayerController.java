@@ -5,6 +5,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.types.EventType;
@@ -100,7 +102,7 @@ public class PlayerController extends PawnController implements InputProcessor {
      */
     public void addGameHUD(Stage stage) {
         if (gameHUD == null) {
-            gameHUD = new GameHUD(spawnArea);
+            gameHUD = new GameHUD(spawnArea, this);
         }
         if (!stage.getActors().contains(gameHUD, false)) {
             stage.addActor(gameHUD);
@@ -145,7 +147,18 @@ public class PlayerController extends PawnController implements InputProcessor {
         }
     }
 
-    public void updateTowers(){
-        inputHandler.updateTowers(teamID);
+    public boolean updateTowersOrUnits(int upgradeType) {
+
+        inputHandler.updateTowersOrUnits(teamID, upgradeType);
+        UnitConfig unitConfig = null;
+
+        if (upgradeType == 20) {
+            unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(20);
+        } else if (upgradeType == 21) {
+            unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(21);
+        }
+        float cost = unitConfig.getCost();
+        return checkAndSubtract(cost, "Gold");
+
     }
 }

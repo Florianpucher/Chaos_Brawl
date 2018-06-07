@@ -34,5 +34,5 @@ public interface InputHandler {
     void createEntityWorldCoordinates(Vector2 worldCoordinates, int unitId, int teamID);
 
 
-    void updateTowers(int playerID);
+    void updateTowersOrUnits(int playerID, int updateType);
 }
