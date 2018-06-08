@@ -38,7 +38,6 @@ public class UnitConfig {
     private int rangedAttackType;
 
     private TextureRegion skin;
-    private Sound sound;
 
 
 
@@ -57,7 +56,6 @@ public class UnitConfig {
         setUpgradeComponent(DEFAULT_UPGRADE_COMPONENT);
         setRangedAttackType(DEFAULT_RANGED_ATTACK_TYPE);
         setSkin(null);
-        setSound(null);
     }
 
     public TextureRegion getSkin() {
@@ -122,14 +120,6 @@ public class UnitConfig {
 
     public void setHitPoints(float hitPoints) {
         this.hitPoints = hitPoints;
-    }
-
-    public Sound getSound() {
-        return sound;
-    }
-
-    public void setSound(Sound sound) {
-        this.sound = sound;
     }
 
     public String getName() {

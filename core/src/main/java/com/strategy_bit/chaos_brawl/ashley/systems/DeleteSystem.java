@@ -11,6 +11,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entities.Particle;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 
 
 /**
@@ -61,9 +62,7 @@ public class DeleteSystem extends IteratingSystem {
 
                 // and give it to the Explosion entity
                 engine.addEntity(new Particle(transform.getPosition(), "explosion"));
-                if(AssetManager.getInstance().getPlayable()){
-                    AssetManager.getInstance().explosionSound.play(1f);
-                }
+                SoundManager.getInstance().playSound("explosionSound");
             } else if (explosionComponent != null) {  // true =  unit
                 // Get Position of object here
                 TransformComponent transform = transformComponentMapper.get(entity);

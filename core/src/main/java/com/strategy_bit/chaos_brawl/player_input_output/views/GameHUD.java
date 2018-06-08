@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 
@@ -127,10 +128,7 @@ public class GameHUD extends Table {
 
         if (upgradeExecuted && input == UPGRADE_UNITS){
 
-            if (AssetManager.getInstance().getPlayable()){
-                AssetManager.getInstance().upgradeExecuted.play(1f);
-            }
-
+            SoundManager.getInstance().playSound("upgradeExecuted");
             btnNewUnit1.setName(UPGRADED_UNIT_1);
             btnNewUnit1.setText(UPGRADED_UNIT_1);
 
@@ -142,7 +140,7 @@ public class GameHUD extends Table {
 
             btnUpgradeUnits.remove();
         } else if (upgradeExecuted && input == UPGRADE_TOWER){
-            AssetManager.getInstance().upgradeExecutedTower.play(1f);
+            SoundManager.getInstance().playSound("upgradeTowerExecuted");
             btnUpgradeTower.remove();
         }
 
@@ -271,18 +269,14 @@ public class GameHUD extends Table {
         if (win) {
             gameOverView = assetManager.victoryScreen;
             if (!playedVictoryOnce){
-                if (AssetManager.getInstance().getPlayable()) {
-                    AssetManager.getInstance().victory.play(1f);
-                }
+                SoundManager.getInstance().playSound("victory");
                 playedVictoryOnce = true;
             }
 
         }else{
             gameOverView = assetManager.defeatScreen;
             if(!playedDefeatOnce) {
-                if (AssetManager.getInstance().getPlayable()) {
-                    AssetManager.getInstance().defeat.play(1f);
-                }
+                SoundManager.getInstance().playSound("defeat");
                 playedDefeatOnce = true;
             }
         }

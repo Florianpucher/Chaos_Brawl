@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.strategy_bit.chaos_brawl.ChaosBrawlGame;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
@@ -54,13 +55,11 @@ public class OptionsMenuScreen extends MenuScreen {
                 if(name.equals(music)){
                     if (isActive){
 
-                        AssetManager.getInstance().music.setVolume(0.0f);
-                        AssetManager.getInstance().setPlayable(false);
+                        SoundManager.getInstance().setVolumeMusic(0.0f);
                         System.out.println("music off");
                     }
                     if (!isActive){
-                        AssetManager.getInstance().music.setVolume(1.0f);
-                        AssetManager.getInstance().setPlayable(true);
+                        SoundManager.getInstance().setVolumeMusic(1.0f);
                         System.out.println("music on");
                     }
                     if (isActive){
