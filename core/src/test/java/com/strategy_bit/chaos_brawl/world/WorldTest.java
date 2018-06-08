@@ -24,7 +24,7 @@ import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
-import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import org.junit.After;
@@ -95,11 +95,11 @@ public class WorldTest extends BaseTest {
         PowerMockito.whenNew(OtherPathfinder.class).withArguments(boardA).thenReturn(pathfinder);
         PowerMockito.whenNew(ParticleEffect.class).withNoArguments().thenReturn(Mockito.mock(ParticleEffect.class));
         world = new World(1,4);
-        Boundary boundary = new Boundary(new Vector2(), new Vector2(), new Vector2(), new Vector2());
-        player1 = new PlayerController(0,world,boundary);
-        player2 = new PlayerController(1,world,boundary);
-        player3 = new PlayerController(2,world,boundary);
-        player4 = new PlayerController(3,world,boundary);
+        SpawnArea boundary = new SpawnArea(0,0,0,0);
+        player1 = new PlayerController(0,world,boundary, camera);
+        player2 = new PlayerController(1,world,boundary,camera);
+        player3 = new PlayerController(2,world,boundary,camera);
+        player4 = new PlayerController(3,world,boundary,camera);
 
         world.setPlayerController(0, player1);
         world.setPlayerController(1,player2);

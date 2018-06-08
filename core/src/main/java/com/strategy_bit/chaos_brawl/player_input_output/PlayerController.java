@@ -2,13 +2,16 @@ package com.strategy_bit.chaos_brawl.player_input_output;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
 import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.types.EventType;
-import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
+import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 /**
@@ -26,8 +29,8 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     private SensorReader sensorReader;
 
-    public PlayerController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
-        super(teamID, inputHandler, spawnArea);
+    public PlayerController(int teamID, InputHandler inputHandler, SpawnArea spawnArea, Camera camera) {
+        super(teamID, inputHandler, spawnArea, camera);
         sensorReader = new SensorReader(this);
     }
 
@@ -56,12 +59,14 @@ public class PlayerController extends PawnController implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 screenCoordinates = new Vector2(screenX, screenY);
+        Vector2 worldCoordinates = VectorMath.vector3ToVector2(camera.unproject(new Vector3(screenCoordinates,0)));
         int current = -1;
         if (gameHUD != null) {
             current = gameHUD.getUnitToSpawn();
-            if (current != -1 && spawnArea.checkIfVectorIsInside(screenCoordinates)) {
+            if (current != -1 && spawnArea.contains(worldCoordinates)) {
                 if (spawnUnit(current)) {
-                    inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
+                    inputHandler.createEntityWorldCoordinates(worldCoordinates, current, teamID);
+                    //inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
                 }
                 return true;
             }

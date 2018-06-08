@@ -1,9 +1,10 @@
 package com.strategy_bit.chaos_brawl.player_input_output;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 import java.util.concurrent.Executor;
@@ -21,8 +22,8 @@ public class AiController extends PawnController implements Runnable{
     private ReentrantLock lock;
     private boolean goIntoPause;
 
-    public AiController(int teamID, InputHandler inputHandler, Boundary spawnArea) {
-        super(teamID, inputHandler, spawnArea);
+    public AiController(int teamID, InputHandler inputHandler, SpawnArea spawnArea, Camera camera) {
+        super(teamID, inputHandler, spawnArea, camera);
         isRunning = false;
         goIntoPause = false;
         lock = new ReentrantLock();
@@ -63,22 +64,17 @@ public class AiController extends PawnController implements Runnable{
     public void run() {
         try {
             while (isRunning) {
-                int xFrom;
-                int xTo;
-                if (spawnArea.getLowerLeft().x < spawnArea.getLowerRight().x) {
-                    xFrom = (int) spawnArea.getLowerLeft().x;
-                    xTo = (int) spawnArea.getLowerRight().x;
-                } else {
-                    xTo = (int) spawnArea.getLowerLeft().x;
-                    xFrom = (int) spawnArea.getLowerRight().x;
-                }
+                float xFrom;
+                float xTo;
+                xFrom =  spawnArea.getX();
+                xTo =  (spawnArea.getX() + spawnArea.getWidth());
 
-                int x = MathUtils.random(xFrom, xTo);
-                int y = (int) MathUtils.random(spawnArea.getLowerLeft().y, spawnArea.getUpperLeft().y);
+                float x = MathUtils.random(xFrom, xTo);
+                float y =  MathUtils.random(spawnArea.getY(), spawnArea.getY() + spawnArea.getHeight());
                 final Vector2 spawnPosition = new Vector2(x, y);
                 Gdx.app.postRunnable(() -> {
                     if (spawnUnit(0)) {
-                        inputHandler.createEntityScreenCoordinates(spawnPosition, 0, teamID);
+                        inputHandler.createEntityWorldCoordinates(spawnPosition, 0, teamID);
                     }
                 });
 

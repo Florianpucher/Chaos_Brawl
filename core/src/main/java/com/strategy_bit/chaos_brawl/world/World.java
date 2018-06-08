@@ -22,12 +22,13 @@ import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
+import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
-import com.strategy_bit.chaos_brawl.util.VectorMath;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -318,14 +319,12 @@ public class World implements InputHandler {
      * @param playerID for which player the spawn area will be created
      * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
      */
-    public Boundary createSpawnAreaForPlayer(int playerID, int players){
+    public SpawnArea createSpawnAreaForPlayer(int playerID, int players){
         Boundary result = board.createSpawnAreaForPlayer(playerID, players);
-
-        Vector2 left = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerLeft(), 0)));
-        Vector2 right = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerRight(), 0)));
-        Vector2 left2 = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getUpperLeft(), 0)));
-        Vector2 right2 = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getUpperRight(), 0)));
-        return new Boundary(left, right, left2, right2);
+        SpawnArea spawnArea = new SpawnArea(result.getLowerLeft().x + WorldSettings.FRUSTUM_WIDTH/2f, result.getLowerLeft().y + WorldSettings.FRUSTUM_HEIGHT/2f,
+                result.getUpperRight().x-result.getUpperLeft().x + WorldSettings.FRUSTUM_WIDTH/2f,
+                result.getUpperRight().y + result.getLowerRight().y + WorldSettings.FRUSTUM_HEIGHT/2f);
+        return spawnArea;
     }
 
     public void cheatFunctionDisposer(){

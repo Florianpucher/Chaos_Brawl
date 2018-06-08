@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
-import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
 
 /**
  * holds information of the gameHUD
@@ -59,7 +59,7 @@ public class GameHUD extends Table {
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
-    public GameHUD(Boundary spawnArea) {
+    public GameHUD(SpawnArea spawnArea) {
         super(AssetManager.getInstance().defaultSkin);
         nextUnitType=-1;
         AssetManager assetManager = AssetManager.getInstance();
@@ -224,16 +224,16 @@ public class GameHUD extends Table {
         camera.position.set(w / 2, h / 2, 0);
     }
 
-    private void initializeNonSpawnAreaShadow(Boundary spawnArea) {
+    private void initializeNonSpawnAreaShadow(SpawnArea spawnArea) {
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
         pixmap.setColor(0, 0, 0, 150);
 
         pixmap.fillRectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         pixmap.setColor(Color.CLEAR);
-        pixmap.fillRectangle((int) (spawnArea.getUpperLeft().x), (int) (spawnArea.getUpperLeft().y),
-                (int) (spawnArea.getUpperRight().x - spawnArea.getUpperLeft().x),
-                (int) (spawnArea.getLowerRight().y - spawnArea.getUpperRight().y));
+        pixmap.fillRectangle((int) (spawnArea.getX()), (int) (spawnArea.getY()),
+                (int) (spawnArea.getWidth()),
+                (int) (spawnArea.getHeight()));
         nonSpawnAreaTexture = new Texture(pixmap);
         pixmap.dispose();
     }
