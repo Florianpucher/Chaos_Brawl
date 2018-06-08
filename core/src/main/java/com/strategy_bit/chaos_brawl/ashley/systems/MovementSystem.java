@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
@@ -43,7 +44,7 @@ public class MovementSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         CombatComponent combatComponent = mCombatComponent.get(entity);
-        if (combatComponent != null && combatComponent.isEngagedInCombat()) {
+        if (combatComponent != null && combatComponent.isAttacking()) {
             return;
         }
         TransformComponent transform = mTransformComponent.get(entity);
@@ -62,7 +63,23 @@ public class MovementSystem extends IteratingSystem {
         transform.setRotation(angle);
 
         // position = position + (velocity * deltaTime)
-        transform.setPosition(VectorMath.add(position, VectorMath.scl(velocity, Gdx.graphics.getDeltaTime())));
+        float velocityX = 0;
+        if(velocity.x < 0){
+            velocityX = MathUtils.clamp(velocity.x *  Gdx.graphics.getDeltaTime(), velocity.x,0 );
+        }else {
+            velocityX = MathUtils.clamp(velocity.x *  Gdx.graphics.getDeltaTime(), 0, velocity.x);
+        }
+        float velocityY = 0;
+        if(velocity.y < 0){
+            velocityY = MathUtils.clamp(velocity.y *  Gdx.graphics.getDeltaTime(), velocity.y, 0);
+        }else {
+            velocityY = MathUtils.clamp(velocity.y *  Gdx.graphics.getDeltaTime(), 0, velocity.y);
+        }
+        System.out.println(velocity);
+        System.out.println(velocityX);
+        System.out.println(velocityY);
+
+        transform.setPosition(VectorMath.add(position, new Vector2(velocityX, velocityY)));
 
     }
 

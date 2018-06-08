@@ -7,6 +7,7 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.WalkAbleAreas;
+import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.BoardInterface;
 
 /**
@@ -117,11 +118,18 @@ public class OtherPathfinder {
      */
     private OtherNode getNode(Vector2 worldCoordinate){
         Vector2 indexVector = boardInterface.getTileBoardPositionDependingOnWorldCoordinates(worldCoordinate);
+        OtherNode closeNode = null;
         for (OtherNode node :
                 graphNodes) {
             if (indexVector.equals(node.getPosition())){
                 return node;
             }
+            if(VectorMath.distance(indexVector, node.getPosition()) <= 1.1f){
+                closeNode = node;
+            }
+        }
+        if(closeNode != null){
+            return closeNode;
         }
         throw new IllegalStateException("Could not find a Node for Coordinates: " + worldCoordinate);
     }
