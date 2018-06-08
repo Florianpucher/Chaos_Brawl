@@ -20,6 +20,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.ReRouteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
@@ -136,6 +137,8 @@ public class World implements InputHandler {
         combatSystem.addWorld(this);
         engine.addSystem(combatSystem);
         engine.addSystem(new BulletDeleteSystem());
+        ReRouteSystem reRouteSystem=new ReRouteSystem(this);
+        engine.addSystem(reRouteSystem);
         //Renderer should be the last system to add
 
         engine.addSystem(renderSystem);
@@ -262,6 +265,10 @@ public class World implements InputHandler {
         }
 
 
+    }
+
+    public Array<Vector2> getPath(Vector2 start, Vector2 dest){
+            return gdxPathFinder.calculatePath(start, dest);
     }
 
     Entity createEntityInternal(int unitId, long unitID, Vector2 worldCoordinates, int teamID){

@@ -60,10 +60,15 @@ public class CombatSystem extends IteratingSystem {
             }
         }
         if (closestEnemy != null) {
-            combatComponent.setEngagedInCombat(true);
+            combatComponent.setAttacking(true);
+            CombatComponent enemyCombatComponent=targetEnemy.getComponent(CombatComponent.class);
+            if (!enemyCombatComponent.isAttacking()) {
+                enemyCombatComponent.setGetsAttacked(true);
+                enemyCombatComponent.setAttacker(transformComponent.getPosition());
+            }
             attack(combatComponent, closestEnemy, transformComponent, targetEnemy, teamGameObjectComponent);
         } else {
-            combatComponent.setEngagedInCombat(false);
+            combatComponent.setAttacking(false);
         }
     }
 

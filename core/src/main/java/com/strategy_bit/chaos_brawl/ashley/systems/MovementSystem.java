@@ -43,7 +43,7 @@ public class MovementSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         CombatComponent combatComponent = mCombatComponent.get(entity);
-        if (combatComponent != null && combatComponent.isEngagedInCombat()) {
+        if (combatComponent != null && combatComponent.isAttacking()) {
             return;
         }
         TransformComponent transform = mTransformComponent.get(entity);
