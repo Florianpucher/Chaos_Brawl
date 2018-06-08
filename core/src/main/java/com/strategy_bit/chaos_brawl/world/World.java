@@ -102,17 +102,20 @@ public class World implements InputHandler {
             configMap = -1;
         }
 
-        setEntityWorldCoordinates(board.getAsset(configMap), playerControllers.length);
+        setEntityWorldCoordinates(board.getConfig(configMap), playerControllers.length);
         resourceTimeStamp = System.currentTimeMillis();
     }
 
-    private void setEntityWorldCoordinates(Array<Float> spawn, int players){
+    private void setEntityWorldCoordinates(Array<Vector2> spawn, int players){
         int offset = 0;
         for (int j = 0; j < players; j++){
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset), spawn.get(offset+1)), 7,  playerControllers[j].getTeamID());
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset+2),spawn.get(offset+3)), 7,  playerControllers[j].getTeamID());
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset+4),spawn.get(offset+5)), 6,  playerControllers[j].getTeamID());
-            offset += 6;
+            createEntityWorldCoordinates(board.getWorldCoordinateOfTile((int) spawn.get(offset).x,
+                    (int) spawn.get(offset).y), 7,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(board.getWorldCoordinateOfTile((int) spawn.get(offset+1).x,
+                    (int) spawn.get(offset+1).y), 7,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(board.getWorldCoordinateOfTile((int) spawn.get(offset+2).x,
+                    (int) spawn.get(offset+2).y), 6,  playerControllers[j].getTeamID());
+            offset += 3;
         }
     }
 

@@ -100,7 +100,7 @@ public class MultiplayerWorldTest extends BaseTest {
         for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i++) {
             positions.add((float) i);
         }
-        Mockito.when(board.getAsset(Mockito.anyInt())).thenReturn(positions);
+        Mockito.when(board.getConfig(Mockito.anyInt())).thenReturn(positions);
 
         ChaosBrawlGame game = Mockito.mock(ChaosBrawlGame.class);
         SpriteBatch spriteBatch = Mockito.mock(SpriteBatch.class);
