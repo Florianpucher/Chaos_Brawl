@@ -145,6 +145,11 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     }
 
     @Override
+    public void sendEntityUpgradeMsg(long entityID) {
+
+    }
+
+    @Override
     public void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints) {
         sendData(new EntityMovingMessage(unitID, wayPoints));
     }

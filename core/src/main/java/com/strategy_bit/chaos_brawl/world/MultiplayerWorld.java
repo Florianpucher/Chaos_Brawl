@@ -10,7 +10,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 
-public class MultiplayerWorld extends World implements MultiplayerInputHandler{
+public class MultiplayerWorld extends World implements MultiplayerInputHandler {
 
     private BrawlMultiplayer multiplayer;
     private boolean isInitialized = false;
@@ -19,34 +19,34 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
         super(map, players);
 
         this.multiplayer = multiplayer;
-        if(!multiplayer.isHost()){
+        if (!multiplayer.isHost()) {
             engine.removeSystem(deleteSystem);
-        }else{
+        } else {
             engine.setInputHandler(this);
         }
     }
 
     @Override
     public void render() {
-        if(multiplayer.isHost()){
+        if (multiplayer.isHost()) {
             updateResources();
 
         }
         engine.update(Gdx.graphics.getDeltaTime());
         //Check if bases are already initialized
-        if(!isInitialized){
+        if (!isInitialized) {
             boolean basesAreUp = true;
             for (Entity base :
                     bases) {
-                if(base == null){
+                if (base == null) {
                     basesAreUp = false;
                     break;
                 }
             }
-            if(basesAreUp){
+            if (basesAreUp) {
                 isInitialized = true;
             }
-        }else{
+        } else {
             checkWinningLosing();
         }
 
@@ -54,7 +54,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
     @Override
     protected void updateResources() {
-        if(System.currentTimeMillis() - resourceTimeStamp > 1){
+        if (System.currentTimeMillis() - resourceTimeStamp > 1) {
             for (PawnController controller :
                     playerControllers) {
                 controller.tick();
@@ -67,22 +67,21 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
 
 
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, int unitId, int teamID) {
-                if(multiplayer.isHost()){
-
+        if (multiplayer.isHost()) {
             PawnController spawnerController = playerControllers[teamID];
             long id = lastID;
-            Entity entity = createEntityInternal(unitId, id,worldCoordinates, teamID);
+            Entity entity = createEntityInternal(unitId, id, worldCoordinates, teamID);
             lastID++;
-            multiplayer.sendEntitySpawnMsg(worldCoordinates, unitId,teamID, id);
-            if(entity.getComponent(MovementComponent.class) != null){
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, unitId, teamID, id);
+            if (entity.getComponent(MovementComponent.class) != null) {
                 Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(),
                         bases[spawnerController.getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
                 entity.getComponent(MovementComponent.class).setPath(path);
 
                 multiplayer.sendEntityMovingMessage(id, path);
             }
-        }else {
-            multiplayer.sendEntitySpawnMsg(worldCoordinates, unitId,teamID, -1);
+        } else {
+            multiplayer.sendEntitySpawnMsg(worldCoordinates, unitId, teamID, -1);
         }
     }
 
@@ -99,18 +98,53 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     }
 
     @Override
+    public void upgradeEntityInternal(Entity entity) {
+
+        if (multiplayer.isHost()) {
+            PawnController spawnerController = playerControllers[entity.getComponent(TeamGameObjectComponent.class).getTeamId()];
+            multiplayer.sendEntitySpawnMsg(entity.getComponent(TransformComponent.class).getPosition(),3, entity.getComponent(TeamGameObjectComponent.class).getTeamId(), lastID++);
+            if (entity.getComponent(MovementComponent.class) != null) {
+                Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(),
+                        bases[spawnerController.getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
+                entity.getComponent(MovementComponent.class).setPath(path);
+
+                multiplayer.sendEntityMovingMessage(lastID-1, path);
+            }
+        } else {
+            multiplayer.sendEntitySpawnMsg(entity.getComponent(TransformComponent.class).getPosition(), 3, entity.getComponent(TeamGameObjectComponent.class).getTeamId(), -1);
+        }
+
+    }
+
+    @Override
     public void deleteUnitLocal(long unitID) {
-        if(multiplayer.isHost()){
+        if (multiplayer.isHost()) {
             multiplayer.sendEntityDeleteMsg(unitID);
-        }else{
+        } else {
             Entity unit = units.get(unitID);
-            if(unit==null){
+            if (unit == null) {
                 return;
             }
             unit.getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
             deleteSystem.removeEntity(unit);
         }
 
+    }
+
+
+    @Override
+    public void upgradeUnitLocal(long unitID) {
+        if (multiplayer.isHost()) {
+            multiplayer.sendEntityDeleteMsg(unitID);
+        } else {
+            Entity unit = units.get(unitID);
+            if (unit == null) {
+                return;
+            }
+            unit.getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
+            upgradeSystem.UpgradeToNextTier(unit);
+
+        }
     }
 
     @Override
@@ -121,7 +155,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     @Override
     protected int checkIfClickHappensOnBase(Vector2 targetLocation, PawnController controller) {
         int baseIndex = super.checkIfClickHappensOnBase(targetLocation, controller);
-        if(!multiplayer.isHost() && baseIndex >= 0){
+        if (!multiplayer.isHost() && baseIndex >= 0) {
             multiplayer.sendNewTargetMsg(controller.getTeamID(), baseIndex);
         }
         return baseIndex;
@@ -135,8 +169,8 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     @Override
     public void getTick() {
         for (PawnController controller :
-             playerControllers) {
-            if(controller != null){
+                playerControllers) {
+            if (controller != null) {
                 controller.tick();
             }
         }

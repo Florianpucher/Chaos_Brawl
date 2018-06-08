@@ -20,6 +20,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.UpgradeSystem;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
@@ -55,6 +56,7 @@ public class World implements InputHandler {
     protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
+    protected UpgradeSystem upgradeSystem;
 
     boolean endGame = false;
     private int players;
@@ -121,7 +123,9 @@ public class World implements InputHandler {
         RenderSystem renderSystem = new RenderSystem();
         camera = renderSystem.getCamera();
         deleteSystem = new DeleteSystem();
+        upgradeSystem = new UpgradeSystem(this);
         engine.addSystem(deleteSystem);
+        engine.addSystem(upgradeSystem);
         engine.addSystem(new MovementSystem());
         BulletSystem bulletSystem=new BulletSystem();
         engine.addSystem(bulletSystem);
@@ -254,9 +258,9 @@ public class World implements InputHandler {
             movementComponent.setPath(path);
 
         }
-
-
     }
+
+
 
     @Override
     public void updateTowersOrUnits(int playerID, int updateType) {
@@ -284,8 +288,13 @@ public class World implements InputHandler {
             }
 
         }
-
         return entity;
+    }
+
+    @Override
+    public void upgradeEntityInternal(Entity entity){
+        engine.addEntity(entity);
+        units.put(lastID++, entity);
     }
 
 

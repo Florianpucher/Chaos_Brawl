@@ -139,6 +139,11 @@ public class BrawlClientImpl implements BrawlClient, BrawlMultiplayer {
     }
 
     @Override
+    public void sendEntityUpgradeMsg(long entityID) {
+        throw new UnsupportedOperationException("Only the host sends upgrade messages");
+    }
+
+    @Override
     public void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints) {
         throw new UnsupportedOperationException("Only the host sends moving messages");
     }

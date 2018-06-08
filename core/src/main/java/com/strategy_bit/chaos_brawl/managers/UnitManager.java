@@ -119,9 +119,7 @@ public class UnitManager {
 
                     }
                     if (unitConfig.get(TEAMGAMEOBJECTCOMPONENT).has(UNITTYPE)) {
-                        config.setTeamId(unitConfig.get(TEAMGAMEOBJECTCOMPONENT).getInt(UNITTYPE));
-                    } else {
-                        config.setTeamId(-1);
+                        config.setUnitType(unitConfig.get(TEAMGAMEOBJECTCOMPONENT).getInt(UNITTYPE));
                     }
                 }
                 if (unitConfig.has(BOUNDARYCOMPONENT)){
