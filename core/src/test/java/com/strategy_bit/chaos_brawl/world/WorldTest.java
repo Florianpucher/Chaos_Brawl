@@ -84,7 +84,7 @@ public class WorldTest extends BaseTest {
         for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i++) {
             positions.add((float) i);
         }
-        Mockito.when(boardA.getAsset(Mockito.anyInt())).thenReturn(positions);
+        Mockito.when(boardA.getConfig(Mockito.anyInt())).thenReturn(positions);
         Array<Vector2> defaultPath = new Array<>();
         defaultPath.add(new Vector2());
         defaultPath.add(new Vector2(1,1));

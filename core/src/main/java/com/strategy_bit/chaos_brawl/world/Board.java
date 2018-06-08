@@ -142,14 +142,16 @@ public class Board implements BoardInterface {
 
         if (players == 2){
             for (int i = 0; i < AssetManager.getInstance().spawn.size - 1; i = i + 2){
-                vectorList.add(new Vector2(AssetManager.getInstance().spawn.get(i), AssetManager.getInstance().spawn.get(i+1)));
+                vectorList.add((coordinateTransformation(getWorldCoordinateOfTile(AssetManager.getInstance().spawn.get(i).intValue(),
+                        AssetManager.getInstance().spawn.get(i+1).intValue()))));
             }
             spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
             spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
         }
         if (players == 4){
             for (int i = 0; i < AssetManager.getInstance().spawn4.size - 1; i = i + 2){
-                vectorList.add(new Vector2(AssetManager.getInstance().spawn4.get(i), AssetManager.getInstance().spawn4.get(i+1)));
+                vectorList.add((coordinateTransformation(getWorldCoordinateOfTile(AssetManager.getInstance().spawn.get(i).intValue(),
+                        AssetManager.getInstance().spawn4.get(i+1).intValue()))));
             }
             spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
             spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
@@ -173,18 +175,28 @@ public class Board implements BoardInterface {
         throw new UnsupportedOperationException("Game only supports up to 4 players");
     }
 
-    public Array<Vector2> getAsset(int asset){
+    public Vector2 coordinateTransformation(Vector2 vector){
+        float x_mid = 20;
+        float y_mid = 15;
+        float x = 0f;
+        float y = 0f;
+        x = vector.x - x_mid;
+        y = (vector.y - y_mid) * - 1;
+        return new Vector2(x,y);
+    }
+
+    public Array<Vector2> getConfig(int asset){
         Array<Vector2> array = new Array<>();
         switch (asset){
 
             case 0:
-                for (int i = 0; i < AssetManager.getInstance().config.size; i = i + 2) {
+                for (int i = 0; i < AssetManager.getInstance().config.size - 1; i = i + 2) {
                     array.add( new Vector2(AssetManager.getInstance().config.get(i), AssetManager.getInstance().config.get(i + 1)));
                 }
                 return array;
 
             case 1:
-                for (int i = 0; i < AssetManager.getInstance().config2.size; i = i + 2) {
+                for (int i = 0; i < AssetManager.getInstance().config2.size - 1; i = i + 2) {
                     array.add( new Vector2(AssetManager.getInstance().config2.get(i), AssetManager.getInstance().config.get(i + 1)));
                 }
                 return array;

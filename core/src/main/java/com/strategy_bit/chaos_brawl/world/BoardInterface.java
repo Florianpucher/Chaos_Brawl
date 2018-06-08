@@ -37,5 +37,5 @@ public interface BoardInterface {
     public Vector2 getWorldCoordinateOfTile(int x, int y);
     public Vector2 getTileBoardPositionDependingOnWorldCoordinates(Vector2 worldCoordinates);
     public Boundary createSpawnAreaForPlayer(int playerID, int players);
-    public Array<Vector2> getAsset(int asset);
+    public Array<Vector2> getConfig(int asset);
 }

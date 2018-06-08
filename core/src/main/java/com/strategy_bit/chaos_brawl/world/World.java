@@ -95,7 +95,7 @@ public class World implements InputHandler {
             configMap = -1;
         }
 
-        setEntityWorldCoordinates(board.getAsset(configMap), playerControllers.length);
+        setEntityWorldCoordinates(board.getConfig(configMap), playerControllers.length);
         resourceTimeStamp = System.currentTimeMillis();
     }
 
