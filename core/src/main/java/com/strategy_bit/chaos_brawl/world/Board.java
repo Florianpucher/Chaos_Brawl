@@ -142,8 +142,8 @@ public class Board implements BoardInterface {
 
         if (players == 2){
             for (int i = 0; i < AssetManager.getInstance().spawn.size - 1; i = i + 2){
-                vectorList.add((coordinateTransformation(getWorldCoordinateOfTile(AssetManager.getInstance().spawn.get(i).intValue(),
-                        AssetManager.getInstance().spawn.get(i+1).intValue()))));
+                vectorList.add(getWorldCoordinateOfTile(AssetManager.getInstance().spawn.get(i).intValue(),
+                        AssetManager.getInstance().spawn.get(i+1).intValue()));
             }
             spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
             spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));

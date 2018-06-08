@@ -22,7 +22,6 @@ import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
-import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
@@ -324,9 +323,9 @@ public class World implements InputHandler {
      */
     public SpawnArea createSpawnAreaForPlayer(int playerID, int players){
         Boundary result = board.createSpawnAreaForPlayer(playerID, players);
-        SpawnArea spawnArea = new SpawnArea(result.getLowerLeft().x + WorldSettings.FRUSTUM_WIDTH/2f, result.getLowerLeft().y + WorldSettings.FRUSTUM_HEIGHT/2f,
-                result.getUpperRight().x-result.getUpperLeft().x + WorldSettings.FRUSTUM_WIDTH/2f,
-                result.getUpperRight().y + result.getLowerRight().y + WorldSettings.FRUSTUM_HEIGHT/2f);
+        SpawnArea spawnArea = new SpawnArea(result.getLowerLeft().x, result.getLowerLeft().y,
+                result.getUpperRight().x-result.getUpperLeft().x,
+                result.getUpperRight().y - result.getLowerRight().y);
         return spawnArea;
     }
 

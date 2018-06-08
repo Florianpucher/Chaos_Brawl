@@ -80,11 +80,16 @@ public class WorldTest extends BaseTest {
                 {0,0,0},
                 {1,1,1},
                 {0,1,1}});
-        Array<Float> positions = new Array<>();
-        for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i++) {
-            positions.add((float) i);
+        Array<Vector2> positions = new Array<>();
+        for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i+=2) {
+            positions.add(new Vector2(i,i+1));
         }
         Mockito.when(boardA.getConfig(Mockito.anyInt())).thenReturn(positions);
+        Mockito.doAnswer(invocation -> {
+            int x = invocation.getArgument(0);
+            int y = invocation.getArgument(1);
+            return new Vector2(x,y);
+        }).when(boardA).getWorldCoordinateOfTile(Mockito.anyInt(),Mockito.anyInt());
         Array<Vector2> defaultPath = new Array<>();
         defaultPath.add(new Vector2());
         defaultPath.add(new Vector2(1,1));
