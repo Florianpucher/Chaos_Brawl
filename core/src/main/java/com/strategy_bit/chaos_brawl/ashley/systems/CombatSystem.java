@@ -10,6 +10,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.World;
 /*
@@ -86,10 +87,10 @@ public class CombatSystem extends IteratingSystem {
         } else {
             if (c1.attack()) {
                 if (c1.isRangedAttackType() == 99 && (h1.getHitPoints() <= h1.getMaxHP() / 2f)) {
-                    AssetManager.getInstance().critHit.play(1f);
+                    SoundManager.getInstance().playSound("critHit");
                     c2.setHitPoints(c2.getHitPoints() - (c1.getAttackDamage() * 2f));
                 } else {
-                    AssetManager.getInstance().attackSword.play(1f);
+                    SoundManager.getInstance().playSound("attackSword");
                     c2.setHitPoints(c2.getHitPoints() - c1.getAttackDamage());
                 }
 

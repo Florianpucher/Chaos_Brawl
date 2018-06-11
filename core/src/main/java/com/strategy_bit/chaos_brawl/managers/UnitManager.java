@@ -57,8 +57,7 @@ public class UnitManager {
             config.setCost(unitConfig.getFloat(COST));
         }
         if (unitConfig.has(SOUND_PATH) && unitConfig.has(SOUND_NAME)) {
-            AssetManager.getInstance().addSound(unitConfig.getString(SOUND_NAME), unitConfig.getString(SOUND_PATH));
-            config.setSound(AssetManager.getInstance().sounds.get(unitConfig.getString(SOUND_NAME)));
+            SoundManager.getInstance().addSound(unitConfig.getString(SOUND_NAME), unitConfig.getString(SOUND_PATH));
         }
         if (unitConfig.has(TEXTURE_COMPONENT) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_PATH) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_NAME)) {
             AssetManager.getInstance().addSkin(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME), unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_PATH));

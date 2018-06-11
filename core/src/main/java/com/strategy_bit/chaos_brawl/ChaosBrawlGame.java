@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
@@ -37,6 +38,8 @@ public class ChaosBrawlGame extends Game {
 		Executor executor = Executors.newSingleThreadExecutor();
 		executor.execute(() -> Gdx.app.postRunnable(() -> {
             assetManager.loadAssets();
+            SoundManager.getInstance().loadMusic();
+            SoundManager.getInstance().loadSounds();
             loadGame = false;
         }));
 	}
@@ -58,7 +61,7 @@ public class ChaosBrawlGame extends Game {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 		logger.log();
 		if(!loadGame){
-			assetManager.music.play();
+			SoundManager.getInstance().playMusic("mainSoundtrack");
 			screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAIN_MENU);
 			loadGame = true;
 		}
@@ -67,7 +70,7 @@ public class ChaosBrawlGame extends Game {
 	@Override
 	public void dispose () {
 		currentScreen.dispose();
-		assetManager.music.stop();
+		SoundManager.getInstance().dispose();
 		assetManager.dispose();
 	}
 }

@@ -24,6 +24,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.ReRouteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.EventType;
@@ -279,16 +280,10 @@ public class World implements InputHandler {
             bases[teamID] = entity;
         }
         else if (unitId==5||unitId==2){
-            if(AssetManager.getInstance().getPlayable()){
-                AssetManager.getInstance().drawSword.play(1f);
-            }
-
+            SoundManager.getInstance().playSound("drawSword");
         }
         else if (unitId==1||unitId==4){
-            if(AssetManager.getInstance().getPlayable()){
-                AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
-            }
-
+            SoundManager.getInstance().playSound("drawKatana");
         }
 
         return entity;
@@ -299,7 +294,6 @@ public class World implements InputHandler {
 
         Entity projectile = new Entity();
         UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
-        unitConfig.getSound().play(0.6f);
 
         Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
 

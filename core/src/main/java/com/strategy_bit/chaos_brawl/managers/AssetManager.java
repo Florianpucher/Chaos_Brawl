@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
@@ -35,8 +36,6 @@ public class AssetManager {
     private static final String ANIM_PATH = "animations/";
     private static final String MARKER_PATH = "markers/";
 
-    private boolean playable;
-
     public BitmapFont font;
     public UnitManager unitManager;
     public Map<String, TextureRegion> markers;
@@ -52,9 +51,9 @@ public class AssetManager {
     public NinePatch resourceSkinMiddle;
     public NinePatch hpSkinOuter;
     public NinePatch hpSkinInner;
+    public Slider.SliderStyle sliderStyle;
     public TextureRegion defaultTile;
     public TextureRegion waterTile;
-    public Music music;
     public TextureRegion dirtTile;
     public Array<FileHandle> maps;
     public Array<Float> config;
@@ -64,20 +63,6 @@ public class AssetManager {
     public Texture victoryScreen;
     public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
-    public Sound victory;
-    public Sound defeat;
-    public Sound critHit;
-    public Sound attackBow;
-    public Sound attackSword;
-    public Sound attackFireball;
-    public Sound attackCannonBall;
-    public Sound hitArrow;
-    public Sound drawSword;
-    public Sound drawKatana;
-    public Sound explosionSound;
-    public Sound upgradeExecuted;
-    public Sound upgradeExecutedTower;
-    private Array<Sound> drawKatanas;
 
     private static AssetManager instance;
 
@@ -124,9 +109,8 @@ public class AssetManager {
         defeatScreen = new Texture("defeat.png");
         progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
-        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3"));
-        music.setVolume(1.0f);
-        music.setLooping(true);
+        sliderStyle = new Slider.SliderStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
+        sliderStyle.knobBefore = sliderStyle.knob;
         maps = new Array<>();
         maps.add(Gdx.files.internal("maps/map1.txt"));
         maps.add(Gdx.files.internal("maps/map2.txt"));
@@ -145,37 +129,6 @@ public class AssetManager {
         setArray(config2, handle2);
         setArray(spawn, handle1);
         setArray(spawn4, handle3);
-
-
-        // sounds
-        victory =Gdx.audio.newSound(Gdx.files.internal("sounds/Victory.mp3"));
-        defeat =Gdx.audio.newSound(Gdx.files.internal("sounds/Defeat.mp3"));
-        upgradeExecuted =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecuted.wav"));
-        upgradeExecutedTower =Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecutedTower.wav"));
-        critHit =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/critHit.wav"));
-        attackSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3"));
-        attackBow =Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav"));
-        attackFireball =Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/fireball.wav"));
-        attackCannonBall = Gdx.audio.newSound(Gdx.files.internal("sounds/Projectiles/cannonball.wav"));
-        hitArrow =Gdx.audio.newSound(Gdx.files.internal("sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3"));
-        drawSword =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Sabre,Draw,Scabbard,Fast,Loose,Rough.mp3"));
-        drawKatana =Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Replace,Scabbard,Fast,Ripple.mp3"));
-        drawKatanas =new Array<>();
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Deep.mp3")));
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Deep.mp3")));
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Determined.mp3")));
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Shuffle.mp3")));
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Steady.mp3")));
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Strong.mp3")));
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast.mp3")));
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Complex.mp3")));
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Methodical.mp3")));
-        drawKatanas.add(Gdx.audio.newSound(Gdx.files.internal("sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Slow,Steady.mp3")));
-
-        explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Animations/explosion.mp3"));
-
-
-
     }
 
     private void setArray(Array<Float> arr, FileHandle handle) {
@@ -213,44 +166,10 @@ public class AssetManager {
         hpSkinInner.getTexture().dispose();
         victoryScreen.dispose();
         defeatScreen.dispose();
-        music.dispose();
-        attackBow.dispose();
-        attackSword.dispose();
-        attackFireball.dispose();
-        attackCannonBall.dispose();
-        hitArrow.dispose();
-        drawSword.dispose();
-        drawKatana.dispose();
-        explosionSound.dispose();
-        victory.dispose();
-        defeat.dispose();
-        upgradeExecuted.dispose();
-        upgradeExecutedTower.dispose();
-        for (Sound s:
-                drawKatanas) {
-            s.dispose();
-        }
 
-    }
-
-    public Sound getRandomDrawKatanaSound(){
-        Random random = new Random();
-        return drawKatanas.get(random.nextInt(drawKatanas.size));
-    }
-
-    public void setPlayable(boolean play){
-        this.playable = play;
-    }
-    public boolean getPlayable(){
-        return playable;
     }
 
     public void addSkin(String name,String path){
         skins.put(name,new TextureRegion(new Texture(path)));
     }
-
-    public void addSound(String name,String path){
-        sounds.put(name, Gdx.audio.newSound(Gdx.files.internal(path)));
-    }
-
 }
