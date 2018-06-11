@@ -94,7 +94,7 @@ public class WorldTest extends BaseTest {
         PowerMockito.whenNew(Board.class).withAnyArguments().thenReturn(boardA);
         PowerMockito.whenNew(OtherPathfinder.class).withArguments(boardA).thenReturn(pathfinder);
         PowerMockito.whenNew(ParticleEffect.class).withNoArguments().thenReturn(Mockito.mock(ParticleEffect.class));
-        world = new World(1,4);
+        world = new World(1,4, true);
         Boundary boundary = new Boundary(new Vector2(), new Vector2(), new Vector2(), new Vector2());
         player1 = new PlayerController(0,world,boundary);
         player2 = new PlayerController(1,world,boundary);
