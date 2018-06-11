@@ -63,7 +63,7 @@ public class World implements InputHandler {
     boolean endGame = false;
     private int players;
 
-    public World(int map, int players) {
+    public World(int map, int players, boolean containsDeleteSystem) {
         units = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
@@ -71,7 +71,7 @@ public class World implements InputHandler {
         tower = new Entity[players];
         this.players = players;
 
-        createEngine();
+        createEngine(containsDeleteSystem);
         marker=new CurrentTargetMarker(new Vector2(0,0));
         engine.addEntity(marker);
         createWorld(map);
@@ -81,7 +81,7 @@ public class World implements InputHandler {
         units = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[2];
-        createEngine();
+        createEngine(true);
         marker=new CurrentTargetMarker(new Vector2(0,0));
         engine.addEntity(marker);
         createWorld(1);
@@ -123,13 +123,19 @@ public class World implements InputHandler {
     }
 
 
-    protected void createEngine(){
+    protected void createEngine(boolean containsDeleteSystem){
         engine = MyEngine.createEngine();
         //Add some logic
         RenderSystem renderSystem = new RenderSystem();
         camera = renderSystem.getCamera();
         deleteSystem = new DeleteSystem(units);
-        engine.addSystem(deleteSystem);
+        if(containsDeleteSystem){
+            engine.addSystem(deleteSystem);
+        } else
+        {
+            deleteSystem.addedToEngine(engine);
+        }
+
         engine.addSystem(new MovementSystem());
         BulletSystem bulletSystem=new BulletSystem();
         engine.addSystem(bulletSystem);

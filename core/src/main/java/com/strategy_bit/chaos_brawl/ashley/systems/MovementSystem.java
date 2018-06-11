@@ -63,7 +63,7 @@ public class MovementSystem extends IteratingSystem {
         transform.setRotation(angle);
 
         // position = position + (velocity * deltaTime)
-        float velocityX = 0;
+        float velocityX;
         if(velocity.x < 0){
             velocityX = MathUtils.clamp(velocity.x *  Gdx.graphics.getDeltaTime(), velocity.x,0 );
         }else {
@@ -75,9 +75,6 @@ public class MovementSystem extends IteratingSystem {
         }else {
             velocityY = MathUtils.clamp(velocity.y *  Gdx.graphics.getDeltaTime(), 0, velocity.y);
         }
-        System.out.println(velocity);
-        System.out.println(velocityX);
-        System.out.println(velocityY);
 
         transform.setPosition(VectorMath.add(position, new Vector2(velocityX, velocityY)));
 
