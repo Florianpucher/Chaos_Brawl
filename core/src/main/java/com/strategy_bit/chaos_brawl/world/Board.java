@@ -150,8 +150,8 @@ public class Board implements BoardInterface {
         }
         if (players == 4){
             for (int i = 0; i < AssetManager.getInstance().spawn4.size - 1; i = i + 2){
-                vectorList.add((coordinateTransformation(getWorldCoordinateOfTile(AssetManager.getInstance().spawn.get(i).intValue(),
-                        AssetManager.getInstance().spawn4.get(i+1).intValue()))));
+                vectorList.add(getWorldCoordinateOfTile(AssetManager.getInstance().spawn4.get(i).intValue(),
+                        AssetManager.getInstance().spawn4.get(i+1).intValue()));
             }
             spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
             spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
@@ -197,7 +197,7 @@ public class Board implements BoardInterface {
 
             case 1:
                 for (int i = 0; i < AssetManager.getInstance().config2.size - 1; i = i + 2) {
-                    array.add( new Vector2(AssetManager.getInstance().config2.get(i), AssetManager.getInstance().config.get(i + 1)));
+                    array.add( new Vector2(AssetManager.getInstance().config2.get(i), AssetManager.getInstance().config2.get(i + 1)));
                 }
                 return array;
 
