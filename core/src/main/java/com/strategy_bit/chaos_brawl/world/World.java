@@ -159,7 +159,7 @@ public class World implements InputHandler {
 
 
     public void render(){
-        updateResources();
+        updateResources(Gdx.graphics.getDeltaTime());
         engine.update(Gdx.graphics.getDeltaTime());
         endGame = checkWinningLosing();
     }
@@ -200,14 +200,12 @@ public class World implements InputHandler {
     }
 
     // update recources
-    protected void updateResources(){
-        if(System.currentTimeMillis() - resourceTimeStamp > 1){
+    protected void updateResources(float deltaTime){
             for (PawnController controller :
                     playerControllers) {
-                controller.tick();
-                resourceTimeStamp = System.currentTimeMillis();
+                controller.tick(deltaTime);
             }
-        }
+
     }
 
 

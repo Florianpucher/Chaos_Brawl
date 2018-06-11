@@ -66,10 +66,10 @@ public abstract class PawnController {
 
 
 
-    public void tick(){
+    public void tick(float deltaTime){
         for (Resource r :
                 resources) {
-            r.add(WorldSettings.RATE *newRate);
+            r.add(deltaTime*WorldSettings.RATE *newRate);
         }
     }
 

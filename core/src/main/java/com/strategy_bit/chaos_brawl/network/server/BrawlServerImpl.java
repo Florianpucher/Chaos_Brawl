@@ -130,8 +130,8 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     }
 
     @Override
-    public void sendTick() {
-        sendData(new ResourceTickMessage());
+    public void sendTick(float deltaTime) {
+        sendData(new ResourceTickMessage(deltaTime));
     }
 
     @Override

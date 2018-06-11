@@ -118,8 +118,8 @@ public class PlayerController extends PawnController implements InputProcessor {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void tick(float deltaTime) {
+        super.tick(deltaTime);
         if (gameHUD != null) {
             for (Resource r :
                     resources) {
