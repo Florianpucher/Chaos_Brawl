@@ -12,6 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entities.CurrentTargetMarker;
 import com.strategy_bit.chaos_brawl.ashley.entities.Projectiles;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletDeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
@@ -26,7 +27,7 @@ import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
-import com.strategy_bit.chaos_brawl.util.VectorMath;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +56,7 @@ public class World implements InputHandler {
     protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
+    protected Entity marker;
 
     boolean endGame = false;
     private int players;
@@ -68,6 +70,8 @@ public class World implements InputHandler {
         this.players = players;
 
         createEngine();
+        marker=new CurrentTargetMarker(new Vector2(0,0));
+        engine.addEntity(marker);
         createWorld(map);
     }
 
@@ -76,6 +80,8 @@ public class World implements InputHandler {
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[2];
         createEngine();
+        marker=new CurrentTargetMarker(new Vector2(0,0));
+        engine.addEntity(marker);
         createWorld(1);
     }
 
@@ -291,7 +297,7 @@ public class World implements InputHandler {
         UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
         unitConfig.getSound().play(0.6f);
 
-            Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
+        Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
 
         createProjectile(projectile);
     }
@@ -315,14 +321,12 @@ public class World implements InputHandler {
      * @param playerID for which player the spawn area will be created
      * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
      */
-    public Boundary createSpawnAreaForPlayer(int playerID, int players){
+    public SpawnArea createSpawnAreaForPlayer(int playerID, int players){
         Boundary result = board.createSpawnAreaForPlayer(playerID, players);
-
-        Vector2 left = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerLeft(), 0)));
-        Vector2 right = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerRight(), 0)));
-        Vector2 left2 = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getUpperLeft(), 0)));
-        Vector2 right2 = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getUpperRight(), 0)));
-        return new Boundary(left, right, left2, right2);
+        SpawnArea spawnArea = new SpawnArea(result.getLowerLeft().x, result.getLowerLeft().y,
+                result.getUpperRight().x-result.getUpperLeft().x,
+                result.getUpperRight().y - result.getLowerRight().y);
+        return spawnArea;
     }
 
     public void cheatFunctionDisposer(){
@@ -354,5 +358,15 @@ public class World implements InputHandler {
     }
     public Camera getCamera() {
         return camera;
+    }
+
+    @Override
+    public void updateMarker(int t){
+        for (Entity base :
+                bases) {
+            if(base!=null&&base.getComponent(TeamGameObjectComponent.class).getTeamId()==t){
+                marker.getComponent(TransformComponent.class).setPosition(base.getComponent(TransformComponent.class).getPosition());
+            }
+        }
     }
 }
