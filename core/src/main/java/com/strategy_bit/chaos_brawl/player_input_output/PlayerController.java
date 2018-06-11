@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
+import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.types.EventType;
@@ -59,14 +60,16 @@ public class PlayerController extends PawnController implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 screenCoordinates = new Vector2(screenX, screenY);
-        Vector2 worldCoordinates = VectorMath.vector3ToVector2(camera.unproject(new Vector3(screenCoordinates,0)));
+
         int current = -1;
         if (gameHUD != null) {
             current = gameHUD.getUnitToSpawn();
+            Vector2 worldCoordinates = VectorMath.vector3ToVector2(camera.unproject(new Vector3(screenCoordinates,0)));
+            worldCoordinates.y = WorldSettings.FRUSTUM_HEIGHT - worldCoordinates.y;
             if (current != -1 && spawnArea.contains(worldCoordinates)) {
                 if (spawnUnit(current)) {
+                    worldCoordinates.y = WorldSettings.FRUSTUM_HEIGHT - worldCoordinates.y;
                     inputHandler.createEntityWorldCoordinates(worldCoordinates, current, teamID);
-                    //inputHandler.createEntityScreenCoordinates(screenCoordinates, current, teamID);
                 }
                 return true;
             }
