@@ -75,11 +75,17 @@ public class SoundManager {
     }
 
     public void playSound(String key){
+        if(!soundHashMap.containsKey(key)){
+            return;
+        }
         soundHashMap.get(key).play(getVolumeSounds());
     }
     public void playMusic(String key){
         if (current != null && current.isPlaying()){
             current.stop();
+        }
+        if(!musicHashMap.containsKey(key)){
+            return;
         }
         current = musicHashMap.get(key);
         current.setVolume(getVolumeMusic());
