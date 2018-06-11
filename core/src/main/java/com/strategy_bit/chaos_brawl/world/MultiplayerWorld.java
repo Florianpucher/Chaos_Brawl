@@ -98,11 +98,11 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     }
 
     @Override
-    public void upgradeEntityInternal(Entity entity) {
+    public void upgradeEntityInternal(Entity entity, int ID) {
 
         if (multiplayer.isHost()) {
             PawnController spawnerController = playerControllers[entity.getComponent(TeamGameObjectComponent.class).getTeamId()];
-            multiplayer.sendEntitySpawnMsg(entity.getComponent(TransformComponent.class).getPosition(),3, entity.getComponent(TeamGameObjectComponent.class).getTeamId(), lastID++);
+            multiplayer.sendEntitySpawnMsg(entity.getComponent(TransformComponent.class).getPosition(),ID, entity.getComponent(TeamGameObjectComponent.class).getTeamId(), lastID++);
             if (entity.getComponent(MovementComponent.class) != null) {
                 Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(),
                         bases[spawnerController.getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
@@ -111,9 +111,8 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
                 multiplayer.sendEntityMovingMessage(lastID-1, path);
             }
         } else {
-            multiplayer.sendEntitySpawnMsg(entity.getComponent(TransformComponent.class).getPosition(), 3, entity.getComponent(TeamGameObjectComponent.class).getTeamId(), -1);
+            multiplayer.sendEntitySpawnMsg(entity.getComponent(TransformComponent.class).getPosition(), ID, entity.getComponent(TeamGameObjectComponent.class).getTeamId(), -1);
         }
-
     }
 
     @Override
@@ -142,7 +141,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
                 return;
             }
             unit.getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
-            upgradeSystem.UpgradeToNextTier(unit);
+            upgradeSystem.UpgradeToNextTier(unit, unitsAreUpgraded, towersAreUpgraded);
 
         }
     }

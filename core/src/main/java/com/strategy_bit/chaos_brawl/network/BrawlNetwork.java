@@ -8,6 +8,7 @@ import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedM
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntityUpgradeMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.PlayerSelectedNewTargetMessage;
@@ -55,5 +56,6 @@ public class BrawlNetwork {
         kryo.register(String[].class);
         kryo.register(ClientDisconnectedMessage.class);
         kryo.register(PlayerSelectedNewTargetMessage.class);
+        kryo.register(EntityUpgradeMessage.class);
     }
 }

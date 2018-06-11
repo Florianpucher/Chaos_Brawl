@@ -12,7 +12,7 @@ public interface MultiplayerInputHandler extends InputHandler {
     void createEntityLocal(Vector2 worldCoordinates, int unitId, int teamID, long unitID);
     void moveEntityLocal(long unitID, Array<Vector2> wayPoints);
     void deleteUnitLocal(long unitID);
-    void upgradeUnitLocal(long unitID);
+    void upgradeUnitLocal(int teamID, int upgradeID);
     void unitAttackLocal(long attackerID, long victimID);
     void playerChangesTarget(int playerIndex, int targetIndex);
     void getTick();

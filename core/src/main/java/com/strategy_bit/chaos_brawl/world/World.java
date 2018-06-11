@@ -30,6 +30,7 @@ import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -57,6 +58,9 @@ public class World implements InputHandler {
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
     protected UpgradeSystem upgradeSystem;
+
+    public boolean unitsAreUpgraded = false;
+    public boolean towersAreUpgraded = false;
 
     boolean endGame = false;
     private int players;
@@ -261,10 +265,18 @@ public class World implements InputHandler {
     }
 
 
-
     @Override
     public void updateTowersOrUnits(int playerID, int updateType) {
+        Iterator<Map.Entry<Long, Entity>> iterator = units.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<Long,Entity> entry = iterator.next();
+            Entity unit = entry.getValue();
 
+
+
+
+
+        }
     }
 
 
@@ -292,7 +304,7 @@ public class World implements InputHandler {
     }
 
     @Override
-    public void upgradeEntityInternal(Entity entity){
+    public void upgradeEntityInternal(Entity entity, int ID){
         engine.addEntity(entity);
         units.put(lastID++, entity);
     }

@@ -16,6 +16,7 @@ import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
+
 public class UpgradeSystem extends IteratingSystem {
 
     private ComponentMapper<TeamGameObjectComponent> teamGameObjectComponentMapper;
@@ -31,7 +32,12 @@ public class UpgradeSystem extends IteratingSystem {
     private Queue<Vector2> path;
     private Vector2 targetLocation;
 
+    UnitConfig config;
+
     private Engine engine;
+
+    private boolean towersUP = true;
+    private boolean unitsUP = true;
 
     InputHandler inputHandler;
 
@@ -42,12 +48,12 @@ public class UpgradeSystem extends IteratingSystem {
         transformComponentMapper = ComponentMapper.getFor((TransformComponent.class));
         movementComponentMapper = ComponentMapper.getFor((MovementComponent.class));
         combatComponentMapper = ComponentMapper.getFor((CombatComponent.class));
-        this.inputHandler=inputHandler;
+        this.inputHandler = inputHandler;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        UpgradeToNextTier(entity);
+        UpgradeToNextTier(entity, unitsUP, towersUP);
     }
 
     @Override
@@ -56,10 +62,16 @@ public class UpgradeSystem extends IteratingSystem {
         this.engine = engine;
     }
 
-    public void UpgradeToNextTier(Entity entity) {
+    public void UpgradeToNextTier(Entity entity, boolean unitsUP, boolean towersUP) {
         TeamGameObjectComponent teComponent = teamGameObjectComponentMapper.get(entity);
 
-        if (teComponent.getUnitType() == 1 || teComponent.getUnitType() == 11) {
+        this.unitsUP = unitsUP;
+        this.towersUP = towersUP;
+
+        System.out.println(unitsUP + " =  unitsUP");
+        System.out.println(towersUP + " =  towersUP");
+
+        if ((teComponent.getUnitType() == 1 || teComponent.getUnitType() == 11) && (unitsUP || towersUP)) {
             CombatComponent cComponent = combatComponentMapper.get(entity);
             TransformComponent trComponent = transformComponentMapper.get(entity);
             MovementComponent mComponent = movementComponentMapper.get(entity);
@@ -70,29 +82,32 @@ public class UpgradeSystem extends IteratingSystem {
 
             Entity entityNew = new Entity();
 
-            if (mComponent != null) {                               // entity is a t1 unit
+            if ((mComponent != null) && unitsUP) {                     // entity is a t1 unit
 
                 hitPoints = teComponent.getHitPoints();
                 rotation = trComponent.getRotation();
                 path = mComponent.getPath();
                 targetLocation = mComponent.getTargetLocation();
 
-                UnitConfig config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(3);
+                config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(3);
 
-               Unit.setComponents(entityNew, config, teamID, position);
-               entityNew.getComponent(TeamGameObjectComponent.class).setHitPoints(hitPoints);
-               entityNew.getComponent(MovementComponent.class).setPath(path);
-
-
-            } else {                                                // entity is a t1 tower
-
-                UnitConfig config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(8);
                 Unit.setComponents(entityNew, config, teamID, position);
+                entityNew.getComponent(TeamGameObjectComponent.class).setHitPoints(hitPoints);
+                entityNew.getComponent(MovementComponent.class).setPath(path);
+
+                inputHandler.upgradeEntityInternal(entityNew, config.getId() + 3);
+
+
+            } else if (towersUP) {                                     // entity is a t1 tower
+
+                config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(8);
+                Unit.setComponents(entityNew, config, teamID, position);
+                inputHandler.upgradeEntityInternal(entityNew, config.getId() + 1);
 
             }
             engine.removeEntity(entity);
-            inputHandler.upgradeEntityInternal(entityNew);
         }
 
     }
+
 }

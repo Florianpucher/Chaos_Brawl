@@ -10,6 +10,7 @@ import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedM
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntityUpgradeMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
@@ -75,6 +76,10 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
         } else if (object instanceof EntityDeleteMessage) {
             EntityDeleteMessage deleteMessage = (EntityDeleteMessage) object;
             inputHandler.deleteUnitLocal(deleteMessage.unitID);
+            return true;
+        } else if (object instanceof EntityUpgradeMessage) {
+            EntityUpgradeMessage upgradeMessage = (EntityUpgradeMessage) object;
+            inputHandler.upgradeUnitLocal(upgradeMessage.teamID, upgradeMessage.upgradeID);
             return true;
         }
         return false;

@@ -7,7 +7,7 @@ public interface BrawlMultiplayer {
     void sendTick();
     void sendEntitySpawnMsg(Vector2 worldPosition, int unitId, int teamID, long id);
     void sendEntityDeleteMsg(long entityID);
-    void sendEntityUpgradeMsg(long entityID);
+    void sendEntityUpgradeMsg(int teamID, int upgradeID);
     void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints);
     BrawlConnector getBrawlConnector();
     void dispose();
