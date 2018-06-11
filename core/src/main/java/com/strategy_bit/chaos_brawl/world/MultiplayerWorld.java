@@ -26,8 +26,8 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
         this.multiplayer = multiplayer;
         if(!multiplayer.isHost()){
             engine.removeSystem(deleteSystem);
-        }else{
-            engine.setInputHandler(this);
+        }else {
+            deleteSystem.setInputHandler(this);
         }
     }
 
@@ -120,6 +120,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
             }
             unit.getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
             deleteSystem.removeEntity(unit);
+            units.remove(unitID);
         }
 
     }

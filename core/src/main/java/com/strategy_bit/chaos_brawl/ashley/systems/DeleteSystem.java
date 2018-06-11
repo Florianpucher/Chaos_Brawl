@@ -11,6 +11,10 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entities.Particle;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
+
+import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -26,9 +30,12 @@ public class DeleteSystem extends IteratingSystem {
     private ComponentMapper<MovementComponent> movementComponentMapper;
 
     private Engine engine;
+    private Map<Long, Entity> units;
+    private MultiplayerInputHandler inputHandler;
 
-    public DeleteSystem() {
+    public DeleteSystem(Map<Long, Entity> units) {
         super(Family.all(TeamGameObjectComponent.class).get());
+        this.units = units;
         mTeamGameObjectComponent = ComponentMapper.getFor(TeamGameObjectComponent.class);
         explosionComponentComponentMapper = ComponentMapper.getFor(ExplosionComponent.class);
         transformComponentMapper = ComponentMapper.getFor(TransformComponent.class);
@@ -37,7 +44,19 @@ public class DeleteSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        removeEntity(entity);
+        if(removeEntity(entity)){
+            Iterator<Map.Entry<Long,Entity>> iterator = units.entrySet().iterator();
+            while(iterator.hasNext()){
+                Map.Entry<Long,Entity> entry = iterator.next();
+                if(entry.getValue() == entity){
+                    if(inputHandler != null){
+                        inputHandler.deleteUnitLocal(entry.getKey());
+                    }
+                    iterator.remove();
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -46,7 +65,7 @@ public class DeleteSystem extends IteratingSystem {
         this.engine = engine;
     }
 
-    public void removeEntity(Entity entity) {
+    public boolean removeEntity(Entity entity) {
         TeamGameObjectComponent component = mTeamGameObjectComponent.get(entity);
         if (component.getHitPoints() <= 0.0) {
             ExplosionComponent explosionComponent = explosionComponentComponentMapper.get(entity);
@@ -74,8 +93,12 @@ public class DeleteSystem extends IteratingSystem {
             }
 
             engine.removeEntity(entity);
-
+            return true;
         }
+        return false;
     }
 
+    public void setInputHandler(MultiplayerInputHandler inputHandler) {
+        this.inputHandler = inputHandler;
+    }
 }

@@ -122,11 +122,11 @@ public class World implements InputHandler {
 
 
     protected void createEngine(){
-        engine = MyEngine.createEngine(units);
+        engine = MyEngine.createEngine();
         //Add some logic
         RenderSystem renderSystem = new RenderSystem();
         camera = renderSystem.getCamera();
-        deleteSystem = new DeleteSystem();
+        deleteSystem = new DeleteSystem(units);
         engine.addSystem(deleteSystem);
         engine.addSystem(new MovementSystem());
         BulletSystem bulletSystem=new BulletSystem();
