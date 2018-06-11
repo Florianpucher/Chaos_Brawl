@@ -7,6 +7,7 @@ import com.strategy_bit.chaos_brawl.network.BrawlConnector;
 import com.strategy_bit.chaos_brawl.network.messages.request.ClientConnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ClientDisconnectedMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntityUpgradeMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.PlayerSelectedNewTargetMessage;
 import com.strategy_bit.chaos_brawl.network.messages.response.NetworkMemberResponseMessage;
@@ -68,6 +69,9 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
             } else if(object instanceof PlayerSelectedNewTargetMessage){
                 PlayerSelectedNewTargetMessage selectedNewTargetMessage = (PlayerSelectedNewTargetMessage) object;
                 multiplayerInputHandler.playerChangesTarget(selectedNewTargetMessage.playerTeamID, selectedNewTargetMessage.targetTeamID);
+            }else if(object instanceof EntityUpgradeMessage){
+                EntityUpgradeMessage entityUpgradeMessage = (EntityUpgradeMessage) object;
+                multiplayerInputHandler.upgradeUnitLocal(entityUpgradeMessage.teamID, entityUpgradeMessage.upgradeID);
             }
         });
     }
