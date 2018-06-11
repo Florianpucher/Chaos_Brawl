@@ -3,8 +3,6 @@ package com.strategy_bit.chaos_brawl.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,10 +37,10 @@ public class SoundManager {
         return instance;
     }
     public void loadSounds(){
-        soundHashMap.put("victory", Gdx.audio.newSound(Gdx.files.internal("sounds/Victory.mp3")));
-        soundHashMap.put("defeat", Gdx.audio.newSound(Gdx.files.internal("sounds/Defeat.mp3")));
-        soundHashMap.put("upgradeExecuted", Gdx.audio.newSound(Gdx.files.internal("sounds/GameHUD/upgradeExecuted.wav")));
-        addSound("upgradeExecutedTower", "sounds/GameHUD/upgradeExecutedTower.wav");
+        addSound("victory", "sounds/Victory.mp3");
+        addSound("defeat", "sounds/Defeat.mp3");
+        addSound("upgradeExecuted", "sounds/GameHUD/upgradeExecuted.wav");
+        addSound("upgradeTowerExecuted", "sounds/GameHUD/upgradeExecutedTower.wav");
         addSound("critHit", "sounds/Weapon Whoosh/critHit.wav");
         addSound("attackSword", "sounds/Weapon Whoosh/Sabre,Swing,Whoosh,Sharp.mp3");
         addSound("attackBow", "sounds/Projectiles/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav");

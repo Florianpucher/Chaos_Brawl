@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
@@ -50,6 +51,7 @@ public class AssetManager {
     public NinePatch resourceSkinMiddle;
     public NinePatch hpSkinOuter;
     public NinePatch hpSkinInner;
+    public Slider.SliderStyle sliderStyle;
     public TextureRegion defaultTile;
     public TextureRegion waterTile;
     public TextureRegion dirtTile;
@@ -107,6 +109,8 @@ public class AssetManager {
         defeatScreen = new Texture("defeat.png");
         progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
+        sliderStyle = new Slider.SliderStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
+        sliderStyle.knobBefore = sliderStyle.knob;
         maps = new Array<>();
         maps.add(Gdx.files.internal("maps/map1.txt"));
         maps.add(Gdx.files.internal("maps/map2.txt"));
