@@ -130,21 +130,11 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
 
     }
 
-
     @Override
-    public void upgradeUnitLocal(long unitID) {
-        if (multiplayer.isHost()) {
-            multiplayer.sendEntityDeleteMsg(unitID);
-        } else {
-            Entity unit = units.get(unitID);
-            if (unit == null) {
-                return;
-            }
-            unit.getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
-            upgradeSystem.UpgradeToNextTier(unit, unitsAreUpgraded, towersAreUpgraded);
+    public void upgradeUnitLocal(int teamID, int upgradeID) {
 
-        }
     }
+
 
     @Override
     public void unitAttackLocal(long attackerID, long victimID) {
