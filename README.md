@@ -15,5 +15,3 @@ Chaos Brawl is a round / real-time strategy game for two to four players. Each p
 ### Other
 * Code quality: [Sonarcloud repository](https://sonarcloud.io/organizations/alisopp-github/projects)
 * Build : [Travis CI](https://travis-ci.org/Florianpucher/Chaos_Brawl)
-## Class diagram (deprecated)
-![class diagram](https://github.com/Florianpucher/Chaos_Brawl/blob/master/project_files/class_diagram.png)
