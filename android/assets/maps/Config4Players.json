@@ -1,8 +1,8 @@
 [
   {
     "type" : "tower1_player1",
-    "x": 2,
-    "y": 7
+    "x": 4,
+    "y": 2
   },
   {
     "type" : "tower2_player1",
@@ -12,51 +12,51 @@
   {
     "type" : "base_player1",
     "x": 1,
-    "y": 5
+    "y": 1
   },
   {
     "type" : "tower2_player2",
-    "x": 13,
+    "x": 10,
+    "y": 8
+  },
+  {
+    "type" : "tower2_player2",
+    "x": 12,
     "y": 7
   },
   {
-    "type" : "tower2_player2",
-    "x": 13,
-    "y": 3
-  },
-  {
     "type" : "base_player2",
-    "x": 14,
-    "y": 5
+    "x": 13,
+    "y": 9
   },
   {
     "type" : "tower1_player3",
-    "x": 8,
-    "y": 8
+    "x": 10,
+    "y": 2
   },
   {
     "type" : "tower2_player3",
     "x": 12,
-    "y": 8
+    "y": 3
   },
   {
     "type" : "base_player3",
-    "x": 10,
-    "y": 9
+    "x": 13,
+    "y": 1
   },
   {
     "type" : "tower1_player4",
-    "x": 8,
-    "y": 3
+    "x": 2,
+    "y": 7
   },
   {
     "type" : "tower2_player4",
-    "x": 12,
-    "y": 3
+    "x": 4,
+    "y": 8
   },
   {
     "type" : "base_player4",
-    "x": 10,
-    "y": 2
+    "x": 1,
+    "y": 9
   }
 ]

@@ -153,10 +153,11 @@ public class Board implements BoardInterface {
                 vectorList.add(getWorldCoordinateOfTile(AssetManager.getInstance().spawn4.get(i).intValue(),
                         AssetManager.getInstance().spawn4.get(i+1).intValue()));
             }
-            spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
-            spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
-            spawnArea2 = new Boundary(vectorList.get(8), vectorList.get(9), vectorList.get(10), vectorList.get(11));
-            spawnArea3 = new Boundary(vectorList.get(12), vectorList.get(13), vectorList.get(14), vectorList.get(15));
+            spawnArea2 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
+            spawnArea3 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
+            spawnArea1 = new Boundary(vectorList.get(8), vectorList.get(9), vectorList.get(10), vectorList.get(11));
+            // player0 host
+            spawnArea0 = new Boundary(vectorList.get(12), vectorList.get(13), vectorList.get(14), vectorList.get(15));
         }
 
 

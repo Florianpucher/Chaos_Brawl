@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
