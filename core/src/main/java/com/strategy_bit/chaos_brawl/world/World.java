@@ -284,7 +284,7 @@ public class World implements InputHandler {
 
 
     @Override
-    public void updateTowersOrUnits(int playerID, int updateType) {
+    public void updateTowersOrUnits(int teamID, int updateType) {
         HashMap<Long, Entity> map = new HashMap<>();
         Iterator<Map.Entry<Long, Entity>> iterator = units.entrySet().iterator();
         while (iterator.hasNext()){
@@ -292,7 +292,7 @@ public class World implements InputHandler {
             Entity unit = entry.getValue();
             TeamGameObjectComponent component = unit.getComponent(TeamGameObjectComponent.class);
             System.out.println(component.getUnitType());
-            if((int)unit.getComponent(TeamGameObjectComponent.class).getUnitType() != updateType)
+            if((int)unit.getComponent(TeamGameObjectComponent.class).getUnitType() != updateType || unit.getComponent(TeamGameObjectComponent.class).getTeamId() != teamID)
             {
                 continue;
             }
