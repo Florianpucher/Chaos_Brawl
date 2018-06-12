@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -112,6 +113,9 @@ public class MultiplayerWorldTest extends BaseTest {
         PowerMockito.whenNew(Board.class).withAnyArguments().thenReturn(board);
         PowerMockito.whenNew(OtherPathfinder.class).withAnyArguments().thenReturn(pathfinder);
         ScreenManager manager = ScreenManager.getInstance();
+
+        Gdx gdx=Mockito.mock(Gdx.class);
+        Mockito.when(gdx.graphics.getDeltaTime()).thenReturn(1f);
         manager.initialize(game);
 
         // initialize server
@@ -194,8 +198,9 @@ public class MultiplayerWorldTest extends BaseTest {
                 assertEquals(false, playersPerWorld[i][j].getMana().getResourceAmount() > 0);
             }
         }
-
         worlds[0].render();
+
+
         // Message should arrive in the next 2 seconds
         Thread.sleep(2000);
         for (PawnController[] aPlayersPerWorld : playersPerWorld) {

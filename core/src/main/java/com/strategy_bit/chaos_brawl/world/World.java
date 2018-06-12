@@ -55,7 +55,6 @@ public class World implements InputHandler {
     protected PawnController[] playerControllers;
     protected Entity[] bases;
     protected Entity[] tower;
-    protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
     protected Entity marker;
@@ -104,7 +103,7 @@ public class World implements InputHandler {
         }
 
         setEntityWorldCoordinates(board.getConfig(configMap), playerControllers.length);
-        resourceTimeStamp = System.currentTimeMillis();
+
     }
 
     private void setEntityWorldCoordinates(Array<Vector2> spawn, int players){
@@ -168,7 +167,7 @@ public class World implements InputHandler {
 
 
     public void render(){
-        updateResources();
+        updateResources(Gdx.graphics.getDeltaTime());
         engine.update(Gdx.graphics.getDeltaTime());
         endGame = checkWinningLosing();
     }
@@ -209,14 +208,12 @@ public class World implements InputHandler {
     }
 
     // update recources
-    protected void updateResources(){
-        if(System.currentTimeMillis() - resourceTimeStamp > 1){
+    protected void updateResources(float deltaTime){
             for (PawnController controller :
                     playerControllers) {
-                controller.tick();
-                resourceTimeStamp = System.currentTimeMillis();
+                controller.tick(deltaTime);
             }
-        }
+
     }
 
 
