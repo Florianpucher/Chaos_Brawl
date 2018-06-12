@@ -1,26 +1,32 @@
 [
   {
-    "x": 4,
-    "y": 11
-  },
-  {
-    "x": 4,
-    "y": 4
-  },
-  {
+    "type" : "tower1_player1",
     "x": 2,
-    "y": 7.5
+    "y": 8
   },
   {
-    "x": 16,
-    "y": 11
+    "type" : "tower2_player1",
+    "x": 2,
+    "y": 2
   },
   {
-    "x": 16,
-    "y": 4
+    "type" : "base_player1",
+    "x": 1,
+    "y": 5
   },
   {
-    "x": 18,
-    "y": 7.5
+    "type" : "tower2_player2",
+    "x": 12,
+    "y": 8
+  },
+  {
+    "type" : "tower2_player2",
+    "x": 12,
+    "y": 2
+  },
+  {
+    "type" : "base_player2",
+    "x": 13,
+    "y": 5
   }
 ]

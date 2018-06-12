@@ -15,5 +15,5 @@ public interface MultiplayerInputHandler extends InputHandler {
     void upgradeUnitLocal(int teamID, int upgradeID);
     void unitAttackLocal(long attackerID, long victimID);
     void playerChangesTarget(int playerIndex, int targetIndex);
-    void getTick();
+    void getTick(float deltaTime);
 }

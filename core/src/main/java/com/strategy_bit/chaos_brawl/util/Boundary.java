@@ -23,7 +23,7 @@ public class Boundary {
 
 
     public boolean checkIfVectorIsInside(Vector2 vectorToCheck){
-        //TODO atm it can only calculate vectors inside a square
+
         return lowerLeft.x <= vectorToCheck.x && lowerRight.x >= vectorToCheck.x &&
                 upperLeft.y <= vectorToCheck.y && lowerLeft.y >= vectorToCheck.y;
 
@@ -37,7 +37,7 @@ public class Boundary {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(lowerLeft).append(lowerRight).append(upperLeft).append(upperRight);
+        builder.append(lowerLeft).append(", ").append(lowerRight).append(", ").append(upperLeft).append(", ").append(upperRight);
         return builder.toString();
     }
 

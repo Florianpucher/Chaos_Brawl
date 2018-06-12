@@ -124,7 +124,7 @@ public class BrawlClientImpl implements BrawlClient, BrawlMultiplayer {
     }
 
     @Override
-    public void sendTick() {
+    public void sendTick(float deltaTime) {
         throw new UnsupportedOperationException("Only the host sends tick messages");
     }
 

@@ -3,10 +3,26 @@ package com.strategy_bit.chaos_brawl.screens.game_screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.player_input_output.AiController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
+import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 import com.strategy_bit.chaos_brawl.world.World;
 
 /**
@@ -30,17 +46,43 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void buildStage() {
+        //ImageButton button = new ImageButton(AssetManager.getInstance().defaultSkin);
+        //button.getImage().setDrawable(new TextureRegionDrawable(AssetManager.getInstance().skins.get("archerSkin")));
         super.buildStage();
         initializeGame();
+        final TextButton btnOptions = new TextButton(EXIT, assetManager.defaultSkin);
+        btnOptions.setName(EXIT);
+
+        final Table root = new Table(assetManager.defaultSkin);
+        root.setFillParent(true);
+        float height = Gdx.graphics.getHeight()/24f;
+        root.top();
+        root.right();
+        root.add(btnOptions).width(Gdx.graphics.getWidth()/10f).height(height);
+        //root.add(button).width(Gdx.graphics.getWidth()/10f).height(height);
+        addActor(root);
+
+        ClickListener listener = new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                String name = event.getListenerActor().getName();
+                if (name.equals(EXIT)){
+                    ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU);
+                }
+                super.clicked(event, x, y);
+            }
+        };
+
+        btnOptions.addListener(listener);
     }
 
 
     protected void initializeGame(){
         manager = new World(map,2, true);
         controllers = new PawnController[2];
-        playerController = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0, 2));
+        playerController = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0, 2), manager.getCamera());
         controllers[0] = playerController;
-        AiController otherPlayerController = new AiController(1,manager, manager.createSpawnAreaForPlayer(1, 2));
+        AiController otherPlayerController = new AiController(1,manager, manager.createSpawnAreaForPlayer(1, 2), manager.getCamera());
         controllers[1] = otherPlayerController;
         manager.setPlayerController(0, playerController);
 

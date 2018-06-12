@@ -16,16 +16,16 @@ public class WorldSettings {
     /**
      * How much tiles are on the map
      */
-    public static final int BOARD_HEIGHT = 10;
+    public static final int BOARD_HEIGHT = 11;
 
     //size of game board that the camera can show
-    public static final float FRUSTUM_WIDTH = 20;
-    public static final float FRUSTUM_HEIGHT = 15;
+    public static final float FRUSTUM_WIDTH = 40;
+    public static final float FRUSTUM_HEIGHT = 30;
     public static final float PIXELS_TO_METRES = 1.0f / 32.0f;
 
 
 
-    public static final double RATE = 0.1d;
+    public static final float RATE = 3.5f;
 
 
     private WorldSettings(){

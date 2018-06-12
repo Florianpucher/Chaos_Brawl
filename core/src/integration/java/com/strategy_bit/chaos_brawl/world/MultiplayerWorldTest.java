@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -25,7 +26,7 @@ import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.OtherPlayerController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
-import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -96,18 +97,25 @@ public class MultiplayerWorldTest extends BaseTest {
                 {0, 0, 0},
                 {1, 1, 1},
                 {0, 1, 1}});
-        Array<Float> positions = new Array<>();
-        for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i++) {
-            positions.add((float) i);
+        Array<Vector2> positions = new Array<>();
+        for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i+=2) {
+            positions.add(new Vector2((float) i, i+1));
         }
-        Mockito.when(board.getAsset(Mockito.anyInt())).thenReturn(positions);
-
+        Mockito.when(board.getConfig(Mockito.anyInt())).thenReturn(positions);
+        Mockito.doAnswer(invocation -> {
+            int x = invocation.getArgument(0);
+            int y = invocation.getArgument(1);
+            return new Vector2(x,y);
+        }).when(board).getWorldCoordinateOfTile(Mockito.anyInt(),Mockito.anyInt());
         ChaosBrawlGame game = Mockito.mock(ChaosBrawlGame.class);
         SpriteBatch spriteBatch = Mockito.mock(SpriteBatch.class);
         PowerMockito.whenNew(SpriteBatch.class).withNoArguments().thenReturn(spriteBatch);
         PowerMockito.whenNew(Board.class).withAnyArguments().thenReturn(board);
         PowerMockito.whenNew(OtherPathfinder.class).withAnyArguments().thenReturn(pathfinder);
         ScreenManager manager = ScreenManager.getInstance();
+
+        Gdx gdx=Mockito.mock(Gdx.class);
+        Mockito.when(gdx.graphics.getDeltaTime()).thenReturn(1f);
         manager.initialize(game);
 
         // initialize server
@@ -148,10 +156,10 @@ public class MultiplayerWorldTest extends BaseTest {
 
     private void initializePlayersForWorld(int worldIndex) {
         MultiplayerWorld world = worlds[worldIndex];
-        Boundary spawnArea = new Boundary(new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, 0), new Vector2(1, 0));
+        SpawnArea spawnArea = new SpawnArea(0, 0, 1, 1);
         for (int i = 0; i < PLAYERS; i++) {
             if (i == worldIndex) {
-                PlayerController playerController = new PlayerController(i, world, spawnArea);
+                PlayerController playerController = new PlayerController(i, world, spawnArea, camera);
                 playersPerWorld[worldIndex][i] = playerController;
                 world.setPlayerController(i, playerController);
             } else {
@@ -190,8 +198,9 @@ public class MultiplayerWorldTest extends BaseTest {
                 assertEquals(false, playersPerWorld[i][j].getMana().getResourceAmount() > 0);
             }
         }
-
         worlds[0].render();
+
+
         // Message should arrive in the next 2 seconds
         Thread.sleep(2000);
         for (PawnController[] aPlayersPerWorld : playersPerWorld) {

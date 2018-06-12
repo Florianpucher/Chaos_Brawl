@@ -24,7 +24,7 @@ import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
-import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import org.junit.After;
@@ -80,11 +80,16 @@ public class WorldTest extends BaseTest {
                 {0,0,0},
                 {1,1,1},
                 {0,1,1}});
-        Array<Float> positions = new Array<>();
-        for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i++) {
-            positions.add((float) i);
+        Array<Vector2> positions = new Array<>();
+        for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i+=2) {
+            positions.add(new Vector2(i,i+1));
         }
-        Mockito.when(boardA.getAsset(Mockito.anyInt())).thenReturn(positions);
+        Mockito.when(boardA.getConfig(Mockito.anyInt())).thenReturn(positions);
+        Mockito.doAnswer(invocation -> {
+            int x = invocation.getArgument(0);
+            int y = invocation.getArgument(1);
+            return new Vector2(x,y);
+        }).when(boardA).getWorldCoordinateOfTile(Mockito.anyInt(),Mockito.anyInt());
         Array<Vector2> defaultPath = new Array<>();
         defaultPath.add(new Vector2());
         defaultPath.add(new Vector2(1,1));
@@ -95,11 +100,11 @@ public class WorldTest extends BaseTest {
         PowerMockito.whenNew(OtherPathfinder.class).withArguments(boardA).thenReturn(pathfinder);
         PowerMockito.whenNew(ParticleEffect.class).withNoArguments().thenReturn(Mockito.mock(ParticleEffect.class));
         world = new World(1,4, true);
-        Boundary boundary = new Boundary(new Vector2(), new Vector2(), new Vector2(), new Vector2());
-        player1 = new PlayerController(0,world,boundary);
-        player2 = new PlayerController(1,world,boundary);
-        player3 = new PlayerController(2,world,boundary);
-        player4 = new PlayerController(3,world,boundary);
+        SpawnArea boundary = new SpawnArea(0,0,0,0);
+        player1 = new PlayerController(0,world,boundary, camera);
+        player2 = new PlayerController(1,world,boundary,camera);
+        player3 = new PlayerController(2,world,boundary,camera);
+        player4 = new PlayerController(3,world,boundary,camera);
 
         world.setPlayerController(0, player1);
         world.setPlayerController(1,player2);

@@ -27,8 +27,8 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
 
     @Override
     public void render() {
-        if (multiplayer.isHost()) {
-            updateResources();
+        if(multiplayer.isHost()){
+            updateResources(Gdx.graphics.getDeltaTime());
 
         }
         engine.update(Gdx.graphics.getDeltaTime());
@@ -59,16 +59,13 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     }
 
     @Override
-    protected void updateResources() {
-        if (System.currentTimeMillis() - resourceTimeStamp > 1) {
+    protected void updateResources(float deltaTime) {
             for (PawnController controller :
                     playerControllers) {
-                controller.tick();
+                controller.tick(deltaTime);
 
             }
-            resourceTimeStamp = System.currentTimeMillis();
-            multiplayer.sendTick();
-        }
+            multiplayer.sendTick(deltaTime);
     }
 
 
@@ -163,11 +160,11 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     }
 
     @Override
-    public void getTick() {
+    public void getTick(float deltaTime) {
         for (PawnController controller :
-                playerControllers) {
-            if (controller != null) {
-                controller.tick();
+             playerControllers) {
+            if(controller != null){
+                controller.tick(deltaTime);
             }
         }
     }
