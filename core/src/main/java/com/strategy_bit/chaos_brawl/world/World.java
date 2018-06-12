@@ -29,7 +29,7 @@ import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
-import com.strategy_bit.chaos_brawl.util.VectorMath;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,17 +103,20 @@ public class World implements InputHandler {
             configMap = -1;
         }
 
-        setEntityWorldCoordinates(board.getAsset(configMap), playerControllers.length);
+        setEntityWorldCoordinates(board.getConfig(configMap), playerControllers.length);
         resourceTimeStamp = System.currentTimeMillis();
     }
 
-    private void setEntityWorldCoordinates(Array<Float> spawn, int players){
+    private void setEntityWorldCoordinates(Array<Vector2> spawn, int players){
         int offset = 0;
         for (int j = 0; j < players; j++){
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset), spawn.get(offset+1)), 7,  playerControllers[j].getTeamID());
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset+2),spawn.get(offset+3)), 7,  playerControllers[j].getTeamID());
-            createEntityWorldCoordinates(new Vector2(spawn.get(offset+4),spawn.get(offset+5)), 6,  playerControllers[j].getTeamID());
-            offset += 6;
+            createEntityWorldCoordinates(board.getWorldCoordinateOfTile((int) spawn.get(offset).x,
+                    (int) spawn.get(offset).y), 7,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(board.getWorldCoordinateOfTile((int) spawn.get(offset+1).x,
+                    (int) spawn.get(offset+1).y), 7,  playerControllers[j].getTeamID());
+            createEntityWorldCoordinates(board.getWorldCoordinateOfTile((int) spawn.get(offset+2).x,
+                    (int) spawn.get(offset+2).y), 6,  playerControllers[j].getTeamID());
+            offset += 3;
         }
     }
 
@@ -325,14 +328,12 @@ public class World implements InputHandler {
      * @param playerID for which player the spawn area will be created
      * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
      */
-    public Boundary createSpawnAreaForPlayer(int playerID, int players){
+    public SpawnArea createSpawnAreaForPlayer(int playerID, int players){
         Boundary result = board.createSpawnAreaForPlayer(playerID, players);
-
-        Vector2 left = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerLeft(), 0)));
-        Vector2 right = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getLowerRight(), 0)));
-        Vector2 left2 = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getUpperLeft(), 0)));
-        Vector2 right2 = VectorMath.vector3ToVector2(camera.project(new Vector3(result.getUpperRight(), 0)));
-        return new Boundary(left, right, left2, right2);
+        SpawnArea spawnArea = new SpawnArea(result.getLowerLeft().x, result.getLowerLeft().y,
+                result.getUpperRight().x-result.getUpperLeft().x,
+                result.getUpperRight().y - result.getLowerRight().y);
+        return spawnArea;
     }
 
     public void cheatFunctionDisposer(){

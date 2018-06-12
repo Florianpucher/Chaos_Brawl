@@ -1,6 +1,7 @@
 package com.strategy_bit.chaos_brawl.player_input_output.views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,6 +9,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -16,10 +19,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
-import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.util.SpawnArea;
+import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 /**
  * holds information of the gameHUD
@@ -60,11 +65,11 @@ public class GameHUD extends Table {
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
-    public GameHUD(Boundary spawnArea) {
+    public GameHUD() {
         super(AssetManager.getInstance().defaultSkin);
         nextUnitType=-1;
         AssetManager assetManager = AssetManager.getInstance();
-        initializeNonSpawnAreaShadow(spawnArea);
+
 
         btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0);
         btnNewUnit1.setName(NEW_UNIT_1);
@@ -222,16 +227,22 @@ public class GameHUD extends Table {
         camera.position.set(w / 2, h / 2, 0);
     }
 
-    private void initializeNonSpawnAreaShadow(Boundary spawnArea) {
+    public void initializeNonSpawnAreaShadow(SpawnArea spawnArea, Camera camera) {
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
+        Vector2 screenPosition = VectorMath.vector3ToVector2(camera.project(new Vector3(
+                spawnArea.x - WorldSettings.FRUSTUM_WIDTH/2f,
+                spawnArea.y - WorldSettings.FRUSTUM_HEIGHT/2f,0)));
+        Vector2 screenSize = VectorMath.vector3ToVector2(camera.project(new Vector3(
+                spawnArea.getWidth()- WorldSettings.FRUSTUM_WIDTH/2f,
+                 spawnArea.getHeight() - WorldSettings.FRUSTUM_HEIGHT/2f,0)));
         pixmap.setBlending(Pixmap.Blending.None);
         pixmap.setColor(0, 0, 0, 150);
 
         pixmap.fillRectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         pixmap.setColor(Color.CLEAR);
-        pixmap.fillRectangle((int) (spawnArea.getUpperLeft().x), (int) (spawnArea.getUpperLeft().y),
-                (int) (spawnArea.getUpperRight().x - spawnArea.getUpperLeft().x),
-                (int) (spawnArea.getLowerRight().y - spawnArea.getUpperRight().y));
+        pixmap.fillRectangle((int) (screenPosition.x), (int) (screenPosition.y),
+                (int) (screenSize.x),
+                (int) (screenSize.y));
         nonSpawnAreaTexture = new Texture(pixmap);
         pixmap.dispose();
     }
