@@ -30,7 +30,6 @@ public class ScreenManager {
     private ChaosBrawlGame game;
     private Deque<ScreenEnum> lastScreens;
     private ScreenEnum currentScreenEnum;
-    private Screen gameScreen;
 
     // Singleton: private constructor
     private ScreenManager() {

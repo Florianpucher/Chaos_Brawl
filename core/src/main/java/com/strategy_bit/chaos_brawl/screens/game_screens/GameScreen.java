@@ -36,7 +36,7 @@ public class GameScreen extends AbstractScreen {
 
 
     protected void initializeGame(){
-        manager = new World(map,2);
+        manager = new World(map,2, true);
         controllers = new PawnController[2];
         playerController = new PlayerController(0, manager, manager.createSpawnAreaForPlayer(0, 2));
         controllers[0] = playerController;

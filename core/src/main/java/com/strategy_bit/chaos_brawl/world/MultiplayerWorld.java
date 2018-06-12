@@ -9,6 +9,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
+import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 
 public class MultiplayerWorld extends World implements MultiplayerInputHandler {
 
@@ -16,13 +17,11 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     private boolean isInitialized = false;
 
     public MultiplayerWorld(BrawlMultiplayer multiplayer, int players, int map) {
-        super(map, players);
+        super(map, players, multiplayer.isHost());
 
         this.multiplayer = multiplayer;
-        if (!multiplayer.isHost()) {
-            engine.removeSystem(deleteSystem);
-        } else {
-            engine.setInputHandler(this);
+        if(multiplayer.isHost()){
+            deleteSystem.setInputHandler(this);
         }
     }
 
@@ -43,7 +42,14 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
                     break;
                 }
             }
-            if (basesAreUp) {
+
+            if(basesAreUp){
+                for (PawnController cont :
+                        playerControllers) {
+                    if (cont instanceof PlayerController){
+                        updateMarker(cont.getCurrentTargetTeam());
+                    }
+                }
                 isInitialized = true;
             }
         } else {
@@ -126,6 +132,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
             }
             unit.getComponent(TeamGameObjectComponent.class).setHitPoints(0.0f);
             deleteSystem.removeEntity(unit);
+            units.remove(unitID);
         }
 
     }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.util.Boundary;
@@ -67,6 +68,7 @@ public class GameHUD extends Table {
         super(AssetManager.getInstance().defaultSkin);
         this.playerController = playerController;
 
+        nextUnitType=-1;
         AssetManager assetManager = AssetManager.getInstance();
         initializeNonSpawnAreaShadow(spawnArea);
 
@@ -131,7 +133,8 @@ public class GameHUD extends Table {
     private void switchButtons(boolean upgradeExecuted, String input) {
 
         if (upgradeExecuted && input == UPGRADE_UNITS) {
-            AssetManager.getInstance().upgradeExecuted.play(1f);
+
+            SoundManager.getInstance().playSound("upgradeExecuted");
 
 
             btnNewUnit1.setName(UPGRADED_UNIT_1);
@@ -146,8 +149,8 @@ public class GameHUD extends Table {
             btnUpgradeUnits.remove();
             playerController.updateTowersOrUnits(20);
 
-        } else if (upgradeExecuted && input == UPGRADE_TOWER) {
-            AssetManager.getInstance().upgradeExecutedTower.play(1f);
+        }else if (upgradeExecuted && input == UPGRADE_TOWER){
+            SoundManager.getInstance().playSound("upgradeTowerExecuted");
             btnUpgradeTower.remove();
             playerController.updateTowersOrUnits(21);
         }
@@ -275,18 +278,14 @@ public class GameHUD extends Table {
         if (win) {
             gameOverView = assetManager.victoryScreen;
             if (!playedVictoryOnce){
-                if (AssetManager.getInstance().getPlayable()) {
-                    AssetManager.getInstance().victory.play(1f);
-                }
+                SoundManager.getInstance().playSound("victory");
                 playedVictoryOnce = true;
             }
 
         }else{
             gameOverView = assetManager.defeatScreen;
             if(!playedDefeatOnce) {
-                if (AssetManager.getInstance().getPlayable()) {
-                    AssetManager.getInstance().defeat.play(1f);
-                }
+                SoundManager.getInstance().playSound("defeat");
                 playedDefeatOnce = true;
             }
         }

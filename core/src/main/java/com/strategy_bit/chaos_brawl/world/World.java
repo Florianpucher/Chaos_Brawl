@@ -12,6 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
+import com.strategy_bit.chaos_brawl.ashley.entities.CurrentTargetMarker;
 import com.strategy_bit.chaos_brawl.ashley.entities.Projectiles;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletDeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.BulletSystem;
@@ -19,10 +20,12 @@ import com.strategy_bit.chaos_brawl.ashley.systems.CombatSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.DeleteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.ReRouteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.UpgradeSystem;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.types.EventType;
@@ -61,11 +64,12 @@ public class World implements InputHandler {
 
     public boolean unitsAreUpgraded = false;
     public boolean towersAreUpgraded = false;
+    protected Entity marker;
 
     boolean endGame = false;
     private int players;
 
-    public World(int map, int players) {
+    public World(int map, int players, boolean containsDeleteSystem) {
         units = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
@@ -73,7 +77,9 @@ public class World implements InputHandler {
         tower = new Entity[players];
         this.players = players;
 
-        createEngine();
+        createEngine(containsDeleteSystem);
+        marker=new CurrentTargetMarker(new Vector2(0,0));
+        engine.addEntity(marker);
         createWorld(map);
     }
 
@@ -81,7 +87,9 @@ public class World implements InputHandler {
         units = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[2];
-        createEngine();
+        createEngine(true);
+        marker=new CurrentTargetMarker(new Vector2(0,0));
+        engine.addEntity(marker);
         createWorld(1);
     }
 
@@ -121,14 +129,22 @@ public class World implements InputHandler {
     }
 
 
-    protected void createEngine(){
-        engine = MyEngine.createEngine(units);
+    protected void createEngine(boolean containsDeleteSystem){
+        engine = MyEngine.createEngine();
         //Add some logic
         RenderSystem renderSystem = new RenderSystem();
         camera = renderSystem.getCamera();
-        deleteSystem = new DeleteSystem();
+        deleteSystem = new DeleteSystem(units);
+        if(containsDeleteSystem){
+            engine.addSystem(deleteSystem);
+        } else
+        {
+            deleteSystem.addedToEngine(engine);
+        }
+
+
         upgradeSystem = new UpgradeSystem(this);
-        engine.addSystem(deleteSystem);
+
         engine.addSystem(upgradeSystem);
         engine.addSystem(new MovementSystem());
         BulletSystem bulletSystem=new BulletSystem();
@@ -138,6 +154,8 @@ public class World implements InputHandler {
         combatSystem.addWorld(this);
         engine.addSystem(combatSystem);
         engine.addSystem(new BulletDeleteSystem());
+        ReRouteSystem reRouteSystem=new ReRouteSystem(this);
+        engine.addSystem(reRouteSystem);
         //Renderer should be the last system to add
 
         engine.addSystem(renderSystem);
@@ -281,6 +299,10 @@ public class World implements InputHandler {
 
 
 
+    public Array<Vector2> getPath(Vector2 start, Vector2 dest){
+            return gdxPathFinder.calculatePath(start, dest);
+    }
+
     Entity createEntityInternal(int unitId, long unitID, Vector2 worldCoordinates, int teamID){
         Entity entity = spawner.createNewUnit(unitId,teamID,worldCoordinates);
         engine.addEntity(entity);
@@ -289,16 +311,10 @@ public class World implements InputHandler {
             bases[teamID] = entity;
         }
         else if (unitId==5||unitId==2){
-            if(AssetManager.getInstance().getPlayable()){
-                AssetManager.getInstance().drawSword.play(1f);
-            }
-
+            SoundManager.getInstance().playSound("drawSword");
         }
         else if (unitId==1||unitId==4){
-            if(AssetManager.getInstance().getPlayable()){
-                AssetManager.getInstance().getRandomDrawKatanaSound().play(1f);
-            }
-
+            SoundManager.getInstance().playSound("drawKatana");
         }
         return entity;
     }
@@ -314,9 +330,8 @@ public class World implements InputHandler {
 
         Entity projectile = new Entity();
         UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
-        unitConfig.getSound().play(0.6f);
 
-            Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
+        Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
 
         createProjectile(projectile);
     }
@@ -379,5 +394,15 @@ public class World implements InputHandler {
     }
     public Camera getCamera() {
         return camera;
+    }
+
+    @Override
+    public void updateMarker(int t){
+        for (Entity base :
+                bases) {
+            if(base!=null&&base.getComponent(TeamGameObjectComponent.class).getTeamId()==t){
+                marker.getComponent(TransformComponent.class).setPosition(base.getComponent(TransformComponent.class).getPosition());
+            }
+        }
     }
 }

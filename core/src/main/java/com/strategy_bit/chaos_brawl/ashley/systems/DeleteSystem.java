@@ -10,7 +10,11 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.entities.Particle;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
+import com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler;
+
+import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -26,9 +30,12 @@ public class DeleteSystem extends IteratingSystem {
     private ComponentMapper<MovementComponent> movementComponentMapper;
 
     private Engine engine;
+    private Map<Long, Entity> units;
+    private MultiplayerInputHandler inputHandler;
 
-    public DeleteSystem() {
+    public DeleteSystem(Map<Long, Entity> units) {
         super(Family.all(TeamGameObjectComponent.class).get());
+        this.units = units;
         teamGameObjectComponentMapper = ComponentMapper.getFor(TeamGameObjectComponent.class);
         explosionComponentComponentMapper = ComponentMapper.getFor(ExplosionComponent.class);
         transformComponentMapper = ComponentMapper.getFor(TransformComponent.class);
@@ -37,7 +44,19 @@ public class DeleteSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        removeEntity(entity);
+        if(removeEntity(entity)){
+            Iterator<Map.Entry<Long,Entity>> iterator = units.entrySet().iterator();
+            while(iterator.hasNext()){
+                Map.Entry<Long,Entity> entry = iterator.next();
+                if(entry.getValue() == entity){
+                    if(inputHandler != null){
+                        inputHandler.deleteUnitLocal(entry.getKey());
+                    }
+                    iterator.remove();
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -46,28 +65,38 @@ public class DeleteSystem extends IteratingSystem {
         this.engine = engine;
     }
 
-    public void removeEntity(Entity entity) {
+    public boolean removeEntity(Entity entity) {
         TeamGameObjectComponent component = teamGameObjectComponentMapper.get(entity);
         if (component.getHitPoints() <= 0.0) {
             ExplosionComponent explosionComponent = explosionComponentComponentMapper.get(entity);
             MovementComponent movementComponent = movementComponentMapper.get(entity);
 
+            // Has explosion component
+            // Play explosion
+
             if (explosionComponent != null && movementComponent == null) {  // true =  building
-
+                // Get Position of object here
                 TransformComponent transform = transformComponentMapper.get(entity);
+
+                // and give it to the Explosion entity
                 engine.addEntity(new Particle(transform.getPosition(), "explosion"));
-                    AssetManager.getInstance().explosionSound.play(1f);
-
+                SoundManager.getInstance().playSound("explosionSound");
             } else if (explosionComponent != null) {  // true =  unit
-
+                // Get Position of object here
                 TransformComponent transform = transformComponentMapper.get(entity);
+
+                // and give it to the Smoke entity
                 engine.addEntity(new Particle(transform.getPosition(), "smoke"));
 
             }
 
             engine.removeEntity(entity);
-
+            return true;
         }
+        return false;
     }
 
+    public void setInputHandler(MultiplayerInputHandler inputHandler) {
+        this.inputHandler = inputHandler;
+    }
 }

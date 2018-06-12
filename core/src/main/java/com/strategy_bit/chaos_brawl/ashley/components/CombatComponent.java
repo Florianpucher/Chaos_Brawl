@@ -2,26 +2,29 @@ package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.math.Vector2;
+
 
 public class CombatComponent implements Component,Pool.Poolable {
-    private static final double MAX_ATTACK_SPEED=60;
-    private double attackRadius;
+    private static final float MAX_ATTACK_SPEED=60;
+    private float attackRadius;
     /**
      * Attacks per second
      */
-    private double attackSpeed;
-    private double attackDamage;
+    private float attackSpeed;
+    private float attackDamage;
     private long lastAttackTimeStamp;
     private boolean isRanged;
     private int isRangedAttackType;
-    private boolean isEngagedInCombat;
+    private boolean isAttacking;
+    private boolean getsAttacked;
+    private Vector2 attacker;
 
-    public void setEverything(double attackRadius, double attackSpeed, double attackDamage, boolean ranged, int rangedAttackType) {
+    public void setEverything(float attackRadius, float attackSpeed, float attackDamage, boolean ranged, int rangedAttackType) {
         setAttackDamage(attackDamage);
         setAttackRadius(attackRadius);
         setAttackSpeed(attackSpeed);
         setRanged(ranged);
-        setEngagedInCombat(false);
         setRangedAttackType(rangedAttackType);
         lastAttackTimeStamp=System.currentTimeMillis()- millisBetweenAttacks();
     }
@@ -30,7 +33,7 @@ public class CombatComponent implements Component,Pool.Poolable {
         return attackRadius;
     }
 
-    public void setAttackRadius(double attackRadius) {
+    public void setAttackRadius(float attackRadius) {
         this.attackRadius = attackRadius;
     }
 
@@ -38,7 +41,7 @@ public class CombatComponent implements Component,Pool.Poolable {
         return attackSpeed;
     }
 
-    public void setAttackSpeed(double attackSpeed) {
+    public void setAttackSpeed(float attackSpeed) {
         if(attackSpeed>MAX_ATTACK_SPEED){
             this.attackSpeed=MAX_ATTACK_SPEED;
         } else {
@@ -50,20 +53,20 @@ public class CombatComponent implements Component,Pool.Poolable {
         return attackDamage;
     }
 
-    public void setAttackDamage(double attackDamage) {
+    public void setAttackDamage(float attackDamage) {
         this.attackDamage = attackDamage;
     }
 
-    public boolean isEngagedInCombat() {
-        return isEngagedInCombat;
+    public boolean isAttacking() {
+        return isAttacking;
     }
 
-    public void setEngagedInCombat(boolean engagedInCombat) {
-        isEngagedInCombat = engagedInCombat;
+    public void setAttacking(boolean attacking) {
+        isAttacking = attacking;
     }
 
     private long millisBetweenAttacks(){
-        return (long)((1.0/attackSpeed)*1000.0);
+        return (long)((1.0/getAttackSpeed())*1000f);
     }
 
     public boolean attack(){
@@ -92,6 +95,22 @@ public class CombatComponent implements Component,Pool.Poolable {
         isRangedAttackType = rangedAttackType;
     }
 
+    public boolean isGetsAttacked() {
+        return getsAttacked;
+    }
+
+    public void setGetsAttacked(boolean getsAttacked) {
+        this.getsAttacked = getsAttacked;
+    }
+
+    public Vector2 getAttacker() {
+        return attacker;
+    }
+
+    public void setAttacker(Vector2 attacker) {
+        this.attacker = attacker;
+    }
+
     public CombatComponent() {
         attackRadius = 0;
         attackSpeed = 0;
@@ -99,7 +118,9 @@ public class CombatComponent implements Component,Pool.Poolable {
         lastAttackTimeStamp = 0;
         isRanged = false;
         isRangedAttackType = 0;
-        isEngagedInCombat = false;
+        isAttacking = false;
+        getsAttacked=false;
+        attacker=new Vector2(0,0);
     }
 
     @Override
@@ -110,6 +131,8 @@ public class CombatComponent implements Component,Pool.Poolable {
         lastAttackTimeStamp = 0;
         isRanged = false;
         isRangedAttackType = 0;
-        isEngagedInCombat = false;
+        isAttacking = false;
+        getsAttacked=false;
+        attacker.set(0,0);
     }
 }

@@ -93,6 +93,7 @@ public class MovementComponent implements Component,Pool.Poolable {
         this.path.addFirst(point);
     }
 
+
     public MovementComponent() {
         this.transformComponent=MyEngine.getInstance().createComponent(TransformComponent.class);
         speed=0;

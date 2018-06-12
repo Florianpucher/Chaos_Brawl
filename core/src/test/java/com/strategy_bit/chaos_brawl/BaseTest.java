@@ -4,7 +4,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
@@ -71,12 +70,6 @@ public class BaseTest {
 
         assetManager.unitManager.unitConfigHashMap = unitConfigHashMap;
         pixmap.dispose();
-        Sound sound = Mockito.mock(Sound.class);
-        assetManager.drawKatana = sound;
-        assetManager.attackBow = sound;
-        assetManager.attackSword = sound;
-        assetManager.hitArrow = sound;
-        assetManager.drawSword = sound;
         assetManager.explosionParticle = Mockito.mock(FileHandle.class);
     }
 

@@ -147,6 +147,12 @@ public class PlayerController extends PawnController implements InputProcessor {
         }
     }
 
+    @Override
+    public void setCurrentTargetTeam(int currentTargetTeam) {
+        super.setCurrentTargetTeam(currentTargetTeam);
+        inputHandler.updateMarker(currentTargetTeam);
+    }
+
     public boolean updateTowersOrUnits(int upgradeType) {
 
         inputHandler.updateTowersOrUnits(teamID, upgradeType);
