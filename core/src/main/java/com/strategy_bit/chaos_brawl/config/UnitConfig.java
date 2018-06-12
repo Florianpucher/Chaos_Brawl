@@ -4,6 +4,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class UnitConfig {
+
+
     //default values
     public static final String DEFAULT_NAME="NA";
     public static final float DEFAULT_COST=1f;
@@ -20,14 +22,18 @@ public class UnitConfig {
     public static final int DEFAULT_RANGED_ATTACK_TYPE =0;
 
     //private fields
+    private int id;
+    private int unitType;
     private String name;
-
     private float cost;
     private float speed;
     private float attackRadius;
     private float attackSpeed;
     private float attackDamage;
     private float hitPoints;
+    private int teamId;
+    private int unitId;
+    private Sound sound;
 
     private boolean ranged;
     private boolean hasMovementComponent;
@@ -38,6 +44,10 @@ public class UnitConfig {
     private int rangedAttackType;
 
     private TextureRegion skin;
+
+    public void setId(int id) { this.id = id;}
+
+    public int getId () { return id; }
 
 
 
@@ -122,6 +132,30 @@ public class UnitConfig {
         this.hitPoints = hitPoints;
     }
 
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
+    public int getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(int unitId) {
+        this.unitId = unitId;
+    }
+
+    public Sound getSound() {
+        return sound;
+    }
+
+    public void setSound(Sound sound) {
+        this.sound = sound;
+    }
+
     public String getName() {
         return name;
     }
@@ -136,6 +170,14 @@ public class UnitConfig {
 
     public void setCost(float cost) {
         this.cost = cost;
+    }
+
+    public int getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(int uniType) {
+        this.unitType = uniType;
     }
 
     public boolean hasMovementComponent() {

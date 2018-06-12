@@ -81,6 +81,10 @@ public class MovementComponent implements Component,Pool.Poolable {
         }
     }
 
+    public void setPath(Queue<Vector2> path){
+        this.path = path;
+    }
+
     public boolean hasNoPath(){
         return path.size < 1;
     }

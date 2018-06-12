@@ -12,6 +12,7 @@ import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.BrawlNetwork;
 import com.strategy_bit.chaos_brawl.network.messages.Message;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntityUpgradeMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.NetworkMembersRequestMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.PlayerSelectedNewTargetMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
@@ -137,6 +138,13 @@ public class BrawlClientImpl implements BrawlClient, BrawlMultiplayer {
     public void sendEntityDeleteMsg(long entityID) {
         throw new UnsupportedOperationException("Only the host sends deleting messages");
     }
+
+    @Override
+    public void sendEntityUpgradeMsg(int teamID, int upgradeID) {
+        EntityUpgradeMessage upgradeMessage = new EntityUpgradeMessage(teamID, upgradeID);
+        sendData(upgradeMessage);
+    }
+
 
     @Override
     public void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints) {

@@ -1,5 +1,6 @@
 package com.strategy_bit.chaos_brawl.world;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 
@@ -34,4 +35,11 @@ public interface InputHandler {
     void createEntityWorldCoordinates(Vector2 worldCoordinates, int unitId, int teamID);
 
     void updateMarker(int t);
+
+
+    void updateTowersOrUnits(int playerID, int updateType);
+
+    void upgradeEntityInternal(Entity entity, int ID);
+
+
 }

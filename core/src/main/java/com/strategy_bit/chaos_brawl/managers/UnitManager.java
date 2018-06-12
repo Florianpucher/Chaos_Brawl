@@ -33,6 +33,8 @@ public class UnitManager {
     private static final String HIT_POINTS = "hitPoints";
     private static final String SOUND_PATH = "soundPath";
     private static final String SOUND_NAME = "soundName";
+    private static final String UNIT_ID = "unitId";
+    private static final String UNIT_TYPE = "unitType";
 
     public void readFile(String file) {
         //TODO Hellmuth reduce cognitive complexity of method
@@ -88,6 +90,16 @@ public class UnitManager {
         }
         if (unitConfig.has(TEAM_GAME_OBJECT_COMPONENT) && unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(HIT_POINTS)) {
             config.setHitPoints(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getFloat(HIT_POINTS));
+
+
+                if (unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(UNIT_TYPE)) {
+                    config.setUnitType(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getInt(UNIT_TYPE));
+                }
+                if (unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(UNIT_ID)) {
+                    config.setUnitId(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getInt(UNIT_ID));
+
+
+            }
         }
         if (unitConfig.has(BOUNDARY_COMPONENT)) {
             config.setBoundaryComponent(true);

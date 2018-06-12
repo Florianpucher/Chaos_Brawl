@@ -14,6 +14,7 @@ import com.strategy_bit.chaos_brawl.network.messages.Message;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityDeleteMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntityMovingMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.EntitySpawnMessage;
+import com.strategy_bit.chaos_brawl.network.messages.request.EntityUpgradeMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.InitializeGameMessage;
 import com.strategy_bit.chaos_brawl.network.messages.request.ResourceTickMessage;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
@@ -143,6 +144,12 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     public void sendEntityDeleteMsg(long entityID) {
         sendData(new EntityDeleteMessage(entityID));
     }
+
+    @Override
+    public void sendEntityUpgradeMsg(int teamID, int upgradeID) {
+        sendData((new EntityUpgradeMessage(teamID, upgradeID)));
+    }
+
 
     @Override
     public void sendEntityMovingMessage(long unitID, Array<Vector2> wayPoints) {

@@ -22,7 +22,10 @@ import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
+import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
+import com.strategy_bit.chaos_brawl.util.Boundary;
+import com.strategy_bit.chaos_brawl.world.InputHandler;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
@@ -65,8 +68,12 @@ public class GameHUD extends Table {
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
-    public GameHUD() {
+    private PlayerController playerController;
+
+    public GameHUD(PlayerController playerController) {
         super(AssetManager.getInstance().defaultSkin);
+        this.playerController = playerController;
+
         nextUnitType=-1;
         AssetManager assetManager = AssetManager.getInstance();
 
@@ -129,11 +136,13 @@ public class GameHUD extends Table {
         initializeGameOverView();
     }
 
-    private void switchButtons(boolean upgradeExecuted, String input){
+    private void switchButtons(boolean upgradeExecuted, String input) {
 
-        if (upgradeExecuted && input == UPGRADE_UNITS){
+        if (upgradeExecuted && input == UPGRADE_UNITS) {
 
             SoundManager.getInstance().playSound("upgradeExecuted");
+
+
             btnNewUnit1.setName(UPGRADED_UNIT_1);
             btnNewUnit1.setText(UPGRADED_UNIT_1);
 
@@ -144,14 +153,15 @@ public class GameHUD extends Table {
             btnNewUnit3.setText(UPGRADED_UNIT_3);
 
             btnUpgradeUnits.remove();
-        } else if (upgradeExecuted && input == UPGRADE_TOWER){
+            playerController.updateTowersOrUnits(20);
+
+        }else if (upgradeExecuted && input == UPGRADE_TOWER){
             SoundManager.getInstance().playSound("upgradeTowerExecuted");
             btnUpgradeTower.remove();
+            playerController.updateTowersOrUnits(21);
         }
-
-
     }
-    
+
 
     private ClickListener listener = new ClickListener() {
         @Override

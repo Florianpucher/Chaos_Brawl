@@ -1,5 +1,12 @@
 [
   {
+    "_comment": "UNIT TYPES: <1>  =  Units Tier 1  <2> =  Units Tier 2  ",
+    "_comment": "UNIT TYPES: <11> =  Tower Tier 1  <22> =  Tower Tier 2  ",
+    "_comment": "UNIT TYPES: <3>  =  Base  ",
+    "_comment": "UNIT TYPES: <4>  =  Projectile  "
+  },
+
+  {
     "id" : 0,
     "name": "Archer",
     "cost" : 10,
@@ -18,7 +25,9 @@
       "rangedAttackType" : 10
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 50
+      "unitId" : 0,
+      "hitPoints" : 50,
+      "unitType" : 1
 
     },
     "ExplosionComponent" : {
@@ -50,7 +59,9 @@
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 75
+      "unitId" : 1,
+      "hitPoints" : 75,
+      "unitType" : 1
 
     },
     "ExplosionComponent" : {
@@ -82,7 +93,9 @@
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 120
+      "unitId" : 2,
+      "hitPoints" : 120,
+      "unitType" : 1
 
     },
     "ExplosionComponent" : {
@@ -114,7 +127,9 @@
       "rangedAttackType" : 11
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 60
+      "unitId" : 3,
+      "hitPoints" : 60,
+      "unitType" : 2
 
     },
     "ExplosionComponent" : {
@@ -146,7 +161,9 @@
       "rangedAttackType" : 99
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 95
+      "unitId" : 4,
+      "hitPoints" : 95,
+      "unitType" : 2
 
     },
     "ExplosionComponent" : {
@@ -178,7 +195,9 @@
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 150
+      "unitId" : 5,
+      "hitPoints" : 150,
+      "unitType" : 2
 
     },
     "ExplosionComponent" : {
@@ -208,7 +227,8 @@
       "rangedAttackType" : 12
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 1000
+      "hitPoints" : 1000,
+      "unitType" : 3
 
     },
     "ExplosionComponent" : {
@@ -221,7 +241,7 @@
   },
 
   {
-  "id" : 8,
+  "id" : 7,
   "name": "Tower",
   "cost" : 0,
   "TextureComponent" : {
@@ -236,7 +256,9 @@
     "rangedAttackType" : 10
   },
   "TeamGameObjectComponent" : {
-    "hitPoints" : 100
+    "unitId" : 7,
+    "hitPoints" : 100,
+    "unitType" : 11
 
   },
   "ExplosionComponent" : {
@@ -252,7 +274,7 @@
 },
 
   {
-    "id" : 7,
+    "id" : 8,
     "name": "Lasertower",
     "cost" : 0,
     "TextureComponent" : {
@@ -261,13 +283,15 @@
     },
     "CombatComponent" : {
       "attackRadius" : 4,
-      "attackSpeed" : 1,
-      "attackDamage" : 1,
+      "attackSpeed" : 60,
+      "attackDamage" : 2,
       "ranged" : true,
       "rangedAttackType" : 13
     },
     "TeamGameObjectComponent" : {
-      "hitPoints" : 120
+      "unitId" : 8,
+      "hitPoints" : 120,
+      "unitType" : 22
 
     },
     "ExplosionComponent" : {
@@ -295,6 +319,10 @@
     },
     "MovementComponent" : {
       "speed" : 10
+    },
+    "TeamGameObjectComponent" : {
+      "unitType" : 4
+
     }
 
   },
@@ -310,6 +338,10 @@
     },
     "MovementComponent" : {
       "speed" : 5
+    },
+    "TeamGameObjectComponent" : {
+      "unitType" : 4
+
     }
 
   },
@@ -325,6 +357,10 @@
     },
     "MovementComponent" : {
       "speed" : 10
+    },
+    "TeamGameObjectComponent" : {
+      "unitType" : 4
+
     }
 
   },
@@ -341,6 +377,10 @@
     },
     "MovementComponent" : {
       "speed" : 5
+    },
+    "TeamGameObjectComponent" : {
+      "unitType" : 4
+
     }
 
   },
@@ -354,7 +394,7 @@
   {
     "id" : 21,
     "name": "UpgradeTower",
-    "cost" : 75
+    "cost" : 50
   }
 
 ]

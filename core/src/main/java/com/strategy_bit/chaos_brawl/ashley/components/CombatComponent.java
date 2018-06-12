@@ -1,11 +1,12 @@
 package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.math.Vector2;
+
 
 public class CombatComponent implements Component,Pool.Poolable {
-    private static final float MAX_ATTACK_SPEED=2.5f;
+    private static final float MAX_ATTACK_SPEED=60;
     private float attackRadius;
     /**
      * Attacks per second

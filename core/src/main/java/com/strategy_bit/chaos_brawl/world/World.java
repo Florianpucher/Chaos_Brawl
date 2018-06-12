@@ -11,6 +11,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.BoundaryComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.UpgradeComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entities.CurrentTargetMarker;
 import com.strategy_bit.chaos_brawl.ashley.entities.Projectiles;
@@ -22,6 +23,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.MovementSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.ReRouteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
+import com.strategy_bit.chaos_brawl.ashley.systems.UpgradeSystem;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
@@ -31,7 +33,9 @@ import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -57,6 +61,8 @@ public class World implements InputHandler {
     protected Entity[] tower;
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
+    protected UpgradeSystem upgradeSystem;
+
     protected Entity marker;
 
     boolean endGame = false;
@@ -138,6 +144,10 @@ public class World implements InputHandler {
             deleteSystem.addedToEngine(engine);
         }
 
+
+        upgradeSystem = new UpgradeSystem(this);
+
+        engine.addSystem(upgradeSystem);
         engine.addSystem(new MovementSystem());
         BulletSystem bulletSystem=new BulletSystem();
         engine.addSystem(bulletSystem);
@@ -270,9 +280,37 @@ public class World implements InputHandler {
             movementComponent.setPath(path);
 
         }
-
-
     }
+
+
+    @Override
+    public void updateTowersOrUnits(int teamID, int updateType) {
+        HashMap<Long, Entity> map = new HashMap<>();
+        Iterator<Map.Entry<Long, Entity>> iterator = units.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<Long,Entity> entry = iterator.next();
+            Entity unit = entry.getValue();
+            TeamGameObjectComponent component = unit.getComponent(TeamGameObjectComponent.class);
+            System.out.println(component.getUnitType());
+            if((int)unit.getComponent(TeamGameObjectComponent.class).getUnitType() != updateType || unit.getComponent(TeamGameObjectComponent.class).getTeamId() != teamID)
+            {
+                continue;
+            }
+            Entity newEntity = upgradeSystem.UpgradeToNextTier(unit, iterator);
+            if(newEntity != null)
+            {
+                map.put(entry.getKey(), newEntity);
+            }
+        }
+        Iterator<Map.Entry<Long, Entity>> iterator2 = map.entrySet().iterator();
+        while (iterator2.hasNext())
+        {
+            Map.Entry<Long,Entity> entry = iterator2.next();
+            units.put(entry.getKey(),entry.getValue());
+        }
+    }
+
+
 
     public Array<Vector2> getPath(Vector2 start, Vector2 dest){
             return gdxPathFinder.calculatePath(start, dest);
@@ -291,8 +329,13 @@ public class World implements InputHandler {
         else if (unitId==1||unitId==4){
             SoundManager.getInstance().playSound("drawKatana");
         }
-
         return entity;
+    }
+
+    @Override
+    public void upgradeEntityInternal(Entity entity, int ID){
+        engine.addEntity(entity);
+        //units.put(lastID++, entity);
     }
 
 

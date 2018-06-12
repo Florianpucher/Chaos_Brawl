@@ -35,6 +35,8 @@ public class Unit {
 
         TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(unitConfig.getHitPoints(),teamId);
+        teamGameObjectComponent.setUnitType(unitConfig.getUnitType());
+        teamGameObjectComponent.setUnitId(unitConfig.getUnitId());
 
         if (unitConfig.hasBoundaryComponent()){
             Vector2 size = new Vector2((textureComponent.getTexture().getRegionWidth() * PIXELS_TO_METRES),(textureComponent.getTexture().getRegionHeight() * PIXELS_TO_METRES));

@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class DeleteSystem extends IteratingSystem {
 
-    private ComponentMapper<TeamGameObjectComponent> mTeamGameObjectComponent;
+    private ComponentMapper<TeamGameObjectComponent> teamGameObjectComponentMapper;
     private ComponentMapper<ExplosionComponent> explosionComponentComponentMapper;
     private ComponentMapper<TransformComponent> transformComponentMapper;
     private ComponentMapper<MovementComponent> movementComponentMapper;
@@ -36,7 +36,7 @@ public class DeleteSystem extends IteratingSystem {
     public DeleteSystem(Map<Long, Entity> units) {
         super(Family.all(TeamGameObjectComponent.class).get());
         this.units = units;
-        mTeamGameObjectComponent = ComponentMapper.getFor(TeamGameObjectComponent.class);
+        teamGameObjectComponentMapper = ComponentMapper.getFor(TeamGameObjectComponent.class);
         explosionComponentComponentMapper = ComponentMapper.getFor(ExplosionComponent.class);
         transformComponentMapper = ComponentMapper.getFor(TransformComponent.class);
         movementComponentMapper = ComponentMapper.getFor(MovementComponent.class);
@@ -66,7 +66,7 @@ public class DeleteSystem extends IteratingSystem {
     }
 
     public boolean removeEntity(Entity entity) {
-        TeamGameObjectComponent component = mTeamGameObjectComponent.get(entity);
+        TeamGameObjectComponent component = teamGameObjectComponentMapper.get(entity);
         if (component.getHitPoints() <= 0.0) {
             ExplosionComponent explosionComponent = explosionComponentComponentMapper.get(entity);
             MovementComponent movementComponent = movementComponentMapper.get(entity);
