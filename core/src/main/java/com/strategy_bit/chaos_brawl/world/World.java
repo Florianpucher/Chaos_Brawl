@@ -63,8 +63,6 @@ public class World implements InputHandler {
     protected DeleteSystem deleteSystem;
     protected UpgradeSystem upgradeSystem;
 
-    public boolean unitsAreUpgraded = false;
-    public boolean towersAreUpgraded = false;
     protected Entity marker;
 
     boolean endGame = false;
@@ -287,7 +285,7 @@ public class World implements InputHandler {
 
     @Override
     public void updateTowersOrUnits(int playerID, int updateType) {
-        ArrayList<Entity> newEntities = new ArrayList<>();
+        HashMap<Long, Entity> map = new HashMap<>();
         Iterator<Map.Entry<Long, Entity>> iterator = units.entrySet().iterator();
         while (iterator.hasNext()){
             Map.Entry<Long,Entity> entry = iterator.next();
@@ -301,13 +299,14 @@ public class World implements InputHandler {
             Entity newEntity = upgradeSystem.UpgradeToNextTier(unit, iterator);
             if(newEntity != null)
             {
-                newEntities.add(newEntity);
+                map.put(entry.getKey(), newEntity);
             }
-
         }
-        for (Entity entity :
-                newEntities) {
-            units.put(lastID++, entity);
+        Iterator<Map.Entry<Long, Entity>> iterator2 = map.entrySet().iterator();
+        while (iterator2.hasNext())
+        {
+            Map.Entry<Long,Entity> entry = iterator2.next();
+            units.put(entry.getKey(),entry.getValue());
         }
     }
 

@@ -91,7 +91,6 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     @Override
     public void createEntityLocal(Vector2 worldCoordinates, int unitId, int teamID, long unitID) {
         createEntityInternal(unitId, unitID, worldCoordinates, teamID);
-
     }
 
     @Override
