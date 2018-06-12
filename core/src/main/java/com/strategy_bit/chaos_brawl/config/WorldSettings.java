@@ -25,7 +25,7 @@ public class WorldSettings {
 
 
 
-    public static final double RATE = 0.1d;
+    public static final float RATE = 3.5f;
 
 
     private WorldSettings(){
