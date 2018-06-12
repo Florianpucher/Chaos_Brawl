@@ -71,7 +71,7 @@ public class BrawlServerListener extends Listener implements BrawlConnector {
                 multiplayerInputHandler.playerChangesTarget(selectedNewTargetMessage.playerTeamID, selectedNewTargetMessage.targetTeamID);
             }else if(object instanceof EntityUpgradeMessage){
                 EntityUpgradeMessage entityUpgradeMessage = (EntityUpgradeMessage) object;
-                multiplayerInputHandler.upgradeUnitLocal(entityUpgradeMessage.teamID, entityUpgradeMessage.upgradeID);
+                multiplayerInputHandler.updateTowersOrUnits(entityUpgradeMessage.teamID, entityUpgradeMessage.upgradeID);
             }
         });
     }

@@ -60,7 +60,7 @@ public class UpgradeSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        //UpgradeToNextTier(entity, unitsUP, towersUP);
+
     }
 
     @Override
@@ -118,7 +118,7 @@ public class UpgradeSystem extends IteratingSystem {
             iterator.remove();
             return entityNew;
 
-            //
+
         }
         return null;
 

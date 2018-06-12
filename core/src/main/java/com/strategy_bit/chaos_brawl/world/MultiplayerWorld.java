@@ -101,22 +101,19 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     }
 
     @Override
-    public void upgradeEntityInternal(Entity entity, int ID) {
+    public void updateTowersOrUnits(int playerID, int updateType) {
+        if(multiplayer.isHost())
+        {
+            super.updateTowersOrUnits(playerID, updateType);
 
-        if (multiplayer.isHost()) {
-
-            PawnController spawnerController = playerControllers[entity.getComponent(TeamGameObjectComponent.class).getTeamId()];
-            multiplayer.sendEntitySpawnMsg(entity.getComponent(TransformComponent.class).getPosition(),ID, entity.getComponent(TeamGameObjectComponent.class).getTeamId(), lastID++);
-            if (entity.getComponent(MovementComponent.class) != null) {
-                Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(),
-                        bases[spawnerController.getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
-                entity.getComponent(MovementComponent.class).setPath(path);
-
-                multiplayer.sendEntityMovingMessage(lastID-1, path);
-            }
-        } else {
-            multiplayer.sendEntitySpawnMsg(entity.getComponent(TransformComponent.class).getPosition(), ID, entity.getComponent(TeamGameObjectComponent.class).getTeamId(), -1);
         }
+        multiplayer.sendEntityUpgradeMsg(playerID, updateType);
+
+    }
+
+    @Override
+    public void upgradeEntityInternal(Entity entity, int ID) {
+        super.upgradeEntityInternal(entity, ID);
     }
 
     @Override
@@ -137,7 +134,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
 
     @Override
     public void upgradeUnitLocal(int teamID, int upgradeID) {
-
+        super.updateTowersOrUnits(teamID, upgradeID);
     }
 
 
