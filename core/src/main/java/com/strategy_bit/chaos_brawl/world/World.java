@@ -55,7 +55,6 @@ public class World implements InputHandler {
     protected PawnController[] playerControllers;
     protected Entity[] bases;
     protected Entity[] tower;
-    protected long resourceTimeStamp;
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
     protected Entity marker;
@@ -104,7 +103,6 @@ public class World implements InputHandler {
         }
 
         setEntityWorldCoordinates(board.getAsset(configMap), playerControllers.length);
-        resourceTimeStamp = System.currentTimeMillis();
     }
 
     private void setEntityWorldCoordinates(Array<Float> spawn, int players){
