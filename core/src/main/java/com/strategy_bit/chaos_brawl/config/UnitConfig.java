@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class UnitConfig {
+
     private int id;
-    private int uniType;
+    private int unitType;
     private String name;
     private float cost;
     private Vector2 position;
@@ -19,6 +20,7 @@ public class UnitConfig {
     private int rangedAttackType;
     private float hitPoints;
     private int teamId;
+    private int unitId;
     private Sound sound;
     private boolean hasMovementComponent;
     private boolean hasBoundaryComponent;
@@ -110,6 +112,14 @@ public class UnitConfig {
         this.teamId = teamId;
     }
 
+    public int getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(int unitId) {
+        this.unitId = unitId;
+    }
+
     public Sound getSound() {
         return sound;
     }
@@ -135,11 +145,11 @@ public class UnitConfig {
     }
 
     public int getUnitType() {
-        return uniType;
+        return unitType;
     }
 
     public void setUnitType(int uniType) {
-        this.uniType = uniType;
+        this.unitType = uniType;
     }
 
     public boolean hasMovementComponent() {

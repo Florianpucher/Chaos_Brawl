@@ -5,10 +5,19 @@ import com.badlogic.gdx.utils.Pool;
 
 public class TeamGameObjectComponent implements Component,Pool.Poolable {
 
+    private int unitId;
     private int teamId;
     private double hitPoints;
     private double maxHP;
     private int unitType;
+
+    public int getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(int unitId) {
+        this.unitId = unitId;
+    }
 
     public TeamGameObjectComponent(double hitPoints, int teamId) {
         setHitPoints(hitPoints);

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Queue;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.UpgradeComponent;
 import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
@@ -23,9 +24,11 @@ public class UpgradeSystem extends IteratingSystem {
     private ComponentMapper<TransformComponent> transformComponentMapper;
     private ComponentMapper<MovementComponent> movementComponentMapper;
     private ComponentMapper<CombatComponent> combatComponentMapper;
+    private ComponentMapper<UpgradeComponent> upgradeComponentMapper;
 
-    private double hitPoints;
+    private int entityID;
     private int teamID;
+    private double hitPoints;
     private Vector2 position;
     private float rotation;
     private double attackRadius;
@@ -48,6 +51,7 @@ public class UpgradeSystem extends IteratingSystem {
         transformComponentMapper = ComponentMapper.getFor((TransformComponent.class));
         movementComponentMapper = ComponentMapper.getFor((MovementComponent.class));
         combatComponentMapper = ComponentMapper.getFor((CombatComponent.class));
+        upgradeComponentMapper = ComponentMapper.getFor((UpgradeComponent.class));
         this.inputHandler = inputHandler;
     }
 
@@ -75,7 +79,9 @@ public class UpgradeSystem extends IteratingSystem {
             CombatComponent cComponent = combatComponentMapper.get(entity);
             TransformComponent trComponent = transformComponentMapper.get(entity);
             MovementComponent mComponent = movementComponentMapper.get(entity);
+            UpgradeComponent uComponent = upgradeComponentMapper.get(entity);
 
+            entityID = teComponent.getUnitId();
             teamID = teComponent.getTeamId();
             attackRadius = cComponent.getAttackRadius();
             position = trComponent.getPosition();
@@ -89,20 +95,25 @@ public class UpgradeSystem extends IteratingSystem {
                 path = mComponent.getPath();
                 targetLocation = mComponent.getTargetLocation();
 
-                config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(3);
+                uComponent.setUnitID(entityID);
+
+                config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(uComponent.getUnitID());
 
                 Unit.setComponents(entityNew, config, teamID, position);
                 entityNew.getComponent(TeamGameObjectComponent.class).setHitPoints(hitPoints);
                 entityNew.getComponent(MovementComponent.class).setPath(path);
 
-                inputHandler.upgradeEntityInternal(entityNew, config.getId() + 3);
+                inputHandler.upgradeEntityInternal(entityNew, config.getId());
 
 
             } else if (towersUP) {                                     // entity is a t1 tower
 
-                config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(8);
+                uComponent.setTowerID(entityID);
+
+                config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(uComponent.getTowerID());
+
                 Unit.setComponents(entityNew, config, teamID, position);
-                inputHandler.upgradeEntityInternal(entityNew, config.getId() + 1);
+                inputHandler.upgradeEntityInternal(entityNew, config.getId());
 
             }
             engine.removeEntity(entity);

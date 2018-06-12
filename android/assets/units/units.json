@@ -31,6 +31,7 @@
       "rangedAttackType" : 10
     },
     "TeamGameObjectComponent" : {
+      "unitId" : 0,
       "hitPoints" : 50,
       "unitType" : 1
 
@@ -70,6 +71,7 @@
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
+      "unitId" : 1,
       "hitPoints" : 75,
       "unitType" : 1
 
@@ -109,6 +111,7 @@
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
+      "unitId" : 2,
       "hitPoints" : 120,
       "unitType" : 1
 
@@ -148,6 +151,7 @@
       "rangedAttackType" : 11
     },
     "TeamGameObjectComponent" : {
+      "unitId" : 3,
       "hitPoints" : 60,
       "unitType" : 2
 
@@ -187,6 +191,7 @@
       "rangedAttackType" : 99
     },
     "TeamGameObjectComponent" : {
+      "unitId" : 4,
       "hitPoints" : 95,
       "unitType" : 2
 
@@ -226,6 +231,7 @@
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
+      "unitId" : 5,
       "hitPoints" : 150,
       "unitType" : 2
 
@@ -298,6 +304,7 @@
     "rangedAttackType" : 10
   },
   "TeamGameObjectComponent" : {
+    "unitId" : 7,
     "hitPoints" : 100,
     "unitType" : 11
 
@@ -336,6 +343,7 @@
       "rangedAttackType" : 13
     },
     "TeamGameObjectComponent" : {
+      "unitId" : 8,
       "hitPoints" : 120,
       "unitType" : 22
 

@@ -37,12 +37,10 @@ public class UnitManager {
     private final String RANGEDATTACKTYPE = "rangedAttackType";
     private final String HITPOINTS = "hitPoints";
     private final String TEAMID = "teamId";
+    private final String UNITID = "unitId";
     private final String UNITTYPE = "unitType";
     private final String SOUNDPATH = "soundPath";
     private final String SOUNDNAME = "soundName";
-
-
-
 
 
 
@@ -120,6 +118,10 @@ public class UnitManager {
                     }
                     if (unitConfig.get(TEAMGAMEOBJECTCOMPONENT).has(UNITTYPE)) {
                         config.setUnitType(unitConfig.get(TEAMGAMEOBJECTCOMPONENT).getInt(UNITTYPE));
+                    }
+                    if (unitConfig.get(TEAMGAMEOBJECTCOMPONENT).has(UNITID)) {
+                        config.setUnitId(unitConfig.get(TEAMGAMEOBJECTCOMPONENT).getInt(UNITID));
+
                     }
                 }
                 if (unitConfig.has(BOUNDARYCOMPONENT)){
