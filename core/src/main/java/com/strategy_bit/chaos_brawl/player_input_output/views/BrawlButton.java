@@ -1,15 +1,25 @@
 package com.strategy_bit.chaos_brawl.player_input_output.views;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
-public class BrawlButton extends TextButton {
+public class BrawlButton extends ImageButton {
     private int unitId;
     private boolean activated;
-    public BrawlButton(String text, Skin skin,int unitId) {
-        super(text, skin);
+    private Cell<Actor> cell;
+    public BrawlButton(String text, Skin skin, int unitId, String imageSkin) {
+        super(skin);
+        setName(text);
+
+        TextureRegion image = AssetManager.getInstance().skins.get(imageSkin);
+        cell= getImageCell();
+        cell.setActor(new Image(image));
         activated=true;
         this.unitId=unitId;
     }

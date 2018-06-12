@@ -24,8 +24,6 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
-import com.strategy_bit.chaos_brawl.util.Boundary;
-import com.strategy_bit.chaos_brawl.world.InputHandler;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 
@@ -78,17 +76,17 @@ public class GameHUD extends Table {
         AssetManager assetManager = AssetManager.getInstance();
 
 
-        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0);
+        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0, AssetManager.UI_SWORD_IMAGE);
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
-        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1);
+        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1, AssetManager.UI_SWORD_IMAGE);
         btnNewUnit2.setName(NEW_UNIT_2);
         setFillParent(true);
-        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2);
+        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2, AssetManager.UI_SWORD_IMAGE);
         btnNewUnit3.setName(NEW_UNIT_3);
-        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20);
+        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20, AssetManager.UI_SWORD_IMAGE);
         btnUpgradeUnits.setName(UPGRADE_UNITS);
-        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21);
+        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21, AssetManager.UI_SWORD_IMAGE);
         btnUpgradeTower.setName(UPGRADE_TOWER);
 
 
@@ -111,6 +109,7 @@ public class GameHUD extends Table {
 
         top();
         //add actors to UI
+        float height = Gdx.graphics.getHeight() / 8.5f;
         add(manaBar).top().width(Gdx.graphics.getWidth() / 2f).height(Gdx.graphics.getHeight() / 9f);
         row().height(7 * Gdx.graphics.getHeight() / 9f);
         add();
@@ -120,13 +119,13 @@ public class GameHUD extends Table {
         Table lowerUI = new Table(assetManager.defaultSkin);
         lowerUI.right();
         add(lowerUI).width((float) Gdx.graphics.getWidth());
-        lowerUI.add(btnNewUnit1).right().height(lowerUI.getPrefHeight());
-        lowerUI.add(btnNewUnit2).right().height(lowerUI.getPrefHeight());
-        lowerUI.add(btnNewUnit3).right().height(lowerUI.getPrefHeight());
+        lowerUI.add(btnNewUnit1).right().height(height).width(Gdx.graphics.getWidth()/5f);
+        lowerUI.add(btnNewUnit2).right().height(height).width(Gdx.graphics.getWidth()/5f);
+        lowerUI.add(btnNewUnit3).right().height(height).width(Gdx.graphics.getWidth()/5f);
 
 
-        lowerUI.add(btnUpgradeUnits).left().height(lowerUI.getPrefHeight());
-        lowerUI.add(btnUpgradeTower).left().height(lowerUI.getPrefHeight());
+        lowerUI.add(btnUpgradeUnits).left().height(height).width(Gdx.graphics.getWidth()/5f);
+        lowerUI.add(btnUpgradeTower).left().height(height).width(Gdx.graphics.getWidth()/5f);
 
         btnNewUnit1.addListener(listener);
         btnNewUnit2.addListener(listener);
@@ -144,13 +143,13 @@ public class GameHUD extends Table {
 
 
             btnNewUnit1.setName(UPGRADED_UNIT_1);
-            btnNewUnit1.setText(UPGRADED_UNIT_1);
+            //btnNewUnit1.setText(UPGRADED_UNIT_1);
 
             btnNewUnit2.setName(UPGRADED_UNIT_2);
-            btnNewUnit2.setText(UPGRADED_UNIT_2);
+            //btnNewUnit2.setText(UPGRADED_UNIT_2);
 
             btnNewUnit3.setName(UPGRADED_UNIT_3);
-            btnNewUnit3.setText(UPGRADED_UNIT_3);
+            //btnNewUnit3.setText(UPGRADED_UNIT_3);
 
             btnUpgradeUnits.remove();
             playerController.updateTowersOrUnits(20);
