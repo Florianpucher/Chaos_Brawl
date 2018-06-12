@@ -70,7 +70,7 @@ public class GameHUD extends Table {
 
     private PlayerController playerController;
 
-    public GameHUD(Boundary spawnArea, PlayerController playerController) {
+    public GameHUD(PlayerController playerController) {
         super(AssetManager.getInstance().defaultSkin);
         this.playerController = playerController;
 

@@ -110,9 +110,9 @@ public class PlayerController extends PawnController implements InputProcessor {
      */
     public void addGameHUD(Stage stage) {
         if (gameHUD == null) {
-            gameHUD = new GameHUD();
+            gameHUD = new GameHUD( this);
             gameHUD.initializeNonSpawnAreaShadow(spawnArea, camera);
-            gameHUD = new GameHUD(spawnArea, this);
+
         }
         if (!stage.getActors().contains(gameHUD, false)) {
             stage.addActor(gameHUD);
