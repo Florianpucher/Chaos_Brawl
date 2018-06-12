@@ -17,6 +17,9 @@ import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
+import java.util.Iterator;
+import java.util.Map;
+
 
 public class UpgradeSystem extends IteratingSystem {
 
@@ -57,7 +60,7 @@ public class UpgradeSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        UpgradeToNextTier(entity, unitsUP, towersUP);
+        //UpgradeToNextTier(entity, unitsUP, towersUP);
     }
 
     @Override
@@ -66,16 +69,13 @@ public class UpgradeSystem extends IteratingSystem {
         this.engine = engine;
     }
 
-    public void UpgradeToNextTier(Entity entity, boolean unitsUP, boolean towersUP) {
+    public Entity UpgradeToNextTier(Entity entity, Iterator<Map.Entry<Long, Entity>> iterator) {
         TeamGameObjectComponent teComponent = teamGameObjectComponentMapper.get(entity);
-
-        this.unitsUP = unitsUP;
-        this.towersUP = towersUP;
 
         System.out.println(unitsUP + " =  unitsUP");
         System.out.println(towersUP + " =  towersUP");
 
-        if ((teComponent.getUnitType() == 1 || teComponent.getUnitType() == 11) && (unitsUP || towersUP)) {
+        if ((teComponent.getUnitType() == 1 || teComponent.getUnitType() == 11)) {
             CombatComponent cComponent = combatComponentMapper.get(entity);
             TransformComponent trComponent = transformComponentMapper.get(entity);
             MovementComponent mComponent = movementComponentMapper.get(entity);
@@ -88,7 +88,7 @@ public class UpgradeSystem extends IteratingSystem {
 
             Entity entityNew = new Entity();
 
-            if ((mComponent != null) && unitsUP) {                     // entity is a t1 unit
+            if ((mComponent != null)) {                     // entity is a t1 unit
 
                 hitPoints = teComponent.getHitPoints();
                 rotation = trComponent.getRotation();
@@ -103,21 +103,24 @@ public class UpgradeSystem extends IteratingSystem {
                 entityNew.getComponent(TeamGameObjectComponent.class).setHitPoints(hitPoints);
                 entityNew.getComponent(MovementComponent.class).setPath(path);
 
-                inputHandler.upgradeEntityInternal(entityNew, config.getId());
-
-
-            } else if (towersUP) {                                     // entity is a t1 tower
+            } else {                                     // entity is a t1 tower
 
                 uComponent.setTowerID(entityID);
 
                 config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(uComponent.getTowerID());
 
                 Unit.setComponents(entityNew, config, teamID, position);
-                inputHandler.upgradeEntityInternal(entityNew, config.getId());
+
 
             }
             engine.removeEntity(entity);
+            inputHandler.upgradeEntityInternal(entityNew, config.getId());
+            iterator.remove();
+            return entityNew;
+
+            //
         }
+        return null;
 
     }
 

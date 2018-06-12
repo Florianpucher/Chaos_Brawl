@@ -104,6 +104,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     public void upgradeEntityInternal(Entity entity, int ID) {
 
         if (multiplayer.isHost()) {
+
             PawnController spawnerController = playerControllers[entity.getComponent(TeamGameObjectComponent.class).getTeamId()];
             multiplayer.sendEntitySpawnMsg(entity.getComponent(TransformComponent.class).getPosition(),ID, entity.getComponent(TeamGameObjectComponent.class).getTeamId(), lastID++);
             if (entity.getComponent(MovementComponent.class) != null) {

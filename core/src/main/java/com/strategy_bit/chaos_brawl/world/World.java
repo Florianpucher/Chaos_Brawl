@@ -11,6 +11,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.BoundaryComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
+import com.strategy_bit.chaos_brawl.ashley.components.UpgradeComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entities.CurrentTargetMarker;
 import com.strategy_bit.chaos_brawl.ashley.entities.Projectiles;
@@ -32,6 +33,7 @@ import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -285,15 +287,27 @@ public class World implements InputHandler {
 
     @Override
     public void updateTowersOrUnits(int playerID, int updateType) {
+        ArrayList<Entity> newEntities = new ArrayList<>();
         Iterator<Map.Entry<Long, Entity>> iterator = units.entrySet().iterator();
         while (iterator.hasNext()){
             Map.Entry<Long,Entity> entry = iterator.next();
             Entity unit = entry.getValue();
+            TeamGameObjectComponent component = unit.getComponent(TeamGameObjectComponent.class);
+            System.out.println(component.getUnitType());
+            if((int)unit.getComponent(TeamGameObjectComponent.class).getUnitType() != updateType)
+            {
+                continue;
+            }
+            Entity newEntity = upgradeSystem.UpgradeToNextTier(unit, iterator);
+            if(newEntity != null)
+            {
+                newEntities.add(newEntity);
+            }
 
-
-
-
-
+        }
+        for (Entity entity :
+                newEntities) {
+            units.put(lastID++, entity);
         }
     }
 
@@ -322,7 +336,7 @@ public class World implements InputHandler {
     @Override
     public void upgradeEntityInternal(Entity entity, int ID){
         engine.addEntity(entity);
-        units.put(lastID++, entity);
+        //units.put(lastID++, entity);
     }
 
 

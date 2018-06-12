@@ -241,7 +241,7 @@
   },
 
   {
-  "id" : 8,
+  "id" : 7,
   "name": "Tower",
   "cost" : 0,
   "TextureComponent" : {
@@ -256,7 +256,7 @@
     "rangedAttackType" : 10
   },
   "TeamGameObjectComponent" : {
-    "unitId" : 8,
+    "unitId" : 7,
     "hitPoints" : 100,
     "unitType" : 11
 
@@ -274,7 +274,7 @@
 },
 
   {
-    "id" : 7,
+    "id" : 8,
     "name": "Lasertower",
     "cost" : 0,
     "TextureComponent" : {
@@ -289,7 +289,7 @@
       "rangedAttackType" : 13
     },
     "TeamGameObjectComponent" : {
-      "unitId" : 7,
+      "unitId" : 8,
       "hitPoints" : 120,
       "unitType" : 22
 
@@ -388,13 +388,13 @@
   {
     "id" : 20,
     "name": "UpgradeUnits",
-    "cost" : 100
+    "cost" : 10
   },
 
   {
     "id" : 21,
     "name": "UpgradeTower",
-    "cost" : 75
+    "cost" : 7
   }
 
 ]

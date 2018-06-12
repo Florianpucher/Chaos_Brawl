@@ -165,14 +165,16 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     public boolean updateTowersOrUnits(int upgradeType) {
 
-        inputHandler.updateTowersOrUnits(teamID, upgradeType);
         UnitConfig unitConfig = null;
-
+        int updateType = -1;
         if (upgradeType == 20) {
             unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(20);
+            updateType = 1;
         } else if (upgradeType == 21) {
             unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(21);
+            updateType = 11;
         }
+        inputHandler.updateTowersOrUnits(teamID, updateType);
         float cost = unitConfig.getCost();
         return checkAndSubtract(cost, "Gold");
 
