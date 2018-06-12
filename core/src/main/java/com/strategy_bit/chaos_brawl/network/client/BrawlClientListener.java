@@ -66,7 +66,8 @@ public class BrawlClientListener extends Listener implements BrawlConnector {
             inputHandler.moveEntityLocal(movingMessage.entityID, movingMessage.toLibGdxArray());
             return true;
         } else if (object instanceof ResourceTickMessage) {
-            inputHandler.getTick();
+            float deltaTime= ((ResourceTickMessage) object).deltaTime;
+            inputHandler.getTick(deltaTime);
             return true;
         } else if (object instanceof EntitySpawnMessage) {
             EntitySpawnMessage entitySpawnMessage = (EntitySpawnMessage) object;

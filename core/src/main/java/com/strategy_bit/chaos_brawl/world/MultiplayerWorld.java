@@ -136,11 +136,11 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler{
     }
 
     @Override
-    public void getTick() {
+    public void getTick(float deltaTime) {
         for (PawnController controller :
              playerControllers) {
             if(controller != null){
-                controller.tick(Gdx.graphics.getDeltaTime());
+                controller.tick(deltaTime);
             }
         }
     }
