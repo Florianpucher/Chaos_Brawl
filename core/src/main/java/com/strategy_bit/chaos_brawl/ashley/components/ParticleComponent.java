@@ -19,21 +19,23 @@ public class ParticleComponent implements Component {
             particleAtlas = AssetManager.getInstance().explosionSkin;
             effect = new ParticleEffect();
             effect.load(AssetManager.getInstance().explosionParticle, particleAtlas);
-            effect.start();
-
         } else if (animation.equals("smoke")) {
             particleAtlas = AssetManager.getInstance().smokeSkin;
             effect = new ParticleEffect();
             effect.load(AssetManager.getInstance().smokeParticle, particleAtlas);
-            effect.start();
+        } else if (animation.equals("star")) {
+            particleAtlas = AssetManager.getInstance().starSkin;
+            effect = new ParticleEffect();
+            effect.load(AssetManager.getInstance().starParticle, particleAtlas);
         }
+        effect.start();
     }
 
     public boolean isComplete() {
         return effect.isComplete();
     }
 
-    public void draw(SpriteBatch batch, float delta){
+    public void draw(SpriteBatch batch, float delta) {
         effect.draw(batch, delta);
     }
 

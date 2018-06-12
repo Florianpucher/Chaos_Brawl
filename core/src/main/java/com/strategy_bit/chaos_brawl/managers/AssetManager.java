@@ -44,6 +44,8 @@ public class AssetManager {
     public  Skin defaultSkin;
     public TextureAtlas explosionSkin;
     public TextureAtlas smokeSkin;
+    public TextureAtlas starSkin;
+    public FileHandle starParticle;
     public FileHandle explosionParticle;
     public FileHandle smokeParticle;
     public NinePatch resourceSkinOuter;
@@ -95,6 +97,8 @@ public class AssetManager {
         // animations
         explosionSkin = new TextureAtlas(ANIM_PATH+"explosions.atlas");
         smokeSkin = new TextureAtlas(ANIM_PATH+"smoke.atlas");
+        starSkin = new TextureAtlas(ANIM_PATH+"star.atlas");
+        starParticle = Gdx.files.internal(ANIM_PATH+"star.p");
         explosionParticle = Gdx.files.internal(ANIM_PATH+"explosions.p");
         smokeParticle = Gdx.files.internal(ANIM_PATH+"smoke.p");
 

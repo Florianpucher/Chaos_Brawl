@@ -12,6 +12,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.UpgradeComponent;
+import com.strategy_bit.chaos_brawl.ashley.entities.Particle;
 import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
@@ -114,6 +115,7 @@ public class UpgradeSystem extends IteratingSystem {
 
             }
             engine.removeEntity(entity);
+            engine.addEntity(new Particle(trComponent.getPosition(), "star"));
             inputHandler.upgradeEntityInternal(entityNew, config.getId());
             iterator.remove();
             return entityNew;

@@ -1,0 +1,13 @@
+
+star.png
+size:48,46
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+particle
+  rotate: false
+  xy: 2, 2
+  size: 80, 78
+  orig: 80, 78
+  offset: 0, 0
+index: -1
