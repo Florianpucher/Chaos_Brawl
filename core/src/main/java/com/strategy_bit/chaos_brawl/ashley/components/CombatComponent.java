@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool;
 
 public class CombatComponent implements Component,Pool.Poolable {
-    private static final double MAX_ATTACK_SPEED=2.5;
+    private static final double MAX_ATTACK_SPEED=60;
     private double attackRadius;
     /**
      * Attacks per second

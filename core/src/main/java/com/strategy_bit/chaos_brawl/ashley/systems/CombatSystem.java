@@ -71,7 +71,7 @@ public class CombatSystem extends IteratingSystem {
 
     private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, Entity targetEnemy, TeamGameObjectComponent h1) {
 
-        for (int i = 12; i > 9; i--) {
+        for (int i = 13; i > 9; i--) {
 
             if (c1.isRanged() && (c1.isRangedAttackType() == i)) {
                 if (c1.attack()) {
@@ -79,11 +79,6 @@ public class CombatSystem extends IteratingSystem {
                     world.createBulletWorldCoordinates(t1.getPosition(), world.getIdOfUnit(targetEnemy), (float) c1.getAttackDamage(), i);
                 }
             }
-        }
-
-        if (c1.isRanged() && (c1.isRangedAttackType() == 13)) {
-            //Lasertower nonstop attack
-            world.createBulletWorldCoordinates(t1.getPosition(), world.getIdOfUnit(targetEnemy), (float) c1.getAttackDamage(), 13);
         }
 
         if (c1.attack() && (c1.isRanged() == false )) {

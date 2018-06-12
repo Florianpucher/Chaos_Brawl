@@ -2,7 +2,7 @@ package com.strategy_bit.chaos_brawl.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 
-public class UpgradeComponent implements Component{
+public class UpgradeComponent implements Component {
 
     private int unitID;
 
@@ -11,7 +11,7 @@ public class UpgradeComponent implements Component{
     }
 
     public void setTowerID(int towerID) {
-        this.towerID = towerID+1;
+        this.towerID = towerID + 1;
     }
 
     private int towerID;
@@ -21,14 +21,12 @@ public class UpgradeComponent implements Component{
     }
 
     public void setUnitID(int unitID) {
-        this.unitID = unitID+3;
+        this.unitID = unitID + 3;
     }
 
 
-
-    public UpgradeComponent(){
+    public UpgradeComponent() {
         // TODO: implement button to Upgrade Units/Towers and swap Method for Towers into stronger ones
-
 
 
     }

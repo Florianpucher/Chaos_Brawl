@@ -337,7 +337,7 @@
     },
     "CombatComponent" : {
       "attackRadius" : 4,
-      "attackSpeed" : 1,
+      "attackSpeed" : 60,
       "attackDamage" : 1,
       "ranged" : true,
       "rangedAttackType" : 13
