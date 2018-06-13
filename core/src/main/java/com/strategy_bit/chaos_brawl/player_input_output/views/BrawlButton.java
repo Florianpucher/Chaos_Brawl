@@ -16,8 +16,6 @@ public class BrawlButton extends ImageButton {
     public BrawlButton(String text, Skin skin, int unitId, TextureRegion imageSkin) {
         super(skin);
         setName(text);
-        debug();
-
         cell= getImageCell();
         cell.setActor(new Image(imageSkin));
         activated=true;
@@ -47,5 +45,14 @@ public class BrawlButton extends ImageButton {
     {
         cell.width(width* percentageOf);
         cell.height(height * percentageOf);
+    }
+
+    /**
+     * changes the image of the button
+     * @param imageSkin the image you want to display on the button
+     */
+    public void setImage(TextureRegion imageSkin)
+    {
+        cell.setActor(new Image((imageSkin)));
     }
 }

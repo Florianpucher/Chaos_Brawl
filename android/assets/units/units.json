@@ -12,7 +12,7 @@
     "cost" : 10,
     "Preview" : {
       "button_preview_name" : "archer_button_spawn",
-      "button_preview_skin" : "user_interface/sword.png"
+      "button_preview_skin" : "user_interface/archer.png"
     },
     "TextureComponent" : {
       "skinName":"archerSkin",
@@ -50,7 +50,7 @@
     "cost" : 8,
     "Preview" : {
       "button_preview_name" : "sword_fighter_button_spawn",
-      "button_preview_skin" : "user_interface/sword.png"
+      "button_preview_skin" : "user_interface/swordfighter.png"
     },
     "TextureComponent" : {
       "skinName":"swordFighterSkin",
@@ -88,7 +88,7 @@
     "cost" : 20,
     "Preview" : {
       "button_preview_name" : "knight_button_spawn",
-      "button_preview_skin" : "user_interface/sword.png"
+      "button_preview_skin" : "user_interface/knight.png"
     },
     "TextureComponent" : {
       "skinName":"knightSkin",
@@ -126,7 +126,7 @@
     "cost" : 10,
     "Preview" : {
       "button_preview_name" : "mage_button_spawn",
-      "button_preview_skin" : "user_interface/sword.png"
+      "button_preview_skin" : "user_interface/mage.png"
     },
     "TextureComponent" : {
       "skinName":"mageSkin",
@@ -164,7 +164,7 @@
     "cost" : 8,
     "Preview" : {
       "button_preview_name" : "berserker_button_spawn",
-      "button_preview_skin" : "user_interface/sword.png"
+      "button_preview_skin" : "user_interface/berserker.png"
     },
     "TextureComponent" : {
       "skinName":"berserkerSkin",
@@ -202,7 +202,7 @@
     "cost" : 20,
     "Preview" : {
       "button_preview_name" : "templar_button_spawn",
-      "button_preview_skin" : "user_interface/sword.png"
+      "button_preview_skin" : "user_interface/templar.png"
     },
     "TextureComponent" : {
       "skinName":"templarSkin",
@@ -415,7 +415,7 @@
     "cost" : 100,
     "Preview" : {
       "button_preview_name" : "upgrade_units_button",
-      "button_preview_skin" : "user_interface/sword.png"
+      "button_preview_skin" : "user_interface/upgrade_towers.png"
     }
   },
 
@@ -425,7 +425,7 @@
     "cost" : 50,
     "Preview" : {
       "button_preview_name" : "upgrade_towers_button",
-      "button_preview_skin" : "user_interface/sword.png"
+      "button_preview_skin" : "user_interface/upgrade_units.png"
     }
   }
 

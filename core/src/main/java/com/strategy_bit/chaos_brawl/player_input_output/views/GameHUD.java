@@ -144,11 +144,11 @@ public class GameHUD extends Table {
 
 
             btnNewUnit1.setName(UPGRADED_UNIT_1);
-
+            btnNewUnit1.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(3).getPreviewImage());
             btnNewUnit2.setName(UPGRADED_UNIT_2);
-
+            btnNewUnit2.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(4).getPreviewImage());
             btnNewUnit3.setName(UPGRADED_UNIT_3);
-
+            btnNewUnit3.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(5).getPreviewImage());
             btnUpgradeUnits.remove();
             playerController.updateTowersOrUnits(20);
 
