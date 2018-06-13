@@ -56,7 +56,7 @@ public class UpgradeSystem extends IteratingSystem {
         this.engine = engine;
     }
 
-    public Entity UpgradeToNextTier(Entity entity, Iterator<Map.Entry<Long, Entity>> iterator) {
+    public Entity upgradeToNextTier(Entity entity, Iterator<Map.Entry<Long, Entity>> iterator) {
         TeamGameObjectComponent teComponent = teamGameObjectComponentMapper.get(entity);
 
         int entityID;
