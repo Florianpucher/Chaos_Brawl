@@ -110,6 +110,7 @@ public class GameHUD extends Table {
         top();
         //add actors to UI
         float height = Gdx.graphics.getHeight() / 8.5f;
+        float width = Gdx.graphics.getWidth()/5f;
         add(manaBar).top().width(Gdx.graphics.getWidth() / 2f).height(Gdx.graphics.getHeight() / 9f);
         row().height(7 * Gdx.graphics.getHeight() / 9f);
         add();
@@ -119,19 +120,19 @@ public class GameHUD extends Table {
         Table lowerUI = new Table(assetManager.defaultSkin);
         lowerUI.right();
         add(lowerUI).width((float) Gdx.graphics.getWidth());
-        lowerUI.add(btnNewUnit1).right().height(height).width(Gdx.graphics.getWidth()/5f);
-        lowerUI.add(btnNewUnit2).right().height(height).width(Gdx.graphics.getWidth()/5f);
-        lowerUI.add(btnNewUnit3).right().height(height).width(Gdx.graphics.getWidth()/5f);
+        lowerUI.add(btnNewUnit1).right().height(height).width(width);
+
+        lowerUI.add(btnNewUnit2).right().height(height).width(width);
+        lowerUI.add(btnNewUnit3).right().height(height).width(width);
 
 
-        lowerUI.add(btnUpgradeUnits).left().height(height).width(Gdx.graphics.getWidth()/5f);
-        lowerUI.add(btnUpgradeTower).left().height(height).width(Gdx.graphics.getWidth()/5f);
-
-        btnNewUnit1.addListener(listener);
-        btnNewUnit2.addListener(listener);
-        btnNewUnit3.addListener(listener);
-        btnUpgradeUnits.addListener(listener);
-        btnUpgradeTower.addListener(listener);
+        lowerUI.add(btnUpgradeUnits).left().height(height).width(width);
+        lowerUI.add(btnUpgradeTower).left().height(height).width(width);
+        for (BrawlButton button :
+                brawlButtons) {
+            button.addListener(listener);
+            button.setSizeImage(width,height, 0.7f);
+        }
         initializeGameOverView();
     }
 
@@ -143,13 +144,10 @@ public class GameHUD extends Table {
 
 
             btnNewUnit1.setName(UPGRADED_UNIT_1);
-            //btnNewUnit1.setText(UPGRADED_UNIT_1);
 
             btnNewUnit2.setName(UPGRADED_UNIT_2);
-            //btnNewUnit2.setText(UPGRADED_UNIT_2);
 
             btnNewUnit3.setName(UPGRADED_UNIT_3);
-            //btnNewUnit3.setText(UPGRADED_UNIT_3);
 
             btnUpgradeUnits.remove();
             playerController.updateTowersOrUnits(20);
