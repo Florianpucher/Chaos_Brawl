@@ -9,9 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.strategy_bit.chaos_brawl.config.UnitConfig;
-import com.strategy_bit.chaos_brawl.managers.UnitManager;
-import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
  * Created by Florian on 04.06.2018.
@@ -22,13 +19,13 @@ public class UnitInfoScreen extends MenuScreen{
     private List<String> previewList;
     private String first = "UNIT STATS:";
     private String empty = "";
-    private static final String back = "Return to Main Menu";
+    private static final String BACK = "Return to Main Menu";
 
     @Override
     public void buildStage() {
         super.buildStage();
-        final TextButton btnBack = new TextButton(back, assetManager.defaultSkin);
-        btnBack.setName(back);
+        final TextButton btnBack = new TextButton(BACK, assetManager.defaultSkin);
+        btnBack.setName(BACK);
 
         float height = Gdx.graphics.getHeight()/8f;
 
@@ -63,7 +60,7 @@ public class UnitInfoScreen extends MenuScreen{
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 String name = event.getListenerActor().getName();
-                if (name.equals(back)) {
+                if (name.equals(BACK)) {
                     screenManager.switchToLastScreen();
                 }
             }
@@ -78,25 +75,5 @@ public class UnitInfoScreen extends MenuScreen{
         previewList.getItems().add("DPS: " + Math.round(dps));
         previewList.getItems().add("AttackRange: " + attackRadius);
         previewList.getItems().add(empty);
-    }
-
-    @Override
-    public void show() {
-        super.show();
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 }

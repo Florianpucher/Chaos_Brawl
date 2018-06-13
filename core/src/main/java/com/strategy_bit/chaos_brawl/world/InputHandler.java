@@ -39,7 +39,7 @@ public interface InputHandler {
 
     void updateTowersOrUnits(int playerID, int updateType);
 
-    void upgradeEntityInternal(Entity entity, int ID);
+    void upgradeEntityInternal(Entity entity, int id);
 
 
 }

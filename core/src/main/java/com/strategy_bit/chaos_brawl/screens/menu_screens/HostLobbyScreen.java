@@ -14,10 +14,8 @@ import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
 public class HostLobbyScreen extends LobbyScreen {
 
     private static final String START_GAME = "Start Game";
-    private TextButton btnStartGame;
 
     private BrawlServer brawlServer;
-
 
     public HostLobbyScreen(BrawlServer brawlServer) {
         this.brawlServer = brawlServer;
@@ -27,7 +25,7 @@ public class HostLobbyScreen extends LobbyScreen {
     @Override
     public void buildStage() {
         super.buildStage();
-        btnStartGame = new TextButton(START_GAME, assetManager.defaultSkin);
+        TextButton btnStartGame = new TextButton(START_GAME, assetManager.defaultSkin);
         btnStartGame.setName(START_GAME);
         root.add(btnStartGame).width(Gdx.graphics.getWidth() / 4f).height(height);
         addActor(root);

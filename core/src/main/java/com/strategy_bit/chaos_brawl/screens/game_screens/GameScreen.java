@@ -3,20 +3,10 @@ package com.strategy_bit.chaos_brawl.screens.game_screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.player_input_output.AiController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
@@ -46,8 +36,6 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void buildStage() {
-        //ImageButton button = new ImageButton(AssetManager.getInstance().defaultSkin);
-        //button.getImage().setDrawable(new TextureRegionDrawable(AssetManager.getInstance().skins.get("archerSkin")));
         super.buildStage();
         initializeGame();
         final TextButton btnOptions = new TextButton(EXIT, assetManager.defaultSkin);
@@ -59,7 +47,6 @@ public class GameScreen extends AbstractScreen {
         root.top();
         root.right();
         root.add(btnOptions).width(Gdx.graphics.getWidth()/10f).height(height);
-        //root.add(button).width(Gdx.graphics.getWidth()/10f).height(height);
         addActor(root);
 
         ClickListener listener = new ClickListener(){
@@ -101,7 +88,6 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-        //TODO input needs to be changed
         // The order of adding the input processors plays an important role!!!
         playerController.addGameHUD(this);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();

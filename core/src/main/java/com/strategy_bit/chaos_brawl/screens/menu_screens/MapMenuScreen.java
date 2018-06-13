@@ -17,6 +17,7 @@ public class MapMenuScreen extends MenuScreen{
     private static final String MAP_1 = "MAP 1";
     private static final String MAP_2 = "MAP 2";
     private static final String MAP_3 = "MAP 3";
+    private static final String MAP_ = "MAP ";
 
     private BrawlMultiplayer brawlMultiplayer;
     private int player;
@@ -61,30 +62,17 @@ public class MapMenuScreen extends MenuScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String name = event.getListenerActor().getName();
-                if(name.equals(MAP_1)){
-                    if (multiplayer){
-                        screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player, 1);
-                    }
-                    else{
-                        screenManager.showScreen(ScreenEnum.GAME, 1);
-                    }
-                }
-                if(name.equals(MAP_2)){
-                    if (multiplayer){
-                        screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player, 2);
-                    }
-                    else{
-                        screenManager.showScreen(ScreenEnum.GAME, 2);
+
+                for (int i = 1; i < 4; i++) {
+                    if (name.equals(MAP_ + Integer.valueOf(i).toString())) {
+                        if (multiplayer) {
+                            screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player, i);
+                        } else {
+                            screenManager.showScreen(ScreenEnum.GAME, i);
+                        }
                     }
                 }
-                if(name.equals(MAP_3)){
-                    if (multiplayer){
-                        screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player, 3);
-                    }
-                    else{
-                        screenManager.showScreen(ScreenEnum.GAME, 3);
-                    }
-                }
+
                 super.clicked(event, x, y);
             }
         };

@@ -1,7 +1,6 @@
 package com.strategy_bit.chaos_brawl.managers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.utils.JsonValue;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * manager for holding references to assets
@@ -36,7 +34,6 @@ public class AssetManager {
     private static final String ANIM_PATH = "animations/";
     private static final String MARKER_PATH = "markers/";
 
-    public BitmapFont font;
     public UnitManager unitManager;
     public Map<String, TextureRegion> markers;
     public Map<String, TextureRegion> skins;

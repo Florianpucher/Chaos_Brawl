@@ -9,13 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.World;
-/*
- updated by Alisopp on 24.03.2018
-  */
 
 /**
  * Created by A_329_09 on 22/03/2018.
@@ -77,11 +73,9 @@ public class CombatSystem extends IteratingSystem {
     private void attack(CombatComponent c1, TeamGameObjectComponent c2, TransformComponent t1, Entity targetEnemy, TeamGameObjectComponent h1) {
         if (c1.isRanged()) {
             for (int i = 13; i > 9; i--) {
-                if (c1.isRangedAttackType() == i) {
-                    if (c1.attack()) {
+                if (c1.isRangedAttackType() == i && c1.attack()) {
                         //ready to fire
                         world.createBulletWorldCoordinates(t1.getPosition(), world.getIdOfUnit(targetEnemy), (float) c1.getAttackDamage(), i);
-                    }
                 }
             }
         } else {

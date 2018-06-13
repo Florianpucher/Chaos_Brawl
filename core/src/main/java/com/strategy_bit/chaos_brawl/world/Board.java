@@ -137,7 +137,10 @@ public class Board implements BoardInterface {
     }
 
     public Boundary createSpawnAreaForPlayer(int playerID, int players){
-        Boundary spawnArea0 = null, spawnArea1 = null, spawnArea2 = null, spawnArea3 = null;
+        Boundary spawnArea0 = null;
+        Boundary spawnArea1 = null;
+        Boundary spawnArea2 = null;
+        Boundary spawnArea3 = null;
         Array<Vector2> vectorList = new Array<>();
 
         if (players == 2){
@@ -177,12 +180,11 @@ public class Board implements BoardInterface {
     }
 
     public Vector2 coordinateTransformation(Vector2 vector){
-        float x_mid = 20;
-        float y_mid = 15;
-        float x = 0f;
-        float y = 0f;
-        x = vector.x - x_mid;
-        y = (vector.y - y_mid) * - 1;
+        float xMid = 20;
+        float yMid = 15;
+
+        float x = vector.x - xMid;
+        float y = (vector.y - yMid) * - 1;
         return new Vector2(x,y);
     }
 
