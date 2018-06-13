@@ -16,13 +16,18 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     private BrawlMultiplayer multiplayer;
     private boolean isInitialized = false;
 
-    public MultiplayerWorld(BrawlMultiplayer multiplayer, int players, int map) {
-        super(map, players, multiplayer.isHost());
+
+    public MultiplayerWorld(BrawlMultiplayer multiplayer, int players, int map, boolean withRenderSystem) {
+        super(map, players, multiplayer.isHost(), withRenderSystem);
 
         this.multiplayer = multiplayer;
         if(multiplayer.isHost()){
             deleteSystem.setInputHandler(this);
         }
+    }
+
+    public MultiplayerWorld(BrawlMultiplayer multiplayer, int players, int map) {
+        this(multiplayer,players,map,true);
     }
 
     @Override

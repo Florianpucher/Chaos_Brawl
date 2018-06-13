@@ -4,6 +4,7 @@ package com.strategy_bit.chaos_brawl.world;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -36,6 +37,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
+import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
+
 /**
  * Central manager for game
  *
@@ -52,7 +56,7 @@ public class World implements InputHandler {
 
     protected SpawnerImpl spawner;
     protected MyEngine engine;
-    protected Camera camera;
+    protected OrthographicCamera camera;
     public BoardInterface board;
     protected PawnController[] playerControllers;
     protected Entity[] bases;
@@ -67,26 +71,34 @@ public class World implements InputHandler {
 
 
     public World(int map, int players, boolean containsDeleteSystem) {
+        this(map,players,containsDeleteSystem,true);
+    }
+
+    /**
+     * constructor for test to disable Rendersystem
+     * @param map
+     * @param players
+     * @param containsDeleteSystem
+     * @param withRenderSystem
+     */
+    public World(int map, int players, boolean containsDeleteSystem, boolean withRenderSystem)
+    {
+        camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+        camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
         units = new HashMap<>();
         spawner = new SpawnerImpl();
         playerControllers = new PawnController[players];
         bases = new Entity[players];
         tower = new Entity[players];
 
-        createEngine(containsDeleteSystem);
+        createEngine(containsDeleteSystem, withRenderSystem);
         marker=new CurrentTargetMarker(new Vector2(0,0));
         engine.addEntity(marker);
         createWorld(map);
     }
 
     public World() {
-        units = new HashMap<>();
-        spawner = new SpawnerImpl();
-        playerControllers = new PawnController[2];
-        createEngine(true);
-        marker=new CurrentTargetMarker(new Vector2(0,0));
-        engine.addEntity(marker);
-        createWorld(1);
+        this(1,2,true);
     }
 
     public void setPlayerController(int index, PawnController pawnController){
@@ -128,11 +140,14 @@ public class World implements InputHandler {
     }
 
 
-    protected void createEngine(boolean containsDeleteSystem){
+    protected void createEngine(boolean containsDeleteSystem, boolean withRenderSystem){
         engine = MyEngine.createEngine();
         //Add some logic
-        RenderSystem renderSystem = new RenderSystem();
-        camera = renderSystem.getCamera();
+        RenderSystem renderSystem = null;
+        if(withRenderSystem)
+        {
+            renderSystem = new RenderSystem(camera);
+        }
         deleteSystem = new DeleteSystem(units);
         if(containsDeleteSystem){
             engine.addSystem(deleteSystem);
@@ -156,11 +171,12 @@ public class World implements InputHandler {
         ReRouteSystem reRouteSystem=new ReRouteSystem(this);
         engine.addSystem(reRouteSystem);
         //Renderer should be the last system to add
+        if(withRenderSystem)
+        {
+            engine.addSystem(renderSystem);
 
-        engine.addSystem(renderSystem);
-
-        engine.addSystem(new ExplosionSystem(camera));
-
+            engine.addSystem(new ExplosionSystem(camera));
+        }
     }
 
 

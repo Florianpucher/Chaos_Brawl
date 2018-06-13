@@ -26,8 +26,6 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import java.util.Comparator;
 
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
 
 /**
@@ -55,7 +53,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
 
     private Stage hpBarStage;
 
-    public RenderSystem() {
+    public RenderSystem(OrthographicCamera camera) {
         //set used entities by components
         super(Family.all(TextureComponent.class, TransformComponent.class).get());
         //initialize component mapper
@@ -68,8 +66,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         comparator = new ZComparator();
         hpBarStage = new Stage();
         //initialize camera with size
-        camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-        camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
+        this.camera = camera;
     }
 
     @Override
