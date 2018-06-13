@@ -2,6 +2,8 @@ package com.strategy_bit.chaos_brawl.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
@@ -35,6 +37,9 @@ public class UnitManager {
     private static final String SOUND_NAME = "soundName";
     private static final String UNIT_ID = "unitId";
     private static final String UNIT_TYPE = "unitType";
+    private static final String PREVIEW = "Preview";
+    private static final String PREVIEW_IMAGE_NAME = "button_preview_name";
+    private static final String PREVIEW_IMAGE_SKIN_PATH = "button_preview_skin";
 
     public void readFile(String file) {
         //TODO Hellmuth reduce cognitive complexity of method
@@ -109,6 +114,12 @@ public class UnitManager {
         }
         if (unitConfig.has(UPGRADE_COMPONENT)) {
             config.setUpgradeComponent(true);
+        }
+        if(unitConfig.has(PREVIEW)){
+            JsonValue preview = unitConfig.get(PREVIEW);
+            TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal(preview.getString(PREVIEW_IMAGE_SKIN_PATH))));
+            AssetManager.getInstance().skins.put(preview.getString(PREVIEW_IMAGE_NAME), region);
+            config.setPreviewImage(region);
         }
         unitConfigHashMap.put(unitConfig.getInt(ID), config);
     }

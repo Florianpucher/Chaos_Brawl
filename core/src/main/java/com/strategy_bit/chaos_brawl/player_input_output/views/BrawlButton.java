@@ -13,13 +13,13 @@ public class BrawlButton extends ImageButton {
     private int unitId;
     private boolean activated;
     private Cell<Actor> cell;
-    public BrawlButton(String text, Skin skin, int unitId, String imageSkin) {
+    public BrawlButton(String text, Skin skin, int unitId, TextureRegion imageSkin) {
         super(skin);
         setName(text);
         debug();
-        TextureRegion image = AssetManager.getInstance().skins.get(imageSkin);
+
         cell= getImageCell();
-        cell.setActor(new Image(image));
+        cell.setActor(new Image(imageSkin));
         activated=true;
         this.unitId=unitId;
     }

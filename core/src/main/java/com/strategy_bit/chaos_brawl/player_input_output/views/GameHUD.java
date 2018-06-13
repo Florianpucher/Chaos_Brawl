@@ -76,17 +76,17 @@ public class GameHUD extends Table {
         AssetManager assetManager = AssetManager.getInstance();
 
 
-        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0, AssetManager.UI_SWORD_IMAGE);
+        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0, AssetManager.getInstance().unitManager.unitConfigHashMap.get(0).getPreviewImage());
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
-        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1, AssetManager.UI_SWORD_IMAGE);
+        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1, AssetManager.getInstance().unitManager.unitConfigHashMap.get(1).getPreviewImage());
         btnNewUnit2.setName(NEW_UNIT_2);
         setFillParent(true);
-        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2, AssetManager.UI_SWORD_IMAGE);
+        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2, AssetManager.getInstance().unitManager.unitConfigHashMap.get(2).getPreviewImage());
         btnNewUnit3.setName(NEW_UNIT_3);
-        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20, AssetManager.UI_SWORD_IMAGE);
+        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20, AssetManager.getInstance().unitManager.unitConfigHashMap.get(20).getPreviewImage());
         btnUpgradeUnits.setName(UPGRADE_UNITS);
-        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21, AssetManager.UI_SWORD_IMAGE);
+        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21, AssetManager.getInstance().unitManager.unitConfigHashMap.get(21).getPreviewImage());
         btnUpgradeTower.setName(UPGRADE_TOWER);
 
 

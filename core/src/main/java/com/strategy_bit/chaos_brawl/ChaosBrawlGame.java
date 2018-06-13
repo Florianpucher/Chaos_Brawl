@@ -61,7 +61,7 @@ public class ChaosBrawlGame extends Game {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 		logger.log();
 		if(!loadGame){
-			SoundManager.getInstance().playMusic("mainSoundtrack");
+			//SoundManager.getInstance().playMusic("mainSoundtrack");
 			screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAIN_MENU);
 			loadGame = true;
 		}

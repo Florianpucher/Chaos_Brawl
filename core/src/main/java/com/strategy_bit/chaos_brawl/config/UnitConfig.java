@@ -34,6 +34,7 @@ public class UnitConfig {
     private int teamId;
     private int unitId;
     private Sound sound;
+    private TextureRegion previewImage;
 
     private boolean ranged;
     private boolean hasMovementComponent;
@@ -66,6 +67,7 @@ public class UnitConfig {
         setUpgradeComponent(DEFAULT_UPGRADE_COMPONENT);
         setRangedAttackType(DEFAULT_RANGED_ATTACK_TYPE);
         setSkin(null);
+        setPreviewImage(null);
     }
 
     public TextureRegion getSkin() {
@@ -210,5 +212,17 @@ public class UnitConfig {
 
     public void setUpgradeComponent(boolean hasUpgradeComponent) {
         this.hasUpgradeComponent = hasUpgradeComponent;
+    }
+
+    public boolean hasPreviewImage(){
+        return previewImage != null;
+    }
+
+    public TextureRegion getPreviewImage(){
+        return previewImage;
+    }
+
+    public void setPreviewImage(TextureRegion image){
+        previewImage = image;
     }
 }
