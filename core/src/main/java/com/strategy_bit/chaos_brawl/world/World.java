@@ -69,7 +69,6 @@ public class World implements InputHandler {
 
     boolean endGame = false;
 
-
     public World(int map, int players, boolean containsDeleteSystem) {
         this(map,players,containsDeleteSystem,true);
     }

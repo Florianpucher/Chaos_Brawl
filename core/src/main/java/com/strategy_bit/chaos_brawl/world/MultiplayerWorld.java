@@ -144,6 +144,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
 
     @Override
     public void unitAttackLocal(long attackerID, long victimID) {
+        // leave this empty
     }
 
     @Override

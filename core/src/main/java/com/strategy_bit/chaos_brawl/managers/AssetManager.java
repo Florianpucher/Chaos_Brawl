@@ -37,6 +37,7 @@ public class AssetManager {
     private static final String MARKER_PATH = "markers/";
 
     public UnitManager unitManager;
+
     public Map<String, TextureRegion> markers;
     public Map<String, TextureRegion> skins;
     public Map<String, Sound> sounds;

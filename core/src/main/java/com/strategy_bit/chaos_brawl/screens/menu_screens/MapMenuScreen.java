@@ -18,7 +18,7 @@ public class MapMenuScreen extends MenuScreen{
     private static final String MAP_1 = "MAP 1";
     private static final String MAP_2 = "MAP 2";
     private static final String MAP_3 = "MAP 3";
-    private static final String MAP_ = "MAP ";
+    private static final String MAP = "MAP ";
 
     private BrawlMultiplayer brawlMultiplayer;
     private int player;
@@ -65,7 +65,7 @@ public class MapMenuScreen extends MenuScreen{
                 String name = event.getListenerActor().getName();
 
                 for (int i = 1; i < 4; i++) {
-                    if (name.equals(MAP_ + Integer.valueOf(i).toString())) {
+                    if (name.equals(MAP + Integer.toString(i))) {
                         if (multiplayer) {
                             screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player, i);
                         } else {
