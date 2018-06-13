@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.network.network_handlers.NetworkConnectionHandler;
 
 /**
@@ -55,9 +56,9 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
         textButtons.add(btnPlayer4);
 
         root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
+        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
-        height = Gdx.graphics.getHeight() / 8f;
+        height = Gdx.graphics.getHeight() / 6f;
         root.top();
         root.add(btnPlayer1).width(Gdx.graphics.getWidth() / 4f).height(height);
         root.row();

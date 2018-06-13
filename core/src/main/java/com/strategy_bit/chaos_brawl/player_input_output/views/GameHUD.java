@@ -76,17 +76,17 @@ public class GameHUD extends Table {
         AssetManager assetManager = AssetManager.getInstance();
 
 
-        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0);
+        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0, AssetManager.getInstance().unitManager.unitConfigHashMap.get(0).getPreviewImage());
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
-        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1);
+        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1, AssetManager.getInstance().unitManager.unitConfigHashMap.get(1).getPreviewImage());
         btnNewUnit2.setName(NEW_UNIT_2);
         setFillParent(true);
-        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2);
+        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2, AssetManager.getInstance().unitManager.unitConfigHashMap.get(2).getPreviewImage());
         btnNewUnit3.setName(NEW_UNIT_3);
-        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20);
+        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20, AssetManager.getInstance().unitManager.unitConfigHashMap.get(20).getPreviewImage());
         btnUpgradeUnits.setName(UPGRADE_UNITS);
-        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21);
+        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21, AssetManager.getInstance().unitManager.unitConfigHashMap.get(21).getPreviewImage());
         btnUpgradeTower.setName(UPGRADE_TOWER);
 
 
@@ -109,6 +109,8 @@ public class GameHUD extends Table {
 
         top();
         //add actors to UI
+        float height = Gdx.graphics.getHeight() / 8.5f;
+        float width = Gdx.graphics.getWidth()/5f;
         add(manaBar).top().width(Gdx.graphics.getWidth() / 2f).height(Gdx.graphics.getHeight() / 9f);
         row().height(7 * Gdx.graphics.getHeight() / 9f);
         add();
@@ -118,19 +120,19 @@ public class GameHUD extends Table {
         Table lowerUI = new Table(assetManager.defaultSkin);
         lowerUI.right();
         add(lowerUI).width((float) Gdx.graphics.getWidth());
-        lowerUI.add(btnNewUnit1).right().height(lowerUI.getPrefHeight());
-        lowerUI.add(btnNewUnit2).right().height(lowerUI.getPrefHeight());
-        lowerUI.add(btnNewUnit3).right().height(lowerUI.getPrefHeight());
+        lowerUI.add(btnNewUnit1).right().height(height).width(width);
+
+        lowerUI.add(btnNewUnit2).right().height(height).width(width);
+        lowerUI.add(btnNewUnit3).right().height(height).width(width);
 
 
-        lowerUI.add(btnUpgradeUnits).left().height(lowerUI.getPrefHeight());
-        lowerUI.add(btnUpgradeTower).left().height(lowerUI.getPrefHeight());
-
-        btnNewUnit1.addListener(listener);
-        btnNewUnit2.addListener(listener);
-        btnNewUnit3.addListener(listener);
-        btnUpgradeUnits.addListener(listener);
-        btnUpgradeTower.addListener(listener);
+        lowerUI.add(btnUpgradeUnits).left().height(height).width(width);
+        lowerUI.add(btnUpgradeTower).left().height(height).width(width);
+        for (BrawlButton button :
+                brawlButtons) {
+            button.addListener(listener);
+            button.setSizeImage(width,height, 0.7f);
+        }
         initializeGameOverView();
     }
 
@@ -142,14 +144,11 @@ public class GameHUD extends Table {
 
 
             btnNewUnit1.setName(UPGRADED_UNIT_1);
-            btnNewUnit1.setText(UPGRADED_UNIT_1);
-
+            btnNewUnit1.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(3).getPreviewImage());
             btnNewUnit2.setName(UPGRADED_UNIT_2);
-            btnNewUnit2.setText(UPGRADED_UNIT_2);
-
+            btnNewUnit2.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(4).getPreviewImage());
             btnNewUnit3.setName(UPGRADED_UNIT_3);
-            btnNewUnit3.setText(UPGRADED_UNIT_3);
-
+            btnNewUnit3.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(5).getPreviewImage());
             btnUpgradeUnits.remove();
             playerController.updateTowersOrUnits(20);
 

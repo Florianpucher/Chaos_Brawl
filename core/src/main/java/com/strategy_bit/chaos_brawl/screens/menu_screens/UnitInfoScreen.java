@@ -2,13 +2,14 @@ package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 /**
  * Created by Florian on 04.06.2018.
@@ -31,7 +32,7 @@ public class UnitInfoScreen extends MenuScreen{
 
         final Table root = new Table(assetManager.defaultSkin);
 
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
+        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
 
         previewList = new List<>(assetManager.defaultSkin);

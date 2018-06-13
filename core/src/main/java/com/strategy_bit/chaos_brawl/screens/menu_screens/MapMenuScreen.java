@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
@@ -46,7 +47,7 @@ public class MapMenuScreen extends MenuScreen{
 
 
         final Table root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch("default-window")));
+        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/8f;
         root.center();

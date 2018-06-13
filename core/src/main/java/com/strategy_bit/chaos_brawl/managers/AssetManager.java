@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,6 +28,8 @@ import java.util.Map;
  */
 
 public class AssetManager {
+    public static String MENU_BACKGROUND = "background";
+
     private static final String UNIT_PATH = "units/";
     private static final String UI_PATH = "user_interface/";
     private static final String ENVIRONMENT_PATH = "environment/";
@@ -61,6 +64,7 @@ public class AssetManager {
     public Texture victoryScreen;
     public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
+    public final static String UI_SWORD_IMAGE = "sword_image_ui";
 
     private static AssetManager instance;
 
@@ -80,7 +84,7 @@ public class AssetManager {
 
     public  void loadAssets(){
         markers.put("default",new TextureRegion(new Texture(MARKER_PATH+"default.png")));
-
+        skins.put(UI_SWORD_IMAGE, new TextureRegion(new Texture(UI_PATH+"sword.png")));
 
         //unit stats
         unitManager.readFile(UNIT_PATH+"units.json");
@@ -99,7 +103,7 @@ public class AssetManager {
         smokeParticle = Gdx.files.internal(ANIM_PATH+"smoke.p");
 
         // user interface & other
-        defaultSkin = new Skin(Gdx.files.internal(UI_PATH+"default/skin.json"));
+        defaultSkin = new Skin(Gdx.files.internal(UI_PATH+"skin/skin.json"));
         resourceSkinOuter = new NinePatch(new Texture(UI_PATH+"resourceBarOuterBorder.png"),12,12,12,12);
         resourceSkinInner = new NinePatch(new Texture(UI_PATH+"resourceBarInner.png"),0,16,7,7);
         resourceSkinMiddle= new NinePatch(new Texture(UI_PATH+"resourceBarMiddle.png"),0,0,21,23);
