@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
-import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.badlogic.gdx.utils.Queue;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
@@ -27,24 +26,12 @@ public class UpgradeSystem extends IteratingSystem {
     private ComponentMapper<TeamGameObjectComponent> teamGameObjectComponentMapper;
     private ComponentMapper<TransformComponent> transformComponentMapper;
     private ComponentMapper<MovementComponent> movementComponentMapper;
-    private ComponentMapper<CombatComponent> combatComponentMapper;
     private ComponentMapper<UpgradeComponent> upgradeComponentMapper;
 
-    private int entityID;
-    private int teamID;
-    private double hitPoints;
-    private Vector2 position;
-    private float rotation;
-    private double attackRadius;
-    private Queue<Vector2> path;
-    private Vector2 targetLocation;
 
     UnitConfig config;
 
     private Engine engine;
-
-    private boolean towersUP = true;
-    private boolean unitsUP = true;
 
     InputHandler inputHandler;
 
@@ -54,14 +41,13 @@ public class UpgradeSystem extends IteratingSystem {
         teamGameObjectComponentMapper = ComponentMapper.getFor(TeamGameObjectComponent.class);
         transformComponentMapper = ComponentMapper.getFor((TransformComponent.class));
         movementComponentMapper = ComponentMapper.getFor((MovementComponent.class));
-        combatComponentMapper = ComponentMapper.getFor((CombatComponent.class));
         upgradeComponentMapper = ComponentMapper.getFor((UpgradeComponent.class));
         this.inputHandler = inputHandler;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-
+        // needs to be empty
     }
 
     @Override
@@ -73,18 +59,20 @@ public class UpgradeSystem extends IteratingSystem {
     public Entity UpgradeToNextTier(Entity entity, Iterator<Map.Entry<Long, Entity>> iterator) {
         TeamGameObjectComponent teComponent = teamGameObjectComponentMapper.get(entity);
 
-        System.out.println(unitsUP + " =  unitsUP");
-        System.out.println(towersUP + " =  towersUP");
+        int entityID;
+        int teamID;
+        double hitPoints;
+        Vector2 position;
+        Queue<Vector2> path;
 
         if ((teComponent.getUnitType() == 1 || teComponent.getUnitType() == 11)) {
-            CombatComponent cComponent = combatComponentMapper.get(entity);
+
             TransformComponent trComponent = transformComponentMapper.get(entity);
             MovementComponent mComponent = movementComponentMapper.get(entity);
             UpgradeComponent uComponent = upgradeComponentMapper.get(entity);
 
             entityID = teComponent.getUnitId();
             teamID = teComponent.getTeamId();
-            attackRadius = cComponent.getAttackRadius();
             position = trComponent.getPosition();
 
             Entity entityNew = new Entity();
@@ -92,9 +80,7 @@ public class UpgradeSystem extends IteratingSystem {
             if ((mComponent != null)) {                     // entity is a t1 unit
 
                 hitPoints = teComponent.getHitPoints();
-                rotation = trComponent.getRotation();
                 path = mComponent.getPath();
-                targetLocation = mComponent.getTargetLocation();
 
                 uComponent.setUnitID(entityID);
 

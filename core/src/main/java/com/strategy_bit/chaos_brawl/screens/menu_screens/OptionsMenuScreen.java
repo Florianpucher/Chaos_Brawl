@@ -7,12 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.strategy_bit.chaos_brawl.ChaosBrawlGame;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
@@ -21,13 +17,13 @@ import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
  */
 
 public class OptionsMenuScreen extends MenuScreen{
-    private static final String back = "Return to main menu";
+    private static final String BACK = "Return to main menu";
 
     @Override
     public void buildStage() {
         super.buildStage();
-        final TextButton btnBack = new TextButton(back, assetManager.defaultSkin);
-        btnBack.setName(back);
+        final TextButton btnBack = new TextButton(BACK, assetManager.defaultSkin);
+        btnBack.setName(BACK);
         final Slider sliderMaster = new Slider(0f, 1f, 0.01f, false, assetManager.sliderStyle);
         final Slider sliderMusic = new Slider(0f, 1f, 0.01f, false, assetManager.sliderStyle);
         final Slider sliderSound = new Slider(0f, 1f, 0.01f, false, assetManager.sliderStyle);
@@ -64,7 +60,7 @@ public class OptionsMenuScreen extends MenuScreen{
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
-            };
+            }
         });
 
         sliderMusic.addListener(new InputListener() {
@@ -75,7 +71,7 @@ public class OptionsMenuScreen extends MenuScreen{
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
-            };
+            }
         });
 
         sliderSound.addListener(new InputListener() {
@@ -86,7 +82,7 @@ public class OptionsMenuScreen extends MenuScreen{
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
-            };
+            }
         });
 
         ClickListener listener = new ClickListener(){
@@ -94,7 +90,7 @@ public class OptionsMenuScreen extends MenuScreen{
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 String name = event.getListenerActor().getName();
-                if(name.equals(back)){
+                if(name.equals(BACK)){
                     screenManager.showScreen(ScreenEnum.MAIN_MENU);
                 }
 

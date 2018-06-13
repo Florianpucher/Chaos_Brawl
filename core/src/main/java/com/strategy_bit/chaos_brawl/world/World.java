@@ -11,7 +11,6 @@ import com.strategy_bit.chaos_brawl.ashley.components.BoundaryComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.ashley.components.UpgradeComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entities.CurrentTargetMarker;
 import com.strategy_bit.chaos_brawl.ashley.entities.Projectiles;
@@ -33,7 +32,6 @@ import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -275,7 +273,6 @@ public class World implements InputHandler {
         MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
         //Move entity to enemy player
         if(movementComponent != null){
-            //TODO add pathfinding here Florian but maybe with ThreadPool implementation!!!
             Array<Vector2> path = gdxPathFinder.calculatePath(entity.getComponent(TransformComponent.class).getPosition(), bases[playerControllers[teamID].getCurrentTargetTeam()].getComponent(TransformComponent.class).getPosition());
             movementComponent.setPath(path);
 
@@ -290,8 +287,6 @@ public class World implements InputHandler {
         while (iterator.hasNext()){
             Map.Entry<Long,Entity> entry = iterator.next();
             Entity unit = entry.getValue();
-            TeamGameObjectComponent component = unit.getComponent(TeamGameObjectComponent.class);
-            System.out.println(component.getUnitType());
             if((int)unit.getComponent(TeamGameObjectComponent.class).getUnitType() != updateType || unit.getComponent(TeamGameObjectComponent.class).getTeamId() != teamID)
             {
                 continue;
@@ -333,9 +328,8 @@ public class World implements InputHandler {
     }
 
     @Override
-    public void upgradeEntityInternal(Entity entity, int ID){
+    public void upgradeEntityInternal(Entity entity, int id){
         engine.addEntity(entity);
-        //units.put(lastID++, entity);
     }
 
 
@@ -377,28 +371,22 @@ public class World implements InputHandler {
     }
 
     public void cheatFunctionDisposer(){
-        if (playerControllers[0].isCheatFunctionActive()){
-            if (playerControllers[1].isCheatFunctionActive()){
+        if (playerControllers[0].isCheatFunctionActive() && playerControllers[1].isCheatFunctionActive()){
                 playerControllers[0].setCheatFunctionActive(false);
-            }
         }
-        if (playerControllers[1].isCheatFunctionActive()){
-            if (playerControllers[0].isCheatFunctionActive()){
+        if (playerControllers[1].isCheatFunctionActive() && playerControllers[0].isCheatFunctionActive()){
                 playerControllers[1].setCheatFunctionActive(false);
-            }
         }
     }
 
     public Vector2 getUnitPosition(long unitID){
         Entity entity=getUnit(unitID);
-        if (entity!=null)
-        return entity.getComponent(TransformComponent.class).getPosition();
+        if (entity!=null){
+            return entity.getComponent(TransformComponent.class).getPosition();
+        }
         else return null;
     }
 
-    public int getPlayers(){
-        return players;
-    }
 
     public Entity getUnit(long unitID){
         return units.get(unitID);

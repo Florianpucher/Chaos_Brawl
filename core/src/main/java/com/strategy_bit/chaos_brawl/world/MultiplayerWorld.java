@@ -111,8 +111,8 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     }
 
     @Override
-    public void upgradeEntityInternal(Entity entity, int ID) {
-        super.upgradeEntityInternal(entity, ID);
+    public void upgradeEntityInternal(Entity entity, int id) {
+        super.upgradeEntityInternal(entity, id);
     }
 
     @Override
@@ -139,7 +139,6 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
 
     @Override
     public void unitAttackLocal(long attackerID, long victimID) {
-        //TODO synchronize attacking
     }
 
     @Override
