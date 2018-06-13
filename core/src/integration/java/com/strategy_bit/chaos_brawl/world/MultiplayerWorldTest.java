@@ -1,28 +1,17 @@
 package com.strategy_bit.chaos_brawl.world;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
 import com.strategy_bit.chaos_brawl.BaseTest;
-import com.strategy_bit.chaos_brawl.ChaosBrawlGame;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.ParticleComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
-import com.strategy_bit.chaos_brawl.ashley.systems.ExplosionSystem;
-import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
-import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.network.client.BrawlClientImpl;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServerImpl;
-import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.OtherPlayerController;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
@@ -34,13 +23,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.InitializationError;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
-import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -49,7 +35,7 @@ import static org.junit.Assert.assertEquals;
  * @since 10.05.2018
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({MultiplayerWorld.class, ParticleComponent.class})
+@PrepareForTest({ParticleComponent.class})
 public class MultiplayerWorldTest extends BaseTest {
     private static final int PLAYERS = 4;
 
@@ -61,9 +47,6 @@ public class MultiplayerWorldTest extends BaseTest {
 
     private BrawlMultiplayer[] brawlMultiplayer;
 
-    private Queue<Vector2> targetPath;
-
-    private Camera camera;
 
     @Before
     public void initialize() throws Exception {
@@ -71,57 +54,10 @@ public class MultiplayerWorldTest extends BaseTest {
         worlds = new MultiplayerWorld[PLAYERS];
         brawlMultiplayer = new BrawlMultiplayer[PLAYERS];
         playersPerWorld = new PawnController[PLAYERS][PLAYERS];
-        RenderSystem renderSystem = Mockito.mock(RenderSystem.class);
-        ExplosionSystem explosionSystem = Mockito.mock(ExplosionSystem.class);
-        OtherPathfinder pathfinder = Mockito.mock(OtherPathfinder.class);
-
-        camera = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-        camera.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
-        Mockito.when(renderSystem.getCamera()).thenReturn(camera);
-
-        Array<Vector2> defaultPath = new Array<>();
-        defaultPath.add(new Vector2());
-        defaultPath.add(new Vector2(1, 1));
-        Mockito.when(pathfinder.calculatePath(Mockito.any(Vector2.class), Mockito.any(Vector2.class))).thenReturn(defaultPath);
-        targetPath = new Queue<>();
-        targetPath.addFirst(defaultPath.get(0));
-        targetPath.addFirst(defaultPath.get(1));
-
-        PowerMockito.whenNew(ParticleEffect.class).withNoArguments().thenReturn(Mockito.mock(ParticleEffect.class));
-
-
-        PowerMockito.whenNew(RenderSystem.class).withNoArguments().thenReturn(renderSystem);
-        PowerMockito.whenNew(ExplosionSystem.class).withAnyArguments().thenReturn(explosionSystem);
-        Board board = Mockito.mock(Board.class);
-        Mockito.when(board.boardToMatrix()).thenReturn(new int[][]{
-                {0, 0, 0},
-                {1, 1, 1},
-                {0, 1, 1}});
-        Array<Vector2> positions = new Array<>();
-        for (int i = 0; i < UNITS_AFTER_INITIALIZATION * 2; i+=2) {
-            positions.add(new Vector2((float) i, i+1));
-        }
-        Mockito.when(board.getConfig(Mockito.anyInt())).thenReturn(positions);
-        Mockito.doAnswer(invocation -> {
-            int x = invocation.getArgument(0);
-            int y = invocation.getArgument(1);
-            return new Vector2(x,y);
-        }).when(board).getWorldCoordinateOfTile(Mockito.anyInt(),Mockito.anyInt());
-        ChaosBrawlGame game = Mockito.mock(ChaosBrawlGame.class);
-        SpriteBatch spriteBatch = Mockito.mock(SpriteBatch.class);
-        PowerMockito.whenNew(SpriteBatch.class).withNoArguments().thenReturn(spriteBatch);
-        PowerMockito.whenNew(Board.class).withAnyArguments().thenReturn(board);
-        PowerMockito.whenNew(OtherPathfinder.class).withAnyArguments().thenReturn(pathfinder);
-        ScreenManager manager = ScreenManager.getInstance();
-
-        Gdx gdx=Mockito.mock(Gdx.class);
-        Mockito.when(gdx.graphics.getDeltaTime()).thenReturn(1f);
-        manager.initialize(game);
 
         // initialize server
         BrawlServerImpl brawlServer = new BrawlServerImpl();
-        MultiplayerWorld serverWorld = new MultiplayerWorld( brawlServer, PLAYERS,4);
-
+        MultiplayerWorld serverWorld = new MultiplayerWorld( brawlServer, PLAYERS,4,false);
         brawlServer.getBrawlConnector().setMultiplayerInputHandler(serverWorld);
         brawlMultiplayer[0] = brawlServer;
         worlds[0] = serverWorld;
@@ -132,13 +68,14 @@ public class MultiplayerWorldTest extends BaseTest {
         for (int i = 1; i < PLAYERS; i++) {
             BrawlClientImpl brawlClient = new BrawlClientImpl();
 
-            MultiplayerWorld clientWorld = new MultiplayerWorld(brawlClient, PLAYERS,4);
+            MultiplayerWorld clientWorld = new MultiplayerWorld(brawlClient, PLAYERS,4, false);
             brawlClient.getBrawlConnector().setMultiplayerInputHandler(clientWorld);
             brawlMultiplayer[i] = brawlClient;
             worlds[i] = clientWorld;
             initializePlayersForWorld(i);
             brawlClient.connectToServer("127.0.0.1");
         }
+        Thread.sleep(500);
         serverWorld.initializeGameForPlayers();
 
         long currentTime = System.currentTimeMillis();
@@ -146,12 +83,15 @@ public class MultiplayerWorldTest extends BaseTest {
         for (MultiplayerWorld world :
                 worlds) {
             while (world.units.size() < UNITS_AFTER_INITIALIZATION) {
-                if (System.currentTimeMillis() - currentTime > 3000) {
+                if (System.currentTimeMillis() - currentTime > 5000) {
                     throw new InitializationError(new Throwable("Could not initialize world for every player"));
                 }
             }
         }
-        camera.update();
+        for (MultiplayerWorld world :
+                worlds) {
+            world.getCamera().update();
+        }
     }
 
     private void initializePlayersForWorld(int worldIndex) {
@@ -159,7 +99,7 @@ public class MultiplayerWorldTest extends BaseTest {
         SpawnArea spawnArea = new SpawnArea(0, 0, 1, 1);
         for (int i = 0; i < PLAYERS; i++) {
             if (i == worldIndex) {
-                PlayerController playerController = new PlayerController(i, world, spawnArea, camera);
+                PlayerController playerController = new PlayerController(i, world, spawnArea, world.getCamera());
                 playersPerWorld[worldIndex][i] = playerController;
                 world.setPlayerController(i, playerController);
             } else {
@@ -213,7 +153,8 @@ public class MultiplayerWorldTest extends BaseTest {
     @Test
     public void testSpawnUnitOnClient() throws InterruptedException {
         for (int i = 1; i < worlds.length; i++) {
-            worlds[i].createEntityWorldCoordinates(new Vector2(0, 0), 0, i);
+
+            worlds[i].createEntityWorldCoordinates(new Vector2(worlds[i].bases[i].getComponent(TransformComponent.class).getPosition()), 0, i);
         }
         // Message should arrive in the next 2 seconds
         Thread.sleep(2000);
@@ -228,7 +169,7 @@ public class MultiplayerWorldTest extends BaseTest {
     public void testSpawnUnitOnServer() throws InterruptedException {
         int unitsToSpawn = 3;
         for (int i = 0; i < unitsToSpawn; i++) {
-            worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), 0, i % PLAYERS);
+            worlds[0].createEntityWorldCoordinates(new Vector2(worlds[i].bases[i].getComponent(TransformComponent.class).getPosition()), 0, i % PLAYERS);
         }
         // Message should arrive in the next 2 seconds
         Thread.sleep(2000);
@@ -239,7 +180,7 @@ public class MultiplayerWorldTest extends BaseTest {
 
     @Test
     public void testUnitDied() throws InterruptedException {
-        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), 0, 0);
+        worlds[0].createEntityWorldCoordinates(new Vector2(worlds[0].bases[0].getComponent(TransformComponent.class).getPosition()), 0, 0);
         Thread.sleep(2000);
         //Check if unit got spawned remotely
         for (int i = 0; i < PLAYERS; i++) {
@@ -257,8 +198,10 @@ public class MultiplayerWorldTest extends BaseTest {
 
     @Test
     public void testUnitGotWayPoints() throws InterruptedException {
-        worlds[0].createEntityWorldCoordinates(new Vector2(0, 0), 0, 0);
+        worlds[0].createEntityWorldCoordinates(new Vector2(worlds[0].bases[0].getComponent(TransformComponent.class).getPosition()), 0, 0);
         Thread.sleep(2000);
+        Entity unitThatMovesServer = worlds[0].units.get(worlds[0].lastID - 1);
+        Queue<Vector2> targetPath = unitThatMovesServer.getComponent(MovementComponent.class).getPath();
         for (int i = 0; i < PLAYERS; i++) {
             Entity unitThatMoves = worlds[i].units.get(worlds[0].lastID - 1);
             Queue<Vector2> path = unitThatMoves.getComponent(MovementComponent.class).getPath();
@@ -294,13 +237,13 @@ public class MultiplayerWorldTest extends BaseTest {
             }
         }
         Thread.sleep(1000);
-        camera.update();
 
         for (int i = 0; i < PLAYERS; i++) {
+            worlds[i].getCamera().update();
             Entity base = worlds[i].bases[(i + 1) % PLAYERS];
             TransformComponent transformComponent = base.getComponent(TransformComponent.class);
             Vector3 worldPosition = new Vector3(transformComponent.getPosition().x, FRUSTUM_HEIGHT - transformComponent.getPosition().y, 0);
-            Vector3 screenPosition = camera.project(worldPosition);
+            Vector3 screenPosition = worlds[i].getCamera().project(worldPosition);
             ((PlayerController) playersPerWorld[i][i]).touchDown((int) screenPosition.x, (int) screenPosition.y, 0, 0);
             Thread.sleep(1000);
             Assert.assertEquals((i + 1) % PLAYERS, playersPerWorld[0][i].getCurrentTargetTeam());

@@ -6,7 +6,7 @@ sourceCompatibility = 1.8
 
 sourceSets.main.java.srcDirs = [ "src/main/java" ]
 sourceSets.test.java.srcDirs = ["src/test/java", "src/integration/java"]
-
+sourceSets.test.resources.srcDirs = ["src/../../android/assets"]
 
 eclipse.project {
     name = appName + "-core"

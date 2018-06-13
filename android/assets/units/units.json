@@ -415,7 +415,7 @@
     "cost" : 100,
     "Preview" : {
       "button_preview_name" : "upgrade_units_button",
-      "button_preview_skin" : "user_interface/upgrade_towers.png"
+      "button_preview_skin" : "user_interface/upgrade_units.png"
     }
   },
 
@@ -425,7 +425,7 @@
     "cost" : 50,
     "Preview" : {
       "button_preview_name" : "upgrade_towers_button",
-      "button_preview_skin" : "user_interface/upgrade_units.png"
+      "button_preview_skin" : "user_interface/upgrade_towers.png"
     }
   }
 
