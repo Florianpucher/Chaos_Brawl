@@ -64,7 +64,6 @@ public class World implements InputHandler {
     protected Entity marker;
 
     boolean endGame = false;
-    private int players;
 
     public World(int map, int players, boolean containsDeleteSystem) {
         units = new HashMap<>();
@@ -72,7 +71,6 @@ public class World implements InputHandler {
         playerControllers = new PawnController[players];
         bases = new Entity[players];
         tower = new Entity[players];
-        this.players = players;
 
         createEngine(containsDeleteSystem);
         marker=new CurrentTargetMarker(new Vector2(0,0));
@@ -291,7 +289,7 @@ public class World implements InputHandler {
             {
                 continue;
             }
-            Entity newEntity = upgradeSystem.UpgradeToNextTier(unit, iterator);
+            Entity newEntity = upgradeSystem.upgradeToNextTier(unit, iterator);
             if(newEntity != null)
             {
                 map.put(entry.getKey(), newEntity);
