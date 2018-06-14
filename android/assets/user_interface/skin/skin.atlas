@@ -6,7 +6,7 @@ filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 515, 679
+  xy: 515, 725
   size: 19, 19
   split: 0, 0, 0, 0
   orig: 19, 19
@@ -14,7 +14,7 @@ background
   index: -1
 button
   rotate: false
-  xy: 1, 186
+  xy: 1, 232
   size: 183, 183
   split: 29, 29, 27, 27
   orig: 183, 183
@@ -22,7 +22,7 @@ button
   index: -1
 button_disabled
   rotate: false
-  xy: 515, 700
+  xy: 515, 746
   size: 183, 183
   split: 29, 30, 27, 27
   orig: 183, 183
@@ -30,7 +30,7 @@ button_disabled
   index: -1
 button_high_lighted
   rotate: false
-  xy: 1, 1
+  xy: 1, 47
   size: 183, 183
   split: 32, 35, 28, 28
   orig: 183, 183
@@ -38,7 +38,7 @@ button_high_lighted
   index: -1
 button_pressed
   rotate: false
-  xy: 186, 186
+  xy: 186, 232
   size: 183, 183
   split: 27, 29, 28, 27
   orig: 183, 183
@@ -46,8 +46,25 @@ button_pressed
   index: -1
 mainmenu
   rotate: false
-  xy: 1, 371
+  xy: 1, 417
   size: 512, 512
   orig: 512, 512
+  offset: 0, 0
+  index: -1
+progress_inner_thin
+  rotate: false
+  xy: 1, 1
+  size: 3, 44
+  split: 0, 0, 0, 0
+  orig: 3, 44
+  offset: 0, 0
+  index: -1
+progress_outer_thin
+  rotate: false
+  xy: 700, 879
+  size: 13, 50
+  split: 6, 6, 3, 3
+  pad: 5, 5, 3, 3
+  orig: 13, 50
   offset: 0, 0
   index: -1

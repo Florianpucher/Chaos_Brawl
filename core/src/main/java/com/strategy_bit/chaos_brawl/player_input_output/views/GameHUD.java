@@ -12,11 +12,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
@@ -60,7 +58,7 @@ public class GameHUD extends Table {
 
     private int nextUnitType;
     private Texture nonSpawnAreaTexture;
-    private ProgressBar manaBar;
+    private Manabar manaBar;
     private Array<BrawlButton> brawlButtons;
 
     private OrthographicCamera camera;
@@ -98,43 +96,39 @@ public class GameHUD extends Table {
         brawlButtons.add(btnUpgradeTower);
         setFillParent(true);
 
-        NinePatchDrawable resourceBarOuter = new NinePatchDrawable(assetManager.resourceSkinOuter);
-        NinePatchDrawable resourceBar = new NinePatchDrawable(assetManager.resourceSkinInner);
-        ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(resourceBarOuter, new NinePatchDrawable(assetManager.resourceSkinMiddle));
-        progressBarStyle.knobBefore = resourceBar;
-        manaBar = new ProgressBar(0f, 100f, 0.1f, false, progressBarStyle);
-
+        manaBar = new Manabar(0f, 100f, 0.1f, false, AssetManager.getInstance().defaultSkin);
         manaBar.setValue(0);
         setBackground((Drawable) null);
 
         top();
         //add actors to UI
-        float height = Gdx.graphics.getHeight() / 8.5f;
-        float width = Gdx.graphics.getWidth()/5f;
-        add(manaBar).top().width(Gdx.graphics.getWidth() / 2f).height(Gdx.graphics.getHeight() / 9f);
-        row().height(7 * Gdx.graphics.getHeight() / 9f);
+        float buttonHeight = Gdx.graphics.getHeight() /7f;
+        float manaBarHeight = Gdx.graphics.getHeight() /8f;
+        float emptySpace = Gdx.graphics.getHeight() - (buttonHeight + manaBarHeight);
+
+        add(manaBar).top().width(Gdx.graphics.getWidth() / 2f).height(manaBarHeight);
+        row().height(emptySpace);
         add();
-        row().height(Gdx.graphics.getHeight() / 9f).width((float) Gdx.graphics.getWidth());
+        row().height(buttonHeight).width((float) Gdx.graphics.getWidth());
 
         // add own table for organizing buttons
         Table lowerUI = new Table(assetManager.defaultSkin);
         lowerUI.right();
         add(lowerUI).width((float) Gdx.graphics.getWidth());
-        lowerUI.add(btnNewUnit1).right().height(height).width(height);
+        lowerUI.add(btnNewUnit1).right().height(buttonHeight).width(buttonHeight);
+        lowerUI.add(btnNewUnit2).right().height(buttonHeight).width(buttonHeight);
+        lowerUI.add(btnNewUnit3).right().height(buttonHeight).width(buttonHeight);
 
-        lowerUI.add(btnNewUnit2).right().height(height).width(height);
-        lowerUI.add(btnNewUnit3).right().height(height).width(height);
 
-
-        lowerUI.add(btnUpgradeUnits).left().height(height).width(2f*height);
-        lowerUI.add(btnUpgradeTower).left().height(height).width(2f*height);
+        lowerUI.add(btnUpgradeUnits).left().height(buttonHeight).width(2f*buttonHeight);
+        lowerUI.add(btnUpgradeTower).left().height(buttonHeight).width(2f*buttonHeight);
         for (BrawlButton button :
                 brawlButtons) {
             button.addListener(listener);
-            button.setSizeImage(height,height, 0.7f);
+            button.setSizeImage(buttonHeight,buttonHeight, 0.7f);
         }
-        btnUpgradeTower.setSizeImage(2f*height,height,0.7f);
-        btnUpgradeUnits.setSizeImage(2f*height,height,0.7f);
+        btnUpgradeTower.setSizeImage(2f*buttonHeight,buttonHeight,0.7f);
+        btnUpgradeUnits.setSizeImage(2f*buttonHeight,buttonHeight,0.7f);
         initializeGameOverView();
     }
 
