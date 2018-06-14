@@ -390,7 +390,7 @@
     },
     "TeamGameObjectComponent" : {
       "unitId" : 19,
-      "hitPoints" : 150,
+      "hitPoints" : 175,
       "unitType" : 22
 
     },
