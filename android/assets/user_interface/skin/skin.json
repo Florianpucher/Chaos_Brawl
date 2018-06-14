@@ -23,6 +23,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0.39496666
 		a: 1
 	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
@@ -53,21 +59,26 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 	default: {
 		font: mainmenu
-		fontColor: dark_grey
-		downFontColor: black
-		overFontColor: grey
+		fontColor: white
+		downFontColor: white
+		overFontColor: white
+		up: button
+		down: button_pressed
+		over: button_high_lighted
+		disabled: button_disabled
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: mainmenu
+		fontColor: black
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
 		font: mainmenu
-		fontColorSelected: black
-		fontColorUnselected: black
+		fontColorSelected: white
+		fontColorUnselected: white
 		selection: button
 		background: background
 	}
@@ -103,9 +114,9 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: mainmenu
-		fontColor: black
-		downFontColor: grey
-		overFontColor: dark_grey
+		fontColor: white
+		downFontColor: white
+		overFontColor: white
 		up: button
 		down: button_pressed
 		over: button_high_lighted
@@ -138,6 +149,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: background
 		titleFont: mainmenu
+		titleFontColor: white
 	}
 }
 }
