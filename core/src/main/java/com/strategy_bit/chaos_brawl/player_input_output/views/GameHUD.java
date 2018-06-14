@@ -120,19 +120,21 @@ public class GameHUD extends Table {
         Table lowerUI = new Table(assetManager.defaultSkin);
         lowerUI.right();
         add(lowerUI).width((float) Gdx.graphics.getWidth());
-        lowerUI.add(btnNewUnit1).right().height(height).width(width);
+        lowerUI.add(btnNewUnit1).right().height(height).width(height);
 
-        lowerUI.add(btnNewUnit2).right().height(height).width(width);
-        lowerUI.add(btnNewUnit3).right().height(height).width(width);
+        lowerUI.add(btnNewUnit2).right().height(height).width(height);
+        lowerUI.add(btnNewUnit3).right().height(height).width(height);
 
 
-        lowerUI.add(btnUpgradeUnits).left().height(height).width(width);
-        lowerUI.add(btnUpgradeTower).left().height(height).width(width);
+        lowerUI.add(btnUpgradeUnits).left().height(height).width(2f*height);
+        lowerUI.add(btnUpgradeTower).left().height(height).width(2f*height);
         for (BrawlButton button :
                 brawlButtons) {
             button.addListener(listener);
-            button.setSizeImage(width,height, 0.7f);
+            button.setSizeImage(height,height, 0.7f);
         }
+        btnUpgradeTower.setSizeImage(2f*height,height,0.7f);
+        btnUpgradeUnits.setSizeImage(2f*height,height,0.7f);
         initializeGameOverView();
     }
 

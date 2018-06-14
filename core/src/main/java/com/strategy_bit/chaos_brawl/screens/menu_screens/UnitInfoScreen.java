@@ -20,13 +20,10 @@ public class UnitInfoScreen extends MenuScreen{
     private List<String> previewList;
     private String first = "UNIT STATS:";
     private String empty = "";
-    private static final String BACK = "Return to Main Menu";
 
     @Override
     public void buildStage() {
         super.buildStage();
-        final TextButton btnBack = new TextButton(BACK, assetManager.defaultSkin);
-        btnBack.setName(BACK);
 
         float height = Gdx.graphics.getHeight()/8f;
 
@@ -37,7 +34,7 @@ public class UnitInfoScreen extends MenuScreen{
 
         previewList = new List<>(assetManager.defaultSkin);
         ScrollPane scrollPane = new ScrollPane(previewList);
-        root.add(scrollPane).width(Gdx.graphics.getHeight());
+        root.add(scrollPane).width(Gdx.graphics.getWidth());
 
         Array<String> array = new Array<>();
         array.add(first);
@@ -52,22 +49,7 @@ public class UnitInfoScreen extends MenuScreen{
         addStats("BERSERKER", 95f, 2f, 2.5f, 5f);
         addStats("TEMPLAR", 150f, 1f, 1f, 6f);
 
-        root.add(btnBack).width(Gdx.graphics.getWidth()/3f).height(height);
-
         addActor(root);
-
-        ClickListener listener = new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                String name = event.getListenerActor().getName();
-                if (name.equals(BACK)) {
-                    screenManager.switchToLastScreen();
-                }
-            }
-        };
-
-        btnBack.addListener(listener);
     }
     private void addStats(String name, float hitPoints, float attackSpeed, float attackRadius, float attackDamage){
         float dps = attackDamage*attackSpeed;
