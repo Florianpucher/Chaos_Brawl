@@ -18,13 +18,9 @@ import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
  */
 
 public class OptionsMenuScreen extends MenuScreen{
-    private static final String BACK = "Return to main menu";
-
     @Override
     public void buildStage() {
         super.buildStage();
-        final TextButton btnBack = new TextButton(BACK, assetManager.defaultSkin);
-        btnBack.setName(BACK);
         final Slider sliderMaster = new Slider(0f, 1f, 0.01f, false, assetManager.sliderStyle);
         final Slider sliderMusic = new Slider(0f, 1f, 0.01f, false, assetManager.sliderStyle);
         final Slider sliderSound = new Slider(0f, 1f, 0.01f, false, assetManager.sliderStyle);
@@ -49,8 +45,6 @@ public class OptionsMenuScreen extends MenuScreen{
         root.add(textSound).width(Gdx.graphics.getWidth()/3f).height(height);
         root.add(sliderSound).width(Gdx.graphics.getWidth()/3f).height(height);
         root.row().height(height*3f);
-        root.row();
-        root.add(btnBack).center().width(Gdx.graphics.getWidth()/3f).height(height);
         addActor(root);
 
         sliderMaster.addListener(new InputListener() {
@@ -85,19 +79,6 @@ public class OptionsMenuScreen extends MenuScreen{
                 return true;
             }
         });
-
-        ClickListener listener = new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                String name = event.getListenerActor().getName();
-                if(name.equals(BACK)){
-                    screenManager.showScreen(ScreenEnum.MAIN_MENU);
-                }
-
-            }
-        };
-        btnBack.addListener(listener);
 
     }
 

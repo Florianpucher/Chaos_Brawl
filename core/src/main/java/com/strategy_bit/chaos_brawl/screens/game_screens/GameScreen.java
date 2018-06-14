@@ -31,36 +31,12 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(int map) {
         this.map = map;
     }
-    private static final String EXIT = "Exit Game";
 
 
     @Override
     public void buildStage() {
         super.buildStage();
         initializeGame();
-        final TextButton btnOptions = new TextButton(EXIT, assetManager.defaultSkin);
-        btnOptions.setName(EXIT);
-
-        final Table root = new Table(assetManager.defaultSkin);
-        root.setFillParent(true);
-        float height = Gdx.graphics.getHeight()/24f;
-        root.top();
-        root.right();
-        root.add(btnOptions).width(Gdx.graphics.getWidth()/10f).height(height);
-        addActor(root);
-
-        ClickListener listener = new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                String name = event.getListenerActor().getName();
-                if (name.equals(EXIT)){
-                    ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU);
-                }
-                super.clicked(event, x, y);
-            }
-        };
-
-        btnOptions.addListener(listener);
     }
 
 
