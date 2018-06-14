@@ -281,7 +281,7 @@
   },
   "TeamGameObjectComponent" : {
     "unitId" : 7,
-    "hitPoints" : 100,
+    "hitPoints" : 250,
     "unitType" : 11
 
   },
@@ -314,7 +314,7 @@
     },
     "TeamGameObjectComponent" : {
       "unitId" : 8,
-      "hitPoints" : 120,
+      "hitPoints" : 300,
       "unitType" : 22
 
     },
@@ -330,6 +330,73 @@
     }
   },
 
+
+
+  {
+    "id" : 18,
+    "name": "DefenseTurret",
+    "cost" : 20,
+    "TextureComponent" : {
+      "skinName":"defenseTurretSkin",
+      "skinPath" :"buildings/defense_turret.png"
+    },
+    "CombatComponent" : {
+      "attackRadius" : 3,
+      "attackSpeed" : 1,
+      "attackDamage" : 7,
+      "ranged" : true,
+      "rangedAttackType" : 10
+    },
+    "TeamGameObjectComponent" : {
+      "unitId" : 18,
+      "hitPoints" : 100,
+      "unitType" : 11
+
+    },
+    "ExplosionComponent" : {
+      "type" : "explosion"
+
+    },
+    "UpgradeComponent" : {
+
+    },
+    "BoundaryComponent" :{
+
+    }
+  },
+
+  {
+    "id" : 19,
+    "name": "DefenseTurretUpgraded",
+    "cost" : 20,
+    "TextureComponent" : {
+      "skinName":"defenseTurretUpgradedSkin",
+      "skinPath" :"buildings/defense_turret_upgraded.png"
+    },
+    "CombatComponent" : {
+      "attackRadius" : 3,
+      "attackSpeed" : 60,
+      "attackDamage" : 0.7,
+      "ranged" : true,
+      "rangedAttackType" : 13
+    },
+    "TeamGameObjectComponent" : {
+      "unitId" : 19,
+      "hitPoints" : 120,
+      "unitType" : 22
+
+    },
+    "ExplosionComponent" : {
+      "type" : "explosion"
+
+    },
+    "UpgradeComponent" : {
+
+    },
+    "BoundaryComponent" :{
+
+    }
+  },
 
   {
 
