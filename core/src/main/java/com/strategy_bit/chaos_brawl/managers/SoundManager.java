@@ -52,7 +52,7 @@ public class SoundManager {
         addSound("drawKatana", "sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Strong.mp3");
     }
     public void loadMusic(){
-        musicHashMap.put("mainSoundtrack", Gdx.audio.newMusic(Gdx.files.internal("sounds/mainSoundTrack.mp3")));
+        musicHashMap.put("mainSoundtrack", Gdx.audio.newMusic(Gdx.files.internal("sounds/The Empire.ogg")));
     }
 
     public void addSound(String key, String sound){
