@@ -66,15 +66,15 @@ public class DeleteSystem extends IteratingSystem {
     }
 
     public boolean removeEntity(Entity entity) {
-        TeamGameObjectComponent component = teamGameObjectComponentMapper.get(entity);
-        if (component.getHitPoints() <= 0.0) {
+        TeamGameObjectComponent teamGameObjectComponent = teamGameObjectComponentMapper.get(entity);
+        if (teamGameObjectComponent.getHitPoints() <= 0.0) {
             ExplosionComponent explosionComponent = explosionComponentComponentMapper.get(entity);
             MovementComponent movementComponent = movementComponentMapper.get(entity);
 
             // Has explosion component
             // Play explosion
 
-            if (explosionComponent != null && movementComponent == null) {  // true =  building
+            if (movementComponent == null && teamGameObjectComponent.getUnitId() != 18 && teamGameObjectComponent.getUnitId() != 19) {  // true =  building
                 // Get Position of object here
                 TransformComponent transform = transformComponentMapper.get(entity);
 

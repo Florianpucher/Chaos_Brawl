@@ -336,6 +336,10 @@
     "id" : 18,
     "name": "DefenseTurret",
     "cost" : 20,
+    "Preview" : {
+      "button_preview_name" : "defenseTurret_button_spawn",
+      "button_preview_skin" : "user_interface/turret.png"
+    },
     "TextureComponent" : {
       "skinName":"defenseTurretSkin",
       "skinPath" :"buildings/defense_turret.png"
@@ -349,7 +353,7 @@
     },
     "TeamGameObjectComponent" : {
       "unitId" : 18,
-      "hitPoints" : 100,
+      "hitPoints" : 125,
       "unitType" : 11
 
     },
@@ -369,20 +373,24 @@
     "id" : 19,
     "name": "DefenseTurretUpgraded",
     "cost" : 20,
+    "Preview" : {
+      "button_preview_name" : "defenseTurretUpgraded_button_spawn",
+      "button_preview_skin" : "user_interface/turret_upgraded.png"
+    },
     "TextureComponent" : {
       "skinName":"defenseTurretUpgradedSkin",
       "skinPath" :"buildings/defense_turret_upgraded.png"
     },
     "CombatComponent" : {
       "attackRadius" : 3,
-      "attackSpeed" : 60,
-      "attackDamage" : 0.7,
+      "attackSpeed" : 1,
+      "attackDamage" : 10,
       "ranged" : true,
       "rangedAttackType" : 13
     },
     "TeamGameObjectComponent" : {
       "unitId" : 19,
-      "hitPoints" : 120,
+      "hitPoints" : 150,
       "unitType" : 22
 
     },
