@@ -241,7 +241,7 @@
     "cost" : 0,
     "TextureComponent" : {
       "skinName":"mainTowerSkin",
-      "skinPath" :"buildings/wall.png"
+      "skinPath" :"buildings/base.png"
     },
     "CombatComponent" : {
       "attackRadius" : 4,

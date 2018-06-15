@@ -75,13 +75,15 @@ public class Manabar extends ProgressBar {
 
         if (knobBefore != null) {
             float offset = 0;
-            if (bg != null) offset = bgLeftWidth;
-            if (round)
-                knobBefore.draw(batch, Math.round(x + offset), Math.round(y + (height - knobBefore.getMinHeight()) * 0.5f),
-                        Math.round(position + knobWidthHalf), height - (bg.getMinHeight() - knobBefore.getMinHeight()));
-            else
-                knobBefore.draw(batch, x + offset, y + (height - knobBefore.getMinHeight()) * 0.5f,
-                        position + knobWidthHalf, knobBefore.getMinHeight());
+            if (bg != null) {
+                offset = bgLeftWidth;
+                if (round)
+                    knobBefore.draw(batch, Math.round(x + offset), Math.round(y + (height - knobBefore.getMinHeight()) * 0.5f),
+                            Math.round(position + knobWidthHalf), height - (bg.getMinHeight() - knobBefore.getMinHeight()));
+                else
+                    knobBefore.draw(batch, x + offset, y + (height - knobBefore.getMinHeight()) * 0.5f,
+                            position + knobWidthHalf, knobBefore.getMinHeight());
+            }
         }
     }
 

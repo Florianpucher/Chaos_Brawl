@@ -111,7 +111,7 @@ public class GameHUD extends Table {
         top();
         //add actors to UI
         float buttonHeight = Gdx.graphics.getHeight() /7f;
-        float manaBarHeight = Gdx.graphics.getHeight() /8f;
+        float manaBarHeight = Gdx.graphics.getHeight() /10f;
         float emptySpace = Gdx.graphics.getHeight() - (buttonHeight + manaBarHeight);
 
         add(manaBar).top().width(Gdx.graphics.getWidth() / 2f).height(manaBarHeight);
@@ -121,16 +121,16 @@ public class GameHUD extends Table {
 
         // add own table for organizing buttons
         Table lowerUI = new Table(assetManager.defaultSkin);
-        lowerUI.right();
+        lowerUI.center();
         add(lowerUI).width((float) Gdx.graphics.getWidth());
-        lowerUI.add(btnNewUnit1).right().height(buttonHeight).width(buttonHeight);
-        lowerUI.add(btnNewUnit2).right().height(buttonHeight).width(buttonHeight);
-        lowerUI.add(btnNewUnit3).right().height(buttonHeight).width(buttonHeight);
-        lowerUI.add(btnNewUnit4).right().height(buttonHeight).width(buttonHeight);
+        lowerUI.add(btnNewUnit1).left().height(buttonHeight).width(buttonHeight);
+        lowerUI.add(btnNewUnit2).left().height(buttonHeight).width(buttonHeight);
+        lowerUI.add(btnNewUnit3).left().height(buttonHeight).width(buttonHeight);
+        lowerUI.add(btnNewUnit4).left().height(buttonHeight).width(buttonHeight);
 
 
-        lowerUI.add(btnUpgradeUnits).left().height(buttonHeight).width(2f*buttonHeight);
-        lowerUI.add(btnUpgradeTower).left().height(buttonHeight).width(2f*buttonHeight);
+        lowerUI.add(btnUpgradeUnits).right().height(buttonHeight).width(2f*buttonHeight);
+        lowerUI.add(btnUpgradeTower).right().height(buttonHeight).width(2f*buttonHeight);
         for (BrawlButton button :
                 brawlButtons) {
             button.addListener(listener);
