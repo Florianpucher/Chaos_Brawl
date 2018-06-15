@@ -81,12 +81,14 @@ public class AiController extends PawnController implements Runnable{
                 set.add(18);
                 set.add(19);
                 int unitId=(Integer) set.toArray()[(int)(Math.random()*set.size())];
-                if (spawnUnit(unitId)) {
+                while (!spawnUnit(unitId)) {
+                    continue;
+                }
                 Gdx.app.postRunnable(() -> {
 
                         inputHandler.createEntityWorldCoordinates(spawnPosition, unitId, teamID);
 
-                });}
+                });
 
 
 
