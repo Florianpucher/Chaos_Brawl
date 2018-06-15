@@ -71,7 +71,7 @@ public class MovementSystem extends IteratingSystem {
 
     private void updateTarget(MovementComponent movementComponent, Vector2 position) {
         Vector2 targetLocation = movementComponent.getTargetLocation();
-        if (VectorMath.distance(targetLocation, position) < 0.2*movementComponent.getSpeed()) {
+        if (VectorMath.distance(targetLocation, position) < 0.2) {
             movementComponent.popCurTarget();
         }
     }

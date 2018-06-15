@@ -91,7 +91,7 @@ public class World implements InputHandler {
         tower = new Entity[players];
 
         createEngine(containsDeleteSystem, withRenderSystem);
-        marker=new CurrentTargetMarker(new Vector2(0,0));
+        marker=new CurrentTargetMarker(new Vector2(0,0), engine);
         engine.addEntity(marker);
         createWorld(map);
     }
@@ -140,7 +140,7 @@ public class World implements InputHandler {
 
 
     protected void createEngine(boolean containsDeleteSystem, boolean withRenderSystem){
-        engine = MyEngine.createEngine();
+        engine = new MyEngine();
         //Add some logic
         RenderSystem renderSystem = null;
         if(withRenderSystem)
@@ -326,7 +326,7 @@ public class World implements InputHandler {
     }
 
     Entity createEntityInternal(int unitId, long unitID, Vector2 worldCoordinates, int teamID){
-        Entity entity = spawner.createNewUnit(unitId,teamID,worldCoordinates);
+        Entity entity = spawner.createNewUnit(unitId,teamID,worldCoordinates, engine);
         engine.addEntity(entity);
         units.put(unitID, entity);
         if(unitId==6){
@@ -352,7 +352,7 @@ public class World implements InputHandler {
         Entity projectile = new Entity();
         UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
 
-        Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
+        Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage, engine);
 
         if (type == 10) {
             SoundManager.getInstance().playSound("attackBow");

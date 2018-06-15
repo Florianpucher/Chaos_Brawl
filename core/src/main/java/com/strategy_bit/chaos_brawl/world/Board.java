@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entities.BackgroundTile;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.types.TileType;
@@ -30,7 +31,7 @@ public class Board implements BoardInterface {
     private float multiplicandX = FRUSTUM_WIDTH / BOARD_WIDTH;
     private float multiplicandY = FRUSTUM_HEIGHT / BOARD_HEIGHT;
 
-    public Board(Engine engine, int map) {
+    public Board(MyEngine engine, int map) {
         tileBoard = new Tile[BOARD_HEIGHT][BOARD_WIDTH];
 
         int[][] mapArray = new int[BOARD_HEIGHT][BOARD_WIDTH];
@@ -41,8 +42,8 @@ public class Board implements BoardInterface {
         Array<FileHandle> maps = AssetManager.getInstance().maps;
         map = map-1;
         mapArray = fileReader(maps.get(map).readString(), mapArray);
-        matrixToBoard(mapArray, size);
-        createTileBoard(engine);
+        matrixToBoard(mapArray, size, engine);
+        //createTileBoard(engine);
     }
 
     private void createTileBoard(Engine engine) {
@@ -73,26 +74,29 @@ public class Board implements BoardInterface {
         return mapArray;
     }
 
-    private void matrixToBoard(int[][] map, Vector2 size) {
+    private void matrixToBoard(int[][] map, Vector2 size, MyEngine engine) {
         for (int i = 0; i < BOARD_HEIGHT; i++) {
             for (int j = 0; j < BOARD_WIDTH; j++) {
                 if (map[i][j] == 0) {
-                    Tile tile = new BackgroundTile(TileType.GRASS);
+                    Tile tile = new BackgroundTile(TileType.GRASS, engine);
                     tileBoard[i][j] = tile;
                     tile.setPosition(new Vector2(multiplicandX / 2 + multiplicandX * j, multiplicandY / 2 + multiplicandY * i));
                     tile.setScale(size);
+                    engine.addEntity((BackgroundTile)tile);
                 }
                 if (map[i][j] == 1) {
-                    Tile tile = new BackgroundTile(TileType.WATER);
+                    Tile tile = new BackgroundTile(TileType.WATER, engine);
                     tileBoard[i][j] = tile;
                     tile.setPosition(new Vector2(multiplicandX / 2 + multiplicandX * j, multiplicandY / 2 + multiplicandY * i));
                     tile.setScale(size);
+                    engine.addEntity((BackgroundTile)tile);
                 }
                 if (map[i][j] == 2) {
-                    Tile tile = new BackgroundTile(TileType.DIRT);
+                    Tile tile = new BackgroundTile(TileType.DIRT, engine);
                     tileBoard[i][j] = tile;
                     tile.setPosition(new Vector2(multiplicandX / 2 + multiplicandX * j, multiplicandY / 2 + multiplicandY * i));
                     tile.setScale(size);
+                    engine.addEntity((BackgroundTile)tile);
                 }
             }
         }
