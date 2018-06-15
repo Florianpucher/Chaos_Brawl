@@ -10,18 +10,18 @@ import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 
 public class Projectiles {
-    public static void setComponents(Entity entity, UnitConfig unitConfig, Vector2 start, long target, float damage) {
+    public static void setComponents(Entity entity, UnitConfig unitConfig, Vector2 start, long target, float damage, MyEngine engine) {
 
-        TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
+        TransformComponent transformComponent = engine.createComponent(TransformComponent.class);
         transformComponent.setPosition(start);
 
-        TextureComponent textureComponent =MyEngine.getInstance().createComponent(TextureComponent.class);
+        TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
         textureComponent.setTexture(unitConfig.getSkin());
 
-        MovementComponent movementComponent = MyEngine.getInstance().createComponent(MovementComponent.class);
+        MovementComponent movementComponent = engine.createComponent(MovementComponent.class);
         movementComponent.setEverything(unitConfig.getSpeed(), transformComponent);
 
-        BulletComponent bulletComponent= MyEngine.getInstance().createComponent(BulletComponent.class);
+        BulletComponent bulletComponent= engine.createComponent(BulletComponent.class);
         bulletComponent.setDeleteWhenTargetIsReachedAndTargetIdAndDamage(true,target,damage);
 
         entity.add(bulletComponent);

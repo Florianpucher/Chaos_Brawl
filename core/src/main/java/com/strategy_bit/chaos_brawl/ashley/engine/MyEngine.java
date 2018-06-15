@@ -16,31 +16,9 @@ import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 
 public class MyEngine extends PooledEngine {
 
-    private static MyEngine instance;
-
-    public static MyEngine getInstance() {
-        if (instance == null) {
-            throw new UnsupportedOperationException("Engine doesn't exist");
-        }
-        return instance;
-    }
-
-    public MyEngine(int entityPoolInitialSize, int entityPoolMaxSize, int componentPoolInitialSize, int componentPoolMaxSize) {
-        super(entityPoolInitialSize,entityPoolMaxSize,componentPoolInitialSize,componentPoolMaxSize);
-    }
-
-    public static MyEngine createEngine() {
-        instance=new MyEngine(0,0,25,1000);
-        return instance;
-    }
-
-    public static void deleteEngine()
+    public MyEngine()
     {
-        if(instance != null)
-        {
-            instance.dispose();
-            instance = null;
-        }
+        super(0,0,25,1000);
     }
 
     public void dispose(){

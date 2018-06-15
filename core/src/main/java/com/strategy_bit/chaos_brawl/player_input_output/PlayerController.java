@@ -7,11 +7,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
-import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
+import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
-import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
@@ -38,7 +37,7 @@ public class PlayerController extends PawnController implements InputProcessor {
     }
 
     public void render(float dt) {
-        gameHUD.updateBtns(resources.get(0).getResourceAmount());
+        gameHUD.updateBtns(gold.getResourceAmount());
         sensorReader.update(dt);
     }
 
@@ -133,10 +132,8 @@ public class PlayerController extends PawnController implements InputProcessor {
     public void tick(float deltaTime) {
         super.tick(deltaTime);
         if (gameHUD != null) {
-            for (Resource r :
-                    resources) {
-                gameHUD.updateManaBar(r);
-            }
+            gameHUD.updateManaBar(gold);
+
         }
     }
 
@@ -174,7 +171,7 @@ public class PlayerController extends PawnController implements InputProcessor {
         }
         inputHandler.updateTowersOrUnits(teamID, updateType);
         float cost = unitConfig.getCost();
-        return checkAndSubtract(cost, "Gold");
+        return checkAndSubtract(cost);
 
     }
 

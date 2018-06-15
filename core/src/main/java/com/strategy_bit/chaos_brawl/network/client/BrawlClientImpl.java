@@ -55,13 +55,8 @@ public class BrawlClientImpl implements BrawlClient, BrawlMultiplayer {
 
     @Override
     public void disconnect() {
-
+        client.getKryo().reset();
         client.stop();
-        try {
-            client.dispose();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

@@ -101,13 +101,9 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
 
     @Override
     public void closeServer() {
+        server.getKryo().reset();
         server.stop();
         serverIsRunning=false;
-        try {
-            server.dispose();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
