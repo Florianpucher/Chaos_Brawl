@@ -65,7 +65,6 @@ public class AiController extends PawnController implements Runnable{
 
     @Override
     public void run() {
-        try {
             while (isRunning) {
                 float xFrom;
                 float xTo;
@@ -75,21 +74,22 @@ public class AiController extends PawnController implements Runnable{
                 float x = MathUtils.random(xFrom, xTo);
                 float y =  MathUtils.random(spawnArea.getY(), spawnArea.getY() + spawnArea.getHeight());
                 final Vector2 spawnPosition = new Vector2(x, y);
+                Set<Integer> set=new HashSet<>();
+                for (int i = 0; i < 6; i++) {
+                    set.add(i);
+                }
+                set.add(18);
+                set.add(19);
+                int unitId=(Integer) set.toArray()[(int)(Math.random()*set.size())];
+                if (spawnUnit(unitId)) {
                 Gdx.app.postRunnable(() -> {
-                    Set<Integer> set=new HashSet<>();
-                    for (int i = 0; i < 6; i++) {
-                        set.add(i);
-                    }
-                    set.add(18);
-                    set.add(19);
-                    int unitId=(Integer) set.toArray()[(int)(Math.random()*set.size())];
-                    if (spawnUnit(unitId)) {
+
                         inputHandler.createEntityWorldCoordinates(spawnPosition, unitId, teamID);
-                    }
-                });
+
+                });}
 
 
-                Thread.sleep(3000);
+
 
                 if (goIntoPause) {
 
@@ -97,8 +97,5 @@ public class AiController extends PawnController implements Runnable{
                     lock.unlock();
                 }
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
