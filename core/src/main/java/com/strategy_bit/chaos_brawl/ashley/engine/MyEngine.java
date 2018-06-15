@@ -34,6 +34,15 @@ public class MyEngine extends PooledEngine {
         return instance;
     }
 
+    public static void deleteEngine()
+    {
+        if(instance != null)
+        {
+            instance.dispose();
+            instance = null;
+        }
+    }
+
     public void dispose(){
         this.clearPools();
         ImmutableArray<EntitySystem> systems = getSystems();
