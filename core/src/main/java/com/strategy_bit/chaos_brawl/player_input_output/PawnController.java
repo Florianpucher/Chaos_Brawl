@@ -11,8 +11,6 @@ import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
-import java.util.ArrayList;
-
 
 /**
  * Interface for communication between player(AI or human) and game
@@ -31,7 +29,7 @@ public abstract class PawnController {
      * in screen Coordinates
      */
     protected SpawnArea spawnArea;
-    protected ArrayList<Resource> resources;
+    protected ResourceGold gold;
     protected Camera camera;
 
     public float getNewRate() {
@@ -49,7 +47,6 @@ public abstract class PawnController {
         this.camera = camera;
         this.spawnArea = spawnArea;
         this.teamID = teamID;
-        this.resources = new ArrayList<>();
         createResource();
 
     }
@@ -69,34 +66,24 @@ public abstract class PawnController {
 
 
     public void tick(float deltaTime){
-        for (Resource r :
-                resources) {
-            r.add(deltaTime*WorldSettings.RATE *newRate);
-        }
+        gold.add(deltaTime*WorldSettings.RATE *newRate);
     }
 
     public void createResource(){
-        Resource resource=new ResourceGold(teamID);
-        resources.add(resource);
+        this.gold = new ResourceGold();
     }
 
     public Resource getMana(){
-        return resources.get(0);
+        return gold;
     }
 
-    public boolean checkAndSubtract(float cost,String resource){
-        for (Resource r :
-                resources) {
-            if (r.getName().equals(resource)){
-                return r.add(-cost);
-            }
-        }
-        return false;
+    public boolean checkAndSubtract(float cost){
+        return gold.add(-cost);
     }
     public boolean spawnUnit(int unitId){
         UnitConfig unitConfig=AssetManager.getInstance().unitManager.unitConfigHashMap.get(unitId);
         float cost= unitConfig.getCost();
-        return checkAndSubtract(cost,"Gold");
+        return checkAndSubtract(cost);
     }
 
     public void gameOver (boolean win) {

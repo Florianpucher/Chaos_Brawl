@@ -16,31 +16,31 @@ import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
 
 public class Unit {
-    public static void setComponents(Entity entity, UnitConfig unitConfig, int teamId, Vector2 position) {
+    public static void setComponents(Entity entity, UnitConfig unitConfig, int teamId, Vector2 position, MyEngine engine) {
 
-        TransformComponent transformComponent = MyEngine.getInstance().createComponent(TransformComponent.class);
+        TransformComponent transformComponent = engine.createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
 
-        TextureComponent textureComponent =MyEngine.getInstance().createComponent(TextureComponent.class);
+        TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
         textureComponent.setTexture(unitConfig.getSkin());
 
         if (unitConfig.hasMovementComponent()) {
-            MovementComponent movementComponent = MyEngine.getInstance().createComponent(MovementComponent.class);
+            MovementComponent movementComponent = engine.createComponent(MovementComponent.class);
             movementComponent.setEverything(unitConfig.getSpeed(), transformComponent);
             entity.add(movementComponent);
         }
 
-        CombatComponent combatComponent = MyEngine.getInstance().createComponent(CombatComponent.class);
+        CombatComponent combatComponent = engine.createComponent(CombatComponent.class);
         combatComponent.setEverything(unitConfig.getAttackRadius(),unitConfig.getAttackSpeed(),unitConfig.getAttackDamage(),unitConfig.isRanged(),unitConfig.isRangedAttackType());
 
-        TeamGameObjectComponent teamGameObjectComponent =MyEngine.getInstance().createComponent(TeamGameObjectComponent.class);
+        TeamGameObjectComponent teamGameObjectComponent = engine.createComponent(TeamGameObjectComponent.class);
         teamGameObjectComponent.setEverything(unitConfig.getHitPoints(),teamId);
         teamGameObjectComponent.setUnitType(unitConfig.getUnitType());
         teamGameObjectComponent.setUnitId(unitConfig.getUnitId());
 
         if (unitConfig.hasBoundaryComponent()){
             Vector2 size = new Vector2((textureComponent.getTexture().getRegionWidth() * PIXELS_TO_METRES),(textureComponent.getTexture().getRegionHeight() * PIXELS_TO_METRES));
-            BoundaryComponent boundaryComponent = MyEngine.getInstance().createComponent(BoundaryComponent.class);
+            BoundaryComponent boundaryComponent = engine.createComponent(BoundaryComponent.class);
             boundaryComponent.setSizeAndTransformComponent(size,transformComponent);
             entity.add(boundaryComponent);
         }

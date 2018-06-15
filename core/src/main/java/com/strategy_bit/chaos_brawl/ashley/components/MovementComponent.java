@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Queue;
-import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 
 /**
  * component that has fields for moving an entity
@@ -95,14 +94,14 @@ public class MovementComponent implements Component,Pool.Poolable {
 
 
     public MovementComponent() {
-        this.transformComponent=MyEngine.getInstance().createComponent(TransformComponent.class);
+        this.transformComponent=null;
         speed=0;
         path=new Queue<>();
     }
 
     @Override
     public void reset() {
-        this.transformComponent=MyEngine.getInstance().createComponent(TransformComponent.class);
+        this.transformComponent=null;
         speed=0;
         path.clear();
 

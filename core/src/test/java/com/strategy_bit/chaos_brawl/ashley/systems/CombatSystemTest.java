@@ -12,7 +12,6 @@ import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.world.World;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +38,7 @@ public class CombatSystemTest extends BaseTest {
         combatSystem = new CombatSystem();
         world = Mockito.mock(World.class);
 
-        engine = MyEngine.createEngine();
+        engine = new MyEngine();
         engine.addSystem(combatSystem);
         combatSystem.addWorld(world);
         for (int i = 0; i < 6; i++) {
@@ -49,8 +48,8 @@ public class CombatSystemTest extends BaseTest {
             attackers.add(attacker);
             victims.add(victim);
 
-            Unit.setComponents(attacker, AssetManager.getInstance().unitManager.unitConfigHashMap.get(i), 0, new Vector2(i,i));
-            Unit.setComponents(victim, AssetManager.getInstance().unitManager.unitConfigHashMap.get(i), 1, new Vector2(i,i));
+            Unit.setComponents(attacker, AssetManager.getInstance().unitManager.unitConfigHashMap.get(i), 0, new Vector2(i,i), engine);
+            Unit.setComponents(victim, AssetManager.getInstance().unitManager.unitConfigHashMap.get(i), 1, new Vector2(i,i), engine);
             engine.addEntity(attacker);
             engine.addEntity(victim);
             int attackType = -1;
@@ -63,10 +62,6 @@ public class CombatSystemTest extends BaseTest {
     }
 
 
-    @After
-    public void after() {
-        MyEngine.deleteEngine();
-    }
 
 
     @Test
