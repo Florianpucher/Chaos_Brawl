@@ -20,18 +20,37 @@ public class SplashScreen extends AbstractScreen {
     private OrthographicCamera camera;
     private Vector2 position;
     private float size;
+    private float splashWidth, splashHeight, splashX, splashY;
 
     @Override
     public void buildStage() {
         super.buildStage();
         batch = new SpriteBatch();
-        splashImage = new Texture(Gdx.files.internal("badlogic.jpg"));
+        splashImage = new Texture(Gdx.files.internal("user_interface/chaos_brawl_logo.png"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         size = Gdx.graphics.getWidth() > Gdx.graphics.getHeight() ? Gdx.graphics.getHeight() : Gdx.graphics.getWidth();
         position = new Vector2();
         position.x = Gdx.graphics.getWidth() / 2f - size / 2f;
         position.y = Gdx.graphics.getHeight() / 2f - size / 2f;
+        float scaleY=1f;
+        if (splashImage.getHeight()>Gdx.graphics.getHeight()){
+            splashHeight =Gdx.graphics.getHeight();
+            scaleY=1-Gdx.graphics.getHeight()/splashImage.getHeight();
+        }else {
+            splashHeight =splashImage.getHeight();
+        }
+        float scaleX=1f;
+        if (splashImage.getWidth()*scaleY>Gdx.graphics.getWidth()){
+            splashWidth =Gdx.graphics.getWidth();
+            scaleX=1-Gdx.graphics.getWidth()/splashImage.getWidth()*scaleY;
+        }else {
+            splashWidth =splashImage.getWidth()*scaleY;
+        }
+        splashHeight *=scaleX;
+        splashX =(Gdx.graphics.getWidth()- splashWidth)/2f;
+        splashY =(Gdx.graphics.getHeight()- splashHeight)/2f;
+
     }
 
     @Override
@@ -41,7 +60,7 @@ public class SplashScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(splashImage, position.x, position.y, size, size);
+        batch.draw(splashImage, splashX, splashY, splashWidth, splashHeight);
         batch.end();
     }
 
