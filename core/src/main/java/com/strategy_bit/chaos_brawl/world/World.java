@@ -354,6 +354,16 @@ public class World implements InputHandler {
 
         Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage);
 
+        if (type == 10) {
+            SoundManager.getInstance().playSound("attackBow");
+        } else if (type == 11) {
+            SoundManager.getInstance().playSound("attackFireball");
+        } else if (type == 12) {
+            SoundManager.getInstance().playSound("attackCannonBall");
+        } else if (type == 13) {
+            SoundManager.getInstance().playSound("attackLaser");
+        }
+
         createProjectile(projectile);
     }
 
