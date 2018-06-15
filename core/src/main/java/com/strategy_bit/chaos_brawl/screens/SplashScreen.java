@@ -36,14 +36,14 @@ public class SplashScreen extends AbstractScreen {
         float scaleY=1f;
         if (splashImage.getHeight()>Gdx.graphics.getHeight()){
             splashHeight =Gdx.graphics.getHeight();
-            scaleY=1-Gdx.graphics.getHeight()/splashImage.getHeight();
+            scaleY=(float) Gdx.graphics.getHeight()/(float) splashImage.getHeight();
         }else {
             splashHeight =splashImage.getHeight();
         }
         float scaleX=1f;
         if (splashImage.getWidth()*scaleY>Gdx.graphics.getWidth()){
             splashWidth =Gdx.graphics.getWidth();
-            scaleX=1-Gdx.graphics.getWidth()/splashImage.getWidth()*scaleY;
+            scaleX=(float) Gdx.graphics.getWidth()/(float) splashImage.getWidth()*scaleY;
         }else {
             splashWidth =splashImage.getWidth()*scaleY;
         }
