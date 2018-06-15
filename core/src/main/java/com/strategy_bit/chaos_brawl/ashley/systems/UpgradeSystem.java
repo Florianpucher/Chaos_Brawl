@@ -61,7 +61,7 @@ public class UpgradeSystem extends IteratingSystem {
 
         int entityID;
         int teamID;
-        double hitPoints;
+        float hitPoints;
         Vector2 position;
         Queue<Vector2> path;
 
