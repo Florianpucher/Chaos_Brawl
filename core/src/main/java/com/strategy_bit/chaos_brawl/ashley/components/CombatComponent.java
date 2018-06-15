@@ -49,7 +49,7 @@ public class CombatComponent implements Component,Pool.Poolable {
         }
     }
 
-    public double getAttackDamage() {
+    public float getAttackDamage() {
         return attackDamage;
     }
 

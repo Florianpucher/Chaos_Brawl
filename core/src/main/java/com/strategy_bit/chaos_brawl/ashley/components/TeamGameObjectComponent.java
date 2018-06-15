@@ -7,8 +7,8 @@ public class TeamGameObjectComponent implements Component,Pool.Poolable {
 
     private int unitId;
     private int teamId;
-    private double hitPoints;
-    private double maxHP;
+    private float hitPoints;
+    private float maxHP;
     private int unitType;
 
     public int getUnitId() {
@@ -19,32 +19,32 @@ public class TeamGameObjectComponent implements Component,Pool.Poolable {
         this.unitId = unitId;
     }
 
-    public TeamGameObjectComponent(double hitPoints, int teamId) {
+    public TeamGameObjectComponent(float hitPoints, int teamId) {
         setHitPoints(hitPoints);
         setTeamId(teamId);
         maxHP = hitPoints;
     }
 
-    public void setEverything(double hitPoints, int teamId) {
+    public void setEverything(float hitPoints, int teamId) {
         setHitPoints(hitPoints);
         setTeamId(teamId);
         maxHP = hitPoints;
     }
 
-    public double getHitPoints() {
+    public float getHitPoints() {
         return hitPoints;
     }
 
-    public void setHitPoints(double hitPoints) {
+    public void setHitPoints(float hitPoints) {
         this.hitPoints = hitPoints;
     }
 
-    public double getMaxHP() {
+    public float getMaxHP() {
         return maxHP;
 
     }
 
-    public double getUnitType() {
+    public int getUnitType() {
         return unitType;
     }
 
