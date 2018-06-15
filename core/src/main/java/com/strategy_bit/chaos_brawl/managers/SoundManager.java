@@ -46,6 +46,7 @@ public class SoundManager {
         addSound("attackBow", "sounds/Projectiles/Bow,Recurve,Scythian,Arrow,Heavy,Fly,By,Whiz,Mid Tone,Two Tone - distant release.wav");
         addSound("attackFireball", "sounds/Projectiles/fireball.wav");
         addSound("attackCannonBall", "sounds/Projectiles/cannonball.wav");
+        addSound("attackLaser", "sounds/Projectiles/laser2.wav");
         addSound("hitArrow", "sounds/Hits/Mace,Hit,Spear,Haft,Lazy,Messy.mp3");
         addSound("drawSword", "sounds/Draw and Replace Weapon/Sabre,Draw,Scabbard,Fast,Loose,Rough.mp3");
         addSound("explosionSound", "sounds/Animations/explosion.mp3");
