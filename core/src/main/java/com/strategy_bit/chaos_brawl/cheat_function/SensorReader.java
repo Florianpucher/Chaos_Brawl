@@ -15,6 +15,11 @@ public class SensorReader {
     private float time = 0;
     private float duration;
     private PlayerController playerController;
+
+    public boolean isActive() {
+        return active;
+    }
+
     private boolean active;
     private boolean used = false;
 
@@ -63,6 +68,7 @@ public class SensorReader {
         accelerations.clear();
         time = 0;
         playerController.setNewRate(1);
+        playerController.setCheatFunctionActive(false);
         active = false;
     }
 

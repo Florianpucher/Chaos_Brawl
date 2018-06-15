@@ -179,4 +179,8 @@ public class PlayerController extends PawnController implements InputProcessor {
         return checkAndSubtract(cost, "Gold");
 
     }
+
+    public boolean cheatFunctionActive(){
+        return sensorReader.isActive();
+    }
 }

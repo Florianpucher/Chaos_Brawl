@@ -26,7 +26,7 @@ public abstract class PawnController {
     protected int teamID;
     protected InputHandler inputHandler;
     protected int currentTargetTeam;
-    protected boolean cheatFunctionActive = true;
+    protected boolean cheatFunctionActive = false;
     /**
      * in screen Coordinates
      */
