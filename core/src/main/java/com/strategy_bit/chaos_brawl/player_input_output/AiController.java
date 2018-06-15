@@ -85,6 +85,10 @@ public class AiController extends PawnController implements Runnable{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    if(!isRunning)
+                    {
+                        break;
+                    }
                 }
                 Gdx.app.postRunnable(() -> {
 
