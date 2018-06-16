@@ -26,7 +26,7 @@ import com.strategy_bit.chaos_brawl.world.InputHandler;
 public class PlayerController extends PawnController implements InputProcessor {
 
     private GameHUD gameHUD;
-
+    private int count = 0;
 
 
     private SensorReader sensorReader;
@@ -67,6 +67,14 @@ public class PlayerController extends PawnController implements InputProcessor {
             current = gameHUD.getUnitToSpawn();
             Vector2 worldCoordinates = VectorMath.vector3ToVector2(camera.unproject(new Vector3(screenCoordinates,0)));
             worldCoordinates.y = WorldSettings.FRUSTUM_HEIGHT - worldCoordinates.y;
+
+            if (current == 18 || current == 19){
+                count++;
+                if (count > 4){
+                    gameHUD.removeTurretButton();
+                }
+            }
+
             if (current != -1 && spawnArea.contains(worldCoordinates)) {
                 if (spawnUnit(current)) {
                     worldCoordinates.y = WorldSettings.FRUSTUM_HEIGHT - worldCoordinates.y;
@@ -79,6 +87,7 @@ public class PlayerController extends PawnController implements InputProcessor {
             inputHandler.sendTouchInput(screenCoordinates, this);
             return true;
         }
+
         return false;
     }
 

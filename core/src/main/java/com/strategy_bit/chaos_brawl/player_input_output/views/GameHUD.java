@@ -59,7 +59,6 @@ public class GameHUD extends Table {
     private boolean playedVictoryOnce = false;
     private boolean playedDefeatOnce = false;
 
-    private int count = 0;
 
     private int nextUnitType;
     private Texture nonSpawnAreaTexture;
@@ -166,6 +165,9 @@ public class GameHUD extends Table {
         }
     }
 
+    public void removeTurretButton (){
+        btnNewUnit4.remove();
+    }
 
     private ClickListener listener = new ClickListener() {
         @Override
@@ -199,7 +201,6 @@ public class GameHUD extends Table {
                     nextUnitType = -1;
                 } else {
                     nextUnitType = 18;
-                    count++;
                 }
             }
             if (name.equals(UPGRADED_UNIT_1) && brawlButtons.get(0).isActivated()) {
@@ -228,7 +229,6 @@ public class GameHUD extends Table {
                     nextUnitType = -1;
                 } else {
                     nextUnitType = 19;
-                    count++;
                 }
             }
             if (name.equals(UPGRADE_UNITS) && brawlButtons.get(4).isActivated()) {
@@ -244,10 +244,6 @@ public class GameHUD extends Table {
                 setBackground(new TextureRegionDrawable(new TextureRegion(nonSpawnAreaTexture)));
             } else {
                 setBackground((Drawable) null);
-            }
-
-            if (count > 4){
-                btnNewUnit4.remove();
             }
         }
     };
