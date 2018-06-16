@@ -22,7 +22,7 @@
       "speed" : 5
     },
     "CombatComponent" : {
-      "attackRadius" : 3,
+      "attackRadius" : 4,
       "attackSpeed" : 2,
       "attackDamage" : 5,
       "ranged" : true,
@@ -99,14 +99,14 @@
     },
     "CombatComponent" : {
       "attackRadius" : 1,
-      "attackSpeed" : 1,
-      "attackDamage" : 5,
+      "attackSpeed" : 1.3,
+      "attackDamage" : 10,
       "ranged" : false,
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
       "unitId" : 2,
-      "hitPoints" : 120,
+      "hitPoints" : 150,
       "unitType" : 1
 
     },
@@ -136,9 +136,9 @@
       "speed" : 5
     },
     "CombatComponent" : {
-      "attackRadius" : 3,
+      "attackRadius" : 5,
       "attackSpeed" : 1,
-      "attackDamage" : 10,
+      "attackDamage" : 12,
       "ranged" : true,
       "rangedAttackType" : 11
     },
@@ -171,12 +171,12 @@
       "skinPath" :"units/unit_berserker.png"
     },
     "MovementComponent" : {
-      "speed" : 5
+      "speed" : 6
     },
     "CombatComponent" : {
       "attackRadius" : 1,
       "attackSpeed" : 2.5,
-      "attackDamage" : 9,
+      "attackDamage" : 7,
       "ranged" : false,
       "rangedAttackType" : 99
     },
@@ -214,13 +214,13 @@
     "CombatComponent" : {
       "attackRadius" : 1,
       "attackSpeed" : 1,
-      "attackDamage" : 6,
+      "attackDamage" : 23,
       "ranged" : false,
       "rangedAttackType" : 0
     },
     "TeamGameObjectComponent" : {
       "unitId" : 5,
-      "hitPoints" : 150,
+      "hitPoints" : 200,
       "unitType" : 2
 
     },
@@ -244,7 +244,7 @@
       "skinPath" :"buildings/base.png"
     },
     "CombatComponent" : {
-      "attackRadius" : 4,
+      "attackRadius" : 6,
       "attackSpeed" : 0.7,
       "attackDamage" : 30,
       "ranged" : true,
@@ -273,7 +273,7 @@
     "skinPath" :"buildings/ballista_tower.png"
   },
   "CombatComponent" : {
-    "attackRadius" : 4,
+    "attackRadius" : 5,
     "attackSpeed" : 1,
     "attackDamage" : 20,
     "ranged" : true,
@@ -306,7 +306,7 @@
       "skinPath" :"buildings/laser_tower.png"
     },
     "CombatComponent" : {
-      "attackRadius" : 4,
+      "attackRadius" : 5,
       "attackSpeed" : 60,
       "attackDamage" : 2,
       "ranged" : true,
@@ -345,7 +345,7 @@
       "skinPath" :"buildings/defense_turret.png"
     },
     "CombatComponent" : {
-      "attackRadius" : 3,
+      "attackRadius" : 4,
       "attackSpeed" : 1,
       "attackDamage" : 7,
       "ranged" : true,
@@ -382,7 +382,7 @@
       "skinPath" :"buildings/defense_turret_upgraded.png"
     },
     "CombatComponent" : {
-      "attackRadius" : 3,
+      "attackRadius" : 5,
       "attackSpeed" : 1,
       "attackDamage" : 10,
       "ranged" : true,
