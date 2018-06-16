@@ -57,6 +57,7 @@ public class UnitManager {
     private void addToConfigs(JsonValue unitConfig) {
         if (!unitConfig.has(ID)) return;
         UnitConfig config = new UnitConfig();
+        config.setId(unitConfig.getInt(ID));
         if (unitConfig.has(NAME)) {
             config.setName(unitConfig.getString(NAME));
         }

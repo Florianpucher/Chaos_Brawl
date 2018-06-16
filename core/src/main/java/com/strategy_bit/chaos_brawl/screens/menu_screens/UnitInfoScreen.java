@@ -9,7 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by Florian on 04.06.2018.
@@ -41,19 +45,22 @@ public class UnitInfoScreen extends MenuScreen{
         previewList.setItems(array);
         previewList.getItems().add(empty);
 
-        addStats("ARCHER", 50f, 2f, 3f, 5f);
-        addStats("FIGHTER", 75f, 1f, 2.5f, 7f);
-        addStats("KNIGHT", 120f, 1f, 1f, 5f);
 
-        addStats("MAGE", 60f, 1f, 3f, 12f);
-        addStats("BERSERKER", 95f, 2f, 2.5f, 5f);
-        addStats("TEMPLAR", 150f, 1f, 1f, 6f);
-
+        Iterator it = AssetManager.getInstance().unitManager.unitConfigHashMap.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry pair = (Map.Entry)it.next();
+            UnitConfig unitConfig=((UnitConfig)(pair.getValue()));
+            if (unitConfig.getId()>5&&unitConfig.getId()!=18&&unitConfig.getId()!=19){
+                continue;
+            }
+            addStats(unitConfig.getName(),unitConfig.getHitPoints(),unitConfig.getAttackSpeed(),unitConfig.getAttackRadius(),unitConfig.getAttackDamage(),unitConfig.getCost());
+        }
         addActor(root);
     }
-    private void addStats(String name, float hitPoints, float attackSpeed, float attackRadius, float attackDamage){
+    private void addStats(String name, float hitPoints, float attackSpeed, float attackRadius, float attackDamage,float cost){
         float dps = attackDamage*attackSpeed;
         previewList.getItems().add(name + ":");
+        previewList.getItems().add("Cost: " + cost);
         previewList.getItems().add("Hitpoints: " + hitPoints);
         previewList.getItems().add("DPS: " + Math.round(dps));
         previewList.getItems().add("AttackRange: " + attackRadius);
