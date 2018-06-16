@@ -175,6 +175,8 @@ public class GameHUD extends Table {
             super.clicked(event, x, y);
             String name = event.getListenerActor().getName();
 
+            SoundManager.getInstance().playSound("click");
+
             if (name.equals(NEW_UNIT_1) && brawlButtons.get(0).isActivated()) {
                 if (nextUnitType == 0) {
                     nextUnitType = -1;

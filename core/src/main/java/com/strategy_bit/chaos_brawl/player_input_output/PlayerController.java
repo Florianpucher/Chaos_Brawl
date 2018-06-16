@@ -68,15 +68,17 @@ public class PlayerController extends PawnController implements InputProcessor {
             Vector2 worldCoordinates = VectorMath.vector3ToVector2(camera.unproject(new Vector3(screenCoordinates,0)));
             worldCoordinates.y = WorldSettings.FRUSTUM_HEIGHT - worldCoordinates.y;
 
-            if (current == 18 || current == 19){
-                count++;
-                if (count > 4){
-                    gameHUD.removeTurretButton();
-                }
-            }
 
             if (current != -1 && spawnArea.contains(worldCoordinates)) {
                 if (spawnUnit(current)) {
+
+                    if (current == 18 || current == 19){
+                        count++;
+                        if (count > 4){
+                            gameHUD.removeTurretButton();
+                        }
+                    }
+
                     worldCoordinates.y = WorldSettings.FRUSTUM_HEIGHT - worldCoordinates.y;
                     inputHandler.createEntityWorldCoordinates(worldCoordinates, current, teamID);
                 }
