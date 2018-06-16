@@ -60,6 +60,7 @@ public class BulletSystem extends IteratingSystem {
 
     private void updateTargetLocation(Vector2 newLocation, MovementComponent movementComponent) {
         if (newLocation != null) {
+            movementComponent.getPath().clear();
             movementComponent.setTargetLocation(newLocation);
         }
     }
