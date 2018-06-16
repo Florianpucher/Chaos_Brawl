@@ -51,6 +51,7 @@ public class SoundManager {
         addSound("drawSword", "sounds/Draw and Replace Weapon/Sabre,Draw,Scabbard,Fast,Loose,Rough.mp3");
         addSound("explosionSound", "sounds/Animations/explosion.mp3");
         addSound("drawKatana", "sounds/Draw and Replace Weapon/Katana,Draw,Scabbard,Fast,Strong.mp3");
+        addSound("click", "sounds/GameHUD/Click.wav");
     }
     public void loadMusic(){
         musicHashMap.put("mainSoundtrack", Gdx.audio.newMusic(Gdx.files.internal("sounds/The Empire.ogg")));

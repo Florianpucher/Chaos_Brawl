@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
 /**
@@ -54,6 +55,8 @@ public class MainMenuScreen extends MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                SoundManager.getInstance().playSound("click");
+
                 String name = event.getListenerActor().getName();
                 if(name.equals(NEW_GAME)){
                     screenManager.showScreen(ScreenEnum.MAP_MENU);

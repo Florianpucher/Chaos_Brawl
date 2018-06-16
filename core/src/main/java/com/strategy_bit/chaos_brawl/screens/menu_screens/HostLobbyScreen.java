@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.network.server.BrawlServer;
 
 /**
@@ -34,6 +35,8 @@ public class HostLobbyScreen extends LobbyScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                SoundManager.getInstance().playSound("click");
+
                 String name = event.getListenerActor().getName();
                 if (name.equals(START_GAME)) {
                     startGame();
