@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
@@ -61,8 +60,26 @@ public class MovementSystem extends IteratingSystem {
         float angle = getRotation(velocity);
         transform.setRotation(angle);
 
+        Vector2 difference = VectorMath.sub(position, targetLocation);
 
-        transform.setPosition(VectorMath.add(position, VectorMath.scl(velocity, Gdx.graphics.getDeltaTime())));
+        // velocity = velocity * deltaTIme
+        velocity.scl(deltaTime);
+
+        // in the case there is a heavy fps drop the unit should move maximal to the next the waypoints and should not jump over it
+        System.out.println(deltaTime);
+        if(deltaTime > 0.5f)
+        {
+            if(Math.abs(velocity.x) > Math.abs(difference.x))
+            {
+                velocity.x = difference.x *(-1);
+            }
+            if(Math.abs(velocity.y) > Math.abs(difference.y))
+            {
+                velocity.y = difference.y *(-1);
+            }
+        }
+        // position = position + velocity
+        transform.setPosition(VectorMath.add(position, velocity));
     }
 
     public float getRotation(Vector2 v) {
