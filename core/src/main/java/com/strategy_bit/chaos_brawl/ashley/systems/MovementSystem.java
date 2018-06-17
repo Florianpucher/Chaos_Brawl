@@ -66,7 +66,6 @@ public class MovementSystem extends IteratingSystem {
         velocity.scl(deltaTime);
 
         // in the case there is a heavy fps drop the unit should move maximal to the next the waypoints and should not jump over it
-        System.out.println(deltaTime);
         if(deltaTime > 0.5f)
         {
             if(Math.abs(velocity.x) > Math.abs(difference.x))
