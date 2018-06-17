@@ -301,7 +301,7 @@ public class World implements InputHandler {
         while (iterator.hasNext()){
             Map.Entry<Long,Entity> entry = iterator.next();
             Entity unit = entry.getValue();
-            if((int)unit.getComponent(TeamGameObjectComponent.class).getUnitType() != updateType || unit.getComponent(TeamGameObjectComponent.class).getTeamId() != teamID)
+            if(unit.getComponent(TeamGameObjectComponent.class).getUnitType() != updateType || unit.getComponent(TeamGameObjectComponent.class).getTeamId() != teamID)
             {
                 continue;
             }

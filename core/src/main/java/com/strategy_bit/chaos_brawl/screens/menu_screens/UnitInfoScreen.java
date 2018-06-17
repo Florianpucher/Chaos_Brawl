@@ -1,12 +1,9 @@
 package com.strategy_bit.chaos_brawl.screens.menu_screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
@@ -28,8 +25,6 @@ public class UnitInfoScreen extends MenuScreen{
     @Override
     public void buildStage() {
         super.buildStage();
-
-        float height = Gdx.graphics.getHeight()/8f;
 
         final Table root = new Table(assetManager.defaultSkin);
 

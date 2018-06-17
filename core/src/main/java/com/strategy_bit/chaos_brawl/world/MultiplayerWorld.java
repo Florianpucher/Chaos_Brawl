@@ -116,11 +116,6 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     }
 
     @Override
-    public void upgradeEntityInternal(Entity entity, int id) {
-        super.upgradeEntityInternal(entity, id);
-    }
-
-    @Override
     public void deleteUnitLocal(long unitID) {
         if (multiplayer.isHost()) {
             multiplayer.sendEntityDeleteMsg(unitID);

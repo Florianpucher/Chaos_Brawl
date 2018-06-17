@@ -28,7 +28,7 @@ import java.util.Map;
  */
 
 public class AssetManager {
-    public static String MENU_BACKGROUND = "background";
+    public static final String MENU_BACKGROUND = "background";
 
     private static final String UNIT_PATH = "units/";
     private static final String UI_PATH = "user_interface/";

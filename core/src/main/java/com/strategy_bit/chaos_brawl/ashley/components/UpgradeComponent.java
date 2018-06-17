@@ -26,5 +26,6 @@ public class UpgradeComponent implements Component {
 
 
     public UpgradeComponent() {
+        // leave this empty
     }
 }

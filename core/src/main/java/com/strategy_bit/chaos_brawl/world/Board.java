@@ -1,6 +1,5 @@
 package com.strategy_bit.chaos_brawl.world;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -43,16 +42,8 @@ public class Board implements BoardInterface {
         map = map-1;
         mapArray = fileReader(maps.get(map).readString(), mapArray);
         matrixToBoard(mapArray, size, engine);
-        //createTileBoard(engine);
     }
 
-    private void createTileBoard(Engine engine) {
-        for (int i = 0; i < BOARD_HEIGHT; i++) {
-            for (int j = 0; j < BOARD_WIDTH; j++) {
-                engine.addEntity((BackgroundTile) tileBoard[i][j]);
-            }
-        }
-    }
 
     private int[][] fileReader(String file, int[][] mapArray) {
         Scanner scanner = null;
@@ -183,14 +174,6 @@ public class Board implements BoardInterface {
         throw new UnsupportedOperationException("Game only supports up to 4 players");
     }
 
-    public Vector2 coordinateTransformation(Vector2 vector){
-        float xMid = 20;
-        float yMid = 15;
-
-        float x = vector.x - xMid;
-        float y = (vector.y - yMid) * - 1;
-        return new Vector2(x,y);
-    }
 
     public Array<Vector2> getConfig(int asset){
         Array<Vector2> array = new Array<>();
