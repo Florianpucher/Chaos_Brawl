@@ -26,6 +26,8 @@ import com.strategy_bit.chaos_brawl.util.VectorMath;
 
 import java.util.Comparator;
 
+import javax.xml.soap.Text;
+
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
 
 /**
@@ -116,10 +118,29 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                     MathUtils.radiansToDegrees * transform.getRotation());
 
             TeamGameObjectComponent unitHP = teamGameObjectMapper.get(entity);
+
             if (unitHP != null) {
                 ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().progressHPbarStyle);
                 hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
 
+                TextureRegion unitMarkers;
+
+                switch (unitHP.getTeamId()){
+                    case 0:
+                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("star"));
+                        break;
+                    case 1:
+                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("square"));
+                        break;
+                    case 2:
+                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("triangle"));
+                        break;
+                    case 3:
+                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("square2"));
+                        break;
+                    default:
+                        throw new UnsupportedOperationException();
+                }
 
                 Vector3 position = new Vector3(transform.getPosition().x ,transform.getPosition().y ,0.0f);
                 // Get position of unit in screenCoordinates
@@ -128,12 +149,12 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                 hpBar.setPosition(screenPosition.x - width/2, screenPosition.y + height/1.5f);
                 hpBar.setSize( width, 1);
                 hpBarStage.addActor(hpBar);
+                batch.draw(unitMarkers,screenPosition.x - width/2, screenPosition.y + height/1.5f);
             }
         }
 
         batch.end();
         hpBarStage.draw();
-
 
         //clear render queue
         renderQueue.clear();
