@@ -22,7 +22,7 @@ public class SoundManager {
     private float volumeMusic;
     private Music current;
 
-    private SoundManager() {
+    public SoundManager() {
         soundHashMap = new HashMap<>();
         musicHashMap = new HashMap<>();
         masterVolume = 1f;
@@ -123,5 +123,13 @@ public class SoundManager {
 
     private void updateVolume(){
         current.setVolume(getVolumeMusic());
+    }
+
+    public HashMap<String, Sound> getSoundHashMap() {
+        return soundHashMap;
+    }
+
+    public HashMap<String, Music> getMusicHashMap() {
+        return musicHashMap;
     }
 }
