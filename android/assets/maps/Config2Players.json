@@ -1,13 +1,13 @@
 [
   {
     "type" : "tower1_player1",
-    "x": 2,
-    "y": 8
+    "x": 3,
+    "y": 7
   },
   {
     "type" : "tower2_player1",
-    "x": 2,
-    "y": 2
+    "x": 3,
+    "y": 3
   },
   {
     "type" : "base_player1",
@@ -16,13 +16,13 @@
   },
   {
     "type" : "tower2_player2",
-    "x": 12,
-    "y": 8
+    "x": 11,
+    "y": 7
   },
   {
     "type" : "tower2_player2",
-    "x": 12,
-    "y": 2
+    "x": 11,
+    "y": 3
   },
   {
     "type" : "base_player2",
