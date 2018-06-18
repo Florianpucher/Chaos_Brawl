@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.config.UnitConfig;
+import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
@@ -21,13 +23,17 @@ public class AiController extends PawnController implements Runnable{
 
     private boolean isRunning;
     private ReentrantLock lock;
+    private ReentrantLock resource_lock;
     private boolean goIntoPause;
+    private float current_cost;
 
     public AiController(int teamID, InputHandler inputHandler, SpawnArea spawnArea, Camera camera) {
         super(teamID, inputHandler, spawnArea, camera);
         isRunning = false;
         goIntoPause = false;
         lock = new ReentrantLock();
+        resource_lock=new ReentrantLock();
+        current_cost=0f;
 
     }
 
@@ -80,15 +86,11 @@ public class AiController extends PawnController implements Runnable{
 
                 int unitId= set.get(MathUtils.random(set.size - 1));
                 while (!spawnUnit(unitId)) {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if(!isRunning)
-                    {
-                        break;
-                    }
+
+                }
+                if(!isRunning)
+                {
+                    break;
                 }
                 Gdx.app.postRunnable(() -> {
 
@@ -105,5 +107,25 @@ public class AiController extends PawnController implements Runnable{
                     lock.unlock();
                 }
             }
+    }
+
+    @Override
+    public void tick(float deltaTime) {
+        super.tick(deltaTime);
+        if (resource_lock.isHeldByCurrentThread()&&gold.getResourceAmount()>=current_cost){
+            resource_lock.unlock();
+        }
+    }
+
+    @Override
+    public boolean spawnUnit(int unitId) {
+        UnitConfig unitConfig= AssetManager.getInstance().unitManager.unitConfigHashMap.get(unitId);
+        float cost= unitConfig.getCost();
+        boolean paid = checkAndSubtract(cost);
+        if (!paid){
+            current_cost=cost;
+            resource_lock.lock();
+        }
+        return paid;
     }
 }
