@@ -149,7 +149,15 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                 hpBar.setPosition(screenPosition.x - width/2, screenPosition.y + height/1.5f);
                 hpBar.setSize( width, 1);
                 hpBarStage.addActor(hpBar);
-                batch.draw(unitMarkers,screenPosition.x - width/2, screenPosition.y + height/1.5f);
+
+                if (unitHP.getUnitType() < 3){
+
+                    batch.draw(unitMarkers,transform.getPosition().x - originX, transform.getPosition().y - originY + 2,
+                            originX, originY,
+                            width, height,
+                            transform.getScale().x * PIXELS_TO_METRES,
+                            transform.getScale().y * PIXELS_TO_METRES, 0f);
+                }
             }
         }
 
