@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.height = 720;
 		config.resizable=false;
 		config.vSyncEnabled=false;
-		config.foregroundFPS=144;
+		config.foregroundFPS=7;
 		new LwjglApplication(new ChaosBrawlGame(), config);
 	}
 }
