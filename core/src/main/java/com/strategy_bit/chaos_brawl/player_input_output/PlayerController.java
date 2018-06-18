@@ -15,6 +15,7 @@ import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
+import com.strategy_bit.chaos_brawl.world.World;
 
 /**
  * interface of user interface and other user input
@@ -34,6 +35,7 @@ public class PlayerController extends PawnController implements InputProcessor {
     public PlayerController(int teamID, InputHandler inputHandler, SpawnArea spawnArea, Camera camera) {
         super(teamID, inputHandler, spawnArea, camera);
         sensorReader = new SensorReader(this);
+        ((World)inputHandler).playerTeamId=teamID;
     }
 
     public void render(float dt) {

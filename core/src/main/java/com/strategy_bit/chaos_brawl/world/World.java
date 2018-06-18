@@ -54,6 +54,7 @@ public class World implements InputHandler {
     protected HashMap<Long, Entity> units;
 
 
+    public int playerTeamId=0;
     protected SpawnerImpl spawner;
     protected MyEngine engine;
     protected OrthographicCamera camera;
@@ -145,7 +146,7 @@ public class World implements InputHandler {
         RenderSystem renderSystem = null;
         if(withRenderSystem)
         {
-            renderSystem = new RenderSystem(camera);
+            renderSystem = new RenderSystem(camera,this);
         }
         deleteSystem = new DeleteSystem(units);
         if(containsDeleteSystem){
