@@ -23,6 +23,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
+import com.strategy_bit.chaos_brawl.world.World;
 
 import java.util.Comparator;
 
@@ -50,10 +51,11 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     private Array<Entity> renderQueue;
     private ZComparator comparator;
     private OrthographicCamera camera;
+    private World world;
 
     private Stage hpBarStage;
 
-    public RenderSystem(OrthographicCamera camera) {
+    public RenderSystem(OrthographicCamera camera, World world) {
         //set used entities by components
         super(Family.all(TextureComponent.class, TransformComponent.class).get());
         //initialize component mapper
@@ -67,6 +69,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         hpBarStage = new Stage();
         //initialize camera with size
         this.camera = camera;
+        this.world=world;
     }
 
     @Override
@@ -118,6 +121,9 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
             TeamGameObjectComponent unitHP = teamGameObjectMapper.get(entity);
             if (unitHP != null) {
                 ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().progressHPbarStyle);
+                if (entity.getComponent(TeamGameObjectComponent.class).getTeamId()==world.playerTeamId) {
+                    hpBar.setStyle(AssetManager.getInstance().progressHPbarStyle2);
+                }
                 hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
 
 
@@ -127,6 +133,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                 // Set position of hp bar above unit
                 hpBar.setPosition(screenPosition.x - width/2, screenPosition.y + height/1.5f);
                 hpBar.setSize( width, 1);
+
                 hpBarStage.addActor(hpBar);
             }
         }
