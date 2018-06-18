@@ -51,11 +51,11 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     private Array<Entity> renderQueue;
     private ZComparator comparator;
     private OrthographicCamera camera;
-    private World world;
+    private int playerTeamId;
 
     private Stage hpBarStage;
 
-    public RenderSystem(OrthographicCamera camera, World world) {
+    public RenderSystem(OrthographicCamera camera) {
         //set used entities by components
         super(Family.all(TextureComponent.class, TransformComponent.class).get());
         //initialize component mapper
@@ -69,7 +69,8 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         hpBarStage = new Stage();
         //initialize camera with size
         this.camera = camera;
-        this.world=world;
+
+        playerTeamId=0;
     }
 
     @Override
@@ -121,7 +122,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
             TeamGameObjectComponent unitHP = teamGameObjectMapper.get(entity);
             if (unitHP != null) {
                 ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().progressHPbarStyle);
-                if (entity.getComponent(TeamGameObjectComponent.class).getTeamId()==world.playerTeamId) {
+                if (entity.getComponent(TeamGameObjectComponent.class).getTeamId()==playerTeamId) {
                     hpBar.setStyle(AssetManager.getInstance().progressHPbarStyle2);
                 }
                 hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
@@ -169,5 +170,9 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         public int compare(Entity e1, Entity e2) {
             return (int) Math.signum((float)(pm.get(e1).getZ() - pm.get(e2).getZ()));
         }
+    }
+
+    public void setPlayerTeamId(int playerTeamId){
+        this.playerTeamId=playerTeamId;
     }
 }

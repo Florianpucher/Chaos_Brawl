@@ -35,7 +35,6 @@ public class PlayerController extends PawnController implements InputProcessor {
     public PlayerController(int teamID, InputHandler inputHandler, SpawnArea spawnArea, Camera camera) {
         super(teamID, inputHandler, spawnArea, camera);
         sensorReader = new SensorReader(this);
-        ((World)inputHandler).playerTeamId=teamID;
     }
 
     public void render(float dt) {

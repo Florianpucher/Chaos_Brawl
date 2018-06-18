@@ -29,6 +29,7 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
+import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.Boundary;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
@@ -65,6 +66,7 @@ public class World implements InputHandler {
     protected OtherPathfinder gdxPathFinder;
     protected DeleteSystem deleteSystem;
     protected UpgradeSystem upgradeSystem;
+    protected RenderSystem renderSystem;
 
     protected Entity marker;
 
@@ -103,6 +105,13 @@ public class World implements InputHandler {
 
     public void setPlayerController(int index, PawnController pawnController){
         playerControllers[index] = pawnController;
+        if (pawnController instanceof PlayerController){
+            playerTeamId=pawnController.getTeamID();
+            if (renderSystem!=null){
+                renderSystem.setPlayerTeamId(pawnController.getTeamID());
+            }
+
+        }
     }
 
     public void initializeGameForPlayers(){
@@ -143,10 +152,10 @@ public class World implements InputHandler {
     protected void createEngine(boolean containsDeleteSystem, boolean withRenderSystem){
         engine = new MyEngine();
         //Add some logic
-        RenderSystem renderSystem = null;
+        renderSystem = null;
         if(withRenderSystem)
         {
-            renderSystem = new RenderSystem(camera,this);
+            renderSystem = new RenderSystem(camera);
         }
         deleteSystem = new DeleteSystem(units);
         if(containsDeleteSystem){
