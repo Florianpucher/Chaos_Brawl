@@ -57,15 +57,10 @@ public class UnitManager {
         if (!unitConfig.has(ID)) return;
         UnitConfig config = new UnitConfig();
         config.setId(unitConfig.getInt(ID));
-        if (unitConfig.has(NAME)) {
-            config.setName(unitConfig.getString(NAME));
-        }
-        if (unitConfig.has(COST)) {
-            config.setCost(unitConfig.getFloat(COST));
-        }
-        if (unitConfig.has(SOUND_PATH) && unitConfig.has(SOUND_NAME)) {
-            SoundManager.getInstance().addSound(unitConfig.getString(SOUND_NAME), unitConfig.getString(SOUND_PATH));
-        }
+        addName(unitConfig,config);
+        addCost(unitConfig,config);
+        addSound(unitConfig,config);
+        addPreview(unitConfig,config);
         addTextureComponent(unitConfig,config);
         addMovementComponent(unitConfig,config);
         addCombatComponent(unitConfig,config);
@@ -73,14 +68,34 @@ public class UnitManager {
         addBoundaryComponent(unitConfig,config);
         addExplosionComponent(unitConfig,config);
         addUpgradeComponent(unitConfig,config);
+        unitConfigHashMap.put(unitConfig.getInt(ID), config);
+    }
 
+    private void addPreview(JsonValue unitConfig, UnitConfig config) {
         if(unitConfig.has(PREVIEW)){
             JsonValue preview = unitConfig.get(PREVIEW);
             TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal(preview.getString(PREVIEW_IMAGE_SKIN_PATH))));
             AssetManager.getInstance().skins.put(preview.getString(PREVIEW_IMAGE_NAME), region);
             config.setPreviewImage(region);
         }
-        unitConfigHashMap.put(unitConfig.getInt(ID), config);
+    }
+
+    private void addSound(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(SOUND_PATH) && unitConfig.has(SOUND_NAME)) {
+            SoundManager.getInstance().addSound(unitConfig.getString(SOUND_NAME), unitConfig.getString(SOUND_PATH));
+        }
+    }
+
+    private void addCost(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(COST)) {
+            config.setCost(unitConfig.getFloat(COST));
+        }
+    }
+
+    private void addName(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(NAME)) {
+            config.setName(unitConfig.getString(NAME));
+        }
     }
 
     private void addUpgradeComponent(JsonValue unitConfig, UnitConfig config) {
