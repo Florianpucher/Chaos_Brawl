@@ -3,6 +3,7 @@ package com.strategy_bit.chaos_brawl.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -52,8 +53,7 @@ public class AssetManager {
     public NinePatch resourceSkinInner;
     public NinePatch resourceSkinMiddle;
     public NinePatch hpSkinOuter;
-    public NinePatch hpSkinInner;
-    public NinePatch hpSkinInner2;
+    public Map<Integer,NinePatch> hpSkinsInner;
     public Map<String, TextureRegion> unitMarkers;
     public Slider.SliderStyle sliderStyle;
     public TextureRegion defaultTile;
@@ -66,8 +66,7 @@ public class AssetManager {
     public Array<Float> spawn4;
     public Texture victoryScreen;
     public Texture defeatScreen;
-    public ProgressBar.ProgressBarStyle progressHPbarStyle;
-    public ProgressBar.ProgressBarStyle progressHPbarStyle2;
+    public Map<Integer, ProgressBar.ProgressBarStyle> hpBarStyles;
     public final static String UI_SWORD_IMAGE = "sword_image_ui";
 
     private static AssetManager instance;
@@ -85,6 +84,8 @@ public class AssetManager {
         sounds = new HashMap<>();
         markers=new HashMap<>();
         unitMarkers = new HashMap<>();
+        hpBarStyles=new HashMap<>();
+        hpSkinsInner=new HashMap<>();
     }
 
     public  void loadAssets(){
@@ -117,14 +118,22 @@ public class AssetManager {
         resourceSkinInner = new NinePatch(new Texture(UI_PATH+"resourceBarInner.png"),0,16,7,7);
         resourceSkinMiddle= new NinePatch(new Texture(UI_PATH+"resourceBarMiddle.png"),0,0,21,23);
         hpSkinOuter = new NinePatch(new Texture("hpBarbackgroundRed.png"));
-        hpSkinInner = new NinePatch(new Texture("hpBarInner.png"));
-        hpSkinInner2 = new NinePatch(new Texture("hpBarInner2.png"));
+        NinePatch hpSkinInner = new NinePatch(new Texture("hpBarInner.png"));
+        NinePatch hpSkinInner2 = new NinePatch(new Texture("hpBarInner2.png"));
+        NinePatch hpSkinInner3 = new NinePatch(new Texture("hpBarInner3.png"));
+        NinePatch hpSkinInner4 = new NinePatch(new Texture("hpBarInner4.png"));
+        hpSkinsInner.put(0,hpSkinInner);
+        hpSkinsInner.put(1,hpSkinInner2);
+        hpSkinsInner.put(2,hpSkinInner3);
+        hpSkinsInner.put(3,hpSkinInner4);
         victoryScreen = new Texture("victory.png");
         defeatScreen = new Texture("defeat.png");
-        progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
-        progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
-        progressHPbarStyle2 = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner2));
-        progressHPbarStyle2.knobBefore = progressHPbarStyle2.knob;
+        for (int i = 0; i < 4; i++) {
+            ProgressBar.ProgressBarStyle progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinsInner.get(i)));
+            progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
+            hpBarStyles.put(i, progressHPbarStyle);
+        }
+
         sliderStyle = new Slider.SliderStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         sliderStyle.knobBefore = sliderStyle.knob;
         maps = new Array<>();
@@ -172,6 +181,12 @@ public class AssetManager {
             ((TextureRegion)(pair.getValue())).getTexture().dispose();
             it.remove();
         }
+        it=hpSkinsInner.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry pair = (Map.Entry)it.next();
+            ((NinePatch)(pair.getValue())).getTexture().dispose();
+            it.remove();
+        }
         defaultTile.getTexture().dispose();
         waterTile.getTexture().dispose();
         dirtTile.getTexture().dispose();
@@ -179,7 +194,6 @@ public class AssetManager {
         resourceSkinInner.getTexture().dispose();
         resourceSkinMiddle.getTexture().dispose();
         hpSkinOuter.getTexture().dispose();
-        hpSkinInner.getTexture().dispose();
         victoryScreen.dispose();
         defeatScreen.dispose();
 
