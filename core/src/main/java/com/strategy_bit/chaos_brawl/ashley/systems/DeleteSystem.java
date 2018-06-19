@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.strategy_bit.chaos_brawl.ashley.components.BaseComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
@@ -68,6 +69,10 @@ public class DeleteSystem extends IteratingSystem {
     public boolean removeEntity(Entity entity) {
         TeamGameObjectComponent teamGameObjectComponent = teamGameObjectComponentMapper.get(entity);
         if (teamGameObjectComponent.getHitPoints() <= 0.0) {
+            BaseComponent baseComponent=entity.getComponent(BaseComponent.class);
+            if (baseComponent!=null){
+                baseComponent.setDestroyed(true);
+            }
             ExplosionComponent explosionComponent = explosionComponentComponentMapper.get(entity);
             MovementComponent movementComponent = movementComponentMapper.get(entity);
 

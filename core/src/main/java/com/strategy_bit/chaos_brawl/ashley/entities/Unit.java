@@ -2,6 +2,8 @@ package com.strategy_bit.chaos_brawl.ashley.entities;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.compression.lzma.Base;
+import com.strategy_bit.chaos_brawl.ashley.components.BaseComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.BoundaryComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.CombatComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.ExplosionComponent;
@@ -53,6 +55,11 @@ public class Unit {
         if (unitConfig.hasUpgradeComponent()){
             UpgradeComponent upgradeComponent = new UpgradeComponent();
             entity.add(upgradeComponent);
+        }
+
+        if (unitConfig.hasBaseComponent()){
+            BaseComponent baseComponent=engine.createComponent(BaseComponent.class);
+            entity.add(baseComponent);
         }
 
         entity.add(transformComponent);

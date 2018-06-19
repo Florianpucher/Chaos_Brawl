@@ -39,6 +39,7 @@ public class UnitManager {
     private static final String PREVIEW_IMAGE_NAME = "button_preview_name";
     private static final String PREVIEW_IMAGE_SKIN_PATH = "button_preview_skin";
     private static final String UNIT_PATH = "units/";
+    private static final String BASE_COMPONENT ="BaseComponent";
 
     private static UnitManager instance;
 
@@ -87,7 +88,14 @@ public class UnitManager {
         addBoundaryComponent(unitConfig,config);
         addExplosionComponent(unitConfig,config);
         addUpgradeComponent(unitConfig,config);
+        addBaseComponent(unitConfig,config);
         unitConfigHashMap.put(unitConfig.getInt(ID), config);
+    }
+
+    private void addBaseComponent(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(BASE_COMPONENT)) {
+            config.setBaseComponent(true);
+        }
     }
 
     private void addPreview(JsonValue unitConfig, UnitConfig config) {

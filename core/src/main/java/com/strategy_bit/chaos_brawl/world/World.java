@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.compression.lzma.Base;
+import com.strategy_bit.chaos_brawl.ashley.components.BaseComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.BoundaryComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.TeamGameObjectComponent;
@@ -222,7 +224,7 @@ public class World implements InputHandler {
         int aliveCounter = 0;
         int lastAlive = -1;
         for (int i = 0; i < bases.length; i++) {
-            if (bases[i].getComponent(TeamGameObjectComponent.class).getHitPoints() <= 0) {
+            if (bases[i].getComponent(BaseComponent.class).isDestroyed()) {
                 playerControllers[i].gameOver(false);
             } else {
                 aliveCounter++;

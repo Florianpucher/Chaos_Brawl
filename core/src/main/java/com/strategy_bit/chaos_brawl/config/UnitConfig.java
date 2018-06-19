@@ -41,6 +41,7 @@ public class UnitConfig {
     private boolean hasBoundaryComponent;
     private boolean hasExplosionComponent;
     private boolean hasUpgradeComponent;
+    private boolean baseComponent;
 
     private int rangedAttackType;
 
@@ -68,6 +69,7 @@ public class UnitConfig {
         setRangedAttackType(DEFAULT_RANGED_ATTACK_TYPE);
         setSkin(null);
         setPreviewImage(null);
+        setBaseComponent(false);
     }
 
     public TextureRegion getSkin() {
@@ -224,5 +226,13 @@ public class UnitConfig {
 
     public void setPreviewImage(TextureRegion image){
         previewImage = image;
+    }
+
+    public void setBaseComponent(boolean baseComponent) {
+        this.baseComponent = baseComponent;
+    }
+
+    public boolean hasBaseComponent() {
+        return baseComponent;
     }
 }
