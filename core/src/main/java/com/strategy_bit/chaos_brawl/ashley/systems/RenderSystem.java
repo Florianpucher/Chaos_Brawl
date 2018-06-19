@@ -23,11 +23,8 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
-import com.strategy_bit.chaos_brawl.world.World;
 
 import java.util.Comparator;
-
-import javax.xml.soap.Text;
 
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
 
@@ -134,16 +131,16 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
 
                 switch (unitHP.getTeamId()){
                     case 0:
-                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("star"));
+                        unitMarkers = AssetManager.getInstance().unitMarkers.get("star");
                         break;
                     case 1:
-                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("square"));
+                        unitMarkers = AssetManager.getInstance().unitMarkers.get("square");
                         break;
                     case 2:
-                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("triangle"));
+                        unitMarkers = AssetManager.getInstance().unitMarkers.get("triangle");
                         break;
                     case 3:
-                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("square2"));
+                        unitMarkers = AssetManager.getInstance().unitMarkers.get("square2");
                         break;
                     default:
                         throw new UnsupportedOperationException();
