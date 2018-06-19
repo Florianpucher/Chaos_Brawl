@@ -10,6 +10,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.world.World;
 
 import org.junit.Assert;
@@ -48,8 +49,8 @@ public class CombatSystemTest extends BaseTest {
             attackers.add(attacker);
             victims.add(victim);
 
-            Unit.setComponents(attacker, AssetManager.getInstance().unitManager.unitConfigHashMap.get(i), 0, new Vector2(i,i), engine);
-            Unit.setComponents(victim, AssetManager.getInstance().unitManager.unitConfigHashMap.get(i), 1, new Vector2(i,i), engine);
+            Unit.setComponents(attacker, UnitManager.getInstance().getUnitConfig(i), 0, new Vector2(i,i), engine);
+            Unit.setComponents(victim, UnitManager.getInstance().getUnitConfig(i), 1, new Vector2(i,i), engine);
             engine.addEntity(attacker);
             engine.addEntity(victim);
             int attackType = -1;
