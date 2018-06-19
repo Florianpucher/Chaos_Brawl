@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
@@ -119,7 +120,7 @@ public class AiController extends PawnController implements Runnable{
 
     @Override
     public boolean spawnUnit(int unitId) {
-        UnitConfig unitConfig= AssetManager.getInstance().unitManager.unitConfigHashMap.get(unitId);
+        UnitConfig unitConfig= UnitManager.getInstance().getUnitConfig(unitId);
         float cost= unitConfig.getCost();
         boolean paid = checkAndSubtract(cost);
         if (!paid){

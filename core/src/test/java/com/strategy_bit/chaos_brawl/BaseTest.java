@@ -8,6 +8,7 @@ import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -48,6 +49,8 @@ public class BaseTest {
 
         AssetManager assetManager = AssetManager.getInstance();
         assetManager.loadAssets();
+        UnitManager unitManager=UnitManager.getInstance();
+        unitManager.initialize();
     }
 
     // After we are done, clean up the application

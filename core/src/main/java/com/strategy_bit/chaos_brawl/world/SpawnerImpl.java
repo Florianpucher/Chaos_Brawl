@@ -7,6 +7,7 @@ import com.strategy_bit.chaos_brawl.ashley.engine.MyEngine;
 import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 
 /**
  * @author AIsopp
@@ -17,7 +18,7 @@ public class SpawnerImpl {
 
     public Entity createNewUnit(int unitId, int teamID, Vector2 position, MyEngine engine) {
         Entity entity= new Entity();
-        UnitConfig unitConfig=AssetManager.getInstance().unitManager.unitConfigHashMap.get(unitId);
+        UnitConfig unitConfig= UnitManager.getInstance().getUnitConfig(unitId);
 
         Unit.setComponents(entity,unitConfig,teamID, position, engine);
 

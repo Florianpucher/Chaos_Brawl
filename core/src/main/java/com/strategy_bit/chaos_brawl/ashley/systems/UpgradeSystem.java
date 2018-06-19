@@ -16,6 +16,7 @@ import com.strategy_bit.chaos_brawl.ashley.entities.Particle;
 import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.world.InputHandler;
 
 import java.util.Iterator;
@@ -85,7 +86,7 @@ public class UpgradeSystem extends IteratingSystem {
 
                 uComponent.setUnitID(entityID);
 
-                config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(uComponent.getUnitID());
+                config = UnitManager.getInstance().getUnitConfig(uComponent.getUnitID());
 
                 Unit.setComponents(entityNew, config, teamID, position, (MyEngine) engine);
                 entityNew.getComponent(TeamGameObjectComponent.class).setHitPoints(hitPoints);
@@ -95,7 +96,7 @@ public class UpgradeSystem extends IteratingSystem {
 
                 uComponent.setTowerID(entityID);
 
-                config = AssetManager.getInstance().unitManager.unitConfigHashMap.get(uComponent.getTowerID());
+                config = UnitManager.getInstance().getUnitConfig(uComponent.getTowerID());
 
                 Unit.setComponents(entityNew, config, teamID, position, (MyEngine) engine);
 

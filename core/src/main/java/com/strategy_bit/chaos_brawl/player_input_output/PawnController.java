@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.resource_system.ResourceGold;
 import com.strategy_bit.chaos_brawl.types.EventType;
@@ -81,7 +82,7 @@ public abstract class PawnController {
         return gold.add(-cost);
     }
     public boolean spawnUnit(int unitId){
-        UnitConfig unitConfig=AssetManager.getInstance().unitManager.unitConfigHashMap.get(unitId);
+        UnitConfig unitConfig= UnitManager.getInstance().getUnitConfig(unitId);
         float cost= unitConfig.getCost();
         return checkAndSubtract(cost);
     }

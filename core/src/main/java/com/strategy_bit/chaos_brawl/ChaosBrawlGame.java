@@ -3,9 +3,11 @@ package com.strategy_bit.chaos_brawl;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.screens.AbstractScreen;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
@@ -21,6 +23,7 @@ public class ChaosBrawlGame extends Game {
 	private AbstractScreen currentScreen;
 	private ScreenManager screenManager;
 	private AssetManager assetManager;
+	private UnitManager unitManager;
 	private boolean loadGame;
 	private FPSLogger logger;
 
@@ -33,11 +36,13 @@ public class ChaosBrawlGame extends Game {
 		screenManager.initialize(this);
 		screenManager.showScreen(ScreenEnum.SPLASH_SCREEN);
 		assetManager = AssetManager.getInstance();
+		unitManager=UnitManager.getInstance();
 		loadGame = true;
 		// Load assets here
 		Executor executor = Executors.newSingleThreadExecutor();
 		executor.execute(() -> Gdx.app.postRunnable(() -> {
             assetManager.loadAssets();
+            unitManager.initialize();
             SoundManager.getInstance().loadMusic();
             SoundManager.getInstance().loadSounds();
             loadGame = false;
