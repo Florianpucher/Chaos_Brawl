@@ -42,7 +42,6 @@ public class UnitManager {
     private static final String PREVIEW_IMAGE_SKIN_PATH = "button_preview_skin";
 
     public void readFile(String file) {
-        //TODO Hellmuth reduce cognitive complexity of method
         unitConfigHashMap = new HashMap<>();
         FileHandle fileHandle = Gdx.files.internal(file);
         JsonReader jsonReader = new JsonReader();
@@ -58,25 +57,94 @@ public class UnitManager {
         if (!unitConfig.has(ID)) return;
         UnitConfig config = new UnitConfig();
         config.setId(unitConfig.getInt(ID));
-        if (unitConfig.has(NAME)) {
-            config.setName(unitConfig.getString(NAME));
+        addName(unitConfig,config);
+        addCost(unitConfig,config);
+        addSound(unitConfig,config);
+        addPreview(unitConfig,config);
+        addTextureComponent(unitConfig,config);
+        addMovementComponent(unitConfig,config);
+        addCombatComponent(unitConfig,config);
+        addTeamGameObjectComponent(unitConfig,config);
+        addBoundaryComponent(unitConfig,config);
+        addExplosionComponent(unitConfig,config);
+        addUpgradeComponent(unitConfig,config);
+        unitConfigHashMap.put(unitConfig.getInt(ID), config);
+    }
+
+    private void addPreview(JsonValue unitConfig, UnitConfig config) {
+        if(unitConfig.has(PREVIEW)){
+            JsonValue preview = unitConfig.get(PREVIEW);
+            TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal(preview.getString(PREVIEW_IMAGE_SKIN_PATH))));
+            AssetManager.getInstance().skins.put(preview.getString(PREVIEW_IMAGE_NAME), region);
+            config.setPreviewImage(region);
         }
-        if (unitConfig.has(COST)) {
-            config.setCost(unitConfig.getFloat(COST));
-        }
+    }
+
+    private void addSound(JsonValue unitConfig, UnitConfig config) {
         if (unitConfig.has(SOUND_PATH) && unitConfig.has(SOUND_NAME)) {
             SoundManager.getInstance().addSound(unitConfig.getString(SOUND_NAME), unitConfig.getString(SOUND_PATH));
         }
+    }
+
+    private void addCost(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(COST)) {
+            config.setCost(unitConfig.getFloat(COST));
+        }
+    }
+
+    private void addName(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(NAME)) {
+            config.setName(unitConfig.getString(NAME));
+        }
+    }
+
+    private void addUpgradeComponent(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(UPGRADE_COMPONENT)) {
+            config.setUpgradeComponent(true);
+        }
+    }
+
+    private void addExplosionComponent(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(EXPLOSION_COMPONENT)) {
+            config.setExplosionComponent(true);
+        }
+    }
+
+    private void addBoundaryComponent(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(BOUNDARY_COMPONENT)) {
+            config.setBoundaryComponent(true);
+        }
+    }
+
+    private void addTextureComponent(JsonValue unitConfig, UnitConfig config) {
         if (unitConfig.has(TEXTURE_COMPONENT) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_PATH) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_NAME)) {
             AssetManager.getInstance().addSkin(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME), unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_PATH));
             config.setSkin(AssetManager.getInstance().skins.get(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME)));
         }
+    }
+
+    private void addMovementComponent(JsonValue unitConfig, UnitConfig config) {
         if (unitConfig.has(MOVEMENT_COMPONENT)) {
             config.setMovementComponent(true);
             if (unitConfig.get(MOVEMENT_COMPONENT).has(SPEED)) {
                 config.setSpeed(unitConfig.get(MOVEMENT_COMPONENT).getFloat(SPEED));
             }
         }
+    }
+
+    private void addTeamGameObjectComponent(JsonValue unitConfig, UnitConfig config) {
+        if (unitConfig.has(TEAM_GAME_OBJECT_COMPONENT) && unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(HIT_POINTS)) {
+            config.setHitPoints(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getFloat(HIT_POINTS));
+            if (unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(UNIT_TYPE)) {
+                config.setUnitType(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getInt(UNIT_TYPE));
+            }
+            if (unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(UNIT_ID)) {
+                config.setUnitId(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getInt(UNIT_ID));
+            }
+        }
+    }
+
+    private void addCombatComponent(JsonValue unitConfig, UnitConfig config) {
         if (unitConfig.has(COMBAT_COMPONENT)) {
             if (unitConfig.get(COMBAT_COMPONENT).has(ATTACK_RADIUS)) {
                 config.setAttackRadius(unitConfig.get(COMBAT_COMPONENT).getFloat(ATTACK_RADIUS));
@@ -94,35 +162,6 @@ public class UnitManager {
                 config.setRangedAttackType(unitConfig.get(COMBAT_COMPONENT).getInt(RANGED_ATTACK_TYPE));
             }
         }
-        if (unitConfig.has(TEAM_GAME_OBJECT_COMPONENT) && unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(HIT_POINTS)) {
-            config.setHitPoints(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getFloat(HIT_POINTS));
-
-
-                if (unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(UNIT_TYPE)) {
-                    config.setUnitType(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getInt(UNIT_TYPE));
-                }
-                if (unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).has(UNIT_ID)) {
-                    config.setUnitId(unitConfig.get(TEAM_GAME_OBJECT_COMPONENT).getInt(UNIT_ID));
-
-
-            }
-        }
-        if (unitConfig.has(BOUNDARY_COMPONENT)) {
-            config.setBoundaryComponent(true);
-        }
-        if (unitConfig.has(EXPLOSION_COMPONENT)) {
-            config.setExplosionComponent(true);
-        }
-        if (unitConfig.has(UPGRADE_COMPONENT)) {
-            config.setUpgradeComponent(true);
-        }
-        if(unitConfig.has(PREVIEW)){
-            JsonValue preview = unitConfig.get(PREVIEW);
-            TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal(preview.getString(PREVIEW_IMAGE_SKIN_PATH))));
-            AssetManager.getInstance().skins.put(preview.getString(PREVIEW_IMAGE_NAME), region);
-            config.setPreviewImage(region);
-        }
-        unitConfigHashMap.put(unitConfig.getInt(ID), config);
     }
 }
 
