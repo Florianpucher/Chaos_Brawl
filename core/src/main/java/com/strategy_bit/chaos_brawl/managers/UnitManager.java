@@ -59,7 +59,7 @@ public class UnitManager {
         config.setId(unitConfig.getInt(ID));
         addName(unitConfig,config);
         addCost(unitConfig,config);
-        addSound(unitConfig,config);
+        addSound(unitConfig);
         addPreview(unitConfig,config);
         addTextureComponent(unitConfig,config);
         addMovementComponent(unitConfig,config);
@@ -80,7 +80,7 @@ public class UnitManager {
         }
     }
 
-    private void addSound(JsonValue unitConfig, UnitConfig config) {
+    private void addSound(JsonValue unitConfig) {
         if (unitConfig.has(SOUND_PATH) && unitConfig.has(SOUND_NAME)) {
             SoundManager.getInstance().addSound(unitConfig.getString(SOUND_NAME), unitConfig.getString(SOUND_PATH));
         }
