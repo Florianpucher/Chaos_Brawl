@@ -31,6 +31,7 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
     protected TextButton btnPlayer4;
     protected Table root;
     protected float height;
+    protected float width;
 
 
     public LobbyScreen() {
@@ -59,14 +60,15 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         height = Gdx.graphics.getHeight() / 6f;
+        width=Gdx.graphics.getWidth()/1.2f;
         root.top();
-        root.add(btnPlayer1).width(Gdx.graphics.getWidth() / 4f).height(height);
+        root.add(btnPlayer1).width(width).height(height);
         root.row();
-        root.add(btnPlayer2).width(Gdx.graphics.getWidth() / 4f).height(height);
+        root.add(btnPlayer2).width(width).height(height);
         root.row();
-        root.add(btnPlayer3).width(Gdx.graphics.getWidth() / 4f).height(height);
+        root.add(btnPlayer3).width(width).height(height);
         root.row();
-        root.add(btnPlayer4).width(Gdx.graphics.getWidth() / 4f).height(height);
+        root.add(btnPlayer4).width(width).height(height);
         root.row();
     }
 

@@ -28,7 +28,7 @@ public class HostLobbyScreen extends LobbyScreen {
         super.buildStage();
         TextButton btnStartGame = new TextButton(START_GAME, assetManager.defaultSkin);
         btnStartGame.setName(START_GAME);
-        root.add(btnStartGame).width(Gdx.graphics.getWidth() / 4f).height(height);
+        root.add(btnStartGame).width(width).height(height);
         addActor(root);
 
         ClickListener listener = new ClickListener() {
