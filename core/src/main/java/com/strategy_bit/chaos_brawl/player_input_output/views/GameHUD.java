@@ -155,13 +155,13 @@ public class GameHUD extends Table {
             btnNewUnit2.setImage(UnitManager.getInstance().getUnitConfig(4).getPreviewImage());
             btnNewUnit3.setName(UPGRADED_UNIT_3);
             btnNewUnit3.setImage(UnitManager.getInstance().getUnitConfig(5).getPreviewImage());
-            btnNewUnit4.setName(UPGRADED_UNIT_4);
-            btnNewUnit4.setImage(UnitManager.getInstance().getUnitConfig(19).getPreviewImage());
             btnUpgradeUnits.remove();
             playerController.updateTowersOrUnits(20);
 
         }else if (upgradeExecuted && input == UPGRADE_TOWER){
             SoundManager.getInstance().playSound("upgradeTowerExecuted");
+            btnNewUnit4.setName(UPGRADED_UNIT_4);
+            btnNewUnit4.setImage(UnitManager.getInstance().getUnitConfig(19).getPreviewImage());
             btnUpgradeTower.remove();
             playerController.updateTowersOrUnits(21);
         }
