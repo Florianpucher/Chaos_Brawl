@@ -66,16 +66,13 @@ public class MovementSystem extends IteratingSystem {
         velocity.scl(deltaTime);
 
         // in the case there is a heavy fps drop the unit should move maximal to the next the waypoints and should not jump over it
-        if(deltaTime > 0.5f)
+        if(Math.abs(velocity.x) > Math.abs(difference.x))
         {
-            if(Math.abs(velocity.x) > Math.abs(difference.x))
-            {
-                velocity.x = difference.x *(-1);
-            }
-            if(Math.abs(velocity.y) > Math.abs(difference.y))
-            {
-                velocity.y = difference.y *(-1);
-            }
+            velocity.x = difference.x *(-1);
+        }
+        if(Math.abs(velocity.y) > Math.abs(difference.y))
+        {
+            velocity.y = difference.y *(-1);
         }
         // position = position + velocity
         transform.setPosition(VectorMath.add(position, velocity));
@@ -87,7 +84,7 @@ public class MovementSystem extends IteratingSystem {
 
     private void updateTarget(MovementComponent movementComponent, Vector2 position) {
         Vector2 targetLocation = movementComponent.getTargetLocation();
-        if (VectorMath.distance(targetLocation, position) < 0.2) {
+        if (VectorMath.distance(targetLocation, position) < 0.13) {
             movementComponent.popCurTarget();
         }
     }

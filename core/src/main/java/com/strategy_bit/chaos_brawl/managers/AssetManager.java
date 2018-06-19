@@ -53,6 +53,7 @@ public class AssetManager {
     public NinePatch resourceSkinMiddle;
     public NinePatch hpSkinOuter;
     public NinePatch hpSkinInner;
+    public NinePatch hpSkinInner2;
     public Map<String, TextureRegion> unitMarkers;
     public Slider.SliderStyle sliderStyle;
     public TextureRegion defaultTile;
@@ -66,6 +67,7 @@ public class AssetManager {
     public Texture victoryScreen;
     public Texture defeatScreen;
     public ProgressBar.ProgressBarStyle progressHPbarStyle;
+    public ProgressBar.ProgressBarStyle progressHPbarStyle2;
     public final static String UI_SWORD_IMAGE = "sword_image_ui";
 
     private static AssetManager instance;
@@ -116,10 +118,13 @@ public class AssetManager {
         resourceSkinMiddle= new NinePatch(new Texture(UI_PATH+"resourceBarMiddle.png"),0,0,21,23);
         hpSkinOuter = new NinePatch(new Texture("hpBarbackgroundRed.png"));
         hpSkinInner = new NinePatch(new Texture("hpBarInner.png"));
+        hpSkinInner2 = new NinePatch(new Texture("hpBarInner2.png"));
         victoryScreen = new Texture("victory.png");
         defeatScreen = new Texture("defeat.png");
         progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
+        progressHPbarStyle2 = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner2));
+        progressHPbarStyle2.knobBefore = progressHPbarStyle2.knob;
         sliderStyle = new Slider.SliderStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         sliderStyle.knobBefore = sliderStyle.knob;
         maps = new Array<>();

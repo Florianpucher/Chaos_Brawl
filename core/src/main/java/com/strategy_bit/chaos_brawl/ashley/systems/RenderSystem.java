@@ -23,6 +23,7 @@ import com.strategy_bit.chaos_brawl.ashley.components.TransformComponent;
 import com.strategy_bit.chaos_brawl.ashley.util.DisposeAble;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.util.VectorMath;
+import com.strategy_bit.chaos_brawl.world.World;
 
 import java.util.Comparator;
 
@@ -52,6 +53,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     private Array<Entity> renderQueue;
     private ZComparator comparator;
     private OrthographicCamera camera;
+    private int playerTeamId;
 
     private Stage hpBarStage;
 
@@ -69,6 +71,8 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         hpBarStage = new Stage();
         //initialize camera with size
         this.camera = camera;
+
+        playerTeamId=0;
     }
 
     @Override
@@ -121,6 +125,9 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
 
             if (unitHP != null) {
                 ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().progressHPbarStyle);
+                if (entity.getComponent(TeamGameObjectComponent.class).getTeamId()==playerTeamId) {
+                    hpBar.setStyle(AssetManager.getInstance().progressHPbarStyle2);
+                }
                 hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
 
                 TextureRegion unitMarkers;
@@ -148,6 +155,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                 // Set position of hp bar above unit
                 hpBar.setPosition(screenPosition.x - width/2, screenPosition.y + height/1.5f);
                 hpBar.setSize( width, 1);
+
                 hpBarStage.addActor(hpBar);
 
                 if (unitHP.getUnitType() < 3){
@@ -191,5 +199,9 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
         public int compare(Entity e1, Entity e2) {
             return (int) Math.signum((float)(pm.get(e1).getZ() - pm.get(e2).getZ()));
         }
+    }
+
+    public void setPlayerTeamId(int playerTeamId){
+        this.playerTeamId=playerTeamId;
     }
 }
