@@ -27,12 +27,12 @@ public class UnitInfoScreen extends MenuScreen{
     public void buildStage() {
         super.buildStage();
 
-        final Table root = new Table(assetManager.defaultSkin);
+        final Table root = new Table(assetManager.getDefaultSkin());
 
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
+        root.setBackground(new NinePatchDrawable(assetManager.getDefaultSkin().getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
 
-        previewList = new List<>(assetManager.defaultSkin);
+        previewList = new List<>(assetManager.getDefaultSkin());
         ScrollPane scrollPane = new ScrollPane(previewList);
         root.add(scrollPane).width(Gdx.graphics.getWidth());
 

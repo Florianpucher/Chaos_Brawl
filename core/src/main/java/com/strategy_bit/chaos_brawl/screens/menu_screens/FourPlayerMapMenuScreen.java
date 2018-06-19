@@ -29,12 +29,12 @@ public class FourPlayerMapMenuScreen extends MenuScreen{
     @Override
     public void buildStage() {
         super.buildStage();
-        final TextButton btnNewMap1 = new TextButton(MAP_4, assetManager.defaultSkin);
+        final TextButton btnNewMap1 = new TextButton(MAP_4, assetManager.getDefaultSkin());
 
         btnNewMap1.setName(MAP_4);
 
-        final Table root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
+        final Table root = new Table(assetManager.getDefaultSkin());
+        root.setBackground(new NinePatchDrawable(assetManager.getDefaultSkin().getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/8f;
         root.center();

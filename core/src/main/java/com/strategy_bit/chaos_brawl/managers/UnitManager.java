@@ -42,6 +42,7 @@ public class UnitManager {
     private static final String BASE_COMPONENT ="BaseComponent";
 
     private static UnitManager instance;
+    AssetManager assetManager;
 
     private Map<Integer, UnitConfig> unitConfigHashMap;
 
@@ -102,7 +103,7 @@ public class UnitManager {
         if(unitConfig.has(PREVIEW)){
             JsonValue preview = unitConfig.get(PREVIEW);
             TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal(preview.getString(PREVIEW_IMAGE_SKIN_PATH))));
-            AssetManager.getInstance().skins.put(preview.getString(PREVIEW_IMAGE_NAME), region);
+            assetManager.getSkins().put(preview.getString(PREVIEW_IMAGE_NAME), region);
             config.setPreviewImage(region);
         }
     }
@@ -146,7 +147,7 @@ public class UnitManager {
     private void addTextureComponent(JsonValue unitConfig, UnitConfig config) {
         if (unitConfig.has(TEXTURE_COMPONENT) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_PATH) && unitConfig.get(TEXTURE_COMPONENT).has(SKIN_NAME)) {
             AssetManager.getInstance().addSkin(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME), unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_PATH));
-            config.setSkin(AssetManager.getInstance().skins.get(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME)));
+            config.setSkin(assetManager.getSkins().get(unitConfig.get(TEXTURE_COMPONENT).getString(SKIN_NAME)));
         }
     }
 

@@ -27,6 +27,8 @@ public class Board implements BoardInterface {
 
     private Tile[][] tileBoard;
 
+    AssetManager assetManager;
+
     private float multiplicandX = FRUSTUM_WIDTH / BOARD_WIDTH;
     private float multiplicandY = FRUSTUM_HEIGHT / BOARD_HEIGHT;
 
@@ -35,10 +37,10 @@ public class Board implements BoardInterface {
 
         int[][] mapArray = new int[BOARD_HEIGHT][BOARD_WIDTH];
 
-        TextureRegion defaultTile = AssetManager.getInstance().defaultTile;
+        TextureRegion defaultTile = assetManager.getDefaultTile();
         Vector2 size = new Vector2(multiplicandX / (defaultTile.getRegionWidth() * PIXELS_TO_METRES), multiplicandY / (defaultTile.getRegionHeight() * PIXELS_TO_METRES));
 
-        Array<FileHandle> maps = AssetManager.getInstance().maps;
+        Array<FileHandle> maps = assetManager.getMaps();
         map = map-1;
         mapArray = fileReader(maps.get(map).readString(), mapArray);
         matrixToBoard(mapArray, size, engine);
@@ -139,17 +141,17 @@ public class Board implements BoardInterface {
         Array<Vector2> vectorList = new Array<>();
 
         if (players == 2){
-            for (int i = 0; i < AssetManager.getInstance().spawn.size - 1; i = i + 2){
-                vectorList.add(getWorldCoordinateOfTile(AssetManager.getInstance().spawn.get(i).intValue(),
-                        AssetManager.getInstance().spawn.get(i+1).intValue()));
+            for (int i = 0; i < assetManager.getSpawn().size - 1; i = i + 2){
+                vectorList.add(getWorldCoordinateOfTile(assetManager.getSpawn().get(i).intValue(),
+                        assetManager.getSpawn().get(i+1).intValue()));
             }
             spawnArea0 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
             spawnArea1 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
         }
         if (players == 4){
-            for (int i = 0; i < AssetManager.getInstance().spawn4.size - 1; i = i + 2){
-                vectorList.add(getWorldCoordinateOfTile(AssetManager.getInstance().spawn4.get(i).intValue(),
-                        AssetManager.getInstance().spawn4.get(i+1).intValue()));
+            for (int i = 0; i < assetManager.getSpawn4().size - 1; i = i + 2){
+                vectorList.add(getWorldCoordinateOfTile(assetManager.getSpawn4().get(i).intValue(),
+                        assetManager.getSpawn4().get(i+1).intValue()));
             }
             spawnArea2 = new Boundary(vectorList.get(0), vectorList.get(1), vectorList.get(2), vectorList.get(3));
             spawnArea3 = new Boundary(vectorList.get(4), vectorList.get(5), vectorList.get(6), vectorList.get(7));
@@ -180,14 +182,14 @@ public class Board implements BoardInterface {
         switch (asset){
 
             case 0:
-                for (int i = 0; i < AssetManager.getInstance().config.size - 1; i = i + 2) {
-                    array.add( new Vector2(AssetManager.getInstance().config.get(i), AssetManager.getInstance().config.get(i + 1)));
+                for (int i = 0; i < assetManager.getConfig().size - 1; i = i + 2) {
+                    array.add( new Vector2(assetManager.getConfig().get(i), assetManager.getConfig().get(i + 1)));
                 }
                 return array;
 
             case 1:
-                for (int i = 0; i < AssetManager.getInstance().config2.size - 1; i = i + 2) {
-                    array.add( new Vector2(AssetManager.getInstance().config2.get(i), AssetManager.getInstance().config2.get(i + 1)));
+                for (int i = 0; i < assetManager.getConfig2().size - 1; i = i + 2) {
+                    array.add( new Vector2(assetManager.getConfig2().get(i), assetManager.getConfig2().get(i + 1)));
                 }
                 return array;
 

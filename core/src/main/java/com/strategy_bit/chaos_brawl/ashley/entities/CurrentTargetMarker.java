@@ -9,13 +9,15 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 
 public class CurrentTargetMarker extends Entity{
 
+    AssetManager assetManager;
+
     public CurrentTargetMarker(Vector2 position, MyEngine engine){
         TransformComponent transformComponent = engine.createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
         transformComponent.setZ(10);
 
         TextureComponent textureComponent =engine.createComponent(TextureComponent.class);
-        textureComponent.setTexture(AssetManager.getInstance().markers.get("default"));
+        textureComponent.setTexture(assetManager.getMarkers().get("default"));
         this.add(transformComponent);
         this.add(textureComponent);
     }

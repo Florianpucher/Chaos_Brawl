@@ -18,18 +18,18 @@ public class OptionsMenuScreen extends MenuScreen{
     @Override
     public void buildStage() {
         super.buildStage();
-        final Slider sliderMaster = new Slider(0f, 1f, 0.01f, false, assetManager.sliderStyle);
-        final Slider sliderMusic = new Slider(0f, 1f, 0.01f, false, assetManager.sliderStyle);
-        final Slider sliderSound = new Slider(0f, 1f, 0.01f, false, assetManager.sliderStyle);
-        final Label textMaster = new Label("Master Volume", assetManager.defaultSkin);
-        final Label textMusic = new Label("Music Volume", assetManager.defaultSkin);
-        final Label textSound = new Label("Sound Volume", assetManager.defaultSkin);
+        final Slider sliderMaster = new Slider(0f, 1f, 0.01f, false, assetManager.getSliderStyle());
+        final Slider sliderMusic = new Slider(0f, 1f, 0.01f, false, assetManager.getSliderStyle());
+        final Slider sliderSound = new Slider(0f, 1f, 0.01f, false, assetManager.getSliderStyle());
+        final Label textMaster = new Label("Master Volume", assetManager.getDefaultSkin());
+        final Label textMusic = new Label("Music Volume", assetManager.getDefaultSkin());
+        final Label textSound = new Label("Sound Volume", assetManager.getDefaultSkin());
         sliderMaster.setValue(SoundManager.getInstance().getMasterVolume());
         sliderMusic.setValue(SoundManager.getInstance().getVolumeMusic());
         sliderSound.setValue(SoundManager.getInstance().getVolumeSounds());
 
-        final Table root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
+        final Table root = new Table(assetManager.getDefaultSkin());
+        root.setBackground(new NinePatchDrawable(assetManager.getDefaultSkin().getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/8f;
         root.center();

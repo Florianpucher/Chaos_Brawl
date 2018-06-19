@@ -24,7 +24,6 @@ public class HostLoungeScreen extends MenuScreen {
 
     private static final String START_SERVER = "Start Server";
 
-
     private BrawlServer brawlServer;
 
     public HostLoungeScreen() {
@@ -35,11 +34,11 @@ public class HostLoungeScreen extends MenuScreen {
     @Override
     public void buildStage() {
         super.buildStage();
-        final TextButton btnStartServer = new TextButton(START_SERVER, assetManager.defaultSkin);
+        final TextButton btnStartServer = new TextButton(START_SERVER, assetManager.getDefaultSkin());
         btnStartServer.setName(START_SERVER);
 
-        final Table root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
+        final Table root = new Table(assetManager.getDefaultSkin());
+        root.setBackground(new NinePatchDrawable(assetManager.getDefaultSkin().getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/8f;
         root.center();

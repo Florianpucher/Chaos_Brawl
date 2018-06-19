@@ -26,14 +26,14 @@ public class NetworkScreen extends MenuScreen {
     public void buildStage() {
         super.buildStage();
 
-        final TextButton btnHostGame = new TextButton(HOST_GAME, assetManager.defaultSkin);
+        final TextButton btnHostGame = new TextButton(HOST_GAME, assetManager.getDefaultSkin());
         btnHostGame.setName(HOST_GAME);
-        final TextButton btnConnectToGame = new TextButton(CLIENT_GAME, assetManager.defaultSkin);
+        final TextButton btnConnectToGame = new TextButton(CLIENT_GAME, assetManager.getDefaultSkin());
         btnConnectToGame.setName(CLIENT_GAME);
 
 
-        final Table root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
+        final Table root = new Table(assetManager.getDefaultSkin());
+        root.setBackground(new NinePatchDrawable(assetManager.getDefaultSkin().getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/8f;
         root.center();

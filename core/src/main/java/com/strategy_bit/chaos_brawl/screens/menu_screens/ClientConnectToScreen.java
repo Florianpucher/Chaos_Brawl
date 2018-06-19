@@ -25,9 +25,9 @@ import java.util.List;
  */
 public class ClientConnectToScreen extends MenuScreen implements NetworkDiscoveryHandler, NetworkConnectionHandler {
 
+
     private static final String REFRESH = "Refresh";
     private String direct = "10.0.2.2";
-
 
     private BrawlClient brawlClient;
     private TextButton btnDirectConnect;
@@ -41,13 +41,13 @@ public class ClientConnectToScreen extends MenuScreen implements NetworkDiscover
     @Override
     public void buildStage() {
         super.buildStage();
-        final TextButton btnHostGame = new TextButton(REFRESH, assetManager.defaultSkin);
+        final TextButton btnHostGame = new TextButton(REFRESH, assetManager.getDefaultSkin());
         btnHostGame.setName(REFRESH);
-        btnDirectConnect = new TextButton(direct, assetManager.defaultSkin);
+        btnDirectConnect = new TextButton(direct, assetManager.getDefaultSkin());
         btnDirectConnect.setName(direct);
 
-        final Table root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
+        final Table root = new Table(assetManager.getDefaultSkin());
+        root.setBackground(new NinePatchDrawable(assetManager.getDefaultSkin().getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight() / 8f;
         root.center();
