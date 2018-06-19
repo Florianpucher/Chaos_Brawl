@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class UnitInfoScreen extends MenuScreen{
         previewList.getItems().add(empty);
 
 
-        Iterator it = AssetManager.getInstance().unitManager.unitConfigHashMap.entrySet().iterator();
+        Iterator it = UnitManager.getInstance().getUnitConfigHashMap().entrySet().iterator();
         while (it.hasNext()){
             Map.Entry pair = (Map.Entry)it.next();
             UnitConfig unitConfig=((UnitConfig)(pair.getValue()));

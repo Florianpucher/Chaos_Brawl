@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UnitManager {
-    public Map<Integer, UnitConfig> unitConfigHashMap;
-
     private static final String ID = "id";
     private static final String NAME = "name";
     private static final String COST = "cost";
@@ -40,8 +38,29 @@ public class UnitManager {
     private static final String PREVIEW = "Preview";
     private static final String PREVIEW_IMAGE_NAME = "button_preview_name";
     private static final String PREVIEW_IMAGE_SKIN_PATH = "button_preview_skin";
+    private static final String UNIT_PATH = "units/";
 
-    public void readFile(String file) {
+    private static UnitManager instance;
+
+    private Map<Integer, UnitConfig> unitConfigHashMap;
+
+    public static UnitManager getInstance() {
+        if (instance == null) {
+            instance = new UnitManager();
+        }
+        return instance;
+    }
+
+    private UnitManager() {
+        unitConfigHashMap=new HashMap<>();
+    }
+
+    public void initialize(){
+        //unit stats
+        readFile(UNIT_PATH+"units.json");
+    }
+
+    private void readFile(String file) {
         unitConfigHashMap = new HashMap<>();
         FileHandle fileHandle = Gdx.files.internal(file);
         JsonReader jsonReader = new JsonReader();
@@ -162,6 +181,14 @@ public class UnitManager {
                 config.setRangedAttackType(unitConfig.get(COMBAT_COMPONENT).getInt(RANGED_ATTACK_TYPE));
             }
         }
+    }
+
+    public UnitConfig getUnitConfig(int index) {
+        return unitConfigHashMap.get(index);
+    }
+
+    public Map<Integer, UnitConfig> getUnitConfigHashMap() {
+        return unitConfigHashMap;
     }
 }
 

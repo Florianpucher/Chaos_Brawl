@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 
 public class BrawlButton extends ImageButton {
     private int unitId;
@@ -30,7 +31,7 @@ public class BrawlButton extends ImageButton {
         this.activated = activated;
     }
     public void update(float res){
-        if (AssetManager.getInstance().unitManager.unitConfigHashMap.get(unitId).getCost()>res){
+        if (UnitManager.getInstance().getUnitConfig(unitId).getCost()>res){
             setDisabled(true);
             setTouchable(Touchable.disabled);
             setActivated(false);

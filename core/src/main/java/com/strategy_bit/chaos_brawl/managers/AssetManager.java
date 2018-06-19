@@ -31,13 +31,10 @@ import java.util.Map;
 public class AssetManager {
     public static final String MENU_BACKGROUND = "background";
 
-    private static final String UNIT_PATH = "units/";
     private static final String UI_PATH = "user_interface/";
     private static final String ENVIRONMENT_PATH = "environment/";
     private static final String ANIM_PATH = "animations/";
     private static final String MARKER_PATH = "markers/";
-
-    public UnitManager unitManager;
 
     public Map<String, TextureRegion> markers;
     public Map<String, TextureRegion> skins;
@@ -80,7 +77,6 @@ public class AssetManager {
 
     private AssetManager() {
         skins = new HashMap<>();
-        unitManager=new UnitManager();
         sounds = new HashMap<>();
         markers=new HashMap<>();
         unitMarkers = new HashMap<>();
@@ -96,8 +92,6 @@ public class AssetManager {
         unitMarkers.put("star",new TextureRegion(new Texture(MARKER_PATH+"star.png")));
         skins.put(UI_SWORD_IMAGE, new TextureRegion(new Texture(UI_PATH+"sword.png")));
 
-        //unit stats
-        unitManager.readFile(UNIT_PATH+"units.json");
 
         // Environment
         defaultTile = new TextureRegion(new Texture(ENVIRONMENT_PATH+"default_tile.png"));

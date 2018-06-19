@@ -10,6 +10,7 @@ import com.strategy_bit.chaos_brawl.cheat_function.SensorReader;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.player_input_output.views.GameHUD;
 import com.strategy_bit.chaos_brawl.types.EventType;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
@@ -174,7 +175,7 @@ public class PlayerController extends PawnController implements InputProcessor {
 
     public boolean updateTowersOrUnits(int upgradeType) {
 
-        UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(upgradeType);
+        UnitConfig unitConfig = UnitManager.getInstance().getUnitConfig(upgradeType);
         int updateType = -1;
         if (upgradeType == 20) {
             updateType = 1;

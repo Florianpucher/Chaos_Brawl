@@ -17,9 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
 import com.strategy_bit.chaos_brawl.config.WorldSettings;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
 import com.strategy_bit.chaos_brawl.resource_system.Resource;
 import com.strategy_bit.chaos_brawl.util.SpawnArea;
@@ -78,19 +80,19 @@ public class GameHUD extends Table {
         AssetManager assetManager = AssetManager.getInstance();
 
 
-        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0, AssetManager.getInstance().unitManager.unitConfigHashMap.get(0).getPreviewImage());
+        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0, UnitManager.getInstance().getUnitConfig(0).getPreviewImage());
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
-        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1, AssetManager.getInstance().unitManager.unitConfigHashMap.get(1).getPreviewImage());
+        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1, UnitManager.getInstance().getUnitConfig(1).getPreviewImage());
         btnNewUnit2.setName(NEW_UNIT_2);
         setFillParent(true);
-        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2, AssetManager.getInstance().unitManager.unitConfigHashMap.get(2).getPreviewImage());
+        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2, UnitManager.getInstance().getUnitConfig(2).getPreviewImage());
         btnNewUnit3.setName(NEW_UNIT_3);
-        btnNewUnit4 = new BrawlButton(NEW_UNIT_4, assetManager.defaultSkin, 18, AssetManager.getInstance().unitManager.unitConfigHashMap.get(18).getPreviewImage());
+        btnNewUnit4 = new BrawlButton(NEW_UNIT_4, assetManager.defaultSkin, 18, UnitManager.getInstance().getUnitConfig(18).getPreviewImage());
         btnNewUnit4.setName(NEW_UNIT_4);
-        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20, AssetManager.getInstance().unitManager.unitConfigHashMap.get(20).getPreviewImage());
+        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20, UnitManager.getInstance().getUnitConfig(20).getPreviewImage());
         btnUpgradeUnits.setName(UPGRADE_UNITS);
-        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21, AssetManager.getInstance().unitManager.unitConfigHashMap.get(21).getPreviewImage());
+        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21, UnitManager.getInstance().getUnitConfig(21).getPreviewImage());
         btnUpgradeTower.setName(UPGRADE_TOWER);
 
 
@@ -148,13 +150,13 @@ public class GameHUD extends Table {
 
 
             btnNewUnit1.setName(UPGRADED_UNIT_1);
-            btnNewUnit1.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(3).getPreviewImage());
+            btnNewUnit1.setImage(UnitManager.getInstance().getUnitConfig(3).getPreviewImage());
             btnNewUnit2.setName(UPGRADED_UNIT_2);
-            btnNewUnit2.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(4).getPreviewImage());
+            btnNewUnit2.setImage(UnitManager.getInstance().getUnitConfig(4).getPreviewImage());
             btnNewUnit3.setName(UPGRADED_UNIT_3);
-            btnNewUnit3.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(5).getPreviewImage());
+            btnNewUnit3.setImage(UnitManager.getInstance().getUnitConfig(5).getPreviewImage());
             btnNewUnit4.setName(UPGRADED_UNIT_4);
-            btnNewUnit4.setImage(AssetManager.getInstance().unitManager.unitConfigHashMap.get(19).getPreviewImage());
+            btnNewUnit4.setImage(UnitManager.getInstance().getUnitConfig(19).getPreviewImage());
             btnUpgradeUnits.remove();
             playerController.updateTowersOrUnits(20);
 

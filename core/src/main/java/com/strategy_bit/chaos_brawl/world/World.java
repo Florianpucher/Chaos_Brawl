@@ -27,6 +27,7 @@ import com.strategy_bit.chaos_brawl.ashley.systems.UpgradeSystem;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
+import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
 import com.strategy_bit.chaos_brawl.player_input_output.PawnController;
 import com.strategy_bit.chaos_brawl.player_input_output.PlayerController;
@@ -360,7 +361,7 @@ public class World implements InputHandler {
     public void createBulletWorldCoordinates(Vector2 worldCoordinates, long targetId, float damage, int type) {
 
         Entity projectile = new Entity();
-        UnitConfig unitConfig = AssetManager.getInstance().unitManager.unitConfigHashMap.get(type);
+        UnitConfig unitConfig = UnitManager.getInstance().getUnitConfig(type);
 
         Projectiles.setComponents(projectile, unitConfig, worldCoordinates, targetId, damage, engine);
 
