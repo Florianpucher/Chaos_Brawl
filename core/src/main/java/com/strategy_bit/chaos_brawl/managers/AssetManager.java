@@ -3,7 +3,6 @@ package com.strategy_bit.chaos_brawl.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -116,20 +115,25 @@ public class AssetManager {
 
         // user interface & other
         defaultSkin = new Skin(Gdx.files.internal(UI_PATH + "skin/skin.json"));
+
         resourceSkinOuter = new NinePatch(new Texture(UI_PATH + "resourceBarOuterBorder.png"), 12, 12, 12, 12);
         resourceSkinInner = new NinePatch(new Texture(UI_PATH + "resourceBarInner.png"), 0, 16, 7, 7);
         resourceSkinMiddle = new NinePatch(new Texture(UI_PATH + "resourceBarMiddle.png"), 0, 0, 21, 23);
         hpSkinOuter = new NinePatch(new Texture("hpBarbackgroundRed.png"));
+
         NinePatch hpSkinInner = new NinePatch(new Texture("hpBarInner.png"));
         NinePatch hpSkinInner2 = new NinePatch(new Texture("hpBarInner2.png"));
         NinePatch hpSkinInner3 = new NinePatch(new Texture("hpBarInner3.png"));
         NinePatch hpSkinInner4 = new NinePatch(new Texture("hpBarInner4.png"));
+
         hpSkinsInner.put(0, hpSkinInner);
         hpSkinsInner.put(1, hpSkinInner2);
         hpSkinsInner.put(2, hpSkinInner3);
         hpSkinsInner.put(3, hpSkinInner4);
+
         victoryScreen = new Texture("victory.png");
         defeatScreen = new Texture("defeat.png");
+
         for (int i = 0; i < 4; i++) {
             ProgressBar.ProgressBarStyle progressHPbarStyle = new ProgressBar.ProgressBarStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinsInner.get(i)));
             progressHPbarStyle.knobBefore = progressHPbarStyle.knob;
@@ -138,6 +142,7 @@ public class AssetManager {
 
         sliderStyle = new Slider.SliderStyle(new NinePatchDrawable(hpSkinOuter), new NinePatchDrawable(hpSkinInner));
         sliderStyle.knobBefore = sliderStyle.knob;
+
         maps = new Array<>();
         maps.add(Gdx.files.internal("maps/map1.txt"));
         maps.add(Gdx.files.internal("maps/map2.txt"));
@@ -148,10 +153,12 @@ public class AssetManager {
         FileHandle handle1 = Gdx.files.internal("maps/SpawnAreas2.json");
         FileHandle handle2 = Gdx.files.internal("maps/Config4Players.json");
         FileHandle handle3 = Gdx.files.internal("maps/SpawnAreas4.json");
+
         config = new Array<>();
         config2 = new Array<>();
         spawn = new Array<>();
         spawn4 = new Array<>();
+
         setArray(config, handle);
         setArray(config2, handle2);
         setArray(spawn, handle1);
