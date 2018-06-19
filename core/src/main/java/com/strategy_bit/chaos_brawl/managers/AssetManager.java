@@ -54,6 +54,7 @@ public class AssetManager {
     public NinePatch hpSkinOuter;
     public NinePatch hpSkinInner;
     public NinePatch hpSkinInner2;
+    public Map<String, TextureRegion> unitMarkers;
     public Slider.SliderStyle sliderStyle;
     public TextureRegion defaultTile;
     public TextureRegion waterTile;
@@ -83,10 +84,15 @@ public class AssetManager {
         unitManager=new UnitManager();
         sounds = new HashMap<>();
         markers=new HashMap<>();
+        unitMarkers = new HashMap<>();
     }
 
     public  void loadAssets(){
         markers.put("default",new TextureRegion(new Texture(MARKER_PATH+"default.png")));
+        unitMarkers.put("triangle",new TextureRegion(new Texture(MARKER_PATH+"triangle.png")));
+        unitMarkers.put("square",new TextureRegion(new Texture(MARKER_PATH+"square.png")));
+        unitMarkers.put("square2",new TextureRegion(new Texture(MARKER_PATH+"square2.png")));
+        unitMarkers.put("star",new TextureRegion(new Texture(MARKER_PATH+"star.png")));
         skins.put(UI_SWORD_IMAGE, new TextureRegion(new Texture(UI_PATH+"sword.png")));
 
         //unit stats

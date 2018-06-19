@@ -27,6 +27,8 @@ import com.strategy_bit.chaos_brawl.world.World;
 
 import java.util.Comparator;
 
+import javax.xml.soap.Text;
+
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.PIXELS_TO_METRES;
 
 /**
@@ -120,6 +122,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                     MathUtils.radiansToDegrees * transform.getRotation());
 
             TeamGameObjectComponent unitHP = teamGameObjectMapper.get(entity);
+
             if (unitHP != null) {
                 ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().progressHPbarStyle);
                 if (entity.getComponent(TeamGameObjectComponent.class).getTeamId()==playerTeamId) {
@@ -127,6 +130,24 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                 }
                 hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
 
+                TextureRegion unitMarkers;
+
+                switch (unitHP.getTeamId()){
+                    case 0:
+                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("star"));
+                        break;
+                    case 1:
+                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("square"));
+                        break;
+                    case 2:
+                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("triangle"));
+                        break;
+                    case 3:
+                        unitMarkers = new TextureRegion(AssetManager.getInstance().unitMarkers.get("square2"));
+                        break;
+                    default:
+                        throw new UnsupportedOperationException();
+                }
 
                 Vector3 position = new Vector3(transform.getPosition().x ,transform.getPosition().y ,0.0f);
                 // Get position of unit in screenCoordinates
@@ -136,12 +157,20 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
                 hpBar.setSize( width, 1);
 
                 hpBarStage.addActor(hpBar);
+
+                if (unitHP.getUnitType() < 3){
+
+                    batch.draw(unitMarkers,transform.getPosition().x - originX, transform.getPosition().y - originY + 2,
+                            originX, originY,
+                            width, height,
+                            transform.getScale().x * PIXELS_TO_METRES,
+                            transform.getScale().y * PIXELS_TO_METRES, 0f);
+                }
             }
         }
 
         batch.end();
         hpBarStage.draw();
-
 
         //clear render queue
         renderQueue.clear();

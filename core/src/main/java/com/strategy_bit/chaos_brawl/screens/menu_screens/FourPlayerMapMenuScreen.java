@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
+import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.network.BrawlMultiplayer;
 import com.strategy_bit.chaos_brawl.screens.ScreenEnum;
 
@@ -45,6 +46,8 @@ public class FourPlayerMapMenuScreen extends MenuScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String name = event.getListenerActor().getName();
+                SoundManager.getInstance().playSound("click");
+
                 if(name.equals(MAP_4)){
                     screenManager.showScreen(ScreenEnum.MULTIPLAYERGAME, brawlMultiplayer, player);
                 }
