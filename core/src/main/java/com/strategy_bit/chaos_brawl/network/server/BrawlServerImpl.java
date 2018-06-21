@@ -137,6 +137,11 @@ public class BrawlServerImpl implements BrawlServer,BrawlMultiplayer {
     }
 
     @Override
+    public void sendEntityAttackMsg(long attackerID, long victimID) {
+        //TODO send entity attack message
+    }
+
+    @Override
     public void sendEntityDeleteMsg(long entityID) {
         sendData(new EntityDeleteMessage(entityID));
     }

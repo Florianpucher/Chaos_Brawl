@@ -19,6 +19,7 @@ import java.util.Map;
 
 
 /**
+ * system for deleting units if their health points <= 0
  * @author AIsopp
  * @version 1.0
  * @since 16.04.2018
@@ -101,6 +102,12 @@ public class DeleteSystem extends IteratingSystem {
         return false;
     }
 
+    /**
+     * if set it will invoke the {@link com.strategy_bit.chaos_brawl.world.MultiplayerInputHandler#deleteUnitLocal(long)}
+     * method during the {@link #processEntity(Entity, float)} method if an unit dies
+     *
+     * @param inputHandler sets a multiplayer input handler
+     */
     public void setInputHandler(MultiplayerInputHandler inputHandler) {
         this.inputHandler = inputHandler;
     }

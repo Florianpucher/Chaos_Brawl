@@ -3,7 +3,6 @@ package com.strategy_bit.chaos_brawl;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
-import com.strategy_bit.chaos_brawl.ashley.entities.Unit;
 import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.ScreenManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
@@ -65,6 +64,7 @@ public class ChaosBrawlGame extends Game {
 	public void render () {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 		logger.log();
+		// change to main menu if all assets are loaded
 		if(!loadGame){
 			SoundManager.getInstance().playMusic("mainSoundtrack");
 			screenManager.showScreenWithoutAddingOldOneToStack(ScreenEnum.MAIN_MENU);

@@ -73,7 +73,7 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
             multiplayer.sendTick(deltaTime);
     }
 
-
+    @Override
     public void createEntityWorldCoordinates(Vector2 worldCoordinates, int unitId, int teamID) {
         if (multiplayer.isHost()) {
             PawnController spawnerController = playerControllers[teamID];
@@ -94,8 +94,8 @@ public class MultiplayerWorld extends World implements MultiplayerInputHandler {
     }
 
     @Override
-    public void createEntityLocal(Vector2 worldCoordinates, int unitId, int teamID, long unitID) {
-        createEntityInternal(unitId, unitID, worldCoordinates, teamID);
+    public void createEntityLocal(Vector2 worldCoordinates, int unitIdType, int teamID, long unitID) {
+        createEntityInternal(unitIdType, unitID, worldCoordinates, teamID);
     }
 
     @Override

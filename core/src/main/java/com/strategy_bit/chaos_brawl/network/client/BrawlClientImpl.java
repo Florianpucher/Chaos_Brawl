@@ -130,6 +130,11 @@ public class BrawlClientImpl implements BrawlClient, BrawlMultiplayer {
     }
 
     @Override
+    public void sendEntityAttackMsg(long attackerID, long victimID) {
+        throw new UnsupportedOperationException("Only the host sends attack messages");
+    }
+
+    @Override
     public void sendEntityDeleteMsg(long entityID) {
         throw new UnsupportedOperationException("Only the host sends deleting messages");
     }
