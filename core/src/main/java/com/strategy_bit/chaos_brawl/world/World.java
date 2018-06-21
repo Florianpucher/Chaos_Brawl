@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.compression.lzma.Base;
 import com.strategy_bit.chaos_brawl.ashley.components.BaseComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.BoundaryComponent;
 import com.strategy_bit.chaos_brawl.ashley.components.MovementComponent;
@@ -27,7 +26,6 @@ import com.strategy_bit.chaos_brawl.ashley.systems.ReRouteSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.RenderSystem;
 import com.strategy_bit.chaos_brawl.ashley.systems.UpgradeSystem;
 import com.strategy_bit.chaos_brawl.config.UnitConfig;
-import com.strategy_bit.chaos_brawl.managers.AssetManager;
 import com.strategy_bit.chaos_brawl.managers.SoundManager;
 import com.strategy_bit.chaos_brawl.managers.UnitManager;
 import com.strategy_bit.chaos_brawl.pathfinder.OtherPathfinder;
@@ -45,7 +43,7 @@ import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_HEIGHT;
 import static com.strategy_bit.chaos_brawl.config.WorldSettings.FRUSTUM_WIDTH;
 
 /**
- * Central manager for game
+ * Central class for game
  *
  * @author AIsopp
  * @version 1.0
@@ -75,16 +73,22 @@ public class World implements InputHandler {
 
     boolean endGame = false;
 
+    /**
+     *
+     * @param map with which map we are playing
+     * @param players how much players are playing
+     * @param containsDeleteSystem should the ashley engine delete units during update
+     */
     public World(int map, int players, boolean containsDeleteSystem) {
         this(map,players,containsDeleteSystem,true);
     }
 
     /**
      * constructor for test to disable Rendersystem
-     * @param map
-     * @param players
-     * @param containsDeleteSystem
-     * @param withRenderSystem
+     * @param map with which map we are playing
+     * @param players how much players are playing
+     * @param containsDeleteSystem should the ashley engine delete units during update
+     * @param withRenderSystem should the world be rendered
      */
     public World(int map, int players, boolean containsDeleteSystem, boolean withRenderSystem)
     {
@@ -102,10 +106,18 @@ public class World implements InputHandler {
         createWorld(map);
     }
 
+    /**
+     * default constructor
+     */
     public World() {
         this(1,2,true);
     }
 
+    /**
+     * set player for an index
+     * @param index internal index of the player
+     * @param pawnController who is representing this player
+     */
     public void setPlayerController(int index, PawnController pawnController){
         playerControllers[index] = pawnController;
         if (pawnController instanceof PlayerController){
@@ -117,6 +129,9 @@ public class World implements InputHandler {
         }
     }
 
+    /**
+     * initialize buildings for players
+     */
     public void initializeGameForPlayers(){
         int configMap;
         if (playerControllers.length < 3) {
@@ -152,9 +167,14 @@ public class World implements InputHandler {
     }
 
 
+    /**
+     * creates the engine for ashley and adds every system to it
+     * @param containsDeleteSystem if false units will not be deleted by the engine.update method if they have no life points left
+     * @param withRenderSystem if false
+     */
     protected void createEngine(boolean containsDeleteSystem, boolean withRenderSystem){
         engine = new MyEngine();
-        //Add some logic
+
         renderSystem = null;
         if(withRenderSystem)
         {
@@ -193,7 +213,7 @@ public class World implements InputHandler {
 
 
     /**
-     * creates Game board ({@link Board})
+     * creates Game board ({@link Board}) and initializes pathfinder
      */
     private void createWorld(int map){
         board = new Board(engine, map);
@@ -201,6 +221,9 @@ public class World implements InputHandler {
     }
 
 
+    /**
+     * call this method from a libgdx class method which name is also render or update
+     */
     public void render(){
         updateResources(Gdx.graphics.getDeltaTime());
         engine.update(Gdx.graphics.getDeltaTime());
@@ -209,8 +232,8 @@ public class World implements InputHandler {
 
 
     /**
-     * returns true if one players one, false otherwise and does inform players if they lose or win
-     * @return true if one players one, false otherwise
+     * returns true if one player left, false otherwise and does inform players if they lose or win
+     * @return true if one player left, false otherwise
      */
     public boolean checkWinningLosing(){
 
@@ -252,6 +275,9 @@ public class World implements InputHandler {
     }
 
 
+    /**
+     * releases every resource that has been allocated with this world
+     */
     public void dispose() {
         engine.dispose();
     }
@@ -282,14 +308,6 @@ public class World implements InputHandler {
             }
         }
         return -1;
-    }
-
-    @Override
-    public void createEntityScreenCoordinates(Vector2 screenCoordinates, int unitId, int teamID) {
-        Vector3 withZCoordinate = new Vector3(screenCoordinates, 0);
-        Vector3 translated = camera.unproject(withZCoordinate);
-        Vector2 targetLocation = new Vector2(translated.x,translated.y);
-        createEntityWorldCoordinates(targetLocation, unitId, teamID);
     }
 
     @Override
@@ -338,17 +356,17 @@ public class World implements InputHandler {
             return gdxPathFinder.calculatePath(start, dest);
     }
 
-    Entity createEntityInternal(int unitId, long unitID, Vector2 worldCoordinates, int teamID){
-        Entity entity = spawner.createNewUnit(unitId,teamID,worldCoordinates, engine);
+    Entity createEntityInternal(int unitIdType, long unitID, Vector2 worldCoordinates, int teamID){
+        Entity entity = spawner.createNewUnit(unitIdType,teamID,worldCoordinates, engine);
         engine.addEntity(entity);
         units.put(unitID, entity);
-        if(unitId==6){
+        if(unitIdType==6){
             bases[teamID] = entity;
         }
-        else if (unitId==5||unitId==2){
+        else if (unitIdType==5||unitIdType==2){
             SoundManager.getInstance().playSound("drawSword");
         }
-        else if (unitId==1||unitId==4){
+        else if (unitIdType==1||unitIdType==4){
             SoundManager.getInstance().playSound("drawKatana");
         }
         return entity;
@@ -397,7 +415,7 @@ public class World implements InputHandler {
      * NOTE: current playerID can be only 1 or 2
      *
      * @param playerID for which player the spawn area will be created
-     * @return a 4x2 matrix where each column represents a position: the lower left, lower right, upper left and upper right corner in screen coordinates
+     * @return a spawn area for a player
      */
     public SpawnArea createSpawnAreaForPlayer(int playerID, int players){
         Boundary result = board.createSpawnAreaForPlayer(playerID, players);

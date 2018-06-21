@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * random generator that should work as a player
  * @author AIsopp
  * @version 1.0
  * @since 19.04.2018
