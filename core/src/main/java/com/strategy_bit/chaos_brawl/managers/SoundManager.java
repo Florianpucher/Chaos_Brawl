@@ -132,4 +132,11 @@ public class SoundManager {
     public HashMap<String, Music> getMusicHashMap() {
         return musicHashMap;
     }
+
+    public float getUnadjustedVolumeSounds() {
+        return volumeSounds;
+    }
+    public float getUnadjustedVolumeMusic() {
+        return volumeMusic;
+    }
 }

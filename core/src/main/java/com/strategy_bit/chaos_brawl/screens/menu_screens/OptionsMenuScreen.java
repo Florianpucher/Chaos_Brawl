@@ -25,8 +25,8 @@ public class OptionsMenuScreen extends MenuScreen{
         final Label textMusic = new Label("Music Volume", assetManager.defaultSkin);
         final Label textSound = new Label("Sound Volume", assetManager.defaultSkin);
         sliderMaster.setValue(SoundManager.getInstance().getMasterVolume());
-        sliderMusic.setValue(SoundManager.getInstance().getVolumeMusic());
-        sliderSound.setValue(SoundManager.getInstance().getVolumeSounds());
+        sliderMusic.setValue(SoundManager.getInstance().getUnadjustedVolumeMusic());
+        sliderSound.setValue(SoundManager.getInstance().getUnadjustedVolumeSounds());
 
         final Table root = new Table(assetManager.defaultSkin);
         root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
