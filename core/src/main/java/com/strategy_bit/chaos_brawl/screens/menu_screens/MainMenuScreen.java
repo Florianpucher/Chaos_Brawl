@@ -27,17 +27,17 @@ public class MainMenuScreen extends MenuScreen {
     @Override
     public void buildStage() {
         super.buildStage();
-        final TextButton btnNewGame = new TextButton(NEW_GAME, assetManager.defaultSkin);
+        final TextButton btnNewGame = new TextButton(NEW_GAME, assetManager.getDefaultSkin());
         btnNewGame.setName(NEW_GAME);
-        final TextButton btnMultiplayer = new TextButton(MULTIPLAYER, assetManager.defaultSkin);
+        final TextButton btnMultiplayer = new TextButton(MULTIPLAYER, assetManager.getDefaultSkin());
         btnMultiplayer.setName(MULTIPLAYER);
-        final TextButton btnOptions = new TextButton(OPTIONS, assetManager.defaultSkin);
+        final TextButton btnOptions = new TextButton(OPTIONS, assetManager.getDefaultSkin());
         btnOptions.setName(OPTIONS);
-        final TextButton btnUnits = new TextButton(UNIT_INFO, assetManager.defaultSkin);
+        final TextButton btnUnits = new TextButton(UNIT_INFO, assetManager.getDefaultSkin());
         btnUnits.setName(UNIT_INFO);
 
-        final Table root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
+        final Table root = new Table(assetManager.getDefaultSkin());
+        root.setBackground(new NinePatchDrawable(assetManager.getDefaultSkin().getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/6f;
         root.center();

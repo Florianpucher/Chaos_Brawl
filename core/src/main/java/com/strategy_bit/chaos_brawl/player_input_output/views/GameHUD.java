@@ -57,10 +57,8 @@ public class GameHUD extends Table {
     private BrawlButton btnUpgradeUnits;
     private BrawlButton btnUpgradeTower;
 
-
     private boolean playedVictoryOnce = false;
     private boolean playedDefeatOnce = false;
-
 
     private int nextUnitType;
     private Texture nonSpawnAreaTexture;
@@ -71,28 +69,28 @@ public class GameHUD extends Table {
     private SpriteBatch batch;
 
     private PlayerController playerController;
+    static AssetManager assetManager;
 
     public GameHUD(PlayerController playerController) {
-        super(AssetManager.getInstance().defaultSkin);
+        super(AssetManager.getInstance().getDefaultSkin());
         this.playerController = playerController;
 
+        assetManager = AssetManager.getInstance();
         nextUnitType=-1;
-        AssetManager assetManager = AssetManager.getInstance();
 
-
-        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.defaultSkin, 0, UnitManager.getInstance().getUnitConfig(0).getPreviewImage());
+        btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.getDefaultSkin(), 0, UnitManager.getInstance().getUnitConfig(0).getPreviewImage());
         btnNewUnit1.setName(NEW_UNIT_1);
         setFillParent(true);
-        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.defaultSkin, 1, UnitManager.getInstance().getUnitConfig(1).getPreviewImage());
+        btnNewUnit2 = new BrawlButton(NEW_UNIT_2, assetManager.getDefaultSkin(), 1, UnitManager.getInstance().getUnitConfig(1).getPreviewImage());
         btnNewUnit2.setName(NEW_UNIT_2);
         setFillParent(true);
-        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.defaultSkin, 2, UnitManager.getInstance().getUnitConfig(2).getPreviewImage());
+        btnNewUnit3 = new BrawlButton(NEW_UNIT_3, assetManager.getDefaultSkin(), 2, UnitManager.getInstance().getUnitConfig(2).getPreviewImage());
         btnNewUnit3.setName(NEW_UNIT_3);
-        btnNewUnit4 = new BrawlButton(NEW_UNIT_4, assetManager.defaultSkin, 18, UnitManager.getInstance().getUnitConfig(18).getPreviewImage());
+        btnNewUnit4 = new BrawlButton(NEW_UNIT_4, assetManager.getDefaultSkin(), 18, UnitManager.getInstance().getUnitConfig(18).getPreviewImage());
         btnNewUnit4.setName(NEW_UNIT_4);
-        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.defaultSkin, 20, UnitManager.getInstance().getUnitConfig(20).getPreviewImage());
+        btnUpgradeUnits = new BrawlButton(UPGRADE_UNITS, assetManager.getDefaultSkin(), 20, UnitManager.getInstance().getUnitConfig(20).getPreviewImage());
         btnUpgradeUnits.setName(UPGRADE_UNITS);
-        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.defaultSkin, 21, UnitManager.getInstance().getUnitConfig(21).getPreviewImage());
+        btnUpgradeTower = new BrawlButton(UPGRADE_TOWER, assetManager.getDefaultSkin(), 21, UnitManager.getInstance().getUnitConfig(21).getPreviewImage());
         btnUpgradeTower.setName(UPGRADE_TOWER);
 
 
@@ -105,7 +103,7 @@ public class GameHUD extends Table {
         brawlButtons.add(btnUpgradeTower);
         setFillParent(true);
 
-        manaBar = new Manabar(0f, 100f, 0.1f, false, AssetManager.getInstance().defaultSkin);
+        manaBar = new Manabar(0f, 100f, 0.1f, false, assetManager.getDefaultSkin());
         manaBar.setValue(0);
         setBackground((Drawable) null);
 
@@ -121,7 +119,7 @@ public class GameHUD extends Table {
         row().height(buttonHeight).width((float) Gdx.graphics.getWidth());
 
         // add own table for organizing buttons
-        Table lowerUI = new Table(assetManager.defaultSkin);
+        Table lowerUI = new Table(assetManager.getDefaultSkin());
         lowerUI.center();
         add(lowerUI).width((float) Gdx.graphics.getWidth());
         lowerUI.add(btnNewUnit1).left().height(buttonHeight).width(buttonHeight);
@@ -155,13 +153,13 @@ public class GameHUD extends Table {
             btnNewUnit2.setImage(UnitManager.getInstance().getUnitConfig(4).getPreviewImage());
             btnNewUnit3.setName(UPGRADED_UNIT_3);
             btnNewUnit3.setImage(UnitManager.getInstance().getUnitConfig(5).getPreviewImage());
-            btnNewUnit4.setName(UPGRADED_UNIT_4);
-            btnNewUnit4.setImage(UnitManager.getInstance().getUnitConfig(19).getPreviewImage());
             btnUpgradeUnits.remove();
             playerController.updateTowersOrUnits(20);
 
         }else if (upgradeExecuted && input == UPGRADE_TOWER){
             SoundManager.getInstance().playSound("upgradeTowerExecuted");
+            btnNewUnit4.setName(UPGRADED_UNIT_4);
+            btnNewUnit4.setImage(UnitManager.getInstance().getUnitConfig(19).getPreviewImage());
             btnUpgradeTower.remove();
             playerController.updateTowersOrUnits(21);
         }
@@ -307,19 +305,19 @@ public class GameHUD extends Table {
 
         camera.update();
 
-        AssetManager assetManager = AssetManager.getInstance();
+
         float tw;
         float th;
         Texture gameOverView;
         if (win) {
-            gameOverView = assetManager.victoryScreen;
+            gameOverView = assetManager.getVictoryScreen();
             if (!playedVictoryOnce){
                 SoundManager.getInstance().playSound("victory");
                 playedVictoryOnce = true;
             }
 
         }else{
-            gameOverView = assetManager.defeatScreen;
+            gameOverView = assetManager.getDefeatScreen();
             if(!playedDefeatOnce) {
                 SoundManager.getInstance().playSound("defeat");
                 playedDefeatOnce = true;

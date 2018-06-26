@@ -51,6 +51,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
     private ZComparator comparator;
     private OrthographicCamera camera;
     private int playerTeamId;
+    AssetManager assetManager;
 
     private Stage hpBarStage;
 
@@ -121,23 +122,24 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
             TeamGameObjectComponent unitHP = teamGameObjectMapper.get(entity);
 
             if (unitHP != null) {
-                ProgressBar hpBar = new ProgressBar(0, 140, 1, false, AssetManager.getInstance().hpBarStyles.get(unitHP.getTeamId()));
-                hpBar.setValue((float) (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
+                assetManager = AssetManager.getInstance();
+                ProgressBar hpBar = new ProgressBar(0, 140, 1, false, assetManager.getHpBarStyles().get(unitHP.getTeamId()));
+                hpBar.setValue( (unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
 
                 TextureRegion unitMarkers;
 
                 switch (unitHP.getTeamId()){
                     case 0:
-                        unitMarkers = AssetManager.getInstance().unitMarkers.get("star");
+                        unitMarkers = assetManager.getUnitMarkers().get("star");
                         break;
                     case 1:
-                        unitMarkers = AssetManager.getInstance().unitMarkers.get("square");
+                        unitMarkers = assetManager.getUnitMarkers().get("square");
                         break;
                     case 2:
-                        unitMarkers = AssetManager.getInstance().unitMarkers.get("triangle");
+                        unitMarkers = assetManager.getUnitMarkers().get("triangle");
                         break;
                     case 3:
-                        unitMarkers = AssetManager.getInstance().unitMarkers.get("square2");
+                        unitMarkers = assetManager.getUnitMarkers().get("square2");
                         break;
                     default:
                         throw new UnsupportedOperationException();

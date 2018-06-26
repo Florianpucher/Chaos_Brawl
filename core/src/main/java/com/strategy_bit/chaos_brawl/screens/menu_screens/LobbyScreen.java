@@ -42,13 +42,13 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
     @Override
     public void buildStage() {
         super.buildStage();
-        btnPlayer1 = new TextButton(PLAYER_1, assetManager.defaultSkin);
+        btnPlayer1 = new TextButton(PLAYER_1, assetManager.getDefaultSkin());
         btnPlayer1.setName(PLAYER_1);
-        btnPlayer2 = new TextButton(PLAYER_2, assetManager.defaultSkin);
+        btnPlayer2 = new TextButton(PLAYER_2, assetManager.getDefaultSkin());
         btnPlayer2.setName(PLAYER_2);
-        btnPlayer3 = new TextButton(PLAYER_3, assetManager.defaultSkin);
+        btnPlayer3 = new TextButton(PLAYER_3, assetManager.getDefaultSkin());
         btnPlayer3.setName(PLAYER_3);
-        btnPlayer4 = new TextButton(PLAYER_4, assetManager.defaultSkin);
+        btnPlayer4 = new TextButton(PLAYER_4, assetManager.getDefaultSkin());
         btnPlayer4.setName(PLAYER_4);
         textButtons = new Array<>();
         textButtons.add(btnPlayer1);
@@ -56,8 +56,8 @@ abstract class LobbyScreen extends MenuScreen implements NetworkConnectionHandle
         textButtons.add(btnPlayer3);
         textButtons.add(btnPlayer4);
 
-        root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
+        root = new Table(assetManager.getDefaultSkin());
+        root.setBackground(new NinePatchDrawable(assetManager.getDefaultSkin().getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         height = Gdx.graphics.getHeight() / 6f;
         width=Gdx.graphics.getWidth()/1.2f;

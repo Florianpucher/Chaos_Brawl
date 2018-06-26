@@ -39,16 +39,16 @@ public class MapMenuScreen extends MenuScreen{
     @Override
     public void buildStage() {
         super.buildStage();
-        final TextButton btnNewMap1 = new TextButton(MAP_1, assetManager.defaultSkin);
-        final TextButton btnNewMap2 = new TextButton(MAP_2, assetManager.defaultSkin);
-        final TextButton btnNewMap3 = new TextButton(MAP_3, assetManager.defaultSkin);
+        final TextButton btnNewMap1 = new TextButton(MAP_1, assetManager.getDefaultSkin());
+        final TextButton btnNewMap2 = new TextButton(MAP_2, assetManager.getDefaultSkin());
+        final TextButton btnNewMap3 = new TextButton(MAP_3, assetManager.getDefaultSkin());
         btnNewMap1.setName(MAP_1);
         btnNewMap2.setName(MAP_2);
         btnNewMap3.setName(MAP_3);
 
 
-        final Table root = new Table(assetManager.defaultSkin);
-        root.setBackground(new NinePatchDrawable(assetManager.defaultSkin.getPatch(AssetManager.MENU_BACKGROUND)));
+        final Table root = new Table(assetManager.getDefaultSkin());
+        root.setBackground(new NinePatchDrawable(assetManager.getDefaultSkin().getPatch(AssetManager.MENU_BACKGROUND)));
         root.setFillParent(true);
         float height = Gdx.graphics.getHeight()/8f;
         root.center();

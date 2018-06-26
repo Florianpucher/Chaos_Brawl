@@ -26,7 +26,7 @@ public class HostLobbyScreen extends LobbyScreen {
     @Override
     public void buildStage() {
         super.buildStage();
-        TextButton btnStartGame = new TextButton(START_GAME, assetManager.defaultSkin);
+        TextButton btnStartGame = new TextButton(START_GAME, assetManager.getDefaultSkin());
         btnStartGame.setName(START_GAME);
         root.add(btnStartGame).width(width).height(height);
         addActor(root);

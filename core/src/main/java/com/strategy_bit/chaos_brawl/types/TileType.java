@@ -10,10 +10,13 @@ import static com.strategy_bit.chaos_brawl.config.WalkAbleAreas.*;
  * @version 1.0
  * @since 27.03.2018
  */
+
 public enum TileType {
     GRASS{
        public TextureRegion getTexture(){
-           return AssetManager.getInstance().defaultTile;
+           AssetManager assetManager = AssetManager.getInstance();
+           TextureRegion defaultTile = assetManager.getDefaultTile();
+           return defaultTile;
        }
 
         @Override
@@ -22,7 +25,9 @@ public enum TileType {
         }
     },WATER{
         public TextureRegion getTexture(){
-            return AssetManager.getInstance().waterTile;
+            AssetManager assetManager = AssetManager.getInstance();
+            TextureRegion waterTile = assetManager.getWaterTile();
+            return waterTile;
         }
 
         @Override
@@ -32,7 +37,9 @@ public enum TileType {
     },
     DIRT{
         public TextureRegion getTexture(){
-            return AssetManager.getInstance().dirtTile;
+            AssetManager assetManager = AssetManager.getInstance();
+            TextureRegion dirtTile = assetManager.getDirtTile();
+            return dirtTile;
         }
         @Override
         public int getMoveAble() {

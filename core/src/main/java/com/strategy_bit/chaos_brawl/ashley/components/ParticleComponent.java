@@ -10,23 +10,25 @@ import com.strategy_bit.chaos_brawl.managers.AssetManager;
 public class ParticleComponent implements Component {
 
     private ParticleEffect effect;
+    AssetManager assetManager;
 
     public ParticleComponent(String animation) {
+        assetManager = AssetManager.getInstance();
 
         TextureAtlas particleAtlas;
 
         if (animation.equals("explosion")) {
-            particleAtlas = AssetManager.getInstance().explosionSkin;
+            particleAtlas = assetManager.getExplosionSkin();
             effect = new ParticleEffect();
-            effect.load(AssetManager.getInstance().explosionParticle, particleAtlas);
+            effect.load(assetManager.getExplosionParticle(), particleAtlas);
         } else if (animation.equals("smoke")) {
-            particleAtlas = AssetManager.getInstance().smokeSkin;
+            particleAtlas = assetManager.getSmokeSkin();
             effect = new ParticleEffect();
-            effect.load(AssetManager.getInstance().smokeParticle, particleAtlas);
+            effect.load(assetManager.getSmokeParticle(), particleAtlas);
         } else if (animation.equals("star")) {
-            particleAtlas = AssetManager.getInstance().starSkin;
+            particleAtlas = assetManager.getStarSkin();
             effect = new ParticleEffect();
-            effect.load(AssetManager.getInstance().starParticle, particleAtlas);
+            effect.load(assetManager.getStarParticle(), particleAtlas);
         }
         effect.start();
     }
