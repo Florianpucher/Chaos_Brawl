@@ -72,9 +72,10 @@ public class GameHUD extends Table {
     static AssetManager assetManager;
 
     public GameHUD(PlayerController playerController) {
-        super(assetManager.getDefaultSkin());
+        super(AssetManager.getInstance().getDefaultSkin());
         this.playerController = playerController;
 
+        assetManager = AssetManager.getInstance();
         nextUnitType=-1;
 
         btnNewUnit1 = new BrawlButton(NEW_UNIT_1, assetManager.getDefaultSkin(), 0, UnitManager.getInstance().getUnitConfig(0).getPreviewImage());

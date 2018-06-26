@@ -12,6 +12,7 @@ public class CurrentTargetMarker extends Entity{
     AssetManager assetManager;
 
     public CurrentTargetMarker(Vector2 position, MyEngine engine){
+        assetManager = AssetManager.getInstance();
         TransformComponent transformComponent = engine.createComponent(TransformComponent.class);
         transformComponent.setPosition(position);
         transformComponent.setZ(10);

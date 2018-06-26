@@ -13,6 +13,7 @@ public class ParticleComponent implements Component {
     AssetManager assetManager;
 
     public ParticleComponent(String animation) {
+        assetManager = AssetManager.getInstance();
 
         TextureAtlas particleAtlas;
 

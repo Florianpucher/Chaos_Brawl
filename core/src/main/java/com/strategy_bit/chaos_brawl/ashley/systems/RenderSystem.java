@@ -122,6 +122,7 @@ public class RenderSystem extends IteratingSystem implements DisposeAble {
             TeamGameObjectComponent unitHP = teamGameObjectMapper.get(entity);
 
             if (unitHP != null) {
+                assetManager = AssetManager.getInstance();
                 ProgressBar hpBar = new ProgressBar(0, 140, 1, false, assetManager.getHpBarStyles().get(entity.getComponent(TeamGameObjectComponent.class).getTeamId()));
                 hpBar.setValue((unitHP.getHitPoints() / unitHP.getMaxHP() * hpBar.getWidth()));
 

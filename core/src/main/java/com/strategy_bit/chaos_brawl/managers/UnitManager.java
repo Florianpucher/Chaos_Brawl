@@ -54,6 +54,7 @@ public class UnitManager {
     }
 
     private UnitManager() {
+        assetManager = AssetManager.getInstance();
         unitConfigHashMap=new HashMap<>();
     }
 

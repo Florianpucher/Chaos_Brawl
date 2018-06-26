@@ -33,6 +33,7 @@ public class Board implements BoardInterface {
     private float multiplicandY = FRUSTUM_HEIGHT / BOARD_HEIGHT;
 
     public Board(MyEngine engine, int map) {
+        assetManager = AssetManager.getInstance();
         tileBoard = new Tile[BOARD_HEIGHT][BOARD_WIDTH];
 
         int[][] mapArray = new int[BOARD_HEIGHT][BOARD_WIDTH];
